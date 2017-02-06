@@ -14,7 +14,7 @@ IMPLEMENT_DYNCREATE(CGroupWiseNetPosForm, CFormView)
 CGroupWiseNetPosForm::CGroupWiseNetPosForm()
 	: CFormView(CGroupWiseNetPosForm::IDD)
 {
-
+ int i=0;
 }
 
 CGroupWiseNetPosForm::~CGroupWiseNetPosForm()
