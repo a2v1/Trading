@@ -1,0 +1,560 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{7835566F-EAB6-4410-BE4F-BDDD63B86261}</ProjectGuid>
+    <RootNamespace>TradingSDI</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <AdditionalIncludeDirectories>D:\TradingGit\Trading\json;D:\TradingGit\Trading\Grid\DataSources\ODBC;D:\TradingGit\Trading\Grid\Include;D:\TradingGit\Trading\Grid\CellTypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>D:\Trading\TradingSDI\TradingSDI;D:\Trading\Grid\DataSources\ODBC;D:\Trading\Grid\Include;D:\Trading\Grid\CellTypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTafnt.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTAutoSize.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTbutn.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTDropGrid.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTdtp.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\ugctelps.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTExpand.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTLabeled.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMail.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMailSort.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMarquee.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTmfnt.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTNote.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\ugctnotewnd.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTOutlookHeader.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTpie.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTpro1.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTprog.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTRado.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTsarw.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTsldr.h" />
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTSpin.h" />
+    <ClInclude Include="..\..\Grid\DataSources\ODBC\UGODBC.H" />
+    <ClInclude Include="..\..\Grid\DataSources\ODBC\ugrecset.h" />
+    <ClInclude Include="..\..\Grid\Include\UG64Bit.h" />
+    <ClInclude Include="..\..\Grid\Include\UGCBType.h" />
+    <ClInclude Include="..\..\Grid\Include\UGCell.h" />
+    <ClInclude Include="..\..\Grid\Include\ugceltyp.h" />
+    <ClInclude Include="..\..\Grid\Include\UGCnrBtn.h" />
+    <ClInclude Include="..\..\Grid\Include\UGCTarrw.h" />
+    <ClInclude Include="..\..\Grid\Include\UGCtrl.h" />
+    <ClInclude Include="..\..\Grid\Include\ugdefine.h" />
+    <ClInclude Include="..\..\Grid\Include\UGDLType.h" />
+    <ClInclude Include="..\..\Grid\Include\UGDrgDrp.h" />
+    <ClInclude Include="..\..\Grid\Include\UGDrwHnt.h" />
+    <ClInclude Include="..\..\Grid\Include\UGDtaSrc.h" />
+    <ClInclude Include="..\..\Grid\Include\UGEdit.h" />
+    <ClInclude Include="..\..\Grid\Include\UGEditBase.h" />
+    <ClInclude Include="..\..\Grid\Include\ugformat.h" />
+    <ClInclude Include="..\..\Grid\Include\uggdinfo.h" />
+    <ClInclude Include="..\..\Grid\Include\UGGrid.h" />
+    <ClInclude Include="..\..\Grid\Include\UGHint.h" />
+    <ClInclude Include="..\..\Grid\Include\ughscrol.h" />
+    <ClInclude Include="..\..\Grid\Include\uglstbox.h" />
+    <ClInclude Include="..\..\Grid\Include\UGMEdit.h" />
+    <ClInclude Include="..\..\Grid\Include\UGMemMan.h" />
+    <ClInclude Include="..\..\Grid\Include\UGMultiS.h" />
+    <ClInclude Include="..\..\Grid\Include\ugprint.h" />
+    <ClInclude Include="..\..\Grid\Include\ugptrlst.h" />
+    <ClInclude Include="..\..\Grid\Include\ugsidehd.h" />
+    <ClInclude Include="..\..\Grid\Include\UGStrOp.h" />
+    <ClInclude Include="..\..\Grid\Include\ugstruct.h" />
+    <ClInclude Include="..\..\Grid\Include\ugtab.h" />
+    <ClInclude Include="..\..\Grid\Include\UGTopHdg.h" />
+    <ClInclude Include="..\..\Grid\Include\ugvscrol.h" />
+    <ClInclude Include="..\..\Grid\Include\ugxpthemes.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIAccount.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIBook.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIByteStream.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APICertificate.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIChart.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIConfirm.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIDaily.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIDeal.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIExecution.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIExposure.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIMail.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APINews.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIOnline.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIOrder.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIPosition.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIRequest.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APISummary.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APITick.h" />
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIUser.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIFile.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIFormat.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIMath.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APISearch.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIStorage.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIStr.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APISync.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIThread.h" />
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APITime.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigCommon.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigFeeder.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigFirewall.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigGateway.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigGroup.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigHistory.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigHoliday.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigManager.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigNetwork.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigParam.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigPlugin.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigReport.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigRoute.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigSpread.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigSymbol.h" />
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigTime.h" />
+    <ClInclude Include="..\..\MT5\Common\MT5APIConstants.h" />
+    <ClInclude Include="..\..\MT5\Common\MT5APILogger.h" />
+    <ClInclude Include="..\..\MT5\Common\MT5APIPublicKey.h" />
+    <ClInclude Include="..\..\MT5\Common\MT5APITools.h" />
+    <ClInclude Include="..\..\MT5\Common\MT5APITypes.h" />
+    <ClInclude Include="..\..\MT5\Manager\API\MT5APIManager.h" />
+    <ClInclude Include="AddScrip.h" />
+    <ClInclude Include="ADD_overview.h" />
+    <ClInclude Include="AlertGrid.h" />
+    <ClInclude Include="AnalysisGrid.h" />
+    <ClInclude Include="AnalysisTable.h" />
+    <ClInclude Include="AuditForm.h" />
+    <ClInclude Include="BalanceAnaGrid.h" />
+    <ClInclude Include="BalanceTableAnalysis.h" />
+    <ClInclude Include="change_comment.h" />
+    <ClInclude Include="ClientCreate.h" />
+    <ClInclude Include="ClientHelpDlg.h" />
+    <ClInclude Include="ClientHelpGrid.h" />
+    <ClInclude Include="Client_Table.h" />
+    <ClInclude Include="clr_setting.h" />
+    <ClInclude Include="Cmycontrol.h" />
+    <ClInclude Include="Cnetposdlg.h" />
+    <ClInclude Include="CNetPosTable.h" />
+    <ClInclude Include="CodeChangedTable.h" />
+    <ClInclude Include="CodesChanged.h" />
+    <ClInclude Include="CommentChangeForm.h" />
+    <ClInclude Include="CScripWiseNetPosTable.h" />
+    <ClInclude Include="CTradeOrder.h" />
+    <ClInclude Include="CTrade_Table.h" />
+    <ClInclude Include="CustomDateTimePiker.h" />
+    <ClInclude Include="DataTradeFilter.h" />
+    <ClInclude Include="Data_Credit.h" />
+    <ClInclude Include="Dealer.h" />
+    <ClInclude Include="DealerSink.h" />
+    <ClInclude Include="Dealing.h" />
+    <ClInclude Include="DealingForm.h" />
+    <ClInclude Include="definemargin_grid.h" />
+    <ClInclude Include="define_margin.h" />
+    <ClInclude Include="Duplicate_Order.h" />
+    <ClInclude Include="Duplicate_OrderTable.h" />
+    <ClInclude Include="Editable_Grid.h" />
+    <ClInclude Include="GridTradeAndOrder.h" />
+    <ClInclude Include="Grid_CheckTrade.h" />
+    <ClInclude Include="Group2WiseNetPosForm.h" />
+    <ClInclude Include="GroupWiseNetPosForm.h" />
+    <ClInclude Include="NetPosForm.h" />
+    <ClInclude Include="Netpositoin_Table.h" />
+    <ClInclude Include="NPBPSType1Grid.h" />
+    <ClInclude Include="NPBPSType1Table.h" />
+    <ClInclude Include="NPBPSType2Grid.h" />
+    <ClInclude Include="NPBPSType2Table.h" />
+    <ClInclude Include="OrderForm.h" />
+    <ClInclude Include="Order_Table.h" />
+    <ClInclude Include="PassedBYMngr.h" />
+    <ClInclude Include="PassedByMngrTable.h" />
+    <ClInclude Include="TableGroupWiseNetPos.h" />
+    <ClInclude Include="GroupWisePosition.h" />
+    <ClInclude Include="LogFile.h" />
+    <ClInclude Include="LTPDock.h" />
+    <ClInclude Include="LTPTable.h" />
+    <ClInclude Include="helpserach_grid.h" />
+    <ClInclude Include="help_search.h" />
+    <ClInclude Include="JournalSearch.h" />
+    <ClInclude Include="LimitMappingScripwise.h" />
+    <ClInclude Include="Login.h" />
+    <ClInclude Include="LTPupdate.h" />
+    <ClInclude Include="LTP_Dilog.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MyCug.h" />
+    <ClInclude Include="NetPosGrid.h" />
+    <ClInclude Include="Netpos_Get_Data.h" />
+    <ClInclude Include="orderEntryForm.h" />
+    <ClInclude Include="OrderGrid.h" />
+    <ClInclude Include="OrderGridFilter.h" />
+    <ClInclude Include="OrderwiseJournal.h" />
+    <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="overview.h" />
+    <ClInclude Include="OverViewOrderGrid.h" />
+    <ClInclude Include="PosEntryAna.h" />
+    <ClInclude Include="Position_Entry_Analysis.h" />
+    <ClInclude Include="Rate.h" />
+    <ClInclude Include="RateDocking.h" />
+    <ClInclude Include="RateGrid.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScripWiseNetPos.h" />
+    <ClInclude Include="ScripWiseNetPosDocking.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SymbolMapping.h" />
+    <ClInclude Include="symbol_grp.h" />
+    <ClInclude Include="Symbol_Map.h" />
+    <ClInclude Include="Symbol_Table.h" />
+    <ClInclude Include="Tab2.h" />
+    <ClInclude Include="tab3.h" />
+    <ClInclude Include="tab4.h" />
+    <ClInclude Include="tabControl.h" />
+    <ClInclude Include="TableGroup_Symbol.h" />
+    <ClInclude Include="Table_Position_Detail.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TradingSDI.h" />
+    <ClInclude Include="TradingSDIDoc.h" />
+    <ClInclude Include="TradingSDIView.h" />
+    <ClInclude Include="T_Pre_Post_outstanding.h" />
+    <ClInclude Include="UIThread.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTafnt.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTAutoSize.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTbutn.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTDropGrid.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTdtp.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\ugctelps.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTExpand.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTLabeled.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMail.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMailSort.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMarquee.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTmfnt.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTNote.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\ugctnotewnd.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTOutlookHeader.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTpie.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTpro1.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTprog.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTRado.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTsarw.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTsldr.cpp" />
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTSpin.cpp" />
+    <ClCompile Include="..\..\Grid\DataSources\ODBC\UGODBC.CPP" />
+    <ClCompile Include="..\..\Grid\DataSources\ODBC\ugrecset.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCBType.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCell.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCelTyp.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCnrBtn.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCTarrw.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGCtrl.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGDLType.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGDrgDrp.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGDrwHnt.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGDtaSrc.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGEdit.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGEditBase.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugformat.cpp" />
+    <ClCompile Include="..\..\Grid\Source\uggdinfo.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGGrid.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGHint.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ughscrol.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugLstBox.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGMEdit.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGMemMan.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGMultiS.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugprint.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugptrlst.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugsidehd.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGStrOp.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugtab.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGTopHdg.cpp" />
+    <ClCompile Include="..\..\Grid\Source\ugvscrol.cpp" />
+    <ClCompile Include="..\..\Grid\Source\UGXPThemes.cpp" />
+    <ClCompile Include="AddScrip.cpp" />
+    <ClCompile Include="ADD_overview.cpp" />
+    <ClCompile Include="AlertGrid.cpp" />
+    <ClCompile Include="AnalysisGrid.cpp" />
+    <ClCompile Include="AuditForm.cpp" />
+    <ClCompile Include="BalanceAnaGrid.cpp" />
+    <ClCompile Include="change_comment.cpp" />
+    <ClCompile Include="ClientCreate.cpp" />
+    <ClCompile Include="ClientHelpDlg.cpp" />
+    <ClCompile Include="ClientHelpGrid.cpp" />
+    <ClCompile Include="clr_setting.cpp" />
+    <ClCompile Include="Cmycontrol.cpp" />
+    <ClCompile Include="Cnetposdlg.cpp" />
+    <ClCompile Include="CodesChanged.cpp" />
+    <ClCompile Include="CommentChangeForm.cpp" />
+    <ClCompile Include="CustomDateTimePiker.cpp" />
+    <ClCompile Include="Dealer.cpp" />
+    <ClCompile Include="Dealing.cpp" />
+    <ClCompile Include="DealingForm.cpp" />
+    <ClCompile Include="definemargin_grid.cpp" />
+    <ClCompile Include="define_margin.cpp" />
+    <ClCompile Include="Duplicate_Order.cpp" />
+    <ClCompile Include="Editable_Grid.cpp" />
+    <ClCompile Include="GridTradeAndOrder.cpp" />
+    <ClCompile Include="Grid_CheckTrade.cpp" />
+    <ClCompile Include="Group2WiseNetPosForm.cpp" />
+    <ClCompile Include="GroupWiseNetPosForm.cpp" />
+    <ClCompile Include="GroupWisePosition.cpp" />
+    <ClCompile Include="helpserach_grid.cpp" />
+    <ClCompile Include="help_search.cpp" />
+    <ClCompile Include="JournalSearch.cpp" />
+    <ClCompile Include="LimitMappingScripwise.cpp" />
+    <ClCompile Include="LogFile.cpp" />
+    <ClCompile Include="LTPDock.cpp" />
+    <ClCompile Include="LTPupdate.cpp" />
+    <ClCompile Include="LTP_Dilog.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MyCug.cpp" />
+    <ClCompile Include="NetPosForm.cpp" />
+    <ClCompile Include="NetPosGrid.cpp" />
+    <ClCompile Include="NPBPSType1Grid.cpp" />
+    <ClCompile Include="NPBPSType2Grid.cpp" />
+    <ClCompile Include="orderEntryForm.cpp" />
+    <ClCompile Include="OrderForm.cpp" />
+    <ClCompile Include="OrderGrid.cpp" />
+    <ClCompile Include="OrderGridFilter.cpp" />
+    <ClCompile Include="OrderwiseJournal.cpp" />
+    <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="overview.cpp" />
+    <ClCompile Include="OverViewOrderGrid.cpp" />
+    <ClCompile Include="PassedBYMngr.cpp" />
+    <ClCompile Include="PosEntryAna.cpp" />
+    <ClCompile Include="Rate.cpp" />
+    <ClCompile Include="RateDocking.cpp" />
+    <ClCompile Include="RateGrid.cpp" />
+    <ClCompile Include="ScripWiseNetPos.cpp" />
+    <ClCompile Include="ScripWiseNetPosDocking.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SymbolMapping.cpp" />
+    <ClCompile Include="symbol_grp.cpp" />
+    <ClCompile Include="Symbol_Map.cpp" />
+    <ClCompile Include="Tab2.cpp" />
+    <ClCompile Include="tab3.cpp" />
+    <ClCompile Include="tab4.cpp" />
+    <ClCompile Include="tabControl.cpp" />
+    <ClCompile Include="TradingSDI.cpp" />
+    <ClCompile Include="TradingSDIDoc.cpp" />
+    <ClCompile Include="TradingSDIView.cpp" />
+    <ClCompile Include="UIThread.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TradingSDI.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Ultimate Grid\Demos\Stock Watch\bitmap1.bmp" />
+    <Image Include="..\..\..\Ultimate Grid\Demos\Stock Watch\bitmap_a.bmp" />
+    <Image Include="..\..\..\ultimate grid\demos\stock watch\bmp00001.bmp" />
+    <Image Include="..\..\..\ultimate grid\demos\stock watch\toolbar1.bmp" />
+    <Image Include="..\..\BitMap\bitmap1.bmp" />
+    <Image Include="..\..\BitMap\bitmap_a.bmp" />
+    <Image Include="..\..\BitMap\bmp00001.bmp" />
+    <Image Include="..\..\BitMap\toolbar1.bmp" />
+    <Image Include="res\output_wnd.ico" />
+    <Image Include="res\output_wnd_hc.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\TradingSDI.ico" />
+    <Image Include="res\TradingSDIDoc.ico" />
+    <Image Include="UserImages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5CommonAPI.dll" />
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5CommonAPI64.dll" />
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5ManagerAPI.dll" />
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5ManagerAPI64.dll" />
+    <None Include="..\..\MT5\Manager\API\MT5APIManager.dll" />
+    <None Include="..\..\MT5\Manager\API\MT5APIManager64.dll" />
+    <None Include="res\ribbon1.mfcribbon-ms" />
+    <None Include="res\TradingSDI.rc2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\BitMap\WS_FTP.LOG" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="TradingSDI.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

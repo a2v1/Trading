@@ -1,0 +1,1094 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#include "verrsrc.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#include ""res\\TradingSDI.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""      // Standard components\r\n"
+    "#include ""afxprint.rc""    // printing/print preview resources\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""afxribbon.rc""        // MFC ribbon and control bar resources\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\TradingSDI.ico"
+IDR_TradingSDITYPE      ICON                    "res\\TradingSDIDoc.ico"
+IDI_OUTPUT_WND          ICON                    "res\\output_wnd.ico"
+IDI_OUTPUT_WND_HC       ICON                    "res\\output_wnd_hc.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    MENUITEM "F",                           0
+END
+
+IDR_POPUP_EDIT MENU
+BEGIN
+    POPUP "Edit"
+    BEGIN
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+    END
+END
+
+IDR_OUTPUT_POPUP MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Copy",                       ID_EDIT_COPY
+        MENUITEM "&Clear",                      ID_EDIT_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Hide",                       ID_VIEW_OUTPUTWND
+    END
+END
+
+IDR_HELP_MENU MENU
+BEGIN
+    MENUITEM "&About TradingSDI...",        ID_APP_ABOUT
+END
+
+IDR_THEME_MENU MENU
+BEGIN
+    MENUITEM "Office 2007 (&Blue Style)",   ID_VIEW_APPLOOK_OFF_2007_BLUE
+    MENUITEM "Office 2007 (B&lack Style)",  ID_VIEW_APPLOOK_OFF_2007_BLACK
+    MENUITEM "Office 2007 (&Silver Style)", ID_VIEW_APPLOOK_OFF_2007_SILVER
+    MENUITEM "Office 2007 (&Aqua Style)",   ID_VIEW_APPLOOK_OFF_2007_AQUA
+    MENUITEM "Win&dows 7",                  ID_VIEW_APPLOOK_WINDOWS_7
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 363, 124
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About TradingSDI"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_COMBO1,119,41,103,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG_ADD_SCRIP DIALOGEX 0, 0, 777, 58
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        IDC_SCRIP_CMB_LOGIN,36,7,64,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Account",IDC_SCRIP_LB_LOGIN,10,8,27,8
+    EDITTEXT        IDC_SCRIP_EDIT_LOGIN,100,7,206,13,ES_AUTOHSCROLL
+    PUSHBUTTON      "Order",IDC_SCRIP_BTN_LOGIN,306,6,50,13
+    COMBOBOX        IDC_SCRIP_CMB_SYMBOL,384,7,76,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Symbol",IDC_SCRIP_LB_SYMBOL,359,8,24,8
+END
+
+IDD_Login_Form DIALOGEX 0, 0, 233, 119
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Login"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Login",IDC_STATIC_LOGIN,38,29,18,8
+    LTEXT           "Password",IDC_STATIC_PWD,36,49,35,8
+    EDITTEXT        IDC_LOGIN_EDIT_LOGIN3,71,29,58,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LOGIN_EDIT_PWD3,72,46,60,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "Login",IDC_BTN_LOGIN,35,76,50,14
+    PUSHBUTTON      "Exit",IDC_BTN_EXIT,89,76,50,14
+END
+
+IDD_DIALOG_RATE DIALOGEX 0, 0, 141, 98
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Rate"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "SCRIP NAME",IDC_RATE_LB_SCRIPNAME,17,17,42,8
+    LTEXT           "EXCHANGE",IDC_RATE_LB_EXCHANGE,80,18,36,8
+    LTEXT           "HEIGH",IDC_RATE_LB_HEIGH,27,30,22,8
+    LTEXT           "LOW",IDC_RATE_LB_LOW,78,31,16,8
+    PUSHBUTTON      "BID",IDC_BTN_RATE_BID,16,40,50,29,BS_MULTILINE
+    PUSHBUTTON      "ASK",IDC_BTN_RATE_ASK,72,40,50,28,BS_MULTILINE
+    LTEXT           "QUANTITY",IDC_RATE_LB_QUANTITY,22,74,35,8
+    COMBOBOX        IDC_RATE_CMB_QTY,60,72,45,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_ORDERENTRY DIALOGEX 0, 0, 275, 242
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "ORDER ENTRY"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Symbol:",IDC_STATIC,46,23,26,8
+    LTEXT           "Type:",IDC_STATIC,48,37,20,8
+    COMBOBOX        IDC_COMBO1,76,21,128,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        IDC_COMBO2,76,36,128,12,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "",IDC_STATIC,7,54,243,167
+    LTEXT           "Type:",IDC_STATIC,49,68,20,8
+    COMBOBOX        IDC_COMBO3,77,67,73,12,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Volume:",IDC_STATIC,49,89,26,8
+    EDITTEXT        IDC_EDIT1,78,87,46,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Price:",IDC_STATIC,50,106,19,8
+    EDITTEXT        IDC_EDIT2,78,103,46,14,ES_AUTOHSCROLL | ES_NUMBER
+    CTEXT           "Price:",IDC_STATIC_PRICE,15,137,215,16
+    PUSHBUTTON      "Place",IDC_BUTTON1,22,188,200,14
+    CTEXT           "Status",IDC_STATIC_PRICE2,13,162,215,16
+END
+
+IDD_DIALOG_FILTER DIALOGEX 0, 0, 722, 26
+STYLE DS_SETFONT | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_SYSMENU
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        FL_CMB_STATUS,0,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_LOGIN,51,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_ORDER,102,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_DATE,153,7,131,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_SYMBOL,284,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_ORDERTYPE,335,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_QTY,386,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        FL_CMB_RATE,437,7,50,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "OK",IDC_BUTTON1,587,5,28,14
+    COMBOBOX        FL_CMB_COMMENT,534,7,52,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_Mapping_Symbol DIALOGEX 0, 0, 285, 367
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Symbol Mapping"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Save",IDC_BUTTON1,29,7,39,14
+    PUSHBUTTON      "Exit",IDC_BUTTON2,75,7,46,14
+    LTEXT           "Static",IDC_STATIC,7,27,271,333
+END
+
+IDD_TAB1 DIALOGEX 0, 0, 717, 381
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Static",IDC_STATIC_FrGrid_Trade2,7,95,703,122
+    EDITTEXT        IDC_EDIT3,92,5,70,14,ES_AUTOHSCROLL
+    LTEXT           "Account Name",IDC_STATIC,18,28,47,8
+    EDITTEXT        IDC_EDIT2,91,28,71,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT1,91,50,71,14,ES_AUTOHSCROLL
+    LTEXT           "History",IDC_STATIC,19,75,24,8
+    EDITTEXT        IDC_EDIT4,92,72,71,14,ES_AUTOHSCROLL
+    LTEXT           "Master Account",IDC_STATIC,18,52,51,8
+    LTEXT           "Acount Number",IDC_STATIC,18,7,50,8
+    LTEXT           "Group 1",IDC_STATIC,208,8,26,8
+    EDITTEXT        IDC_EDIT10,238,5,40,14,ES_AUTOHSCROLL
+    LTEXT           "Group 2",IDC_STATIC,283,8,26,8
+    EDITTEXT        IDC_EDIT11,312,5,40,14,ES_AUTOHSCROLL
+    LTEXT           "Group 3",IDC_STATIC,369,7,26,8
+    EDITTEXT        IDC_EDIT12,398,5,40,14,ES_AUTOHSCROLL
+    LTEXT           "Group 4",IDC_STATIC,369,32,26,8
+    EDITTEXT        IDC_EDIT9,398,29,40,14,ES_AUTOHSCROLL
+    LTEXT           "Credit",IDC_STATIC,370,56,20,8
+    EDITTEXT        IDC_EDIT8,398,55,40,14,ES_AUTOHSCROLL
+    CONTROL         "CommentYN",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,204,30,55,10
+    CONTROL         "IgnoreYN",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,263,31,46,10
+    PUSHBUTTON      "Update Limit Scrip Wise",IDC_BUTTON1,241,55,112,14
+    LTEXT           "Total Number of Trades",IDC_STATIC,470,5,76,8
+    EDITTEXT        IDC_EDIT6,628,5,76,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Last Trade On",IDC_STATIC,470,32,46,8
+    EDITTEXT        IDC_EDIT5,628,31,76,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Percentage Of Total Trade to Parrent Account",IDC_STATIC,470,59,149,8
+    EDITTEXT        IDC_EDIT7,628,57,75,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "Update",IDC_BUTTON2,628,78,50,14
+    LTEXT           "Total",IDC_STATIC,36,226,17,8
+    EDITTEXT        IDC_EDIT13,65,224,80,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Balance",IDC_STATIC,222,226,26,8
+    EDITTEXT        IDC_EDIT14,260,224,77,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Profit",IDC_STATIC,405,226,18,8
+    EDITTEXT        IDC_EDIT15,437,224,74,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Static",IDC_STATIC_FrGrid_Order2,7,243,703,131
+    PUSHBUTTON      "Update",IDC_BUTTON3,312,29,41,14
+END
+
+IDD_NETPOS_DLG DIALOGEX 0, 0, 479, 20
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Ig 0 Qty",IDC_IGQTY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,4,43,12
+    EDITTEXT        IDC_LOGIN,115,4,107,12,ES_AUTOHSCROLL
+    EDITTEXT        IDC_GROUP,250,4,46,12,ES_AUTOHSCROLL
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,318,5,54,12
+    CONTROL         "Ig Main",IDC_IGMAIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,376,4,39,12
+    CONTROL         "Ig Coment",IDC_IGCOMMENT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,418,4,49,12
+    LTEXT           "Login and Symbol",IDC_STATIC,55,4,58,12
+    LTEXT           "Group",IDC_STATIC,227,4,20,12
+    LTEXT           "Date",IDC_STATIC,299,5,18,12
+END
+
+IDD_DLG_CLR DIALOGEX 0, 0, 227, 93
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,162,68,51,18
+    COMBOBOX        IDC_COMBO_CLR,67,18,74,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Color",IDC_BUTTON_CLR,161,17,51,18
+    LTEXT           "Order Type",IDC_STATIC,12,20,51,8
+END
+
+IDD_DIALOG_LIMITmAPPING DIALOGEX 0, 0, 263, 327
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "LIMIT MAPPING"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Save",ID_BTN_OK,137,298,50,14
+    PUSHBUTTON      "Cancel",ID_BTN_CANCEL,193,298,50,14
+    LTEXT           "Static",IDC_STATIC_GRID_LIMTMAPPING,15,14,214,262
+END
+
+IDD_CHNGE_COMMENT DIALOGEX 0, 0, 283, 135
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Change Comment"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT16,59,15,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT15,59,34,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT1,59,51,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT14,59,68,66,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT9,181,14,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT10,181,31,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT8,181,47,67,14,ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT6,181,62,67,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Update",IDOK,66,106,60,15
+    PUSHBUTTON      "Cancel",IDCANCEL,128,106,63,16
+    LTEXT           "Time",IDC_STATIC,31,17,25,13
+    LTEXT           "Deal",IDC_STATIC,31,35,20,13
+    LTEXT           "Order",IDC_STATIC,30,52,24,13
+    LTEXT           "Symbol",IDC_STATIC,30,69,25,13
+    LTEXT           "Type",IDC_STATIC,148,16,27,12
+    LTEXT           "Volume",IDC_STATIC,148,34,27,10
+    LTEXT           "Price",IDC_STATIC,148,50,27,8
+    LTEXT           "Comment",IDC_STATIC,148,64,31,10
+END
+
+IDD_SYMBOL_GRP DIALOGEX 0, 0, 265, 346
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Symbol Group Mapping"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,117,4,41,15
+    PUSHBUTTON      "Exit",IDCANCEL,204,4,42,15
+    LTEXT           "Group",IDC_STATIC,8,10,38,8
+    EDITTEXT        IDC_EDIT1,34,9,77,14,ES_AUTOHSCROLL
+    LTEXT           "Static",IDC_STATIC_GRID,3,45,255,273
+    PUSHBUTTON      "Help",IDC_BUTTON1,162,4,39,15
+END
+
+IDD_HELP_SEARCH DIALOGEX 0, 0, 271, 293
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Search PopUp"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Exit",IDCANCEL,189,11,50,14
+    LTEXT           "Static",IDC_STATIC_HELP,5,35,259,253
+    EDITTEXT        IDC_EDIT1,56,11,68,14,ES_AUTOHSCROLL
+    LTEXT           "Search",IDC_STATIC,13,13,23,8
+END
+
+IDD_DEFINE_MARGIN DIALOGEX 0, 0, 279, 305
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Define Symbol Margin"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,156,4,50,14
+    PUSHBUTTON      "Exit",IDCANCEL,217,4,50,14
+    LTEXT           "Static",IDC_STATIC_MARGIN,4,27,271,271
+    EDITTEXT        IDC_EDIT1,50,4,69,14,ES_AUTOHSCROLL
+    LTEXT           "Search",IDC_STATIC,12,5,23,8
+END
+
+IDD_DIALOG_FOR_JOURNAL_SEARCH DIALOGEX 0, 0, 227, 34
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "From:",IDC_STATIC,12,9,20,8
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,31,7,64,12
+    LTEXT           "To:",IDC_STATIC,98,9,12,8
+    CONTROL         "",IDC_DATETIMEPICKER2,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,112,7,64,12
+    PUSHBUTTON      "Show",IDC_BUTTON1,179,6,41,14
+END
+
+IDD_ORDERWISE_JOURNAL DIALOGEX 0, 0, 727, 249
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "OrderWiseJournal"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Static",IDC_STATIC,7,7,713,235
+END
+
+IDD_DIALOG_LTP DIALOGEX 0, 0, 243, 289
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+EXSTYLE WS_EX_TRANSPARENT
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,158,4,50,14
+    LTEXT           "Static",IDC_STATIC_LTP,1,22,237,266
+    PUSHBUTTON      "Get LTP",IDC_BUTTON1,103,4,50,14
+END
+
+IDD_TAB2 DIALOGEX 0, 0, 729, 367
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Update",IDOK,602,346,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,660,346,50,14
+    LTEXT           "Static",IDC_STATIC_FrGrid_Trade_history2,6,8,716,250
+    COMBOBOX        IDC_COMBO1,328,286,61,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Export",IDC_BUTTON1,485,286,50,14
+    PUSHBUTTON      "Request",IDC_BUTTON2,420,286,50,14
+    LTEXT           "Period",IDC_STATIC,42,286,21,8
+    CONTROL         "",IDC_DATETIMEPICKER1,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,93,285,100,15
+    CONTROL         "",IDC_DATETIMEPICKER2,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,204,285,100,15
+END
+
+IDD_OVERVIEW DIALOGEX 0, 0, 719, 405
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "OverView Frame"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TAB1,"SysTabControl32",TCS_FOCUSONBUTTONDOWN,0,7,712,391
+END
+
+IDD_TAB3 DIALOGEX 0, 0, 669, 338
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Request",IDOK,218,307,76,14
+    PUSHBUTTON      "Cancel",IDCANCEL,316,307,50,14
+    LTEXT           "Static",IDC_STATIC_POSENTRYGRID,10,9,536,276
+    LTEXT           "Select By Client Code",IDC_STATIC,25,309,69,8
+    COMBOBOX        IDC_COMBO1,117,308,80,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_TAB4 DIALOGEX 0, 0, 712, 360
+STYLE DS_SYSMODAL | DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Static",IDC_STATIC_BALANCE_TABLE,4,2,695,308
+    DEFPUSHBUTTON   "Request",IDOK,217,327,80,14
+    LTEXT           "Select By Client Code",IDC_STATIC,20,328,69,8
+    COMBOBOX        IDC_COMBO1,110,327,81,30,CBS_DROPDOWN | CBS_SORT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG1 DIALOGEX 0, 0, 281, 169
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Client Create"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        IDC_EDIT1,77,21,119,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT2,77,38,119,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT3,77,57,79,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT4,77,74,79,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT5,77,90,79,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT6,77,106,79,14,ES_AUTOHSCROLL
+    CONTROL         "Comment",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,73,128,46,10
+    CONTROL         "Ignore",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,118,128,37,10
+    DEFPUSHBUTTON   "Save",IDSAVE,58,145,50,14
+    PUSHBUTTON      "Help",IDC_DELETEBTN,112,145,50,14
+    PUSHBUTTON      "Exit",IDCANCEL,166,145,50,14
+    LTEXT           "Group 2",IDC_STATIC,33,77,26,8
+    LTEXT           "Name",IDC_STATIC,33,40,19,8
+    LTEXT           "Login",IDC_STATIC,33,22,18,8
+    LTEXT           "Group 1",IDC_STATIC,33,59,30,8
+    LTEXT           "Group 3",IDC_STATIC,33,93,26,8
+    LTEXT           "Client Credit",IDC_STATIC,33,108,40,8
+END
+
+IDD_DIALOG2 DIALOGEX 0, 0, 551, 393
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Client Help Form"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Save",IDOK,440,2,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,492,1,50,14
+    LTEXT           "Static",IDC_STATICGRID,1,20,547,371
+    EDITTEXT        IDC_EDITSEARCH,32,1,85,14,ES_AUTOHSCROLL
+    LTEXT           "Search :",IDC_STATIC,1,3,28,8
+END
+
+IDD_ORDERFORM DIALOGEX 0, 0, 433, 302
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_NETPOSFORM DIALOGEX 0, 0, 321, 152
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_COMMENTCHANGEFORM DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_DEALINGFORM DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_GROUP2WISENETPOSFORM DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_GROUPWISENETPOS DIALOGEX 0, 0, 185, 93
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD
+FONT 8, "MS Shell Dlg", 400, 0, 0x0
+BEGIN
+END
+
+IDD_AUDITFORM DIALOGEX 0, 0, 589, 170
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "FileDescription", "TradingSDI"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "TradingSDI.exe"
+            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "OriginalFilename", "TradingSDI.exe"
+            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 356
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 117
+    END
+
+    IDD_DIALOG_ADD_SCRIP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 770
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 51
+    END
+
+    IDD_Login_Form, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 112
+    END
+
+    IDD_DIALOG_RATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 134
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 91
+    END
+
+    IDD_ORDERENTRY, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 268
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 220
+    END
+
+    IDD_DIALOG_FILTER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 715
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 19
+    END
+
+    IDD_Mapping_Symbol, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 278
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 360
+    END
+
+    IDD_TAB1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 710
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 374
+    END
+
+    IDD_NETPOS_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 472
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 16
+    END
+
+    IDD_DLG_CLR, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 220
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_DIALOG_LIMITmAPPING, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 256
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 320
+    END
+
+    IDD_CHNGE_COMMENT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 276
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 132
+    END
+
+    IDD_SYMBOL_GRP, DIALOG
+    BEGIN
+        LEFTMARGIN, 3
+        RIGHTMARGIN, 259
+        TOPMARGIN, 4
+        BOTTOMMARGIN, 318
+    END
+
+    IDD_HELP_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 5
+        RIGHTMARGIN, 264
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 288
+    END
+
+    IDD_DEFINE_MARGIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 275
+        TOPMARGIN, 3
+        BOTTOMMARGIN, 298
+    END
+
+    IDD_DIALOG_FOR_JOURNAL_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 220
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 21
+    END
+
+    IDD_ORDERWISE_JOURNAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 720
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 242
+    END
+
+    IDD_DIALOG_LTP, DIALOG
+    BEGIN
+        TOPMARGIN, 1
+    END
+
+    IDD_TAB2, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 722
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 360
+    END
+
+    IDD_OVERVIEW, DIALOG
+    BEGIN
+        RIGHTMARGIN, 712
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 398
+    END
+
+    IDD_TAB3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 662
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 331
+    END
+
+    IDD_TAB4, DIALOG
+    BEGIN
+        RIGHTMARGIN, 705
+        VERTGUIDE, 25
+        BOTTOMMARGIN, 353
+        HORZGUIDE, 171
+    END
+
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 278
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 167
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 1
+        RIGHTMARGIN, 548
+        TOPMARGIN, 1
+        BOTTOMMARGIN, 391
+    END
+
+    IDD_ORDERFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 426
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 295
+    END
+
+    IDD_NETPOSFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 314
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 145
+    END
+
+    IDD_COMMENTCHANGEFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 178
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_DEALINGFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 178
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_GROUP2WISENETPOSFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 178
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_GROUPWISENETPOS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 178
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 86
+    END
+
+    IDD_AUDITFORM, DIALOG
+    BEGIN
+        LEFTMARGIN, 2
+        TOPMARGIN, 1
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP_ARROW_UP     BITMAP                  "..\\..\\BitMap\\bitmap_a.bmp"
+IDB_BITMAP_ARROW_DOWN   BITMAP                  "..\\..\\BitMap\\bitmap1.bmp"
+IDR_MAINFRAME           BITMAP                  "..\\..\\BitMap\\toolbar1.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_TAB2 DLGINIT
+BEGIN
+    IDC_COMBO1, 0x403, 12, 0
+0x6c41, 0x206c, 0x6968, 0x7473, 0x726f, 0x0079, 
+    IDC_COMBO1, 0x403, 6, 0
+0x6f54, 0x6164, 0x0079, 
+    IDC_COMBO1, 0x403, 10, 0
+0x6559, 0x7473, 0x7265, 0x6164, 0x0079, 
+    IDC_COMBO1, 0x403, 12, 0
+0x7246, 0x6d6f, 0x4d20, 0x6e6f, 0x6164, 0x0079, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 28, 15
+BEGIN
+    BUTTON      ID_CHECK
+    BUTTON      ID_1
+    BUTTON      ID_2
+    BUTTON      ID_3
+    BUTTON      ID_4
+    BUTTON      ID_5
+    BUTTON      ID_6
+    BUTTON      ID_7
+    BUTTON      ID_8
+    BUTTON      ID_9
+    BUTTON      ID_10
+    BUTTON      ID_11
+    BUTTON      ID_12
+    BUTTON      ID_13
+    BUTTON      ID_14
+    BUTTON      ID_15
+    BUTTON      ID_16
+    BUTTON      ID_17
+    BUTTON      ID_18
+    BUTTON      ID_19
+    BUTTON      ID_20
+    BUTTON      ID_21
+    BUTTON      ID_22
+    BUTTON      ID_23
+    BUTTON      ID_24
+    BUTTON      ID_25
+    BUTTON      ID_26
+    BUTTON      ID_27
+    BUTTON      ID_28
+    BUTTON      ID_29
+    BUTTON      ID_30
+    BUTTON      ID_31
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Ribbon
+//
+
+IDR_RIBBON1             RT_RIBBON_XML           "res\\ribbon1.mfcribbon-ms"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+    IDS_SCRIPNETPOS_WND     "ScripWiseNetPos"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "TradingSDI\n\nTradingSDI\n\n\nTradingSDI.Document\nTradingSDI.Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "TradingSDI"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "CAP"
+    ID_INDICATOR_NUM        "NUM"
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "OVR"
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_DIRECT    "Print the active document using current options\nQuick Print"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STATUS_PANE1        "Pane 1"
+    IDS_STATUS_PANE2        "Pane 2"
+    IDS_TOOLBAR_STANDARD    "Standard"
+    IDS_TOOLBAR_CUSTOMIZE   "Customize..."
+END
+
+STRINGTABLE
+BEGIN
+    IDS_OUTPUT_WND          "Output"
+    IDS_PROPERTIES_WND      "RatePanal"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_BUILD_TAB           "Position"
+    IDS_DEBUG_TAB           "Order"
+    IDS_FIND_TAB            "Deal"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_EDIT_MENU           "Edit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_SYMBOLGROUPMAPPING "Symbol Group Map"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#include "res\TradingSDI.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"      // Standard components
+#include "afxprint.rc"    // printing/print preview resources
+#if !defined(_AFXDLL)
+#include "afxribbon.rc"        // MFC ribbon and control bar resources
+#endif
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

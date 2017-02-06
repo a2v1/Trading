@@ -1,0 +1,1118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{8d6bd5dd-e53d-425e-bd71-dc1b3d053432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid\Source Files">
+      <UniqueIdentifier>{8cd3ca05-dd47-45ba-91cd-e13b48ff3c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid\ODBC Datasource">
+      <UniqueIdentifier>{ca7f1888-418e-40eb-ae66-fd73f4254861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5">
+      <UniqueIdentifier>{013fc110-0f38-46e2-aa98-3dcff14f0dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Common">
+      <UniqueIdentifier>{4919116c-a0c7-462d-90aa-e23228d53f14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Manager">
+      <UniqueIdentifier>{624a676a-730f-4b64-b047-2a4c3ad8bc95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Common\Base">
+      <UniqueIdentifier>{74f5ceb5-bfd7-41f5-8b91-51455e079b65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Common\Classes">
+      <UniqueIdentifier>{9181711d-6a8c-45e6-a7fd-1e8b502ce1a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Common\Config">
+      <UniqueIdentifier>{f8d2474a-231f-4e50-a890-7f74ef1af341}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT5\Manager\API">
+      <UniqueIdentifier>{9dfbd644-dff2-49d4-83a8-6b1d8eee022e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid\Include">
+      <UniqueIdentifier>{0dbb8dac-1a84-4bc8-8d11-1da79637388f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BitMap">
+      <UniqueIdentifier>{caa3f9ec-7dc1-46da-934b-e517b775c4a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid\CellTypes">
+      <UniqueIdentifier>{5bd116a5-eeb3-49bd-afac-7801ad541b50}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TradingSDI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TradingSDIDoc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TradingSDIView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyCug.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="AddScrip.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dealer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Login.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="orderEntryForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DealerSink.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderGridFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\DataSources\ODBC\UGODBC.H">
+      <Filter>Grid\ODBC Datasource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\DataSources\ODBC\ugrecset.h">
+      <Filter>Grid\ODBC Datasource</Filter>
+    </ClInclude>
+    <ClInclude Include="UIThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SymbolMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Editable_Grid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="CTradeOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CNetPosTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetPosGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Dealing.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Netpos_Get_Data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RateDocking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RateGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="ScripWiseNetPos.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="ScripWiseNetPosDocking.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CScripWiseNetPosTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Duplicate_Order.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="Duplicate_OrderTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cmycontrol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="overview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridTradeAndOrder.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="OverViewOrderGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrade_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid_CheckTrade.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTradeFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cnetposdlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clr_setting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LimitMappingScripwise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Table_Position_Detail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDateTimePiker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="change_comment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_Credit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol_grp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol_Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="help_search.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="helpserach_grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="define_margin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="definemargin_grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TableGroup_Symbol.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AlertGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="JournalSearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderwiseJournal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnalysisGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="AnalysisTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTPupdate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTP_Dilog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTPTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LTPDock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tab2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tabControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ADD_overview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tab3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tab4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PosEntryAna.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Position_Entry_Analysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BalanceTableAnalysis.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BalanceAnaGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="T_Pre_Post_outstanding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Client_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupWisePosition.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="TableGroupWiseNetPos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientCreate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientHelpGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientHelpDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NetPosForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommentChangeForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DealingForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Group2WiseNetPosForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GroupWiseNetPosForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Netpositoin_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AuditForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassedBYMngr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NPBPSType1Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NPBPSType2Grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CodesChanged.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Order_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PassedByMngrTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NPBPSType1Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NPBPSType2Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CodeChangedTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\MT5APIConstants.h">
+      <Filter>MT5\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\MT5APILogger.h">
+      <Filter>MT5\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\MT5APIPublicKey.h">
+      <Filter>MT5\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\MT5APITools.h">
+      <Filter>MT5\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\MT5APITypes.h">
+      <Filter>MT5\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIAccount.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIBook.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIByteStream.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APICertificate.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIChart.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIConfirm.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIDaily.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIDeal.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIExecution.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIExposure.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIMail.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APINews.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIOnline.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIOrder.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIPosition.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIRequest.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APISummary.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APITick.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Bases\MT5APIUser.h">
+      <Filter>MT5\Common\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIFile.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIFormat.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIMath.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APISearch.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIStorage.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIStr.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APISync.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APIThread.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Classes\MT5APITime.h">
+      <Filter>MT5\Common\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigCommon.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigFeeder.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigFirewall.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigGateway.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigGroup.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigHistory.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigHoliday.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigManager.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigNetwork.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigParam.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigPlugin.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigReport.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigRoute.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigSpread.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigSymbol.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Common\Config\MT5APIConfigTime.h">
+      <Filter>MT5\Common\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\MT5\Manager\API\MT5APIManager.h">
+      <Filter>MT5\Manager\API</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UG64Bit.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGCBType.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGCell.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugceltyp.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGCnrBtn.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGCTarrw.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGCtrl.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugdefine.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGDLType.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGDrgDrp.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGDrwHnt.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGDtaSrc.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGEdit.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGEditBase.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugformat.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\uggdinfo.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGGrid.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGHint.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ughscrol.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\uglstbox.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGMEdit.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGMemMan.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGMultiS.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugprint.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugptrlst.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugsidehd.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGStrOp.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugstruct.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugtab.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\UGTopHdg.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugvscrol.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\Include\ugxpthemes.h">
+      <Filter>Grid\Include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTafnt.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTAutoSize.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTbutn.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTDropGrid.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTdtp.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\ugctelps.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTExpand.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTLabeled.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMail.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMailSort.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTMarquee.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTmfnt.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTNote.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\ugctnotewnd.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTOutlookHeader.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTpie.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTpro1.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTprog.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTRado.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTsarw.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTsldr.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Grid\CellTypes\UGCTSpin.h">
+      <Filter>Grid\CellTypes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TradingSDI.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TradingSDIDoc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TradingSDIView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputWnd.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCBType.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCell.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCelTyp.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCnrBtn.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCTarrw.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGCtrl.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGDLType.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGDrgDrp.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGDrwHnt.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGDtaSrc.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGEdit.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGEditBase.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugformat.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\uggdinfo.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGGrid.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGHint.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ughscrol.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugLstBox.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGMEdit.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGMemMan.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGMultiS.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugprint.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugptrlst.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugsidehd.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGStrOp.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugtab.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGTopHdg.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\ugvscrol.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\Source\UGXPThemes.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MyCug.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="AddScrip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dealer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="orderEntryForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderGridFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\DataSources\ODBC\UGODBC.CPP">
+      <Filter>Grid\ODBC Datasource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\DataSources\ODBC\ugrecset.cpp">
+      <Filter>Grid\ODBC Datasource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTsarw.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UIThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SymbolMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Editable_Grid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="NetPosGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Dealing.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="RateDocking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RateGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="ScripWiseNetPos.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="ScripWiseNetPosDocking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Duplicate_Order.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Cmycontrol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="overview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GridTradeAndOrder.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="OverViewOrderGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid_CheckTrade.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="Cnetposdlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clr_setting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LimitMappingScripwise.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDateTimePiker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="change_comment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTbutn.cpp">
+      <Filter>Grid\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="symbol_grp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbol_Map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="help_search.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="helpserach_grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="define_margin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="definemargin_grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AlertGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="JournalSearch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderwiseJournal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnalysisGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="LTPupdate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LTP_Dilog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LTPDock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tab2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tabControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ADD_overview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tab3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tab4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PosEntryAna.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BalanceAnaGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GroupWisePosition.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientCreate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientHelpGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientHelpDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NetPosForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommentChangeForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DealingForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Group2WiseNetPosForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GroupWiseNetPosForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AuditForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PassedBYMngr.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NPBPSType1Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NPBPSType2Grid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CodesChanged.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTafnt.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTAutoSize.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTDropGrid.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTdtp.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\ugctelps.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTExpand.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTLabeled.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMail.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMailSort.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTMarquee.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTmfnt.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTNote.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\ugctnotewnd.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTOutlookHeader.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTpie.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTpro1.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTprog.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTRado.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTsldr.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Grid\CellTypes\UGCTSpin.cpp">
+      <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="TradingSDI.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\output_wnd.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\output_wnd_hc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="UserImages.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TradingSDIDoc.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\TradingSDI.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Ultimate Grid\Demos\Stock Watch\bitmap_a.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Ultimate Grid\Demos\Stock Watch\bitmap1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\ultimate grid\demos\stock watch\toolbar1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\ultimate grid\demos\stock watch\bmp00001.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\BitMap\bitmap_a.bmp">
+      <Filter>BitMap</Filter>
+    </Image>
+    <Image Include="..\..\BitMap\bitmap1.bmp">
+      <Filter>BitMap</Filter>
+    </Image>
+    <Image Include="..\..\BitMap\bmp00001.bmp">
+      <Filter>BitMap</Filter>
+    </Image>
+    <Image Include="..\..\BitMap\toolbar1.bmp">
+      <Filter>BitMap</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\TradingSDI.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\ribbon1.mfcribbon-ms">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5CommonAPI.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5CommonAPI64.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5ManagerAPI.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MetaQuotes.MT5ManagerAPI64.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MT5APIManager.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+    <None Include="..\..\MT5\Manager\API\MT5APIManager64.dll">
+      <Filter>MT5\Manager\API</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\BitMap\WS_FTP.LOG">
+      <Filter>BitMap</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
