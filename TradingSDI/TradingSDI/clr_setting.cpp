@@ -16,8 +16,7 @@ IMPLEMENT_DYNAMIC(clr_setting, CDialogEx)
 clr_setting::clr_setting(CWnd* pParent /*=NULL*/)
 	: CDialogEx(clr_setting::IDD, pParent)
 {
-
-
+	
 }
 
 clr_setting::~clr_setting()
