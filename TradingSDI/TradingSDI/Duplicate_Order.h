@@ -28,6 +28,18 @@ int short_click;
 	CString t;
 	static _bstr_t bstr_currenttime;
 
+
+	struct st_Change_Comment_List
+	{
+		wchar_t  Login[60];
+		wchar_t  Old_Comment[60];
+		wchar_t  New_Comment[60];
+		wchar_t  Deal[60];		
+	};
+	typedef TMTArray<st_Change_Comment_List> Change_Comment_List_Array;
+	Change_Comment_List_Array m_Change_Comment_List_Array;
+
+	
 	
 
 	static int filter_break;
