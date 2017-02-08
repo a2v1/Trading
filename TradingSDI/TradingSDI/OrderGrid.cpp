@@ -1607,6 +1607,7 @@ session.Close();
 	
 	if(OrderGrid::m_Client.Connect(L"68.168.104.26",5042)==FALSE)
 	{
+
 		AfxMessageBox(L"Failed to Connect");
 		return 0;
 	}	
