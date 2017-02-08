@@ -142,14 +142,8 @@ void CAuditForm::InitForm()
 	m_Grid[0]->ShowWindow(SW_SHOW);
 	for(int nCount=1; nCount <m_nPageCount ; nCount++)
 	{
-		m_Grid[nCount]->ShowWindow(SW_SHOW);
+		m_Grid[nCount]->ShowWindow(SW_HIDE);
 	}
-	//activate tab form
-	m_Grid[0]->SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_SHOWWINDOW);
-    for(int nCount=1; nCount < m_nPageCount; nCount++){
-        m_Grid[nCount]->SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_HIDEWINDOW);
-    }
-
 
 }
 void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
