@@ -1613,6 +1613,7 @@ session.Close();
 	_bstr_t bstr="";
 	USES_CONVERSION ;	
 	rapidjson::Document d;	
+
 	//while(true)
 	//{
 	//	//Sleep(50);
