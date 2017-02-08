@@ -341,7 +341,6 @@
     <ClInclude Include="TableGroupWiseNetPos.h" />
     <ClInclude Include="GroupWisePosition.h" />
     <ClInclude Include="LogFile.h" />
-    <ClInclude Include="LTPDock.h" />
     <ClInclude Include="LTPTable.h" />
     <ClInclude Include="helpserach_grid.h" />
     <ClInclude Include="help_search.h" />
@@ -474,7 +473,6 @@
     <ClCompile Include="JournalSearch.cpp" />
     <ClCompile Include="LimitMappingScripwise.cpp" />
     <ClCompile Include="LogFile.cpp" />
-    <ClCompile Include="LTPDock.cpp" />
     <ClCompile Include="LTPupdate.cpp" />
     <ClCompile Include="LTP_Dilog.cpp" />
     <ClCompile Include="MainFrm.cpp" />

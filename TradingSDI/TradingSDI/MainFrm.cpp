@@ -12,8 +12,6 @@
 #include "SymbolMapping.h"
 #include "NetPosGrid.h"
 #include "JournalSearch.h"
-#include "LTP_Dilog.h"
-#include "LTPDock.h"
 #include "Symbol_Table.h"
 #include "symbol_grp.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
@@ -244,11 +242,9 @@ CMainFrame::CMainFrame()
 {		
 	// TODO: add member initialization code here
 	theApp.m_nAppLook = theApp.GetInt(_T("ApplicationLook"), ID_VIEW_APPLOOK_VS_2008);
-	m_LTPpane =NULL;
 }
 CMainFrame::~CMainFrame()
 {
-	SAFE_DELETE(m_LTPpane);
 	OrderGrid::m_Client.Close();
 }
 
@@ -542,7 +538,7 @@ RECT.bottom  =RECT.bottom +2;
     m_Symbolmapiingdlg.Create(IDD_Mapping_Symbol, this);
 	m_SymbolDlg.Create(IDD_SYMBOL_GRP, this);
 	m_DefineMarginDlg.Create(IDD_DEFINE_MARGIN, this);
-
+	m_ltp_dilog.Create(IDD_DIALOG_LTP, this);
 
 	return 0;
 }
@@ -756,16 +752,6 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 LRESULT CMainFrame::OnResetMember(WPARAM wp,LPARAM)
 {
-	int id = (int)wp;
-	switch(id)
-	{
-	   case IDC_DIALOG_PANE:
-		   SAFE_DELETE(m_LTPpane);
-			break;
-		
-       default :
-			return (LRESULT)FALSE;//id warent found
-	}
 	return (LRESULT)TRUE;
 }
 
@@ -1251,28 +1237,8 @@ void CMainFrame::OnViewJournalsearch()
 void CMainFrame::OnFileLtpupdate()
 {
 	
-	if(m_LTPpane && m_LTPpane->GetSafeHwnd())
-	{
-		m_LTPpane->ShowPane(TRUE,FALSE,TRUE);
-		return ;
-	}
-	m_LTPpane = new LTPDock(); 
-	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN|CBRS_FLOATING|CBRS_LEFT| CBRS_FLOAT_MULTI | CBRS_SIZE_FIXED;
-    DWORD dwControlBarStyle = AFX_CBRS_FLOAT | AFX_CBRS_CLOSE ;  // excluding AFX_CBRS_RESIZE
-    m_LTPpane->Create(_T("LTP Update"), this, CRect(0,0,380,480), TRUE, 0, dwStyle, dwControlBarStyle);
-
-	m_LTPpane->EnableDocking(CBRS_FLOATING);
-    m_LTPpane->SetMinSize(CSize(350, 400));
-	
-    m_LTPpane->SetResizeMode(FALSE);
-	
-	DockPane(m_LTPpane);
-    m_LTPpane->SetPaneStyle( m_LTPpane->GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_BORDER_3D | CBRS_GRIPPER | CBRS_SIZE_FIXED);
 	
     RecalcLayout();
-     
-
-
 }
 
 
@@ -1614,36 +1580,21 @@ void CMainFrame::OnSymbolmap()
 
 void CMainFrame::OnSymbolgroupmapping()
 {
-     
-		//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
-		CRect rect;
-		GetClientRect(&rect);
-		m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
-		m_Symbolmapiingdlg.ShowWindow(SW_NORMAL);
+     //dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+	CRect rect;
+	GetClientRect(&rect);
+	m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
+	m_Symbolmapiingdlg.ShowWindow(SW_NORMAL);
+		
 }
 
 
 void CMainFrame::OnLtpupdate()
 {
-	// TODO: Add your command handler code here
-	if(m_LTPpane && m_LTPpane->GetSafeHwnd())
-	{
-		m_LTPpane->ShowPane(TRUE,FALSE,TRUE);
-		return ;
-	}
-	m_LTPpane = new LTPDock(); 
-	DWORD dwStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN|CBRS_FLOATING|CBRS_LEFT | CBRS_SIZE_FIXED;
-    DWORD dwControlBarStyle = AFX_CBRS_FLOAT | AFX_CBRS_CLOSE ;  // excluding AFX_CBRS_RESIZE
-    m_LTPpane->Create(_T("LTP Update"), this, CRect(0,0,380,480), TRUE, 0, dwStyle, dwControlBarStyle);
-
-	m_LTPpane->EnableDocking(CBRS_FLOATING);
-    m_LTPpane->SetMinSize(CSize(350, 400));
-	
-    m_LTPpane->SetResizeMode(FALSE);
-	
-	DockPane(m_LTPpane);
-  //  m_LTPpane->SetPaneStyle( m_LTPpane->GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_BORDER_3D | CBRS_GRIPPER | CBRS_SIZE_FIXED);
-	RecalcLayout();
+	CRect rect;
+	GetClientRect(&rect);
+	m_ltp_dilog.MoveWindow( 1,48,380,500);
+	m_ltp_dilog.ShowWindow(SW_NORMAL);
 }
 
 

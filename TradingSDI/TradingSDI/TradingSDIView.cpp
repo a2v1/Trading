@@ -62,6 +62,7 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		m_tab.DestroyWindow();
 		m_tab.Create(CMFCTabCtrl::STYLE_3D_VS2005,m_rect,this,1,CMFCTabCtrl::LOCATION_TOP);
 		m_tab.EnableTabSwap(false);
+
 		AddView(RUNTIME_CLASS(COrderForm),_T("Order"),0);
 		AddView(RUNTIME_CLASS(CNetPosForm),_T("NetPosition"),1);
 		AddView(RUNTIME_CLASS(CCommentChangeForm),_T("CommentChange"),2);
