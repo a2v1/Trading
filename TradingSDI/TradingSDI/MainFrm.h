@@ -9,7 +9,6 @@
 #include "define_margin.h"
 #include "ClientCreate.h"
 #include "SymbolMapping.h"
-#include "LTPDock.h"
 #include "LTP_Dilog.h"
 #include "symbol_grp.h"
 class CMainFrame : public CFrameWndEx,public IMTManagerSink, public IMTRequestSink, public IMTOrderSink, public IMTDealerSink,public IMTDealSink ,public IMTTickSink 
@@ -78,7 +77,7 @@ public:
 	SymbolMapping         m_Symbolmapiingdlg;
 	define_margin         m_DefineMarginDlg ;
 	ClientCreate          m_ClientDlg;
-
+	LTP_Dilog             m_ltp_dilog;
 
 
 
@@ -104,19 +103,13 @@ public:
 	int m_index;
 	static CMFCToolBar m_wndToolBar;
 	int last_Nrow;
-//	virtual void Ignore0Qty_Clicked();
-//	virtual void IgnoreMain_Clicked();
-//	virtual void IgnoreComment_Clicked();
-
-//	virtual void delete_data();
 	virtual void UpdateComment();
 
 	virtual BOOL OnShowPanes(BOOL bShow);
-	//virtual void Getdate_Clicked();
+	
 // Implementation
 public:
 	virtual ~CMainFrame();
-	//virtual void OnSetup();
 	
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -129,7 +122,6 @@ protected:  // control bar embedded members
 	
 	CMFCStatusBar     m_wndStatusBar;
 	CMFCToolBarImages m_UserImages;	
-	CDockablePane   *m_LTPpane;
 	RateDocking       m_rateDocking;
 	ScripWiseNetPosDocking   m_ScripNetPosDocking;
 	//CFormView         m_formView;
