@@ -15,22 +15,48 @@ IMPLEMENT_DYNCREATE(CAuditForm, CFormView)
 CAuditForm::CAuditForm()
 	: CFormView(CAuditForm::IDD)
 {
-  
+    try
+  {
+	m_GridID[0] =IDC_STATICPASSED;
+    m_GridID[1] =IDC_STATICNPBPSTYPE1;
+    m_GridID[2] =IDC_STATICNPBPSTYPE2;
+    m_GridID[3] =IDC_STATICODECHANGED;
+ 
+	m_Grid[0] = new CPassedBYMngr();
+    m_Grid[1] = new CNPBPSType1Grid();
+    m_Grid[2] = new CNPBPSType2Grid();
+	m_Grid[3] = new CCodesChanged();
+   }
+	catch(CMemoryException e)
+	{
+		AfxMessageBox(L"CAudit Form Constructor Initialization");
+		throw;
+	}
+ 
+    m_nPageCount = 4;
+	m_tabCurrent=0;
 }
 
 CAuditForm::~CAuditForm()
 {
+	for(int nCount=0; nCount <m_nPageCount ; nCount++)
+	{
+     delete m_Grid[nCount];
+    }
 	
 }
 
 void CAuditForm::DoDataExchange(CDataExchange* pDX)
 {
 	CFormView::DoDataExchange(pDX);
-	
+
+	DDX_Control(pDX, IDC_TABAUDIT, m_tab);
 }
 
 BEGIN_MESSAGE_MAP(CAuditForm, CFormView)
 	ON_WM_CREATE()
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TABAUDIT, &CAuditForm::OnTcnSelchangeTabaudit)
+	ON_NOTIFY(TCN_FOCUSCHANGE, IDC_TABAUDIT, &CAuditForm::OnTcnFocusChangeTabaudit)
 END_MESSAGE_MAP()
 
 
@@ -65,46 +91,92 @@ int CAuditForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		desktop.bottom=desktop.bottom-182;
 		MoveWindow(&desktop,TRUE);
 
+
 		CRect 	rect;
 		GetClientRect(&rect);
-		CRect rect1,rect2,rect3,rect4;
+		CRect rect1;
 		rect1.CopyRect(rect);
-		
-		rect1.bottom=rect1.bottom-450;               
-	   if (!m_passedbymngrGrid.CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,rect1,this,IDC_STATICPASSED))
-	   {
+
+		if (!m_tab.Create(WS_CHILD|WS_VISIBLE,rect1,this,IDC_TABAUDIT))
+		{
 			     
-				TRACE0("Failed to create PassedBYGrid\n");
+				TRACE0("Failed to create Tabs in Audit Form\n");
 				return -1; 
-       }	
+		}
 
-	   rect2.CopyRect(rect);
-	   rect2.top=rect1.bottom;
-	   rect2.bottom=rect2.bottom-300;
-	   if (!m_npbpstype1grid.CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,rect2,this,IDC_STATICNPBPSTYPE1))
-	   {
-				TRACE0("Failed to create CodeChangedGrid\n");
-				return -1; 
-       }
+		m_tab.InsertItem(1,L"PassByManager");
+		m_tab.InsertItem(2,L"NBPS1");
+		m_tab.InsertItem(3,L"NBPS2");
+		m_tab.InsertItem(4,L"CodeChanged");
 
-       rect3.CopyRect(rect);
-	   rect3.top=rect2.bottom;
-	   rect3.bottom=rect3.bottom-150;
-	   if (!m_npbpstype2grid.CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,rect3,this,IDC_STATICNPBPSTYPE2))
-	   {
-				TRACE0("Failed to create Type1 Grid\n");
-				return -1; // fail to create
-       }
-
-	   rect4.CopyRect(rect);
-	   rect4.top=rect3.bottom;
-	   rect4.bottom=rect4.bottom;
-	   if (!m_CodeChangGrid.CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,rect4,this,IDC_STATICODECHANGED))
-	   {
-				TRACE0("Failed to create Type2 Grid\n");
-				return -1; // fail to create
-       }
-
+		InitForm();
 
 	   return 0;
+}
+
+void CAuditForm::InitForm()
+{
+
+	CRect tabRect, itemRect;
+	int nX, nY, nXc, nYc;
+ 
+	GetClientRect(&tabRect);
+	m_tab.GetItemRect(0, &itemRect);
+ 
+	nX=itemRect.left;
+	nY=itemRect.bottom+1;
+	nXc=tabRect.right-itemRect.left-1;
+	nYc=tabRect.bottom-nY-1;
+	
+    for(int nCount=0; nCount <m_nPageCount ; nCount++)
+	{
+    
+		if (!m_Grid[nCount]->CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,CRect(nX,nY,nXc,nYc),&m_tab,m_GridID[nCount]))
+	    {
+			     
+			TRACE0("Failed to create PassedBYGrid\n");
+			return ; 
+	    }
+    }
+
+	m_Grid[0]->ShowWindow(SW_SHOW);
+	for(int nCount=1; nCount <m_nPageCount ; nCount++)
+	{
+		m_Grid[nCount]->ShowWindow(SW_SHOW);
+	}
+	//activate tab form
+	m_Grid[0]->SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_SHOWWINDOW);
+    for(int nCount=1; nCount < m_nPageCount; nCount++){
+        m_Grid[nCount]->SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_HIDEWINDOW);
+    }
+
+
+}
+void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	// TODO: Add your control notification handler code here
+	
+	if(m_tabCurrent != m_tab.GetCurSel()){
+		m_Grid[m_tabCurrent]->ShowWindow(SW_HIDE);
+        m_tabCurrent=m_tab.GetCurSel();
+        m_Grid[m_tabCurrent]->ShowWindow(SW_SHOW);
+        m_Grid[m_tabCurrent]->SetFocus();
+    }
+ 
+ 
+    *pResult = 0;
+}
+
+
+void CAuditForm::OnTcnFocusChangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	
+ if(m_tabCurrent != m_tab.GetCurFocus()){
+	m_Grid[m_tabCurrent]->ShowWindow(SW_HIDE);
+    m_tabCurrent=m_tab.GetCurFocus();
+    m_Grid[m_tabCurrent]->ShowWindow(SW_SHOW);
+    m_Grid[m_tabCurrent]->SetFocus();
+    }
+
+	*pResult = 0;
 }
