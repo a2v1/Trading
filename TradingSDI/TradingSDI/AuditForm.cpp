@@ -126,9 +126,9 @@ void CAuditForm::InitForm()
 	nX=itemRect.left;
 	nY=itemRect.bottom+1;
 	nXc=tabRect.right-itemRect.left-1;
-	nYc=tabRect.bottom-nY-1;
+	nYc=tabRect.bottom;
 	
-    for(int nCount=0; nCount <m_nPageCount ; nCount++)
+    for(int nCount=0; nCount <m_nPageCount; nCount++)
 	{
     
 		if (!m_Grid[nCount]->CreateGrid(WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN|WS_CLIPSIBLINGS,CRect(nX,nY,nXc,nYc),&m_tab,m_GridID[nCount]))
