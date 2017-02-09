@@ -1304,18 +1304,18 @@ void Duplicate_Order::Selected_commentChange()
 {
 	
 	/*OrderGrid::m_Client.Send("Hello",5);*/
-	/*if(CDealer::admin_login!=1)
+	if(CDealer::admin_login!=1)
 	{
 		AfxMessageBox(L"You Are not a valid user");
 		return ;
-	}*/
+	}
 
 	char * Final_Str="";
 
 
 	// For Checking
 
-	st_Change_Comment_List m_st_Change_Comment_List={};
+	/*st_Change_Comment_List m_st_Change_Comment_List={};
 	CMTStr::Copy(m_st_Change_Comment_List.Deal,L"8200");
 	CMTStr::Copy(m_st_Change_Comment_List.Login,L"200011");
 	CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,L"OLD");
@@ -1328,7 +1328,7 @@ void Duplicate_Order::Selected_commentChange()
 						
 	Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
 	strcpy(Final_Str , oldstr);
-	strcat(Final_Str , newstr);
+	strcat(Final_Str , newstr);*/
 
 
 
@@ -1361,8 +1361,8 @@ void Duplicate_Order::Selected_commentChange()
 		
 		if (login!=L"" && check_value==L"1"  && comment_n.Trim().GetLength()>0) 
 		{
-			//change_comment_dealwise(login,deal,comment_n,comment_o);
-			st_Change_Comment_List m_st_Change_Comment_List={};
+			change_comment_dealwise(login,deal,comment_n,comment_o);
+			/*st_Change_Comment_List m_st_Change_Comment_List={};
 			CMTStr::Copy(m_st_Change_Comment_List.Deal,deal);
 			CMTStr::Copy(m_st_Change_Comment_List.Login,login);
 			CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,comment_o);
@@ -1375,12 +1375,7 @@ void Duplicate_Order::Selected_commentChange()
 						
 			Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
 			strcpy(Final_Str , oldstr);
-			strcat(Final_Str , newstr);
-			
-
-
-
-			
+			strcat(Final_Str , newstr);*/			
 			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}

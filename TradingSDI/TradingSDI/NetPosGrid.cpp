@@ -558,16 +558,18 @@ void NetPosGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL proces
 
 	if(QuickGetText(0,row)!=NULL )
 	{
-		ADD_overview m_tab_dlg;
+		
 		if (row==0)
 		{
 			if(NetPosGrid::insertFilterFlag==0)
-			{			
-			  m_tab_dlg.DoModal();//Setp 1
+			{	
+				ADD_overview m_tab_dlg;
+				m_tab_dlg.DoModal();//Setp 1
 			}
 		}
 		else
 		{
+			ADD_overview m_tab_dlg;
 			m_tab_dlg.DoModal();
 		}
 	}
