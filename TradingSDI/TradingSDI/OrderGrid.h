@@ -310,7 +310,7 @@ public:
 	
 	int					m_nButtonIndex;
 	CUGButtonType		m_button;
-	CString str[14];
+	CString str[16];
 	
 	int	m_nSpinIndex;
 	int run_check;
@@ -324,7 +324,7 @@ public:
 	virtual void OnSetup();
 	virtual void OnSheetSetup(int sheetNumber);
 
-
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val;
 
 	
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;

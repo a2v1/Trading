@@ -71,6 +71,8 @@ NetPosGrid::st_multiplyer NetPosGrid::m_st_multiplyer={};
 NetPosGrid::Symbol_rate NetPosGrid::m_Symbol_rate={};
 NetPosGrid::Symbol_rateArray NetPosGrid::m_Symbol_rateArray;
 
+NetPosGrid::NetpositionArray NetPosGrid::m_client_lost;
+
 NetPosGrid::st_Netposition NetPosGrid::m_st_Netposition_Ratecal={};
 
 int NetPosGrid::netpos_grid_total=0;
@@ -179,7 +181,7 @@ double getColumnSum_in_st(int col_index)
 
 
 
-boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value);
+//boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value);
 
 UINT Update_Netposition(LPVOID pParam);
 
@@ -2080,6 +2082,27 @@ void NetPosGrid::filter()
 		DeleteRow(0);
 		NetPosGrid::insertFilterFlag=0;
 		NetPosGrid::strFilter=" ";
+		NetPosGrid::col0_val=L"";
+		NetPosGrid::col1_val=L"";
+		NetPosGrid::col2_val=L"";
+		NetPosGrid::col3_val=L"";
+		NetPosGrid::col4_val=L"";
+		NetPosGrid::col5_val=L"";
+		NetPosGrid::col6_val=L"";
+		NetPosGrid::col7_val=L"";
+		NetPosGrid::col8_val=L"";
+		NetPosGrid::col9_val=L"";
+		NetPosGrid::col10_val=L"";
+		NetPosGrid::col11_val=L"";
+		NetPosGrid::col12_val=L"";
+		NetPosGrid::col13_val=L"";
+		NetPosGrid::col14_val=L"";
+		NetPosGrid::col15_val=L"";
+		NetPosGrid::col16_val=L"";
+		NetPosGrid::col17_val=L"";
+		NetPosGrid::col18_val=L"";
+		NetPosGrid::col19_val=L"";
+		NetPosGrid::col20_val=L"";
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
@@ -3293,8 +3316,22 @@ UINT Update_Netposition(LPVOID pParam)
 			 artists1.Close();
 		
 		}
+		else
+		{
+		
+			CoUninitialize();
+			CoInitialize(NULL);	
+			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CheckData;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+			if(SUCCEEDED(hr))
+			{
+					 hr=session.Open(connection);
+			}
+		}
 		
 		NetPosGrid::str_grid_filter.Unlock();
+		NetPosGrid::mutex_Symbol_ltp.Lock();
+		NetPosGrid::m_client_lost.Assign(NetPosGrid::m_NetpositionArray);
+		NetPosGrid::mutex_Symbol_ltp.Unlock();
 
 
 			if (NetPosGrid::int_igrore_comment==0)
@@ -3451,8 +3488,10 @@ UINT Update_Netposition(LPVOID pParam)
 				//st_Netposition_Ignore_comment
 				NetPosGrid::m_Netposition_Ignore_comment_Array.Clear();
 
+				NetPosGrid::mutex_Symbol_ltp.Lock();
 				int client_total=NetPosGrid::m_login_in_m_Array.Total() ;
 				int symbol_total=NetPosGrid::m_Symbol_in_m_Array.Total();
+				NetPosGrid::mutex_Symbol_ltp.Unlock();
 				for (int c=0;c<client_total;c++)
 				{
 					NetPosGrid::login_in_m m_login_in_m={};
@@ -3568,9 +3607,9 @@ UINT Update_Netposition(LPVOID pParam)
 							}
 						}
 						//End of getting name and group of Login							
-						if (m_d_Balance!=0 && m_d_netqty!=0)
+						if (m_d_Balance!=0 || m_d_netqty!=0)
 						{
-							CMTStr::Copy(m_st_comment.m_Name ,str_name) ;
+							CMTStr::Copy(m_st_comment.m_Name ,str_name);
 							CMTStr::Copy(m_st_comment.m_symbol ,str_symbol);				
 							CMTStr::Copy(m_st_comment.m_pre_qty ,m_pre_qty_str) ;						
 							CMTStr::Copy(m_st_comment.m_incre_qty ,m_incre_qty_str);				

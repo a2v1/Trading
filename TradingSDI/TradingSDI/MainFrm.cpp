@@ -1468,20 +1468,21 @@ void CMainFrame::OnUpdateIgnorecomment(CCmdUI *pCmdUI)
 void CMainFrame::OnIgnorecomment()
 {
 	// TODO: Add your command handler code here
+
 	m_enabled_comment=!m_enabled_comment;
-	/*CMFCRibbonCheckBox *pcheckignorecomment= (CMFCRibbonCheckBox*)m_wndRibbonBar.FindByID(ID_IGNORE0QQTY,FALSE,FALSE);
-    BOOL m_enable = pcheckignorecomment->IsChecked();*/
+	
 
 	if(m_enabled_comment==1)
 	{
+		NetPosGrid::mutex_Symbol_ltp.Lock();
 		NetPosGrid::m_login_in_m_Array.Clear();
 		NetPosGrid::m_Symbol_in_m_Array.Clear();
 		NetPosGrid::int_igrore_comment=1;
-		int noof_rowsInStruc=NetPosGrid::m_NetpositionArray.Total();
+		int noof_rowsInStruc=NetPosGrid::m_client_lost.Total();
 		NetPosGrid::st_Netposition st_net={};
 		for(int i=0;i<noof_rowsInStruc;i++)
 		{
-			st_net=NetPosGrid::m_NetpositionArray[i];
+			st_net=NetPosGrid::m_client_lost[i];
 			CString str_login=st_net.m_login;
 			if (str_login.Find('-')>0)
 			{
@@ -1532,6 +1533,7 @@ void CMainFrame::OnIgnorecomment()
 				NetPosGrid::m_Symbol_in_m_Array.Add(&m_st_symbol);
 			}
 		}
+		NetPosGrid::mutex_Symbol_ltp.Unlock();
 	}
 	if(m_enabled_comment==0)
 	{
