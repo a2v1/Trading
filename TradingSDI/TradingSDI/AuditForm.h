@@ -17,19 +17,13 @@ protected:
 	CAuditForm();           // protected constructor used by dynamic creation
 	virtual ~CAuditForm();
 	  
-	 //Array to hold the list of dialog boxes/tab pages for CTabCtrl
+	 //Array to hold the list of Grid tab pages for CTabCtrl
     int m_GridID[4];
-    //CDialog Array Variable to hold the dialogs
+    //Grid Array Variable to hold the dialogs
 	CUGCtrl *m_Grid[4];
     int m_tabCurrent;
     int m_nPageCount;
 
- 
-	CPassedBYMngr m_passedbymngrGrid;
-	CCodesChanged m_CodeChangGrid;
-	CNPBPSType1Grid m_npbpstype1grid;
-	CNPBPSType2Grid m_npbpstype2grid;
-    
 public:
 	enum { IDD = IDD_AUDITFORM };
 
