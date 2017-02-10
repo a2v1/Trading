@@ -5,6 +5,9 @@
 #include "LogFile.h"
 #include "ADD_overview.h"
 #include "Netpositoin_Table.h"
+
+boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value);
+
 class NetPosGrid:public CUGCtrl
 {
 public:
@@ -86,7 +89,7 @@ public:
 	static st_Netposition m_st_Netposition_Ratecal;
 
 
-
+	static NetpositionArray m_client_lost;
 
 
 	

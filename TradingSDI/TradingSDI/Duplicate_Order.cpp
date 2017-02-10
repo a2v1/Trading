@@ -1302,11 +1302,41 @@ void Duplicate_Order::change_comment_dealwise(CString login,CString dealno,CStri
 
 void Duplicate_Order::Selected_commentChange()
 {
+	
+	/*OrderGrid::m_Client.Send("Hello",5);*/
 	if(CDealer::admin_login!=1)
 	{
 		AfxMessageBox(L"You Are not a valid user");
 		return ;
 	}
+
+	char * Final_Str="";
+
+
+	// For Checking
+
+	/*st_Change_Comment_List m_st_Change_Comment_List={};
+	CMTStr::Copy(m_st_Change_Comment_List.Deal,L"8200");
+	CMTStr::Copy(m_st_Change_Comment_List.Login,L"200011");
+	CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,L"OLD");
+	CMTStr::Copy(m_st_Change_Comment_List.New_Comment,L"NEW");
+	char struct_data[sizeof(st_Change_Comment_List)];
+	memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));
+
+	char* newstr=struct_data+'|';
+	char* oldstr=Final_Str;
+						
+	Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
+	strcpy(Final_Str , oldstr);
+	strcat(Final_Str , newstr);*/
+
+
+
+
+	// End of Checking
+
+
+	char* data_for_send;
 	Duplicate_Order::filter_break=1;
 	int rows_count=GetNumberRows();
 	CString login=L"";
@@ -1328,9 +1358,24 @@ void Duplicate_Order::Selected_commentChange()
 		comment_n=QuickGetText(9,fcount);
 		CString check_value=QuickGetText(10,fcount);
 		_bstr_t strdeal=deal;
+		
 		if (login!=L"" && check_value==L"1"  && comment_n.Trim().GetLength()>0) 
 		{
 			change_comment_dealwise(login,deal,comment_n,comment_o);
+			/*st_Change_Comment_List m_st_Change_Comment_List={};
+			CMTStr::Copy(m_st_Change_Comment_List.Deal,deal);
+			CMTStr::Copy(m_st_Change_Comment_List.Login,login);
+			CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,comment_o);
+			CMTStr::Copy(m_st_Change_Comment_List.New_Comment,comment_n);
+			char struct_data[sizeof(st_Change_Comment_List)];
+			memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));
+
+			char* newstr=struct_data+'|';
+			char* oldstr=Final_Str;
+						
+			Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
+			strcpy(Final_Str , oldstr);
+			strcat(Final_Str , newstr);*/			
 			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}

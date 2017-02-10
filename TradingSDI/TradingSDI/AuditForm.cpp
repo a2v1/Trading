@@ -97,6 +97,7 @@ int CAuditForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CRect rect1;
 		rect1.CopyRect(rect);
 
+
 		if (!m_tab.Create(WS_CHILD|WS_VISIBLE,rect1,this,IDC_TABAUDIT))
 		{
 			     
@@ -139,6 +140,7 @@ void CAuditForm::InitForm()
 	    }
     }
 
+	//Default Tab Show
 	m_Grid[0]->ShowWindow(SW_SHOW);
 	for(int nCount=1; nCount <m_nPageCount ; nCount++)
 	{
