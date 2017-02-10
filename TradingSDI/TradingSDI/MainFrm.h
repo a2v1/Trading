@@ -20,7 +20,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	CString order_type[8];
-	struct Symbol_Mapping
+   struct Symbol_Mapping
    {
 	  
       wchar_t           symbol[64];              
@@ -34,7 +34,6 @@ public:
 
    CMFCRibbonEdit* pEditRibbon;
    CMFCRibbonEdit* pEditDate_time;
-  
 
 	CLogFile m_logfile;
 
@@ -78,8 +77,7 @@ public:
 	define_margin         m_DefineMarginDlg ;
 	ClientCreate          m_ClientDlg;
 	LTP_Dilog             m_ltp_dilog;
-
-
+	
 
 	CButton			  m_btn_Delete;
 	CButton			  m_btn_Update_Comment;

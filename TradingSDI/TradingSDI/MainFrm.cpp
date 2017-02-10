@@ -1434,7 +1434,6 @@ void CMainFrame::OnUpdateIgnoremain(CCmdUI *pCmdUI)
 	pCmdUI->Enable();
     pCmdUI->SetCheck( m_enabled_main ? 1 :  0 );
 	
-    
 }
 
 
