@@ -250,10 +250,11 @@ CMainFrame::~CMainFrame()
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
-	
+	//CHECK bOX BY DEFAULT PROP
 	m_enabled_ignore0=false ;
-	m_enabled_main=false ;
-	m_enabled_comment=false ;
+	m_enabled_comment =false;
+	m_enabled_main=false;
+
 	order_type[0]=L"Buy";
 	order_type[1]=L"Sell";
 	order_type[2]=L"Buy Limit";
@@ -318,7 +319,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	pEditRibbon = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_TOTALVALUE));	
 	
 	pEditDate_time = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_DATETIME));
-	pEditDate_time->SetText(L"Date :");
+
 	
 	//current date and time 
 	CTime t = CTime::GetCurrentTime();
@@ -1406,8 +1407,8 @@ void CMainFrame::OnLiverateview()
 void CMainFrame::OnUpdateIgnore0qqty(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_ignore0 ? 1 :  0 );
+    pCmdUI->Enable();
+	pCmdUI->SetCheck( m_enabled_ignore0 ? 1 :  0 );
 }
 
 
@@ -1415,9 +1416,7 @@ void CMainFrame::OnIgnore0qqty()
 {	// TODO: Add your command handler code here
 	m_enabled_ignore0 = !m_enabled_ignore0;
 
-	/*CMFCRibbonCheckBox *pcheckignore= (CMFCRibbonCheckBox*)m_wndRibbonBar.FindByID(ID_IGNORE0QQTY,FALSE,FALSE);
-    BOOL m_enable = pcheckignore->IsChecked();*/
-	
+
     if(m_enabled_ignore0==1)
 	{
 		NetPosGrid::int_ignoreQty=1;
@@ -1426,14 +1425,16 @@ void CMainFrame::OnIgnore0qqty()
 	{
 		NetPosGrid::int_ignoreQty=0;
 	}
-
+ 
 	Invalidate();
 }
 
 void CMainFrame::OnUpdateIgnoremain(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_main ? 1 :  0 );
+    pCmdUI->SetCheck( m_enabled_main );
+	
+    
 }
 
 
@@ -1441,12 +1442,9 @@ void CMainFrame::OnIgnoremain()
 {
 	// TODO: Add your command handler code here
 	m_enabled_main =!m_enabled_main;
-
-	/*CMFCRibbonCheckBox *pcheckignoremain= (CMFCRibbonCheckBox*)m_wndRibbonBar.FindByID(ID_IGNORE0QQTY,FALSE,FALSE);
-      m_enabled_main = pcheckignoremain->IsChecked();*/
+	m_enabled_comment=false;
 	if(m_enabled_main==1)
 	{
-		
 		NetPosGrid::ignoremain=" and isnull(type,'')<>'O'";
 		NetPosGrid::ignorecomment="";
 	}
@@ -1454,15 +1452,16 @@ void CMainFrame::OnIgnoremain()
 	{
 		NetPosGrid::ignoremain="";
 	}
-
-	Invalidate();
+  
+   Invalidate();
 }
 
 void CMainFrame::OnUpdateIgnorecomment(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_comment ? 1 :  0 );
+    pCmdUI->SetCheck( m_enabled_comment );
+
 }
 
 void CMainFrame::OnIgnorecomment()
@@ -1470,8 +1469,7 @@ void CMainFrame::OnIgnorecomment()
 	// TODO: Add your command handler code here
 
 	m_enabled_comment=!m_enabled_comment;
-	
-
+	m_enabled_main=false;
 	if(m_enabled_comment==1)
 	{
 		NetPosGrid::mutex_Symbol_ltp.Lock();
@@ -1570,7 +1568,6 @@ void CMainFrame::OnUpdateTotalvalue(CCmdUI *pCmdUI)
 void CMainFrame::OnSymbolmap()
 {
    
-	//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 	CRect rect;
 	GetClientRect(&rect);
 	m_SymbolDlg.MoveWindow( 1,48,430,600);
@@ -1582,7 +1579,6 @@ void CMainFrame::OnSymbolmap()
 
 void CMainFrame::OnSymbolgroupmapping()
 {
-     //dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 	CRect rect;
 	GetClientRect(&rect);
 	m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
@@ -1602,8 +1598,7 @@ void CMainFrame::OnLtpupdate()
 
 void CMainFrame::OnDefinesymbol()
 {
-    // TODO: Add your command handler code here
-	//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+
 	CRect rect;
 	GetClientRect(&rect);
 	m_DefineMarginDlg.MoveWindow( 1,48,415,538);
@@ -1614,9 +1609,7 @@ void CMainFrame::OnDefinesymbol()
 
 void CMainFrame::OnClientcreate()
 {
-	// TODO: Add your command handler code here
-   
-	//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+
 	CRect rect;
 	GetClientRect(&rect);
 	m_ClientDlg.MoveWindow( 30,100,450,350);
@@ -1627,8 +1620,8 @@ void CMainFrame::OnClientcreate()
 void CMainFrame::OnUpdateDatetime(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable();				
-	pEditDate_time->SetEditText(CMainFrame::current_datetime);
+	pCmdUI->Enable(0);				
+	//pEditDate_time->SetEditText(CMainFrame::current_datetime);
 }
 
 
