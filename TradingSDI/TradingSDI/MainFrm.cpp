@@ -1432,7 +1432,7 @@ void CMainFrame::OnIgnore0qqty()
 void CMainFrame::OnUpdateIgnoremain(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_main );
+    pCmdUI->SetCheck( m_enabled_main ? 1 :  0 );
 	
     
 }
@@ -1460,7 +1460,7 @@ void CMainFrame::OnUpdateIgnorecomment(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_comment );
+    pCmdUI->SetCheck( m_enabled_comment ? 1 :  0);
 
 }
 
