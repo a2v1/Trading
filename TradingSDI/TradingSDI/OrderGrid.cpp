@@ -1535,20 +1535,20 @@ BOOLEAN  OrderGrid::CheckvalueInArray(const CStringArray& arr,CString strval)
 {
 	try
 	{
-	int arrcount=arr.GetCount();
-    for (int forcount=0;forcount<arrcount;forcount++)
-	{
-		if (arr[forcount]==strval)
+		int arrcount=arr.GetCount();
+		for (int forcount=0;forcount<arrcount;forcount++)
 		{
-			return true;
+			if (arr[forcount]==strval)
+			{
+				return true;
+			}
 		}
-	}
-    return false  ;
+		return false  ;
 	}
 	catch(_com_error & ce)
-			{
-				AfxMessageBox(ce.Description()+L"CheckvalueInArray");			
-			} 
+	{
+		AfxMessageBox(ce.Description()+L"CheckvalueInArray");			
+	} 
 }
  
 void OrderGrid::addItemToCombobox()
@@ -1604,7 +1604,10 @@ void OrderGrid::addItemToCombobox()
 				if (clocount==1)
 				{
 					str_val=m_st_for_filter.time ;
-					str_val=str_val.Trim();
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1751,16 +1754,13 @@ void OrderGrid::addItemToCombobox()
 						arr15.Add(str_val);
 					}
 				}
-
-			
-
 		}												
 	}
 	}
 	catch(_com_error & ce)
-			{
-				AfxMessageBox(ce.Description()+L"addItemToCombobox");			
-			} 
+	{
+		AfxMessageBox(ce.Description()+L"addItemToCombobox");			
+	} 
 } 
 
 UINT check_comment_YN(CString login);
@@ -1799,8 +1799,7 @@ void get_login_balance_details(CString login)
 			bal=m_Client_Balance.Total_Balance;
 			break;
 		}
-	}
-	
+	}	
 	NetPosGrid::new_client=check_exist;
 	NetPosGrid::row_position=row_pos;
 	NetPosGrid::Pre_balance=bal;
@@ -1855,12 +1854,8 @@ UINT RequestHandler(LPVOID pParam)
 		AfxMessageBox(L"client.Open(session,strCommand_char) Failed");
 	}
 		//End of Getting Client Information Details
-
-client.Close();
-session.Close();
-
-
-
+	client.Close();
+	session.Close();
 	OrderGrid::first_time_data_Received_YN=0;
 	//CSocket m_Client;		
 	if( AfxSocketInit() == FALSE)
@@ -2648,6 +2643,7 @@ UINT update_data_PBNPS_Order(void *pParam)
 						if (OrderGrid::col1_val.Trim().GetLength()>0)
 						{
 							col_row_val[1]=col_row_val[1].Mid(0,OrderGrid::col1_val.Trim().GetLength());
+							col_row_val[1]=col_row_val[1].Mid(0,10);
 						}
 						col_row_val[2]=L"" ;
 						if (OrderGrid::col2_val.Trim().GetLength()>0)
