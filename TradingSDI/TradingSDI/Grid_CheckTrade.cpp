@@ -1322,13 +1322,21 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		_bstr_t strMainCode="";
 		_bstr_t strComment="";
 		CString sel_login=GridTradeAndOrder::m_selected_login;
+		int catpos=sel_login.Find('-');
 		CString sel_comment=sel_login.Mid(7,sel_login.GetLength()-7);
 		sel_login=sel_login.Mid(0,6);
 		strMainCode=sel_login;
 		strComment=sel_comment;
 
 		HRESULT hr;
-		strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'  " + strfilter + "    order by [deal] desc";		
+		if(catpos>=0)
+		{
+			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'  " + strfilter + "    order by [deal] desc";		
+		}
+		else
+		{
+			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
+		}
 		char* strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);	
 		double rows_count;
@@ -1343,8 +1351,14 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		artists1.Close();
 
 
-
-		strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
+		if(catpos>=0)
+		{
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
+		}
+		else
+		{
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
+		}
 		strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);				
 			 				 

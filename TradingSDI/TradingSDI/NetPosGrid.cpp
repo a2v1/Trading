@@ -179,7 +179,35 @@ double getColumnSum_in_st(int col_index)
 	return return_val;
 }
 
+double getColumnSum_in_st_O(int col_index);
+double getColumnSum_in_st_O(int col_index)
+{
+	double return_val=0;
+	CUGCell m_cell;
+	int total_rows=NetPosGrid::m_NetpositionArray_For_Grid.Total();
+	NetPosGrid::st_Netposition st={};
+	for (int i=0;i<total_rows;i++)
+	{
+		st=NetPosGrid::m_NetpositionArray_For_Grid[i];
 
+		CString str_login=st.m_login;
+		if (str_login.Find('-')<0)
+		{
+			LPTSTR endPtr1;			
+			double d_val1=0;
+			if (col_index==8)
+			{
+				d_val1=_tcstod(st.m_Floating_Profit,&endPtr1);
+			}	
+			if (col_index==5)
+			{
+				d_val1=_tcstod(st.m_netqty,&endPtr1);
+			}		
+			return_val=return_val+d_val1;
+		}
+	}
+	return return_val;
+}
 
 //boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value);
 
@@ -530,7 +558,7 @@ void NetPosGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL proces
 
 	try
 	{
-    if(login && name != L"")
+    if(login != L"")
 	{
 	GridTradeAndOrder::m_selected_login=QuickGetText(0,row);
 	GridTradeAndOrder::m_selected_Name=QuickGetText(1,row);
@@ -2503,7 +2531,7 @@ void NetPosGrid::OnSetup()
 
 		//database initilization
 		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CheckData;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 		if(SUCCEEDED(hr))
 		{
 		 hr=session.Open(connection);							
@@ -3224,7 +3252,7 @@ UINT Update_Netposition(LPVOID pParam)
 	CDataSource connection;
 	CSession session;
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CheckData;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	if(SUCCEEDED(hr))
 	{
 			 hr=session.Open(connection);
@@ -3274,11 +3302,47 @@ UINT Update_Netposition(LPVOID pParam)
 						}*/
 
 						//strpre_netQty.Format( _T("%.2f"), artists1.m_Pre_NetQty);
-						CMTStr::Copy(mst.m_pre_qty,artists1.m_Pre_NetQty);
+						CString str_m_Pre_NetQty=artists1.m_Pre_NetQty;
+						if (str_m_Pre_NetQty.Find('.')>0)
+						{
+							double  dbPre_NetQty=_wtof(artists1.m_Pre_NetQty);
+							str_m_Pre_NetQty.Format( _T("%.2f"), dbPre_NetQty);
+							CMTStr::Copy(mst.m_pre_qty,str_m_Pre_NetQty);
+						}
+						else
+						{
+							CMTStr::Copy(mst.m_pre_qty,artists1.m_Pre_NetQty);
+						}
 						//strDiff_netQty.Format( _T("%.2f"), artists1.m_Diff_NetQty);
-						CMTStr::Copy(mst.m_incre_qty ,artists1.m_Diff_NetQty);
+
+
+						str_m_Pre_NetQty=artists1.m_Diff_NetQty;
+						if (str_m_Pre_NetQty.Find('.')>0)
+						{
+							double  dbPre_NetQty=_wtof(artists1.m_Diff_NetQty);
+							str_m_Pre_NetQty.Format( _T("%.2f"), dbPre_NetQty);
+							CMTStr::Copy(mst.m_incre_qty,str_m_Pre_NetQty);
+						}
+						else
+						{
+							CMTStr::Copy(mst.m_incre_qty,artists1.m_Diff_NetQty);
+						}
+						
 						//str_NetQty.Format( _T("%.2f"), artists1.m_NetQty);
-						CMTStr::Copy(mst.m_netqty ,artists1.m_NetQty);
+
+
+						str_m_Pre_NetQty=artists1.m_NetQty;
+						if (str_m_Pre_NetQty.Find('.')>0)
+						{
+							double  dbPre_NetQty=_wtof(artists1.m_NetQty);
+							str_m_Pre_NetQty.Format( _T("%.2f"), dbPre_NetQty);
+							CMTStr::Copy(mst.m_netqty,str_m_Pre_NetQty);
+						}
+						else
+						{
+							CMTStr::Copy(mst.m_netqty,artists1.m_NetQty);
+						}
+			
 
 						//str_Average.Format( _T("%.2f"), artists1.m_Average);
 						CMTStr::Copy(mst.m_avg_rate ,artists1.m_Average) ;
@@ -3318,10 +3382,11 @@ UINT Update_Netposition(LPVOID pParam)
 		}
 		else
 		{
-		
+			session.Close();
+			connection.Close();
 			CoUninitialize();
 			CoInitialize(NULL);	
-			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CheckData;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 			if(SUCCEEDED(hr))
 			{
 					 hr=session.Open(connection);
@@ -4383,11 +4448,11 @@ UINT Update_Netposition(LPVOID pParam)
 	NetPosGrid::st_Netposition N_st={};
 	CMTStr::Copy(N_st.m_login ,L"Total:-");
 	CString tempval=L"";
-	tempval.Format(L"%.2f",getColumnSum_in_st(8));
+	tempval.Format(L"%.2f",getColumnSum_in_st_O(8));
 	CMTStr::Copy(N_st.m_Floating_Profit,tempval);
 	CString str_balance=tempval;
 	
-	tempval.Format(L"%.2f",getColumnSum_in_st(5));
+	tempval.Format(L"%.2f",getColumnSum_in_st_O(5));
 	CMTStr::Copy(N_st.m_netqty,tempval);
 	NetPosGrid::m_NetpositionArray_For_Grid.Add(&N_st);		
 

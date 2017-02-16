@@ -54,7 +54,7 @@ BOOL ClientHelpDlg::OnInitDialog()
 	//database initialization
 		
 		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CheckData;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
 		if(SUCCEEDED(hr))
 		{
 			hr=session.Open(connection);							
@@ -94,7 +94,7 @@ BOOL ClientHelpDlg::OnInitDialog()
 void ClientHelpDlg::getdata()
 {
 	CCommand<CAccessor<Client_Table> > table;				 	
-		char* strCommand_char="SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit]FROM [CheckData].[dbo].[Client]";
+		char* strCommand_char="SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit]FROM [CHECKDATA].[dbo].[Client]";
 		hr=table.Open(session,strCommand_char);							 			 		 				 	
 	    CString strBuffer=L""; 
 
@@ -135,7 +135,7 @@ void ClientHelpDlg::OnEnChangeEditsearch()
 		CString  str_command=L"";
 		GetDlgItemText(IDC_EDITSEARCH,edit_val);
 
-		str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CheckData].[dbo].[Client] where [V_Name] like '%s%s'",edit_val,L"%");
+		str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Name] like '%s%s'",edit_val,L"%");
 		_bstr_t bstr_command=str_command;
 		char* strCommand_char=bstr_command;
 		hr=table.Open(session,strCommand_char);	

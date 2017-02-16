@@ -1310,31 +1310,7 @@ void Duplicate_Order::Selected_commentChange()
 		return ;
 	}
 
-	char * Final_Str="";
-
-
-	// For Checking
-
-	/*st_Change_Comment_List m_st_Change_Comment_List={};
-	CMTStr::Copy(m_st_Change_Comment_List.Deal,L"8200");
-	CMTStr::Copy(m_st_Change_Comment_List.Login,L"200011");
-	CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,L"OLD");
-	CMTStr::Copy(m_st_Change_Comment_List.New_Comment,L"NEW");
-	char struct_data[sizeof(st_Change_Comment_List)];
-	memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));
-
-	char* newstr=struct_data+'|';
-	char* oldstr=Final_Str;
-						
-	Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
-	strcpy(Final_Str , oldstr);
-	strcat(Final_Str , newstr);*/
-
-
-
-
-	// End of Checking
-
+	char * Final_Str="";	
 
 	char* data_for_send;
 	Duplicate_Order::filter_break=1;
@@ -1350,6 +1326,8 @@ void Duplicate_Order::Selected_commentChange()
 	_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=68.168.104.26;Database=TRADEDATABASE;uid=sa;pwd=ok@12345;";		
 	_bstr_t str_new="";
 	_bstr_t InsertAndUpdate_Command="";
+	_bstr_t  bstr_final_comment=""; 
+	bstr_final_comment="Comment_Change~";
 	for (int fcount=0;fcount<rows_count;fcount++)
 	{
 		login=QuickGetText(0,fcount);
@@ -1362,24 +1340,60 @@ void Duplicate_Order::Selected_commentChange()
 		if (login!=L"" && check_value==L"1"  && comment_n.Trim().GetLength()>0) 
 		{
 			change_comment_dealwise(login,deal,comment_n,comment_o);
-			/*st_Change_Comment_List m_st_Change_Comment_List={};
+			st_Change_Comment_List m_st_Change_Comment_List={};
 			CMTStr::Copy(m_st_Change_Comment_List.Deal,deal);
 			CMTStr::Copy(m_st_Change_Comment_List.Login,login);
 			CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,comment_o);
 			CMTStr::Copy(m_st_Change_Comment_List.New_Comment,comment_n);
-			char struct_data[sizeof(st_Change_Comment_List)];
-			memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));
+			char *struct_data;
+			//memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));*/
+			_bstr_t bstr_login=login+"-"+comment_o+"|"+login+"-"+comment_n;
+			
+			bstr_final_comment=bstr_final_comment+bstr_login+"|";
+		
 
-			char* newstr=struct_data+'|';
-			char* oldstr=Final_Str;
-						
-			Final_Str = (char *) malloc(1 + strlen(oldstr)+ strlen(newstr) );
-			strcpy(Final_Str , oldstr);
-			strcat(Final_Str , newstr);*/			
 			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}
 	}	
+	Final_Str=bstr_final_comment;
+	int check_data_send=0;
+	if(check_data_send=OrderGrid::m_Client.Send(Final_Str,strlen(Final_Str))>1)
+	{
+
+	}
+	else
+	{
+	
+			 if(WSAGetLastError()!=WSAEWOULDBLOCK) 
+			 { 				
+				shutdown(OrderGrid::m_Client,2);
+				closesocket(OrderGrid::m_Client);									
+			 }		
+			 
+			 CSocket m_Client;
+			if( AfxSocketInit() == FALSE)
+			{ 
+				AfxMessageBox(L"Failed to Initialize Sockets"); 
+				return ; 
+			}
+			if(m_Client.Create()==FALSE)
+			{
+				AfxMessageBox(L"Failed to Create Socket");
+				return ;
+			}
+			if(m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+			{
+				AfxMessageBox(L"Failed to Connect");		
+				return;
+			}	
+		    m_Client.Send(Final_Str,strlen(Final_Str));
+			m_Client.Close();
+			shutdown(m_Client,2);
+			closesocket(m_Client);
+
+	}
+	Final_Str=NULL ;
 	CString str_command_check=InsertAndUpdate_Command;
 	if (str_command_check.Trim().GetLength()>0)
 	{

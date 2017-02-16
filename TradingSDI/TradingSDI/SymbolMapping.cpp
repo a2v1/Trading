@@ -134,7 +134,7 @@ void SymbolMapping::OnBnClickedButton1()
 		CoInitialize(NULL);
           // Define string variables.		 
 		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");
-		 //_bstr_t strCnn("Provider=SQLOLEDB;SERVER=.;Database=checkdata;uid=sa;pwd=ok;");
+		 //_bstr_t strCnn("Provider=SQLOLEDB;SERVER=.;Database=CHECKDATA;uid=sa;pwd=ok;");
         _RecordsetPtr pRstAuthors = NULL;
  
       // Call Create instance to instantiate the Record set
@@ -178,7 +178,7 @@ void SymbolMapping::getSymbolData()
 		CoInitialize(NULL);
           // Define string variables.		 
 		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");
-		 //_bstr_t strCnn("Provider=SQLOLEDB;SERVER=.;Database=checkdata;uid=sa;pwd=ok;");
+		 //_bstr_t strCnn("Provider=SQLOLEDB;SERVER=.;Database=CHECKDATA;uid=sa;pwd=ok;");
         _RecordsetPtr pRstAuthors = NULL;
  
       // Call Create instance to instantiate the Record set
