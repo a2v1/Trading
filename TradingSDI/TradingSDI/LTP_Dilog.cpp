@@ -36,6 +36,7 @@ BEGIN_MESSAGE_MAP(LTP_Dilog, CDialogEx)
 	
 	ON_BN_CLICKED(IDOK, &LTP_Dilog::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTON1, &LTP_Dilog::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON4, &LTP_Dilog::OnBnClickedButton4)
 END_MESSAGE_MAP()
 // LTP_Dilog message handlers
 
@@ -118,11 +119,48 @@ void LTP_Dilog::OnBnClickedButton1()
 		CString strf=ltp_grid.QuickGetText(0,f_count);
 		strf=strf.Trim();
 		MTTickShort  tick;
-		DlgHelp::m_dealer->m_manager->TickLast(L"GCG71KG",tick);
+		DlgHelp::m_dealer->m_manager->TickLast(strf,tick);
 		CString strtlasttick=L"";
 		strtlasttick.Format(L"%.4f",tick.ask );
 		ltp_grid.QuickSetText (2,f_count,strtlasttick);
 		
 	}
 	ltp_grid.RedrawAll();
+}
+
+
+void LTP_Dilog::OnBnClickedButton4()
+{
+	if(CDealer::admin_login!=1)
+	{
+		AfxMessageBox(L"You Are not a valid user");
+		return ;
+	}
+
+
+	int noofrows=ltp_grid.GetNumberRows();
+	for (int f_count=0;f_count<noofrows;f_count++)
+	{
+		CString strf=ltp_grid.QuickGetText(0,f_count);
+		CString str_closingrate=ltp_grid.QuickGetText(2,f_count);
+
+		strf=strf.Trim();
+		MTTickShort  tick;
+		
+		DlgHelp::m_dealer->m_manager->TickLast(strf,tick);
+		tick.datetime=0;
+
+		LPTSTR endPtr1;										
+		double Closing_rate=_tcstod(str_closingrate ,&endPtr1);
+		tick.ask=Closing_rate;
+		tick.bid=Closing_rate;
+		tick.last=Closing_rate;
+
+		MTTickShort  newtick[1]={};
+		newtick[0]=tick;
+		
+		MTAPIRES res;
+		res=DlgHelp::m_dealer->m_admin->TickAdd(strf,newtick,1);
+	}
+	AfxMessageBox(L"Closing Rate has been updated");
 }
