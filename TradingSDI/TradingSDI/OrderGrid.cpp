@@ -2619,14 +2619,11 @@ UINT update_data_PBNPS_Order(void *pParam)
 
 				 OrderGrid::m_order_mutex.Lock();
 
-				
-				 
-
 				 int val_type=0;	
 				 val_type=0;
 				 if (OrderGrid::insertFilterFlag==1 )
 				 {
-					 OrderGrid::m_st_Order_GridArray.Clear();
+					OrderGrid::m_st_Order_GridArray.Clear();
 					int noof_rowsInStruc=OrderGrid::m_st_Order_UpdateArray.Total();
 					for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
 					{
@@ -3053,6 +3050,7 @@ LRESULT OrderGrid::OnThreadMessage(WPARAM wParam, LPARAM lParam)
 		if (CheckvalueInArray(Deal_in_Grid)==false && Deal_in_Grid!="")
 		{
 			DeleteRow(i);
+
 		}
 	}
 	int array_total=OrderGrid::m_st_Order_UpdateArray.Total();

@@ -37,7 +37,7 @@ public:
 	CFont m_font;
 	void filter();
 	CUGCell cell1, cell2, cell3, cell4, cell5,cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13, cell14;
-	
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val;
 	
 	struct st_gridAndOrder
 	{		 		
@@ -55,6 +55,7 @@ public:
 		wchar_t Limit[100];
         wchar_t Remark2 [100];
 	};
+
 	typedef TMTArray<st_gridAndOrder> st_gridAndOrder_Array;
 	static st_gridAndOrder_Array m_gridAndOrder_Array_Fill;	
 	static st_gridAndOrder_Array m_gridAndOrder_Array;	

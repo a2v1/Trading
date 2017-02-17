@@ -68,6 +68,21 @@ _bstr_t GridTradeAndOrder::strFilter(" ");
 _variant_t GridTradeAndOrder::result;
 long GridTradeAndOrder::rgIndices[2];
 _bstr_t GridTradeAndOrder::bstr_currenttime("");
+
+//filter value global use
+CString GridTradeAndOrder::col0_val=L"";
+CString GridTradeAndOrder::col1_val=L"";
+CString GridTradeAndOrder::col2_val=L"";
+CString GridTradeAndOrder::col3_val=L"";
+CString GridTradeAndOrder::col4_val=L"";
+CString GridTradeAndOrder::col5_val=L"";
+CString GridTradeAndOrder::col6_val=L"";
+CString GridTradeAndOrder::col7_val=L"";
+CString GridTradeAndOrder::col8_val=L"";
+CString GridTradeAndOrder::col9_val=L"";
+CString GridTradeAndOrder::col10_val=L"";
+CString GridTradeAndOrder::col11_val=L"";
+CString GridTradeAndOrder::col12_val=L"";
 /////////////////////////////////////////////////////////////////////////////
 //Standard MyCug construction/destruction
 
@@ -194,7 +209,108 @@ UINT update_data_Trade(void *pParam)
 
 
 			 GridTradeAndOrder::gridAndOrder_mutex.Lock();	
-			 GridTradeAndOrder::m_gridAndOrder_Grid_array.Assign(GridTradeAndOrder::m_gridAndOrder_Array_Fill);
+
+
+			 //COLUMN VALUES FILTERATION
+			  int val_type=0;	
+				 val_type=0;
+				 if (GridTradeAndOrder::insertFilterFlag==1 )
+				 {
+					 GridTradeAndOrder::m_gridAndOrder_Grid_array.Clear();
+					 int noof_rowsInStruc=GridTradeAndOrder::m_gridAndOrder_Array_Fill.Total();
+					for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+					{
+						GridTradeAndOrder::st_gridAndOrder m_st_Netposition={};
+						m_st_Netposition=GridTradeAndOrder::m_gridAndOrder_Array_Fill[fcount];
+						int flag=0;				
+						CString col_row_val[13];		
+						col_row_val[0]=m_st_Netposition.Symbol ;
+						if (GridTradeAndOrder::col0_val.Trim().GetLength()>0)
+						{
+							col_row_val[0]=col_row_val[0].Mid(0,GridTradeAndOrder::col0_val.Trim().GetLength());
+						}
+						col_row_val[1]=m_st_Netposition.Order;
+						if (GridTradeAndOrder::col1_val.Trim().GetLength()>0)
+						{
+							col_row_val[1]=col_row_val[1].Mid(0,GridTradeAndOrder::col1_val.Trim().GetLength());
+							col_row_val[1]=col_row_val[1].Mid(0,10);
+						}
+						col_row_val[2]=m_st_Netposition.Time ;
+						if (GridTradeAndOrder::col2_val.Trim().GetLength()>0)
+						{
+							col_row_val[2]=col_row_val[2].Mid(0,GridTradeAndOrder::col2_val.Trim().GetLength());
+						}
+						
+						col_row_val[3]=m_st_Netposition.Type ;
+						if (GridTradeAndOrder::col3_val.Trim().GetLength()>0)
+						{
+							col_row_val[3]=col_row_val[3].Mid(0,GridTradeAndOrder::col3_val.Trim().GetLength());
+						}
+
+						col_row_val[4]=m_st_Netposition.Volume;
+						if (GridTradeAndOrder::col4_val.Trim().GetLength()>0)
+						{
+							col_row_val[4]=col_row_val[4].Mid(0,GridTradeAndOrder::col4_val.Trim().GetLength());
+						}
+
+                        double m_price=m_st_Netposition.Price;
+				        CString price=L"" ;
+				        price.Format(L"%.2f",m_price);
+						col_row_val[5]=price;
+						boolean bool_col5=Check_numeric_col_filter(GridTradeAndOrder::col5_val,col_row_val[5]);
+
+						double m_rate=m_st_Netposition.Current_Rate;
+				        CString m_rate1=L"" ;
+				        m_rate1.Format(L"%.2f",m_rate);
+						col_row_val[6]=m_rate1;
+						boolean bool_col6=Check_numeric_col_filter(GridTradeAndOrder::col6_val,col_row_val[6]);
+
+						double m_pl=m_st_Netposition.PL;
+				        CString m_pl1=L"" ;
+				        m_pl1.Format(L"%.2f",m_pl);
+						col_row_val[7]=m_pl1;
+						boolean bool_col7=Check_numeric_col_filter(GridTradeAndOrder::col7_val,col_row_val[7]);
+
+						col_row_val[8]=m_st_Netposition.Status;
+						if (GridTradeAndOrder::col8_val.Trim().GetLength()>0)
+						{
+							col_row_val[8]=col_row_val[8].Mid(0,GridTradeAndOrder::col8_val.Trim().GetLength());
+						}
+
+						col_row_val[9]=m_st_Netposition.Trade_Checked ;
+						if (GridTradeAndOrder::col9_val.Trim().GetLength()>0)
+						{
+							col_row_val[9]=col_row_val[9].Mid(0,GridTradeAndOrder::col9_val.Trim().GetLength());
+						}
+
+						col_row_val[10]=m_st_Netposition.Checked_Time ;
+						if (GridTradeAndOrder::col10_val.Trim().GetLength()>0)
+						{
+							col_row_val[10]=col_row_val[10].Mid(0,GridTradeAndOrder::col10_val.Trim().GetLength());
+						}
+						col_row_val[11]=m_st_Netposition.Limit ;
+						if (GridTradeAndOrder::col11_val.Trim().GetLength()>0)
+						{
+							col_row_val[11]=col_row_val[11].Mid(0,GridTradeAndOrder::col11_val.Trim().GetLength());
+						}
+						col_row_val[12]=m_st_Netposition.Remark2;
+						if (GridTradeAndOrder::col12_val.Trim().GetLength()>0)
+						{
+							col_row_val[12]=col_row_val[12].Mid(0,GridTradeAndOrder::col12_val.Trim().GetLength());
+						}
+
+						if((GridTradeAndOrder::col0_val.Trim()==col_row_val[0].Trim() || GridTradeAndOrder::col0_val.Trim()==L"ALL"||GridTradeAndOrder::col0_val.Trim()==L"") && (GridTradeAndOrder::col1_val.Trim()==col_row_val[1].Trim() || GridTradeAndOrder::col1_val.Trim()==L"ALL"||GridTradeAndOrder::col1_val.Trim()==L"") && (GridTradeAndOrder::col2_val.Trim()==col_row_val[2].Trim() || GridTradeAndOrder::col2_val.Trim()==L"ALL"||GridTradeAndOrder::col2_val.Trim()==L"")  && (GridTradeAndOrder::col3_val.Trim()==col_row_val[3].Trim() || GridTradeAndOrder::col3_val.Trim()==L"ALL"||GridTradeAndOrder::col3_val.Trim()==L"") && (GridTradeAndOrder::col4_val.Trim()==col_row_val[4].Trim() || GridTradeAndOrder::col4_val.Trim()==L"ALL"||GridTradeAndOrder::col4_val.Trim()==L"")   && (bool_col5==true || GridTradeAndOrder::col5_val.Trim()==L"ALL"||GridTradeAndOrder::col5_val.Trim()==L"")   && (bool_col6==true || GridTradeAndOrder::col6_val.Trim()==L"ALL"||GridTradeAndOrder::col6_val.Trim()==L"")   && (bool_col7==true || GridTradeAndOrder::col7_val.Trim()==L"ALL"||GridTradeAndOrder::col7_val.Trim()==L"")   && (GridTradeAndOrder::col8_val.Trim()==col_row_val[8].Trim() || GridTradeAndOrder::col8_val.Trim()==L"ALL"||GridTradeAndOrder::col8_val.Trim()==L"") && (GridTradeAndOrder::col9_val.Trim()==col_row_val[9].Trim() || GridTradeAndOrder::col9_val.Trim()==L"ALL"||GridTradeAndOrder::col9_val.Trim()==L"") &&(GridTradeAndOrder::col10_val==col_row_val[10] || GridTradeAndOrder::col10_val==L"ALL"||GridTradeAndOrder::col10_val==L"")&&(GridTradeAndOrder::col11_val==col_row_val[11] || GridTradeAndOrder::col11_val==L"ALL"||GridTradeAndOrder::col11_val==L"")&&(GridTradeAndOrder::col12_val==col_row_val[12] || GridTradeAndOrder::col12_val==L"ALL"||GridTradeAndOrder::col12_val==L""))
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Add(&m_st_Netposition);
+						}
+					}
+				 }
+				 else
+				 {
+					 GridTradeAndOrder::m_gridAndOrder_Grid_array.Assign(GridTradeAndOrder::m_gridAndOrder_Array_Fill);
+				 }
+
+
 			 GridTradeAndOrder::gridAndOrder_mutex.Unlock();	
 			 Sleep(1000);
 		 }
@@ -506,7 +622,7 @@ int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 	m_logfile_g.LogEvent(L"Start OnDropList");
 	if (msg==103)
 	{
-		if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
+	if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
 	{
 		GridTradeAndOrder::filter_break=1;
 		check_First==0;
@@ -515,12 +631,175 @@ int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 		GetCell(col,row,&cell);
 		strval=cell.GetText();
 		GridTradeAndOrder::strFilter="";
-		if (strval!=L"")
-		{
-			gridFilter(col,GetNumberRows(),strval);
-		}
+
 	}
-	RedrawAll();
+
+		if(GridTradeAndOrder::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					col0_val=strval;					
+				}
+				else
+				{
+					col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					col1_val=strval;					
+				}
+				else
+				{
+					col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					col2_val=strval;					
+				}
+				else
+				{
+					col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					col3_val=strval;					
+				}
+				else
+				{
+					col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					col4_val=strval;					
+				}
+				else
+				{
+					col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					col5_val=strval;					
+				}
+				else
+				{
+					col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					col6_val=strval;					
+				}
+				else
+				{
+					col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					col7_val=strval;					
+				}
+				else
+				{
+					col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					col8_val=strval;					
+				}
+				else
+				{
+					col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					col9_val=strval;					
+				}
+				else
+				{
+					col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					col10_val=strval;					
+				}
+				else
+				{
+					col10_val=L"ALL";					
+				}
+			}
+
+			if(col==11)
+			{
+				if (strval!=L"")
+				{
+					col11_val=strval;					
+				}
+				else
+				{
+					col11_val=L"ALL";					
+				}
+			}
+
+			if(col==12)
+			{
+				if (strval!=L"")
+				{
+					col12_val=strval;					
+				}
+				else
+				{
+					col12_val=L"ALL";					
+				}
+			}
+
+	  }
+	 RedrawAll();
 	}
 	m_logfile_g.LogEvent(L"End OnDropList");
 	return true;
