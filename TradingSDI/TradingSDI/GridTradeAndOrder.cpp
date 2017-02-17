@@ -1161,6 +1161,20 @@ void GridTradeAndOrder::OnTimer(UINT nIDEvent)
 		DeleteRow(0);
 		GridTradeAndOrder::insertFilterFlag=0;
 		GridTradeAndOrder::strFilter=" ";
+
+		GridTradeAndOrder::col0_val=L"";
+		GridTradeAndOrder::col1_val=L"";
+		GridTradeAndOrder::col2_val=L"";
+		GridTradeAndOrder::col3_val=L"";
+		GridTradeAndOrder::col4_val=L"";
+		GridTradeAndOrder::col5_val=L"";
+		GridTradeAndOrder::col6_val=L"";
+		GridTradeAndOrder::col7_val=L"";
+		GridTradeAndOrder::col8_val=L"";
+		GridTradeAndOrder::col9_val=L"";
+		GridTradeAndOrder::col10_val=L"";
+		GridTradeAndOrder::col11_val=L"";
+		GridTradeAndOrder::col12_val=L"";
 	}
 	RedrawAll();
 
