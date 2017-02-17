@@ -152,15 +152,24 @@ void LTP_Dilog::OnBnClickedButton4()
 
 		LPTSTR endPtr1;										
 		double Closing_rate=_tcstod(str_closingrate ,&endPtr1);
-		tick.ask=Closing_rate;
-		tick.bid=Closing_rate;
-		tick.last=Closing_rate;
-
-		MTTickShort  newtick[1]={};
-		newtick[0]=tick;
 		
+
+		MTTick   newtick={};
+		CMTStr::Copy(newtick.symbol,strf);
+		newtick.ask=Closing_rate;
+		newtick.bid=Closing_rate;
+		newtick.last=Closing_rate;
+
+		/*CMTStr::Copy(newtick.symbol,L"GCNLTP");
+		newtick.ask=1242;
+		newtick.bid=1242;
+		newtick.last=1242;*/
+
+
+
 		MTAPIRES res;
-		res=DlgHelp::m_dealer->m_admin->TickAdd(strf,newtick,1);
+		//res=DlgHelp::m_dealer->m_admin->TickAdd(strf,newtick,1);
+		res=DlgHelp::m_dealer->m_manager->TickAdd(strf,newtick);
 	}
 	AfxMessageBox(L"Closing Rate has been updated");
 }
