@@ -1566,11 +1566,11 @@ void CMainFrame::OnUpdateTotalvalue(CCmdUI *pCmdUI)
 
 void CMainFrame::OnSymbolmap()
 {
-   
-	CRect rect;
+    CRect rect;
 	GetClientRect(&rect);
-	m_SymbolDlg.MoveWindow( 1,48,430,600);
-	m_SymbolDlg.ShowWindow(SW_NORMAL);
+	m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
+	m_Symbolmapiingdlg.ShowWindow(SW_NORMAL);
+	
 
 }
 
@@ -1580,8 +1580,8 @@ void CMainFrame::OnSymbolgroupmapping()
 {
 	CRect rect;
 	GetClientRect(&rect);
-	m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
-	m_Symbolmapiingdlg.ShowWindow(SW_NORMAL);
+	m_SymbolDlg.MoveWindow( 1,48,430,600);
+	m_SymbolDlg.ShowWindow(SW_NORMAL);
 		
 }
 
