@@ -786,7 +786,7 @@ void Grid_CheckTrade::OnMenuCommand(int col,long row,int section,int item)
 //		value greater than zero to identify that the cell1 comes after cell2
 int Grid_CheckTrade::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {
-if( flags & UG_SORT_DESCENDING )
+ if( flags & UG_SORT_DESCENDING )
 	{
 		CUGCell *ptr = cell1;
 		cell1 = cell2;
@@ -1465,14 +1465,15 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		 	CString cstrpl;
 			cstrpl.Format(_T("%.2f"),totbuyqty );	
 
-			QuickSetText(1,row,L"Total");
-			QuickSetText(2,row,L"");
-			QuickSetText(3,row,L"");
-			QuickSetText(4,row,L"Buy Qty:-");
-			QuickSetText(5,row,cstrpl);
-			QuickSetText(6,row,L"Sell Qty:-");
+			int total_row=GetNumberRows();
+			QuickSetText(1,total_row-1,L"Total");
+			QuickSetText(2,total_row-1,L"");
+			QuickSetText(3,total_row-1,L"");
+			QuickSetText(4,total_row-1,L"Buy Qty:-");
+			QuickSetText(5,total_row-1,cstrpl);
+			QuickSetText(6,total_row-1,L"Sell Qty:-");
 			cstrpl.Format(_T("%.2f"),totsellqty  );	
-			QuickSetText(7,row,cstrpl);
+			QuickSetText(7,total_row-1,cstrpl);
 
 		 artists1.Close();	
 		 session.Close();

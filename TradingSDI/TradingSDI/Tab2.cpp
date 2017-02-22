@@ -93,7 +93,7 @@ void Tab2::OnBnClickedOk()
 	 _bstr_t  str_new=" ";
 	 _bstr_t str_symbol="";
 	 _bstr_t commentYN="";
-
+	 
 	 for (int forcount=0;forcount<rows_no;forcount++)
 	 {
 		 commentYN=gridtradecheck.QuickGetText(0,forcount);

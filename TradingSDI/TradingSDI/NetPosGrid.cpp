@@ -281,6 +281,7 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	SetColWidth(19,100);								
 	QuickSetText(20,-1,L"pl_volume");
 	SetColWidth(20,0);	
+
 	// Header font
 	for(int i = 0; i < GetNumberCols(); i++)
 	{

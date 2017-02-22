@@ -622,17 +622,17 @@ int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 	m_logfile_g.LogEvent(L"Start OnDropList");
 	if (msg==103)
 	{
-	if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
-	{
-		GridTradeAndOrder::filter_break=1;
-		check_First==0;
-		CString  strval=L"";
-		CUGCell cell;
-		GetCell(col,row,&cell);
-		strval=cell.GetText();
-		GridTradeAndOrder::strFilter="";
+		if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
+		{
+			GridTradeAndOrder::filter_break=1;
+			check_First==0;
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();
+			GridTradeAndOrder::strFilter="";
 
-	}
+		}
 
 		if(GridTradeAndOrder::insertFilterFlag==1 && row==0 )
 		{
