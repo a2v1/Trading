@@ -224,7 +224,7 @@ UINT update_data_Trade(void *pParam)
 						m_st_Netposition=GridTradeAndOrder::m_gridAndOrder_Array_Fill[fcount];
 						int flag=0;				
 						CString col_row_val[13];		
-						col_row_val[0]=m_st_Netposition.Symbol ;
+						col_row_val[0]=m_st_Netposition.Symbol;
 						if (GridTradeAndOrder::col0_val.Trim().GetLength()>0)
 						{
 							col_row_val[0]=col_row_val[0].Mid(0,GridTradeAndOrder::col0_val.Trim().GetLength());
@@ -312,8 +312,8 @@ UINT update_data_Trade(void *pParam)
 
 
 			 GridTradeAndOrder::gridAndOrder_mutex.Unlock();	
-			 Sleep(1000);
-		 }
+			}
+		Sleep(10);
 	  }
 
     session.Close();
@@ -1221,29 +1221,38 @@ void GridTradeAndOrder::addItemToCombobox()
 	CStringArray arr10;
 	CStringArray arr11;
 	CStringArray arr12;
-	CStringArray arr13;
 	try
 	{
 	int rows=1;
-	rows=GetNumberRows();
+	
 	
 	CString str_val=L"";
 	
-	for (int forcount=0;forcount<13;forcount++)
+	for (int forcount=0;forcount<12;forcount++)
 	{
 		str[forcount]=L"ALL\n";		
 	}
+	GridTradeAndOrder::gridAndOrder_mutex.Lock();	
+	st_gridAndOrder_Array m_array_filter;
+	m_array_filter.Assign(GridTradeAndOrder::m_gridAndOrder_Array_Fill);
+	GridTradeAndOrder::gridAndOrder_mutex.Unlock();	
+
+	rows=m_array_filter.Total();
+
 	for (int forcount=0;forcount<rows;forcount++)
 	{
-		for (int clocount=0;clocount<13;clocount++)
+
+		st_gridAndOrder m_st_for_filter={};
+		m_st_for_filter=m_array_filter[forcount];
+
+
+		for (int clocount=0;clocount<12;clocount++)
 		{
-			str_val=QuickGetText(clocount,forcount);
-			str_val=str_val.Trim();
-			
-			if (str_val!=L"")
-			{
-				if (clocount==0)
+
+			  if (clocount==0)
 				{
+					str_val=m_st_for_filter.Symbol;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1254,6 +1263,8 @@ void GridTradeAndOrder::addItemToCombobox()
 
 				if (clocount==1)
 				{
+					str_val=m_st_for_filter.Order;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1264,9 +1275,15 @@ void GridTradeAndOrder::addItemToCombobox()
 
 				if (clocount==2)
 				{
+					str_val=m_st_for_filter.Time ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
+
 					if (CheckvalueInArray(arr2,str_val)==false )
 					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
+						str[clocount]=str[clocount]+str_val+L"\n";									
 						arr2.Add(str_val);
 					}
 				}
@@ -1275,6 +1292,8 @@ void GridTradeAndOrder::addItemToCombobox()
 
 				if (clocount==3)
 				{
+					str_val=m_st_for_filter.Type;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr3,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1284,6 +1303,8 @@ void GridTradeAndOrder::addItemToCombobox()
 
 				if (clocount==4)
 				{
+					str_val=m_st_for_filter.Volume;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr4,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1292,6 +1313,10 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
+					double m_price=m_st_for_filter.Price;
+				    CString str_val=L"" ;
+				    str_val.Format(L"%.2f",m_price);
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1300,6 +1325,10 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==6)
 				{
+					double Current_Rate=m_st_for_filter.Current_Rate;
+				    CString str_val=L"" ;
+				    str_val.Format(L"%.2f",Current_Rate);
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr6,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1308,6 +1337,10 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==7)
 				{
+					double pl=m_st_for_filter.PL;
+				    CString str_val=L"" ;
+				    str_val.Format(L"%.2f",pl);
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr7,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1316,6 +1349,8 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==8)
 				{
+					str_val=m_st_for_filter.Status;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr8,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1324,6 +1359,8 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==9)
 				{
+					str_val=m_st_for_filter.Trade_Checked;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr9,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1332,6 +1369,8 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==10)
 				{
+					str_val=m_st_for_filter.Checked_Time;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr10,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1340,6 +1379,8 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==11)
 				{
+					str_val=m_st_for_filter.Limit;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr11,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1348,23 +1389,16 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==12)
 				{
+					str_val=m_st_for_filter.Remark2;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr12,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr12.Add(str_val);
 					}
 				}
-				if (clocount==13)
-				{
-					if (CheckvalueInArray(arr13,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr13.Add(str_val);
-					}
-				}
 				
-
-			}
+			
 
 		}												
 	}
