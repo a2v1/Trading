@@ -660,6 +660,9 @@
     <ClInclude Include="..\..\Grid\CellTypes\UGCTSpin.h">
       <Filter>Grid\CellTypes</Filter>
     </ClInclude>
+    <ClInclude Include="SymbolMappingTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TradingSDI.cpp">

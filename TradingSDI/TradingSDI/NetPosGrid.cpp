@@ -2789,19 +2789,20 @@ int NetPosGrid::OnCanViewMove(int oldcol,long oldrow,int newcol,long newrow)
 }
 
 void NetPosGrid::writeData()
-{	
-	try
-	{
-    CMenu* pMenu;
-	pMenu = GetPopupMenu();
+{
 
-   CMenu* submenu = pMenu->GetSubMenu(1);
+try
+{
+CMenu* pMenu;
+pMenu = GetPopupMenu();
+
+CMenu* submenu = pMenu->GetSubMenu(1);
 
 
-  rapidjson::Document d;	
-  streampos size;
-  char* allNewData = '\0';
-  int flag;
+rapidjson::Document d;	
+streampos size;
+char* allNewData = '\0';
+int flag;
   
 
  fstream file(_T("D:\\RapidJasonExample\\RapidJason\\RapidJason\\Item_Checked.txt"), ios::in|ios::ate);

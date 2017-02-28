@@ -338,6 +338,7 @@
     <ClInclude Include="Order_Table.h" />
     <ClInclude Include="PassedBYMngr.h" />
     <ClInclude Include="PassedByMngrTable.h" />
+    <ClInclude Include="SymbolMappingTable.h" />
     <ClInclude Include="TableGroupWiseNetPos.h" />
     <ClInclude Include="GroupWisePosition.h" />
     <ClInclude Include="LogFile.h" />

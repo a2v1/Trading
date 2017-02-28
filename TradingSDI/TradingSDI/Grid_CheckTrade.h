@@ -47,6 +47,32 @@ public:
 	void filter();
 	CUGCell cell1, cell2, cell3, cell4, cell5,cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13, cell14;
 	void getData(CString FilterType,CString Datefrom,CString DateTo);
+
+
+
+	//Structure for fill data
+	struct st_grid_check
+	{		 		
+		wchar_t m_time[100];
+		wchar_t m_order[100];
+		wchar_t m_deal[100];
+		wchar_t m_symbol[50];
+		wchar_t m_Type[100];
+		wchar_t m_volume[100];
+		wchar_t m_price[50];
+		wchar_t m_comment[100];
+		wchar_t m_OurComment[100];
+		wchar_t m_Checked[100];
+		wchar_t m_CommentYN[100];
+
+	};
+	typedef TMTArray<st_grid_check> st_grid_check_array;
+	static st_grid_check m_st_grid_check;
+	static st_grid_check_array m_st_grid_check_Array_Fill;	
+	static st_grid_check_array m_st_grid_check_Array;	
+	static st_grid_check_array m_st_grid_check_Grid_array;
+	static CMutex grid_trade_mutex;
+
 	
 protected:
 
@@ -145,7 +171,8 @@ public:
 	virtual void OnKeyDown(UINT *vcKey,BOOL processed);
 
 
-
+	////set text
+	//void OnGetCell(int col,long row,CUGCell *cell);
 
 
 

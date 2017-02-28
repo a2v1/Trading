@@ -30,7 +30,7 @@ BEGIN_MESSAGE_MAP(SymbolMapping, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()	
-		
+	ON_WM_CLOSE()	
 	ON_BN_CLICKED(IDC_BUTTON1, &SymbolMapping::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &SymbolMapping::OnBnClickedButton2)
 END_MESSAGE_MAP()
@@ -92,6 +92,17 @@ BOOL SymbolMapping::OnInitDialog()
 	e_grid.SetColWidth(1,150);
 	e_grid.QuickSetText(0,-1,L"SYMBOL");
 	e_grid.QuickSetText(1,-1,L"MAPPING SYMBOL");
+
+
+	//data base initialization
+		CoInitialize(NULL);		
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+		if(SUCCEEDED(hr))
+		{
+			hr=session.Open(connection);							
+		}
+
+
 
 	getSymbolData();
 	
@@ -155,8 +166,11 @@ void SymbolMapping::OnBnClickedButton1()
 			cmd=cmd+"insert into symbol_mapping values('" + valField1 + "','" + valField2 + "')";
 		}
 	}	
+
+
 	cmd=" delete from symbol_mapping   delete from last_tick  "+cmd;
-	pRstAuthors->Open(cmd,strCnn, adOpenStatic,adLockReadOnly,adCmdText);    			
+	pRstAuthors->Open(cmd,strCnn, adOpenStatic,adLockReadOnly,adCmdText);    	
+
 
 	AfxMessageBox(L"Symbol has been updated");
 }
@@ -165,40 +179,37 @@ void SymbolMapping::OnBnClickedButton1()
 void SymbolMapping::OnBnClickedButton2()
 {
 		
+	session.Close();
+	connection.Close();
 	CDialog::OnCancel();
 }
 
 
 void SymbolMapping::getSymbolData()
 {
-	
-		
-		CString  strsqlcommand;				 	
-		HRESULT hr = S_OK;		 
-		CoInitialize(NULL);
-          // Define string variables.		 
-		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");
-		 //_bstr_t strCnn("Provider=SQLOLEDB;SERVER=.;Database=CHECKDATA;uid=sa;pwd=ok;");
-        _RecordsetPtr pRstAuthors = NULL;
- 
-      // Call Create instance to instantiate the Record set
-      hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
-      if(FAILED(hr))
-      {           
-      }
-		//_bstr_t strShort(" cast(DT_SetupTime as datetime) desc");
-	  _bstr_t valField1("");
-	  _bstr_t valField2("");
-	 pRstAuthors->Open("select symbol,mapping_symbol from symbol_mapping",strCnn, adOpenStatic,adLockReadOnly,adCmdText);    			
-	 int rows_count=0;
-	 while(!pRstAuthors->EndOfFile)
-	 {
-		valField1 = pRstAuthors->Fields->GetItem("symbol")->Value;
-		valField2 = pRstAuthors->Fields->GetItem("mapping_symbol")->Value;
-		e_grid.QuickSetText(0,rows_count,valField1); 
-		e_grid.QuickSetText(1,rows_count,valField2);
-		rows_count=rows_count+1;
-		pRstAuthors->MoveNext();
-	 }
-	 pRstAuthors->Close();
+	 //by oledb
+	 CCommand<CAccessor<Symbol_MapTable> > table;				 	
+		char* strCommand_char="select symbol,mapping_symbol from symbol_mapping";
+		hr=table.Open(session,strCommand_char);							 			 		 				 
+
+		if(SUCCEEDED(hr))
+		{
+			int row_number =0;
+			while (table.MoveNext() == S_OK)
+			{	
+				e_grid.InsertRow(row_number);
+				e_grid.QuickSetText(0,row_number,table.m_Symbol);
+				e_grid.QuickSetText(1,row_number,table.m_mapping_Symbol);
+				row_number=row_number+1;
+			}		
+		}			
+		e_grid.RedrawAll();
+		table.Close();
+}
+
+void SymbolMapping::OnClose()
+{
+	session.Close();
+	connection.Close();
+	CDialogEx::OnClose();
 }

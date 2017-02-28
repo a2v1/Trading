@@ -2,6 +2,8 @@
 #include <vector>
 #include "Resource.h"
 #include "Editable_Grid.h"
+#include "SymbolMappingTable.h"
+#include <atldbcli.h>
 // CTradingDlg dialog
 class SymbolMapping  : public CDialogEx
 {
@@ -15,7 +17,10 @@ public:
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-	
+
+	CDataSource connection;
+    CSession session;
+    HRESULT hr;
 
 // Implementation
 protected:
@@ -54,4 +59,5 @@ public:
 	
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
+	afx_msg void OnClose();
 };
