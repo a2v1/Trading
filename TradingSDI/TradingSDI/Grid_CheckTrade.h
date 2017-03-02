@@ -37,7 +37,8 @@ public:
 	static int intRows;
 	static int lock_data_fill ;
 	static int data_display ;
-	
+	static int col_click;
+	static int a_d;
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
 	CUGSortArrowType m_sortArrow;
@@ -48,7 +49,7 @@ public:
 	CUGCell cell1, cell2, cell3, cell4, cell5,cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13, cell14;
 	void getData(CString FilterType,CString Datefrom,CString DateTo);
 
-
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val;
 
 	//Structure for fill data
 	struct st_grid_check
@@ -76,11 +77,11 @@ public:
 	
 protected:
 
-	LRESULT OnThreadMessage(WPARAM, LPARAM);
-	LRESULT OnThreadMessage_RowsNo(WPARAM, LPARAM);
-	LRESULT GridRefresh(WPARAM, LPARAM);	
-	LRESULT GridRowCount(WPARAM, LPARAM);	
-	LRESULT RowDelete(WPARAM, LPARAM);	
+	//LRESULT OnThreadMessage(WPARAM, LPARAM);
+	//LRESULT OnThreadMessage_RowsNo(WPARAM, LPARAM);
+	//LRESULT GridRefresh(WPARAM, LPARAM);	
+	//LRESULT GridRowCount(WPARAM, LPARAM);	
+	//LRESULT RowDelete(WPARAM, LPARAM);	
 	LRESULT DeleteThred(WPARAM, LPARAM);	
 	int c1_click;
 	int c2_click;
@@ -125,9 +126,7 @@ public:
 	virtual int OnCanViewMove(int oldcol,long oldrow,int newcol,long newrow);
 
 	_bstr_t get_string(CString  MainStr,CString SepStr);
-
-
-
+	double getColumnSum_in_struct(int col_index,int flag);
 	
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
 	void addItemToCombobox();
@@ -171,10 +170,11 @@ public:
 	virtual void OnKeyDown(UINT *vcKey,BOOL processed);
 
 
-	////set text
-	//void OnGetCell(int col,long row,CUGCell *cell);
+	//set text
+	void OnGetCell(int col,long row,CUGCell *cell);
 
-
+	void Col_sorting();
+	void ColValue_filter();
 
 	//focus rect setup
 	

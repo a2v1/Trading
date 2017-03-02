@@ -30,24 +30,19 @@ no_namespace rename("EOF", "EndOfFile")
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-//CUIThread
+
 BEGIN_MESSAGE_MAP(Grid_CheckTrade,CUGCtrl)	
 	ON_WM_SIZE()
 	ON_WM_TIMER()
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE1, OnThreadMessage)
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE_ROWSNO1, OnThreadMessage_RowsNo)		
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE_REFRESH1, GridRefresh)		
-	ON_MESSAGE(GRID_ROWS_COUNT1, GridRowCount)		
-	ON_MESSAGE(DELETE_ROW1, RowDelete)	
 	ON_MESSAGE(DELETE_THREAD,DeleteThred)
 END_MESSAGE_MAP()
 
 //Structure variable
 Grid_CheckTrade::st_grid_check_array Grid_CheckTrade::m_st_grid_check_Array_Fill;
-Grid_CheckTrade::st_grid_check_array Grid_CheckTrade::m_st_grid_check_Grid_array;
 Grid_CheckTrade::st_grid_check_array Grid_CheckTrade::m_st_grid_check_Array;
+Grid_CheckTrade::st_grid_check_array Grid_CheckTrade::m_st_grid_check_Grid_array;
+
 Grid_CheckTrade::st_grid_check Grid_CheckTrade::m_st_grid_check={};
-CMutex Grid_CheckTrade::grid_trade_mutex;
 
 
 int Grid_CheckTrade::filter_break=0;
@@ -61,7 +56,8 @@ int Grid_CheckTrade::Grid_Rows_Count=0;
 int Grid_CheckTrade::data_display=0;
 int Grid_CheckTrade::thred_kill=0;
 int Grid_CheckTrade::thred_killed_ok=0;
-
+int Grid_CheckTrade::col_click=0;
+int Grid_CheckTrade::a_d=0;
 
 CString Grid_CheckTrade::m_strtime=L"";
 CString Grid_CheckTrade::m_strdeal=L"";
@@ -72,8 +68,20 @@ CString Grid_CheckTrade::m_strvolume=L"";
 CString Grid_CheckTrade::m_strprice=L"";
 CString Grid_CheckTrade::m_strcomment=L"";
 
+CString Grid_CheckTrade::col0_val=L"";
+CString Grid_CheckTrade::col1_val=L"";
+CString Grid_CheckTrade::col2_val=L"";
+CString Grid_CheckTrade::col3_val=L"";
+CString Grid_CheckTrade::col4_val=L"";
+CString Grid_CheckTrade::col5_val=L"";
+CString Grid_CheckTrade::col6_val=L"";
+CString Grid_CheckTrade::col7_val=L"";
+CString Grid_CheckTrade::col8_val=L"";
+CString Grid_CheckTrade::col9_val=L"";
+CString Grid_CheckTrade::col10_val=L"";
 //_bstr_t Grid_CheckTrade::m_selected_login="0";
 //_bstr_t Grid_CheckTrade::m_selected_Name="0";
+
 _bstr_t Grid_CheckTrade::strShort("  order by t1.login asc,t1.symbol asc");
 _bstr_t Grid_CheckTrade::cellvalue("");
 _bstr_t Grid_CheckTrade::strFilter(" ");
@@ -88,9 +96,7 @@ Grid_CheckTrade::Grid_CheckTrade()
 {
 	 t = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
 	 bstr_currenttime=t;
-	UGXPThemes::UseThemes(false);
-
-	
+	//UGXPThemes::UseThemes(false);
 
 }
 
@@ -99,55 +105,122 @@ Grid_CheckTrade::~Grid_CheckTrade()
 	
 	
 }
-
-LRESULT Grid_CheckTrade::GridRefresh(WPARAM wParam, LPARAM lParam)
+boolean Check_numeric_col_filter1(CString  filter_value,CString  real_value);
+boolean  Check_numeric_col_filter1(CString  filter_value,CString  real_value)
 {
-	RedrawAll();
-	return 0;
-}
+		boolean bool_col=false;		
+		double temp_double=0;
+		LPTSTR endPtr;
+		temp_double= _tcstod(real_value, &endPtr);	
+		filter_value=filter_value.Trim();
+		if (filter_value.GetLength()>2)
+		{
+			if (filter_value.Mid(0,2)==L">=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,2)==L"<=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
 
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
 
-
-LRESULT Grid_CheckTrade::OnThreadMessage(WPARAM wParam, LPARAM lParam)
-{
-	HRESULT hr = S_OK;	
-	int col= (int)wParam;
-	int row= (int)lParam;
-	
-	if (Grid_CheckTrade::insertFilterFlag==0)
-	{
-		
-		QuickSetText(col,row,Grid_CheckTrade::cellvalue);	
-		
-		//RedrawCell(col,row);
-	}
-	else
-	{
-		QuickSetText(col,row+1,Grid_CheckTrade::cellvalue);	
 			
-		//RedrawCell(col,row+1);
-	}
-	return 0;
-}
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
 
-LRESULT Grid_CheckTrade::GridRowCount(WPARAM wParam, LPARAM lParam)
-{
-	//RedrawAll();
-	Grid_CheckTrade::Grid_Rows_Count=GetNumberRows();
-	return 0;
-}
+		}
+		else
+		{
 
-LRESULT Grid_CheckTrade::RowDelete(WPARAM wParam, LPARAM lParam)
-{
-	int row= (int)wParam;
-	for(int f=0;f<10;f++)
-	{
-		QuickSetText(f,row,L"");
-	}
-	//DeleteRow(row);
-	return 0;
-}
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
 
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+		}
+		return bool_col;
+}
 LRESULT Grid_CheckTrade::DeleteThred(WPARAM wParam, LPARAM lParam)
 {
 	DWORD exit_code= NULL;
@@ -166,20 +239,43 @@ LRESULT Grid_CheckTrade::DeleteThred(WPARAM wParam, LPARAM lParam)
 	Grid_CheckTrade::thred_killed_ok=0;	
 	return 0;
 }
-LRESULT Grid_CheckTrade::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
+
+double Grid_CheckTrade::getColumnSum_in_struct(int col_index,int flag)
 {
-	int val= (int)wParam;
-	int flag= (int)lParam;
-	if(flag==0)
+
+	double return_val=0;
+	CUGCell m_cell;
+	int total_rows=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+	Grid_CheckTrade::st_grid_check st={};
+	for (int i=0;i<total_rows;i++)
 	{
-		SetNumberRows(val);
+		
+        st=Grid_CheckTrade::m_st_grid_check_Array_Fill[i];
+		LPTSTR endPtr1;			
+		double d_val1=0;
+		if (col_index==6)
+		{
+			d_val1=_tcstod(st.m_volume,&endPtr1);
+			if (flag==0)
+			{				
+				if (wcscmp(st.m_Type,L"Buy")==0)
+				{
+					return_val=return_val+d_val1;
+				}
+			}
+			else
+			{				
+				if ((wcscmp(st.m_Type,L"Sell")==0))
+				{
+					return_val=return_val+d_val1;
+				}
+			}
+
+		}	
 	}
-	if(flag==1)
-	{
-		InsertRow(val);
-	}
-		return 0;
+	return return_val;
 }
+
 /////////////////////////////////////////////////////////////////////////////
 //	OnSheetSetup	
 //		This notification is called for each additional sheet that the grid
@@ -190,24 +286,16 @@ LRESULT Grid_CheckTrade::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
 //		<none>
 void Grid_CheckTrade::OnSheetSetup(int sheetNumber)
 {
+	
 	int	nRow = 0, nCol = 0;
-	// ****************************************************************
-	// ** Set up columns
-	// ****************************************************************
-	CUGCell cell;
-
-	//GetGridDefault(&cell);
-	//cell.SetBackColor(MY_COLOR_BACK);
-	//cell.SetTextColor(MY_COLOR_TEXT);
-	//SetGridDefault(&cell);
 	EnableExcelBorders(TRUE);
 	SetHighlightRow(TRUE, FALSE);
 	SetDoubleBufferMode(TRUE);
 	SetDefFont(0);
-	SetSH_Width(0);
+	SetSH_Width(0);	
+	SetVScrollMode(1);
 	
-	
-	//// Number
+	// Number
 			SetNumberCols(11);
 			QuickSetText(0,-1,L"Comment");
 			SetColWidth(0,80);
@@ -277,9 +365,28 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 	UNREFERENCED_PARAMETER(rect);
 	UNREFERENCED_PARAMETER(point);
 	UNREFERENCED_PARAMETER(processed);
-
+	
+	Grid_CheckTrade::col_click=col;
 	if( updn == 0)
 		return;
+	if (col_click!=col)
+	{
+		a_d=0;
+	}
+	else
+	{
+		if (a_d==0)
+		{
+			a_d=1;
+		}
+		else
+		{
+			a_d=0;
+		}
+	}
+
+
+	
 
 	QuickSetCellType( m_iSortCol, -1, 0 );
 
@@ -311,8 +418,13 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 		QuickSetCellTypeEx( m_iSortCol, -1, UGCT_SORTARROWUP );
 //		Trace( _T( "Sorted column %d descending" ), iCol );
 	}
+
+
+	Col_sorting();
 	
+
 	RedrawAll();
+	
 }
 int Grid_CheckTrade::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
 {
@@ -384,7 +496,7 @@ void Grid_CheckTrade::gridFilter(int colno,int rows_count,CString col_value)
 		 double totbuyqty=0;
 		 double totsellqty=0;
 		 double buyqty=0;
-		double sellqty=0;
+		 double sellqty=0;
 	for(int fcount=0;fcount<rows_count-1;fcount++)
 	{
 		buyqty=0;
@@ -432,7 +544,163 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 	
 	if (msg==103)
 	{
-	if(Grid_CheckTrade::insertFilterFlag==1 && row==0)
+		if(Grid_CheckTrade::insertFilterFlag==1 && row==0)
+		{
+			Grid_CheckTrade::filter_break=1;
+			check_First==0;
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();
+			Grid_CheckTrade::strFilter="";		
+		}
+
+		
+
+		if(Grid_CheckTrade::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					col0_val=strval;					
+				}
+				else
+				{
+					col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					col1_val=strval;					
+				}
+				else
+				{
+					col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					col2_val=strval;					
+				}
+				else
+				{
+					col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					col3_val=strval;					
+				}
+				else
+				{
+					col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					col4_val=strval;					
+				}
+				else
+				{
+					col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					col5_val=strval;					
+				}
+				else
+				{
+					col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					col6_val=strval;					
+				}
+				else
+				{
+					col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					col7_val=strval;					
+				}
+				else
+				{
+					col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					col8_val=strval;					
+				}
+				else
+				{
+					col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					col9_val=strval;					
+				}
+				else
+				{
+					col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					col10_val=strval;					
+				}
+				else
+				{
+					col10_val=L"ALL";					
+				}
+			}
+
+		}
+
+		ColValue_filter();
+	/*if(Grid_CheckTrade::insertFilterFlag==1 && row==0)
 	{
 		Grid_CheckTrade::filter_break=1;
 		check_First==0;
@@ -445,10 +713,10 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 		{
 			gridFilter(col,GetNumberRows(),strval);
 		}
-	 }
-	 RedrawAll();
-	}
-	return true;
+	 }*/
+	  RedrawAll();
+     }
+    return true;
 }
 _bstr_t Grid_CheckTrade::get_string(CString  MainStr,CString SepStr)
 {
@@ -978,6 +1246,8 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 
  void Grid_CheckTrade::filter()
  {
+	 CMenu *pMnenu;
+	 pMnenu= GetPopupMenu();
 	if (Grid_CheckTrade::insertFilterFlag==0)
 	{
 			addItemToCombobox();
@@ -995,13 +1265,28 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 				QuickSetRange(col,row,col,row,&cell);
 				QuickSetLabelText(col,row,str[col_count]);
 			}
+			pMnenu->CheckMenuItem(2001,MF_CHECKED);
 	}
 	else
 	{
 		
 		DeleteRow(0);
 		Grid_CheckTrade::insertFilterFlag=0;
-		Grid_CheckTrade::strFilter=" ";
+		int r_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+		int grid_total=GetNumberRows();
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
  }
@@ -1040,6 +1325,7 @@ void Grid_CheckTrade::addItemToCombobox()
 	CStringArray arr7;
 	CStringArray arr8;
 	CStringArray arr9;
+	CStringArray arr10;
 	
 	try
 	{
@@ -1052,17 +1338,22 @@ void Grid_CheckTrade::addItemToCombobox()
 	{
 		str[forcount]=L"ALL\n";		
 	}
+	
+	st_grid_check_array m_array_filter;
+	m_array_filter.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
+	
+	rows=m_array_filter.Total();
 	for (int forcount=0;forcount<rows;forcount++)
 	{
-		for (int clocount=0;clocount<10;clocount++)
-		{
-			str_val=QuickGetText(clocount,forcount);
-			str_val=str_val.Trim();
-			
-			if (str_val!=L"")
-			{
+		st_grid_check m_st_for_filter={};
+		m_st_for_filter=m_array_filter[forcount];
+
+		for (int clocount=0;clocount<16;clocount++)
+		{									
 				if (clocount==0)
 				{
+					str_val=m_st_for_filter.m_CommentYN ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1073,6 +1364,11 @@ void Grid_CheckTrade::addItemToCombobox()
 
 				if (clocount==1)
 				{
+					str_val=m_st_for_filter.m_time ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1083,17 +1379,25 @@ void Grid_CheckTrade::addItemToCombobox()
 
 				if (clocount==2)
 				{
+					str_val=m_st_for_filter.m_deal ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr2,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr2.Add(str_val);
 					}
+					
 				}
 
 
 
 				if (clocount==3)
 				{
+					str_val=m_st_for_filter.m_order ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr3,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1103,6 +1407,8 @@ void Grid_CheckTrade::addItemToCombobox()
 
 				if (clocount==4)
 				{
+					str_val=m_st_for_filter.m_symbol ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr4,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1111,6 +1417,8 @@ void Grid_CheckTrade::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
+					str_val=m_st_for_filter.m_Type ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1119,6 +1427,8 @@ void Grid_CheckTrade::addItemToCombobox()
 				}
 				if (clocount==6)
 				{
+					str_val=m_st_for_filter.m_volume ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr6,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1127,6 +1437,8 @@ void Grid_CheckTrade::addItemToCombobox()
 				}
 				if (clocount==7)
 				{
+					str_val=m_st_for_filter.m_price;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr7,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1135,6 +1447,8 @@ void Grid_CheckTrade::addItemToCombobox()
 				}
 				if (clocount==8)
 				{
+					str_val=m_st_for_filter.m_comment ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr8,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -1143,16 +1457,27 @@ void Grid_CheckTrade::addItemToCombobox()
 				}
 				if (clocount==9)
 				{
+					str_val=m_st_for_filter.m_OurComment ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr9,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr9.Add(str_val);
 					}
+				}
+				if (clocount==10)
+				{
+					str_val=m_st_for_filter.m_Checked;
+					str_val=str_val.Trim();
+					if (CheckvalueInArray(arr10,str_val)==false )
+					{
+						str[clocount]=str[clocount]+str_val+L"\n";										
+						arr10.Add(str_val);
+					}
 				}								
 			}
 
 		}												
-	}
 	}
 	catch(_com_error & ce)
 			{
@@ -1185,15 +1510,15 @@ void Grid_CheckTrade::OnSetup()
 	c12_click=0;
 	c13_click=0;
 	c14_click=0;
-	int	nIndex = 0;
-	CUGCell cell;
+
+    CUGCell cell;
 	GetGridDefault(&cell);
 	SetGridDefault(&cell);
 	EnableExcelBorders(FALSE);
 	SetHighlightRow(TRUE, FALSE);
 	SetDoubleBufferMode(TRUE);
-	SetUserSizingMode( TRUE );
-
+	SetUserSizingMode( TRUE  );
+	SetVScrollMode(1);
 	
 	InitMenu();
 	// Create and set default font
@@ -1222,9 +1547,7 @@ void Grid_CheckTrade::OnSetup()
 	cell.SetAlignment( UG_ALIGNCENTER | UG_ALIGNVCENTER );
 	SetGridDefault( &cell );
 
-	SetNumberCols( 14 );
-	//SetNumberRows( 50 );
-
+	SetNumberCols(11);
 	m_iArrowIndex = AddCellType( &m_sortArrow );
 
 	SetCurrentCellMode( 2 );
@@ -1241,20 +1564,18 @@ void Grid_CheckTrade::OnSetup()
 
 
 	// Start timers
-	//srand( (unsigned)time( NULL ) );
+	srand( (unsigned)time( NULL ) );
 	SetTimer(0, 100, NULL);
 	SetTimer(1, 100, NULL);
 
-
-
+	
 
 	QuickSetCellType( 0, -1, m_iArrowIndex );
 	SortBy( 0, UG_SORT_ASCENDING );
 
 	m_iSortCol = 0;
-	m_bSortedAscending = TRUE;	
+	m_bSortedAscending = TRUE;
 
-	//check on first column
      
 }
 
@@ -1289,12 +1610,6 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		}
 	}
 
-
-
-
-
-	SetNumberRows(0);
-	RedrawAll();
 	CoInitialize(NULL);
 	CDataSource connection;
 	CSession session;
@@ -1340,40 +1655,18 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		strComment=sel_comment;
 
 		HRESULT hr;
+		char* strCommand_char;
 		if(catpos>=0)
 		{
-			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'  " + strfilter + "    order by [deal] desc";		
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND [action] IN (0,1) AND  isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
 		}
 		else
 		{
-			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
-		}
-		char* strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);	
-		double rows_count;
-		if(SUCCEEDED(hr))
-		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			LPTSTR endPtr;
-			rows_count = _tcstod(artists1.m_time, &endPtr);															
-		}
-		}
-		artists1.Close();
-
-
-		if(catpos>=0)
-		{
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
-		}
-		else
-		{
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "'  AND [action] IN (0,1)  " + strfilter + "    order by [deal] desc";		
 		}
 		strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);				
 			 				 
-		 int intRows=0;
 		 
 		 double t_d_m_Pre_NetQty=0;
 		 double t_d_m_Diff_NetQty=0;
@@ -1386,63 +1679,109 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		 double totbuyqty=0;
 		 double totsellqty=0;
 
-		 InsertRow(rows_count);
-		 SetNumberRows(rows_count+1);
-		 int row=0;
-		 if(SUCCEEDED(hr))
+		
+		if(SUCCEEDED(hr))
 		{
+		 Grid_CheckTrade::m_st_grid_check_Array_Fill.Clear();
 		 while (artists1.MoveNext() == S_OK)
 		 {
 			 buyqty=0;
 			 sellqty=0;
-			 CUGCell cell ;			 
-			
-			GetColDefault( 10, &cell );			
-			QuickSetCellType(10,row,UGCT_CHECKBOX);	
-			QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
-			SetColDefault( 10, &cell );
-
-			
-			QuickSetCellType(0,row,UGCT_CHECKBOX);	
-			QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
-			
-
-			GetCell(9,0,&cell);
-			cell.SetParam(CELLTYPE_IS_EDITABLE);
-			
-			QuickSetText(0,row,artists1.m_CommentYN);
-			QuickSetText(1,row,artists1.m_time);
-			QuickSetText(2,row,artists1.m_deal);
-			QuickSetText(3,row,artists1.m_order);
-			QuickSetText(4,row,artists1.m_symbol);
-			QuickSetText(5,row,artists1.m_Type);
-			QuickSetText(6,row,artists1.m_volume );
-
+			 
 			LPTSTR endPtr;
 			double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
 			CString cstrpl;
 			cstrpl.Format(_T("%.2f"),d_m_PL);	
 
 
+		    Grid_CheckTrade::st_grid_check m_st={};
+			
+			CMTStr::Copy(m_st.m_CommentYN ,artists1.m_CommentYN);
+			CMTStr::Copy(m_st.m_time,artists1.m_time);
+			CMTStr::Copy(m_st.m_deal ,artists1.m_deal);
+			CMTStr::Copy(m_st.m_order ,artists1.m_order);
+			CMTStr::Copy(m_st.m_symbol,artists1.m_symbol);
+			CMTStr::Copy(m_st.m_Type,artists1.m_Type);
+			CMTStr::Copy(m_st.m_volume,artists1.m_volume);
+		
+            CMTStr::Copy(m_st.m_price,cstrpl);
+			CMTStr::Copy(m_st.m_comment,artists1.m_comment);
+			CMTStr::Copy(m_st.m_OurComment,artists1.m_OurComment);
+			CMTStr::Copy(m_st.m_Checked,artists1.m_Checked);
+			Grid_CheckTrade::m_st_grid_check_Array_Fill.Add(&m_st);
+		  }
+		 }
+	
 
-			if (_tcscmp(artists1.m_Type,_T("Buy"))==0 )
-			{
-				buyqty  = _tcstod(artists1.m_volume, &endPtr);												
-				totbuyqty= totbuyqty+buyqty;
-			}
-			if (_tcscmp(artists1.m_Type,_T("Sell"))==0 )
-			{
-				sellqty  = _tcstod(artists1.m_volume, &endPtr);	
-				totsellqty =totsellqty+sellqty;
-			}
+		//End of Updating Data In New Structure
+		Grid_CheckTrade::st_grid_check N_st={};
+		CMTStr::Copy(N_st.m_CommentYN ,L"Total:-");
+
+		 CString s1 = L"";        
+		 int trade_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+		 s1.Format(L"Count:-%d",trade_count);
+
+		 CString s2 = L"";   
+
+		 double netQty=getColumnSum_in_struct(6,0)-getColumnSum_in_struct(6,1);
+		 s2.Format(L"Net:-%.2f",netQty);
 
 
-			QuickSetText(7,row,cstrpl);
-			QuickSetText(8,row,artists1.m_comment );
-			QuickSetText(9,row,artists1.m_OurComment );
-			QuickSetText(10,row,artists1.m_Checked);
+		CMTStr::Copy(N_st.m_time ,s1);
 
-			if (_tcscmp(artists1.m_Checked,_T("0"))!=0 )
+
+		CMTStr::Copy(N_st.m_OurComment ,s2);
+        CMTStr::Copy(N_st.m_symbol ,L"Buy Qty:-");
+		CMTStr::Copy(N_st.m_volume ,L"Sell Qty:-");
+
+	    CString temp_buy_total=L"";
+	    temp_buy_total.Format(L"%.2f",getColumnSum_in_struct(6,0));
+		CMTStr::Copy(N_st.m_Type,temp_buy_total);
+
+		CString temp_sell_total=L"";
+	    temp_sell_total.Format(L"%.2f",getColumnSum_in_struct(6,1));
+		CMTStr::Copy(N_st.m_price,temp_sell_total);
+
+	
+		Grid_CheckTrade::m_st_grid_check_Array_Fill.Add(&N_st);
+		
+
+		//ASSINGNING MAIN ARRAY TO OTHER 
+		Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
+
+		int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+		int grid_total=GetNumberRows();
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+
+		//checkbox in grid 
+		int row=0;
+		CUGCell cell;
+	
+        for(row;row<r_count-1;row++)
+	    {
+			GetColDefault( 10, &cell );			
+			QuickSetCellType(10,row,UGCT_CHECKBOX);	
+			QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
+			SetColDefault( 10, &cell );
+			QuickSetCellType(0,row,UGCT_CHECKBOX);	
+			QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
+	    }
+		GetCell(9,0,&cell);
+		cell.SetParam(CELLTYPE_IS_EDITABLE);
+
+		//checkbox initialization in grid rows
+		if (_tcscmp(artists1.m_Checked,_T("0"))!=0 )
 			{
 				for (int fcount=0;fcount<=10;fcount++)
 				{
@@ -1452,7 +1791,6 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 					int nParam = cell.GetParam();					
 					cell.SetBackColor(Grid_CheckTrade::rows_color_checked);
 					SetCell(fcount,row ,&cell);
-					RedrawCell(fcount,row);
 				}
 			}
 			else
@@ -1465,449 +1803,171 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 					int nParam = cell.GetParam();					
 					cell.SetBackColor(Grid_CheckTrade::rows_color_unchecked);
 					SetCell(fcount,row ,&cell);
-					RedrawCell(fcount,row);
 				}
 			}
 
+        
 
-			row=row+1;
-		 }
-		 }
-		 	CString cstrpl;
-			cstrpl.Format(_T("%.2f"),totbuyqty );	
-
-			int total_row=GetNumberRows();
-			QuickSetText(1,total_row-1,L"Total");
-			QuickSetText(2,total_row-1,L"");
-			QuickSetText(3,total_row-1,L"");
-			QuickSetText(4,total_row-1,L"Buy Qty:-");
-			QuickSetText(5,total_row-1,cstrpl);
-			QuickSetText(6,total_row-1,L"Sell Qty:-");
-			cstrpl.Format(_T("%.2f"),totsellqty  );	
-			QuickSetText(7,total_row-1,cstrpl);
-
-		 artists1.Close();	
+         artists1.Close();	
 		 session.Close();
 		 connection.Close();
-		RedrawAll();		 
+		 RedrawAll();		 
 	}
 	catch(_com_error & ce)
 	{
 		AfxMessageBox(ce.Description());			
 	}
-	
 }
 
-//void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo)
-//{
-//	try
-//	{
-//
-//	CString strval=L"";
-//	CStdioFile	myFile;
-//	if ( myFile.Open( _T("Color_UnChecked.txt"), CFile::modeRead ) )
-//	{								
-//		myFile.Seek( 0, CFile::begin );		
-//		myFile.ReadString(strval);
-//		myFile.Close();		
-//		int intcolor = _ttoi(strval);
-//		if(intcolor!=0)
-//		{
-//			Grid_CheckTrade::rows_color_unchecked=intcolor;
-//		}
-//	}
-//
-//	if ( myFile.Open( _T("Color_Checked.txt"), CFile::modeRead ) )
-//	{								
-//		myFile.Seek( 0, CFile::begin );		
-//		myFile.ReadString(strval);
-//		myFile.Close();		
-//		int intcolor = _ttoi(strval);
-//		if(intcolor!=0)
-//		{
-//			Grid_CheckTrade::rows_color_checked=intcolor;
-//		}
-//	}
-//
-//
-//
-//
-//
-//	SetNumberRows(0);
-//	RedrawAll();
-//	CoInitialize(NULL);
-//	CDataSource connection;
-//	CSession session;
-//	CCommand<CAccessor<DataTradeFilter> > artists1;
-//
-//	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
-//	
-//	session.Open(connection);
-//		_bstr_t strCommand="";				
-//		_bstr_t strfilter="";				
-//		if (FilterType!=L"")
-//		{
-//			if (FilterType==L"All history")
-//			{
-//				strfilter="";
-//			}
-//			if (FilterType==L"From Monday")
-//			{
-//				strfilter=" and [Time]>=convert(varchar(11),(getdate()-datepart(dw,getdate())+2),111)";
-//			}
-//			if (FilterType==L"Today")
-//			{
-//				strfilter=" and [Time]>=convert(varchar(11),getdate(),111)";
-//			}
-//			if (FilterType==L"Yesterday")
-//			{
-//				strfilter=" and [Time]>=convert(varchar(11),getdate()-1,111)";
-//			}
-//		}
-//		else
-//		{
-//			_bstr_t df=Datefrom ;
-//			_bstr_t dt=DateTo;
-//			strfilter=" and [Time]>='" + df + "' and [Time]<='" + dt + "'";
-//		}		
-//		_bstr_t strMainCode="";
-//		_bstr_t strComment="";
-//		CString sel_login=GridTradeAndOrder::m_selected_login;
-//		int catpos=sel_login.Find('-');
-//		CString sel_comment=sel_login.Mid(7,sel_login.GetLength()-7);
-//		sel_login=sel_login.Mid(0,6);
-//		strMainCode=sel_login;
-//		strComment=sel_comment;
-//
-//		HRESULT hr;
-//		if(catpos>=0)
-//		{
-//			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'  " + strfilter + "    order by [deal] desc";		
-//		}
-//		else
-//		{
-//			strCommand="select isnull(count(*),0),'' as 'order','' as  'deal','' as 'symbol','' as 'Type','' as  'volume','' as 'price','' as 'comment','' as 'OurComment','' as 'Checked','' as 'CommentYN' from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
-//		}
-//		char* strCommand_char=(char*)strCommand;
-//		hr=artists1.Open(session,strCommand_char);	
-//		double rows_count;
-//
-//		
-//		if(SUCCEEDED(hr))
-//		{
-//		while (artists1.MoveNext() == S_OK)
-//		{
-//		    LPTSTR endPtr;
-//			rows_count = _tcstod(artists1.m_time, &endPtr);																
-//		}
-//		}
-//		artists1.Close();
-//
-//
-//		if(catpos>=0)
-//		{
-//			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
-//		}
-//		else
-//		{
-//			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' " + strfilter + "    order by [deal] desc";		
-//		}
-//		strCommand_char=(char*)strCommand;
-//		hr=artists1.Open(session,strCommand_char);				
-//			 				 
-//		 int intRows=0;
-//		 
-//		 double t_d_m_Pre_NetQty=0;
-//		 double t_d_m_Diff_NetQty=0;
-//		 double t_d_m_NetQty=0;
-//		 double t_d_m_PL=0;
-//		 double t_d_m_Balance=0;
-//
-//		 double buyqty=0;
-//		 double sellqty=0;
-//		 double totbuyqty=0;
-//		 double totsellqty=0;
-//
-//		
-//		 SetNumberRows(rows_count+1);
-//		 int row=0;
-//		if(SUCCEEDED(hr))
-//		{
-//		 Grid_CheckTrade::m_st_grid_check_Array_Fill.Clear();
-//		 while (artists1.MoveNext() == S_OK)
-//		 {
-//			 buyqty=0;
-//			 sellqty=0;
-//			 CUGCell cell ;			 
-//			//InsertRow(row);
-//			GetColDefault( 10, &cell );			
-//			QuickSetCellType(10,row,UGCT_CHECKBOX);	
-//			QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
-//			SetColDefault( 10, &cell );
-//
-//			
-//			QuickSetCellType(0,row,UGCT_CHECKBOX);	
-//			QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
-//			
-//
-//			GetCell(9,0,&cell);
-//			cell.SetParam(CELLTYPE_IS_EDITABLE);
-//			
-//		    Grid_CheckTrade::st_grid_check m_st={};
-//			//QuickSetText(0,row,artists1.m_CommentYN);
-//			CMTStr::Copy(m_st.m_CommentYN ,artists1.m_CommentYN);
-//			CMTStr::Copy(m_st.m_time,artists1.m_time);
-//			CMTStr::Copy(m_st.m_deal ,artists1.m_deal);
-//			//QuickSetText(1,row,artists1.m_time);
-//			//QuickSetText(2,row,artists1.m_deal);
-//			CMTStr::Copy(m_st.m_order ,artists1.m_order);
-//			//QuickSetText(3,row,artists1.m_order);
-//			CMTStr::Copy(m_st.m_symbol,artists1.m_symbol);
-//			//QuickSetText(4,row,artists1.m_symbol);
-//			CMTStr::Copy(m_st.m_Type,artists1.m_Type);
-//		//	QuickSetText(5,row,artists1.m_Type);
-//			CMTStr::Copy(m_st.m_volume,artists1.m_volume);
-//			//QuickSetText(6,row,artists1.m_volume );
-//
-//		    CMTStr::Copy(m_st.m_price,artists1.m_price);
-//			LPTSTR endPtr;
-//			double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
-//			CString cstrpl;
-//			cstrpl.Format(_T("%.2f"),d_m_PL);	
-//
-//
-//
-//			if (_tcscmp(artists1.m_Type,_T("Buy"))==0 )
-//			{
-//				buyqty  = _tcstod(artists1.m_volume, &endPtr);												
-//				totbuyqty= totbuyqty+buyqty;
-//			}
-//			if (_tcscmp(artists1.m_Type,_T("Sell"))==0 )
-//			{
-//				sellqty  = _tcstod(artists1.m_volume, &endPtr);	
-//				totsellqty =totsellqty+sellqty;
-//			}
-//
-//
-//			//QuickSetText(7,row,cstrpl);
-//			CMTStr::Copy(m_st.m_comment,artists1.m_comment);
-//			CMTStr::Copy(m_st.m_OurComment,artists1.m_OurComment);
-//			CMTStr::Copy(m_st.m_Checked,artists1.m_Checked);
-//			/*QuickSetText(8,row,artists1.m_comment);
-//			QuickSetText(9,row,artists1.m_OurComment );
-//			QuickSetText(10,row,artists1.m_Checked);
-//*/
-//			Grid_CheckTrade::m_st_grid_check_Array_Fill.Add(&m_st);
-//
-//			if (_tcscmp(artists1.m_Checked,_T("0"))!=0 )
-//			{
-//				for (int fcount=0;fcount<=10;fcount++)
-//				{
-//					CUGCell cell;
-//					GetCell(fcount,row,&cell);
-//					int nCellTypeIndex = cell.GetCellType();
-//					int nParam = cell.GetParam();					
-//					cell.SetBackColor(Grid_CheckTrade::rows_color_checked);
-//					SetCell(fcount,row ,&cell);
-//					//RedrawCell(fcount,row);
-//				}
-//			}
-//			else
-//			{
-//				for (int fcount=0;fcount<=10;fcount++)
-//				{
-//					CUGCell cell;
-//					GetCell(fcount,row,&cell);
-//					int nCellTypeIndex = cell.GetCellType();
-//					int nParam = cell.GetParam();					
-//					cell.SetBackColor(Grid_CheckTrade::rows_color_unchecked);
-//					SetCell(fcount,row ,&cell);
-//					//RedrawCell(fcount,row);
-//				}
-//			}
-//			row=row+1;
-//		  }
-//		 }
-//		
-//		 	/*CString cstrpl;
-//			cstrpl.Format(_T("%.2f"),totbuyqty );	
-//
-//			int total_row=GetNumberRows();
-//			QuickSetText(1,total_row-1,L"Total");
-//			QuickSetText(2,total_row-1,L"");
-//			QuickSetText(3,total_row-1,L"");
-//			QuickSetText(4,total_row-1,L"Buy Qty:-");
-//			QuickSetText(5,total_row-1,cstrpl);
-//			QuickSetText(6,total_row-1,L"Sell Qty:-");
-//			cstrpl.Format(_T("%.2f"),totsellqty  );	
-//			QuickSetText(7,total_row-1,cstrpl);*/
-//
-//		 artists1.Close();	
-//
-//		 //attach in the final array 
-//		Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
-//
-//	     session.Close();
-//		 connection.Close();
-//		RedrawAll();		 
-//	}
-//	catch(_com_error & ce)
-//	{
-//		AfxMessageBox(ce.Description());			
-//	}
-//	
-//}
-//void Grid_CheckTrade::OnGetCell(int col,long row,CUGCell *cell)
-//{		
-//		//m_logfile_g.LogEvent(L"Start OnGetCell");
-//	    Grid_CheckTrade::st_grid_check mst_grid={};
-//
-//		int rows_no=0;
-//		rows_no=row;		
-//		UNREFERENCED_PARAMETER(col);
-//		UNREFERENCED_PARAMETER(row);
-//		UNREFERENCED_PARAMETER(*cell);		
-//		if ( col >= 0 && row == -1 )
-//		{	
-//		}
-//		else if ( row >= 0 && col == -1 )
-//		{	
-//		}
-//		else if ( col >= 0 && row >= 0 )
-//		{
-//			if (Grid_CheckTrade::insertFilterFlag==1)
-//			{
-//				rows_no=row-1;				
-//				if (row==0)
-//				{
-//					return;
-//				}
-//			}
-//			if (col==0)
-//			{		
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_CommentYN;										
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//
-//			else if (col==1)
-//			{
-//
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];				
-//				CString tmp=mst_grid.m_time ;				
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//				
-//				
-//			}
-//			else if (col==2)
-//			{		
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_deal ;
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//				
-//			}
-//			else if (col==3)
-//			{	
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_order ;
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//
-//			}
-//			else if (col==4)
-//			{				
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_symbol ;				
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//			else if (col==5)
-//			{				
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_Type  ;
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//			else if (col==6)
-//			{	
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_volume  ;
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//			else if (col==7)
-//			{				
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_price ;
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				
-//			    }
-//			}
-//
-//			else if (col==8)
-//			{	
-//				
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_comment;										
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//			else if (col==9)
-//			{	
-//				
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_OurComment;										
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//			}
-//			else if (col==10)
-//			{	
-//				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-//				CString tmp=mst_grid.m_Checked;										
-//				CString str_get_value=cell->GetText();
-//				if (wcscmp(str_get_value,tmp)!=0)
-//				{
-//					cell->SetText(tmp);
-//				}
-//					
-//			}
-//		
-//	   }
-//
-//}
+void Grid_CheckTrade::OnGetCell(int col,long row,CUGCell *cell)
+{		
+		//m_logfile_g.LogEvent(L"Start OnGetCell");
+	    Grid_CheckTrade::st_grid_check mst_grid={};
+
+        int rows_no=0;
+		rows_no=row;		
+		UNREFERENCED_PARAMETER(col);
+		UNREFERENCED_PARAMETER(row);
+		UNREFERENCED_PARAMETER(*cell);		
+		if ( col >= 0 && row == -1 )
+		{	
+		}
+		else if ( row >= 0 && col == -1 )
+		{	
+		}
+		else if ( col >= 0 && row >= 0 )
+		{
+			if (Grid_CheckTrade::insertFilterFlag==1)
+			{
+				rows_no=row-1;				
+				if (row==0)
+				{
+					return;
+				}
+			}
+			if (col==0)
+			{		
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_CommentYN;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==1)
+			{
+
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_time;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==2)
+			{		
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_deal ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==3)
+			{	
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_order ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==4)
+			{				
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_symbol ;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==5)
+			{				
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Type  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==6)
+			{	
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_volume  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==7)
+			{				
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_price ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				
+			    }
+			}
+
+			else if (col==8)
+			{	
+				
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_comment;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==9)
+			{	
+				
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_OurComment;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==10)
+			{	
+				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Checked;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+					
+			}
+		 }
+
+}
 
 
 
@@ -1972,4 +2032,415 @@ void Grid_CheckTrade::OnRClicked(int col,long row,int updn,RECT *rect,POINT *poi
 	Grid_CheckTrade::m_strvolume=QuickGetText(6,row);
 	Grid_CheckTrade::m_strprice=QuickGetText(7,row);
 	Grid_CheckTrade::m_strcomment=QuickGetText(8,row);
+}
+
+void Grid_CheckTrade::Col_sorting()
+{
+ 	//m_logfile_g.LogEvent(L"Start Update_Netposition Step_5");	
+	int t_rows=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+	t_rows=t_rows-1;
+	Grid_CheckTrade::st_grid_check first_st={};
+	Grid_CheckTrade::st_grid_check swap_st={};
+	Grid_CheckTrade::st_grid_check next_st={};
+	
+
+	int val_type=0;
+	if (Grid_CheckTrade::col_click==1||Grid_CheckTrade::col_click==3 ||Grid_CheckTrade::col_click==4 ||Grid_CheckTrade::col_click==5 ||Grid_CheckTrade::col_click==8||Grid_CheckTrade::col_click==9)
+	{
+		val_type=0;
+	}
+	else
+	{
+		val_type=1;
+	}
+	for (int i=0;i<t_rows;i++)
+	{
+		first_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+		for (int j=i+1;j<t_rows;j++)
+		{
+			next_st=Grid_CheckTrade::m_st_grid_check_Grid_array[j];
+			if (Grid_CheckTrade::a_d==0)
+			{
+				if (val_type==0)
+				{
+					if (Grid_CheckTrade::col_click==1)
+					{
+						if (wcscmp(first_st.m_time,next_st.m_time)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_time,swap_st.m_time);
+
+							
+						}
+					}
+					
+					if (Grid_CheckTrade::col_click==3)
+					{
+						if (wcscmp(first_st.m_order ,next_st.m_order)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_order,swap_st.m_order);
+
+							
+						}
+					}
+
+
+					if (Grid_CheckTrade::col_click==4)
+					{
+						if (wcscmp(first_st.m_symbol  ,next_st.m_symbol)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol,swap_st.m_symbol);
+
+							
+						}
+					}
+
+					if (Grid_CheckTrade::col_click==5)
+					{
+						if (wcscmp(first_st.m_Type  ,next_st.m_Type)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_Type,swap_st.m_Type);
+
+							
+						}
+					}
+
+					
+
+					if (Grid_CheckTrade::col_click==8)
+					{
+						if (wcscmp(first_st.m_comment   ,next_st.m_comment)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_comment,swap_st.m_comment);
+
+							
+						}
+					}
+
+					if (Grid_CheckTrade::col_click==9)
+					{
+						if (wcscmp(first_st.m_OurComment,next_st.m_OurComment)>0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_OurComment,swap_st.m_OurComment);
+						}
+					}
+
+
+				
+				}
+				else if (val_type==1)
+				{
+					if (Grid_CheckTrade::col_click==7)
+					{
+						LPTSTR endPtr1;										
+						double d_val1=_tcstod(first_st.m_price ,&endPtr1);
+						LPTSTR endPtr2;										
+						double d_val2=_tcstod(next_st.m_price,&endPtr2);						
+						if (d_val1>d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_price,swap_st.m_price);							
+						}
+					}
+					if (Grid_CheckTrade::col_click==6)
+					{
+						LPTSTR endPtr1;										
+						int d_val1=_tcstod(first_st.m_volume ,&endPtr1);
+						LPTSTR endPtr2;										
+						int d_val2=_tcstod(next_st.m_volume,&endPtr2);						
+						if (d_val1>d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_volume,swap_st.m_volume);
+
+							
+						}
+					}
+					if (Grid_CheckTrade::col_click==2)
+					{
+						LPTSTR endPtr1;										
+						int d_val1=_tcstod(first_st.m_deal ,&endPtr1);
+						LPTSTR endPtr2;										
+						int d_val2=_tcstod(next_st.m_deal,&endPtr2);						
+						if (d_val1>d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal,swap_st.m_deal);
+						}
+					}
+
+				}
+			}
+
+
+			else if(Grid_CheckTrade::a_d==1)
+			{
+              	if (val_type==0)
+				{
+					if (Grid_CheckTrade::col_click==1)
+					{
+						if (wcscmp(first_st.m_time,next_st.m_time)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_time,swap_st.m_time);
+
+							
+						}
+					}
+					if (Grid_CheckTrade::col_click==2)
+					{
+						if (wcscmp(first_st.m_deal,next_st.m_deal)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal,swap_st.m_deal);
+						}
+					}
+					if (Grid_CheckTrade::col_click==3)
+					{
+						if (wcscmp(first_st.m_order ,next_st.m_order)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_order,swap_st.m_order);
+
+							
+						}
+					}
+
+
+					if (Grid_CheckTrade::col_click==4)
+					{
+						if (wcscmp(first_st.m_symbol  ,next_st.m_symbol)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol,swap_st.m_symbol);
+
+							
+						}
+					}
+
+					if (Grid_CheckTrade::col_click==5)
+					{
+						if (wcscmp(first_st.m_Type  ,next_st.m_Type)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_Type,swap_st.m_Type);
+
+							
+						}
+					}
+					if (Grid_CheckTrade::col_click==8)
+					{
+						if (wcscmp(first_st.m_comment   ,next_st.m_comment)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_comment,swap_st.m_comment);
+
+							
+						}
+					}
+
+					if (Grid_CheckTrade::col_click==9)
+					{
+						if (wcscmp(first_st.m_OurComment,next_st.m_OurComment)<0)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_OurComment,swap_st.m_OurComment);
+						}
+					}
+
+
+				
+				}
+				else if (val_type==1)
+				{
+					if (Grid_CheckTrade::col_click==7)
+					{
+						LPTSTR endPtr1;										
+						double d_val1=_tcstod(first_st.m_price ,&endPtr1);
+						LPTSTR endPtr2;										
+						double d_val2=_tcstod(next_st.m_price,&endPtr2);						
+						if (d_val1<d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_price,swap_st.m_price);							
+						}
+					}
+					if (Grid_CheckTrade::col_click==6)
+					{
+						LPTSTR endPtr1;										
+						int d_val1=_tcstod(first_st.m_volume ,&endPtr1);
+						LPTSTR endPtr2;										
+						int d_val2=_tcstod(next_st.m_volume,&endPtr2);						
+						if (d_val1<d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_volume,swap_st.m_volume);
+
+							
+						}
+					}
+					if (Grid_CheckTrade::col_click==2)
+					{
+						LPTSTR endPtr1;										
+						int d_val1=_tcstod(first_st.m_deal ,&endPtr1);
+						LPTSTR endPtr2;										
+						int d_val2=_tcstod(next_st.m_deal,&endPtr2);						
+						if (d_val1<d_val2)
+						{
+							Grid_CheckTrade::m_st_grid_check_Grid_array.Shift(j,i-j);
+							swap_st=Grid_CheckTrade::m_st_grid_check_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal,swap_st.m_deal);
+						}
+					}
+
+				}				
+	
+			}
+			
+		}
+		
+	}
+	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+
+		int grid_total=GetNumberRows();
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+}
+
+void Grid_CheckTrade::ColValue_filter()
+{
+
+	    int val_type=0;	
+		val_type=0;
+		if (Grid_CheckTrade::insertFilterFlag==1 )
+		{
+		Grid_CheckTrade::m_st_grid_check_Grid_array.Clear();
+		int noof_rowsInStruc=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+		for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+		{
+			Grid_CheckTrade::st_grid_check m_st_Netposition={};
+			m_st_Netposition=Grid_CheckTrade::m_st_grid_check_Array_Fill[fcount];
+			int flag=0;				
+			CString col_row_val[11];		
+			col_row_val[0]=m_st_Netposition.m_CommentYN ;
+			if (Grid_CheckTrade::col0_val.Trim().GetLength()>0)
+			{
+				col_row_val[0]=col_row_val[0].Mid(0,Grid_CheckTrade::col0_val.Trim().GetLength());
+			}
+			col_row_val[1]=m_st_Netposition.m_time ;
+			if (Grid_CheckTrade::col1_val.Trim().GetLength()>0)
+			{
+				col_row_val[1]=col_row_val[1].Mid(0,Grid_CheckTrade::col1_val.Trim().GetLength());
+				col_row_val[1]=col_row_val[1].Mid(0,10);
+			}
+			col_row_val[2]=m_st_Netposition.m_deal;
+			if (Grid_CheckTrade::col2_val.Trim().GetLength()>0)
+			{
+				col_row_val[2]=col_row_val[2].Mid(0,Grid_CheckTrade::col2_val.Trim().GetLength());
+			}
+						
+			col_row_val[3]=m_st_Netposition.m_order ;
+			if (Grid_CheckTrade::col3_val.Trim().GetLength()>0)
+			{
+				col_row_val[3]=col_row_val[3].Mid(0,Grid_CheckTrade::col3_val.Trim().GetLength());
+			}
+
+			col_row_val[4]=m_st_Netposition.m_symbol;
+			if (Grid_CheckTrade::col4_val.Trim().GetLength()>0)
+			{
+				col_row_val[4]=col_row_val[4].Mid(0,Grid_CheckTrade::col4_val.Trim().GetLength());
+			}
+
+			col_row_val[5]=m_st_Netposition.m_Type ;
+			if (Grid_CheckTrade::col5_val.Trim().GetLength()>0)
+			{
+				col_row_val[5]=col_row_val[5].Mid(0,Grid_CheckTrade::col5_val.Trim().GetLength());
+			}
+
+			col_row_val[6]=m_st_Netposition.m_volume;
+			boolean bool_col6=Check_numeric_col_filter1(Grid_CheckTrade::col6_val,col_row_val[6]);
+
+			col_row_val[7]=m_st_Netposition.m_price  ;
+			boolean bool_col7=Check_numeric_col_filter1(Grid_CheckTrade::col7_val,col_row_val[7]);
+
+			col_row_val[8]=m_st_Netposition.m_comment ;
+			if (Grid_CheckTrade::col8_val.Trim().GetLength()>0)
+			{
+				col_row_val[8]=col_row_val[8].Mid(0,Grid_CheckTrade::col8_val.Trim().GetLength());
+			}
+
+			col_row_val[9]=m_st_Netposition.m_OurComment  ;
+			if (Grid_CheckTrade::col9_val.Trim().GetLength()>0)
+			{
+				col_row_val[9]=col_row_val[9].Mid(0,Grid_CheckTrade::col9_val.Trim().GetLength());
+			}
+
+			col_row_val[10]=m_st_Netposition.m_Checked;
+			if (Grid_CheckTrade::col10_val.Trim().GetLength()>0)
+			{
+				col_row_val[10]=col_row_val[10].Mid(0,Grid_CheckTrade::col10_val.Trim().GetLength());
+			}
+			
+			if((Grid_CheckTrade::col0_val.Trim()==col_row_val[0].Trim() || Grid_CheckTrade::col0_val.Trim()==L"ALL"||Grid_CheckTrade::col0_val.Trim()==L"") && (Grid_CheckTrade::col1_val.Trim()==col_row_val[1].Trim() || Grid_CheckTrade::col1_val.Trim()==L"ALL"||Grid_CheckTrade::col1_val.Trim()==L"") && (Grid_CheckTrade::col2_val.Trim()==col_row_val[2].Trim() || Grid_CheckTrade::col2_val.Trim()==L"ALL"||Grid_CheckTrade::col2_val.Trim()==L"")  && (Grid_CheckTrade::col3_val.Trim()==col_row_val[3].Trim() || Grid_CheckTrade::col3_val.Trim()==L"ALL"||Grid_CheckTrade::col3_val.Trim()==L"") && (Grid_CheckTrade::col4_val.Trim()==col_row_val[4].Trim() || Grid_CheckTrade::col4_val.Trim()==L"ALL"||Grid_CheckTrade::col4_val.Trim()==L"")   && (Grid_CheckTrade::col5_val.Trim()==col_row_val[5].Trim() || Grid_CheckTrade::col5_val.Trim()==L"ALL"||Grid_CheckTrade::col5_val.Trim()==L"")   && (bool_col6==true || Grid_CheckTrade::col6_val.Trim()==L"ALL"||Grid_CheckTrade::col6_val.Trim()==L"")   && (bool_col7==true || Grid_CheckTrade::col7_val.Trim()==L"ALL"||Grid_CheckTrade::col7_val.Trim()==L"")   && (Grid_CheckTrade::col8_val.Trim()==col_row_val[8].Trim() || Grid_CheckTrade::col8_val.Trim()==L"ALL"||Grid_CheckTrade::col8_val.Trim()==L"") && (Grid_CheckTrade::col9_val.Trim()==col_row_val[9].Trim() || Grid_CheckTrade::col9_val.Trim()==L"ALL"||Grid_CheckTrade::col9_val.Trim()==L"") &&(Grid_CheckTrade::col10_val==col_row_val[10] || Grid_CheckTrade::col10_val==L"ALL"||Grid_CheckTrade::col10_val==L""))
+			{
+				Grid_CheckTrade::m_st_grid_check_Grid_array.Add(&m_st_Netposition);
+			}
+		}
+		}
+		else
+		{
+			Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
+		}
+
+		
+
+	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+
+		int grid_total=GetNumberRows();
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+
 }

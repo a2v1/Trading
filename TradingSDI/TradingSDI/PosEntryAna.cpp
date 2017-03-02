@@ -79,7 +79,7 @@ void PosEntryAna::OnSetup()
 	SetHighlightRow(TRUE, FALSE);
 	SetDoubleBufferMode(TRUE);
 	SetUserSizingMode( TRUE  );
-
+	SetVScrollMode(TRUE);
 	
 	InitMenu();
 	// Create and set default font
@@ -137,9 +137,11 @@ void PosEntryAna::OnSheetSetup(int sheetNumber)
 	EnableExcelBorders(TRUE);
 	SetHighlightRow(TRUE, FALSE);
 	SetDoubleBufferMode(TRUE);
+	SetVScrollMode(TRUE);
 	SetDefFont(0);
 	SetSH_Width(0);	
 	SetNumberCols(6);
+	
 
 	QuickSetText(0,-1,L"Deal");
 	SetColWidth(0,100);

@@ -2541,13 +2541,14 @@ void NetPosGrid::OnSetup()
 	}
 	 catch(_com_error & ce)
 	{
-		AfxMessageBox(ce.Description()+L"   writeData");			
+		AfxMessageBox(ce.Description()+L"   ONSETUP");			
 	} 
 }
 void NetPosGrid::Thread_start_st_netpos_update()
 {
 	AfxBeginThread(Update_Netposition, this);		
 }
+
 boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 {
 		boolean bool_col=false;		
