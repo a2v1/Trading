@@ -44,7 +44,8 @@ public:
 	CUGSortArrowType m_sortArrow;
 	int m_iSortCol;
 	CFont m_font;
-	
+	static int val_type;
+
 	void filter();
 	CUGCell cell1, cell2, cell3, cell4, cell5,cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13, cell14;
 	void getData(CString FilterType,CString Datefrom,CString DateTo);
@@ -175,7 +176,7 @@ public:
 
 	void Col_sorting();
 	void ColValue_filter();
-
+	void RefreshGrid();
 	//focus rect setup
 	
 };

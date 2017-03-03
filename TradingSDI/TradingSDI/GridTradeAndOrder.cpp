@@ -50,6 +50,9 @@ CMutex GridTradeAndOrder::gridAndOrder_mutex;
 CString GridTradeAndOrder::m_c_symbol=L"";
 int GridTradeAndOrder::value_row_no=0;
 int GridTradeAndOrder::filter_break=0;
+int GridTradeAndOrder::col_click=0;
+int GridTradeAndOrder::a_d=0;
+
 int GridTradeAndOrder::insertFilterFlag=0;
 int GridTradeAndOrder::check_First=0;
 int GridTradeAndOrder::thred_killed_ok=0;
@@ -186,15 +189,20 @@ UINT update_data_Trade(void *pParam)
 				 GridTradeAndOrder::m_gridAndOrder_Array_Fill.Clear();
 				 GridTradeAndOrder::st_gridAndOrder m_st_Dealing={};				 
 				 while (artists1.MoveNext() == S_OK)
-				 {																	  
+				 {									
+                    LPTSTR endPtr;
+				    double d_m_PL = _tcstod(artists1.m_Price, &endPtr);												
+					CString cstrpl;
+					cstrpl.Format(_T("%.2f"),d_m_PL);	
+
 					CMTStr::Copy(m_st_Dealing.Symbol ,artists1.m_Symbol );				 					
 					CMTStr::Copy(m_st_Dealing.Order ,artists1.m_Order );				 												
 					CMTStr::Copy(m_st_Dealing.Time,artists1.m_Time ) ;
 					CMTStr::Copy(m_st_Dealing.Type ,artists1.m_Type );		
-					CMTStr::Copy(m_st_Dealing.Volume ,artists1.m_Volume );		
-					m_st_Dealing.Price =artists1.m_Price ;
-					m_st_Dealing.Current_Rate =artists1.m_Current_Rate;
-					m_st_Dealing.PL =artists1.m_PL;
+					CMTStr::Copy(m_st_Dealing.Volume ,artists1.m_Volume );	
+					CMTStr::Copy(m_st_Dealing.Price,cstrpl) ;
+					CMTStr::Copy(m_st_Dealing.Type ,artists1.m_Current_Rate);		
+					CMTStr::Copy(m_st_Dealing.Volume ,artists1.m_PL);
 					CMTStr::Copy(m_st_Dealing.Status,artists1.m_Status);
 					CMTStr::Copy(m_st_Dealing.Trade_Checked,artists1.m_Trade_Checked);
 					CMTStr::Copy(m_st_Dealing.Checked_Time,artists1.m_Checked_Time);
@@ -253,22 +261,13 @@ UINT update_data_Trade(void *pParam)
 							col_row_val[4]=col_row_val[4].Mid(0,GridTradeAndOrder::col4_val.Trim().GetLength());
 						}
 
-                        double m_price=m_st_Netposition.Price;
-				        CString price=L"" ;
-				        price.Format(L"%.2f",m_price);
-						col_row_val[5]=price;
+						col_row_val[5]=m_st_Netposition.Price;;
 						boolean bool_col5=Check_numeric_col_filter(GridTradeAndOrder::col5_val,col_row_val[5]);
 
-						double m_rate=m_st_Netposition.Current_Rate;
-				        CString m_rate1=L"" ;
-				        m_rate1.Format(L"%.2f",m_rate);
-						col_row_val[6]=m_rate1;
+						col_row_val[6]=m_st_Netposition.Current_Rate;;
 						boolean bool_col6=Check_numeric_col_filter(GridTradeAndOrder::col6_val,col_row_val[6]);
 
-						double m_pl=m_st_Netposition.PL;
-				        CString m_pl1=L"" ;
-				        m_pl1.Format(L"%.2f",m_pl);
-						col_row_val[7]=m_pl1;
+						col_row_val[7]=m_st_Netposition.PL;
 						boolean bool_col7=Check_numeric_col_filter(GridTradeAndOrder::col7_val,col_row_val[7]);
 
 						col_row_val[8]=m_st_Netposition.Status;
@@ -311,7 +310,326 @@ UINT update_data_Trade(void *pParam)
 				 }
 
 
-			 GridTradeAndOrder::gridAndOrder_mutex.Unlock();	
+
+//SORTING Colums values
+	int t_rows=GridTradeAndOrder::m_gridAndOrder_Grid_array.Total();
+	GridTradeAndOrder::st_gridAndOrder first_st={};
+	GridTradeAndOrder::st_gridAndOrder next_st={};
+	GridTradeAndOrder::st_gridAndOrder swap_st={};
+	val_type=0;
+	if (GridTradeAndOrder::col_click==4 || GridTradeAndOrder::col_click==5||GridTradeAndOrder::col_click==7 || GridTradeAndOrder::col_click==6)
+	{
+		val_type=1;
+	}
+	for (int i=0;i<t_rows;i++)
+	{
+		first_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+		for (int j=i+1;j<t_rows;j++)
+		{
+			next_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[j];
+			if (GridTradeAndOrder::a_d==0)
+			{
+				if (val_type==0)
+				{
+					if (GridTradeAndOrder::col_click==0)
+					{
+						if (wcscmp(first_st.Symbol   ,next_st.Symbol)>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Symbol ,swap_st.Symbol  );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==1)
+					{
+						if (wcscmp(first_st.Order   ,next_st.Order   )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Order   ,swap_st.Order  );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==2)
+					{
+						if (wcscmp(first_st.Time  ,next_st.Time  )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Time  ,swap_st.Time );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==3)
+					{
+						if (wcscmp(first_st.Type   ,next_st.Type   )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Type ,swap_st.Type  );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==8)
+					{
+						if (wcscmp(first_st.Status   ,next_st.Status   )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Status ,swap_st.Status  );							
+						}
+					}
+
+
+					if (GridTradeAndOrder::col_click==9)
+					{
+						if (wcscmp(first_st.Trade_Checked   ,next_st.Trade_Checked  )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Trade_Checked ,swap_st.Trade_Checked );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==10)
+					{
+						if (wcscmp(first_st.Checked_Time  ,next_st.Checked_Time  )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Checked_Time,swap_st.Checked_Time );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==11)
+					{
+						if (wcscmp(first_st.Limit  ,next_st.Limit  )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Limit  ,swap_st.Limit );							
+						}
+					}
+
+
+					if (GridTradeAndOrder::col_click==12)
+					{
+						if (wcscmp(first_st.Remark2   ,next_st.Remark2  )>0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Remark2   ,swap_st.Remark2 );							
+						}
+					}
+
+				}	
+				else
+				{
+					if (GridTradeAndOrder::col_click==4)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Volume, &endPtr1);
+						double val2=_tcstod(next_st.Volume, &endPtr1);
+						if (val1>val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Volume  ,swap_st.Volume  );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==5)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Price, &endPtr1);
+						double val2=_tcstod(next_st.Price, &endPtr1);
+						if (val1>val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Price ,swap_st.Price);							
+						}
+					}
+					if (GridTradeAndOrder::col_click==6)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Current_Rate, &endPtr1);
+						double val2=_tcstod(next_st.Current_Rate, &endPtr1);
+						if (val1>val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Current_Rate  ,swap_st.Current_Rate);							
+						}
+
+					}
+					if (GridTradeAndOrder::col_click==7)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.PL, &endPtr1);
+						double val2=_tcstod(next_st.PL, &endPtr1);
+						if (val1>val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.PL ,swap_st.PL  );							
+						}
+					}
+					
+				}
+			 }
+			else
+			{
+				if (val_type==0)
+				{
+
+					if (GridTradeAndOrder::col_click==0)
+					{
+						if (wcscmp(first_st.Symbol   ,next_st.Symbol)<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Symbol ,swap_st.Symbol  );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==1)
+					{
+						if (wcscmp(first_st.Order   ,next_st.Order)<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Order   ,swap_st.Order  );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==2)
+					{
+						if (wcscmp(first_st.Time  ,next_st.Time  )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Time  ,swap_st.Time );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==3)
+					{
+						if (wcscmp(first_st.Type   ,next_st.Type )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Type ,swap_st.Type  );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==8)
+					{
+						if (wcscmp(first_st.Status   ,next_st.Status)<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Status ,swap_st.Status  );							
+						}
+					}
+
+
+					if (GridTradeAndOrder::col_click==9)
+					{
+						if (wcscmp(first_st.Trade_Checked   ,next_st.Trade_Checked  )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Trade_Checked ,swap_st.Trade_Checked );							
+						}
+					}
+					
+					if (GridTradeAndOrder::col_click==10)
+					{
+						if (wcscmp(first_st.Checked_Time  ,next_st.Checked_Time  )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Checked_Time,swap_st.Checked_Time );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==11)
+					{
+						if (wcscmp(first_st.Limit  ,next_st.Limit  )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Limit  ,swap_st.Limit );							
+						}
+					}
+
+
+					if (GridTradeAndOrder::col_click==12)
+					{
+						if (wcscmp(first_st.Remark2   ,next_st.Remark2  )<0)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Remark2   ,swap_st.Remark2 );							
+						}
+					}
+
+				}	
+				else
+				{
+					if (GridTradeAndOrder::col_click==4)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Volume, &endPtr1);
+						double val2=_tcstod(next_st.Volume, &endPtr1);
+						if (val1<val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Volume  ,swap_st.Volume  );							
+						}
+					}
+					if (GridTradeAndOrder::col_click==5)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Price, &endPtr1);
+						double val2=_tcstod(next_st.Price, &endPtr1);
+						if (val1<val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Price ,swap_st.Price);							
+						}
+					}
+					if (GridTradeAndOrder::col_click==6)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.Current_Rate, &endPtr1);
+						double val2=_tcstod(next_st.Current_Rate, &endPtr1);
+						if (val1<val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.Current_Rate  ,swap_st.Current_Rate);							
+						}
+
+					}
+					if (GridTradeAndOrder::col_click==7)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.PL, &endPtr1);
+						double val2=_tcstod(next_st.PL, &endPtr1);
+						if (val1<val2)
+						{
+							GridTradeAndOrder::m_gridAndOrder_Grid_array.Shift(j,i-j);
+							swap_st=GridTradeAndOrder::m_gridAndOrder_Grid_array[i];
+							CMTStr::Copy(first_st.PL ,swap_st.PL  );							
+						}
+					}
+					
+				}
+				
+			}
+		}
+	}
+
+
+	        GridTradeAndOrder::gridAndOrder_mutex.Unlock();	
 			}
 		Sleep(10);
 	  }
@@ -571,8 +889,26 @@ void GridTradeAndOrder::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT
 	UNREFERENCED_PARAMETER(point);
 	UNREFERENCED_PARAMETER(processed);
 
+    GridTradeAndOrder::col_click=col;
 	if( updn == 0)
 		return;
+
+
+	if (col_click!=col)
+	{
+		a_d=0;
+	}
+	else
+	{
+		if (a_d==0)
+		{
+			a_d=1;
+		}
+		else
+		{
+			a_d=0;
+		}
+	}
 
 	QuickSetCellType( m_iSortCol, -1, 0 );
 
@@ -1313,9 +1649,7 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
-					double m_price=m_st_for_filter.Price;
-				    CString str_val=L"" ;
-				    str_val.Format(L"%.2f",m_price);
+					str_val=m_st_for_filter.Price;
 					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
@@ -1325,9 +1659,7 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==6)
 				{
-					double Current_Rate=m_st_for_filter.Current_Rate;
-				    CString str_val=L"" ;
-				    str_val.Format(L"%.2f",Current_Rate);
+					str_val=m_st_for_filter.Current_Rate;
 					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr6,str_val)==false )
 					{
@@ -1337,9 +1669,8 @@ void GridTradeAndOrder::addItemToCombobox()
 				}
 				if (clocount==7)
 				{
-					double pl=m_st_for_filter.PL;
-				    CString str_val=L"" ;
-				    str_val.Format(L"%.2f",pl);
+					
+					str_val=m_st_for_filter.PL;
 					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr7,str_val)==false )
 					{
@@ -1675,10 +2006,7 @@ void GridTradeAndOrder::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==5)
 			{				
 				mst_grid=GridTradeAndOrder::m_gridAndOrder_Grid_array[rows_no];
-				double m_price=mst_grid.Price  ;
-
-				CString tmp=L"" ;
-				tmp.Format(L"%.2f",m_price);
+				CString tmp=mst_grid.Price;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1688,10 +2016,7 @@ void GridTradeAndOrder::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==6)
 			{	
 				mst_grid=GridTradeAndOrder::m_gridAndOrder_Grid_array[rows_no];
-				double m_currentrate=mst_grid.Current_Rate  ;
-
-				CString tmp=L"" ;
-				tmp.Format(L"%.2f",m_currentrate);
+				CString tmp=mst_grid.Current_Rate  ;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1701,10 +2026,7 @@ void GridTradeAndOrder::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==7)
 			{				
 				mst_grid=GridTradeAndOrder::m_gridAndOrder_Grid_array[rows_no];
-				double m_pl=mst_grid.PL  ;
-
-				CString tmp=L"" ;
-				tmp.Format(L"%.2f",m_pl);
+				CString tmp=mst_grid.PL  ;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{

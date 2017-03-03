@@ -46,9 +46,9 @@ public:
 		wchar_t Time[100];
 		wchar_t Type[50];
 		wchar_t Volume[100];
-		double Price;
-		double Current_Rate;		
-		double PL;
+		wchar_t Price[100];
+		wchar_t Current_Rate[100];		
+		wchar_t PL[100];
 		wchar_t Status[100];
 		wchar_t Trade_Checked[100];
 		wchar_t Checked_Time[100];
@@ -61,7 +61,8 @@ public:
 	static st_gridAndOrder_Array m_gridAndOrder_Array;	
 	static st_gridAndOrder_Array m_gridAndOrder_Grid_array;
 	static CMutex gridAndOrder_mutex;
-
+	static int col_click;
+    static int a_d;
 
 
 protected:
