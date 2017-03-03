@@ -1319,6 +1319,8 @@ void Duplicate_Order::Selected_commentChange()
 	CString deal=L"";
 	CString comment_o=L"";
 	CString comment_n=L"";
+	CString ocomment_o=L"";
+	CString ocomment_n=L"";
 	CoInitialize(NULL);
 	_RecordsetPtr pRstAuthors = NULL;
 	 HRESULT hr = S_OK;
@@ -1333,13 +1335,24 @@ void Duplicate_Order::Selected_commentChange()
 		login=QuickGetText(0,fcount);
 		deal=QuickGetText(2,fcount);
 		comment_o=QuickGetText(8,fcount);
+		ocomment_o=comment_o;
+		if (comment_o.Find('-')>=0)
+		{
+			comment_o=comment_o.Mid(0,comment_o.Find('-'));
+		}
 		comment_n=QuickGetText(9,fcount);
+		ocomment_n=comment_n;
+		if (comment_n.Find('-')>=0)
+		{
+			comment_n=comment_n.Mid(0,comment_n.Find('-'));
+		}
+		
 		CString check_value=QuickGetText(10,fcount);
 		_bstr_t strdeal=deal;
 		
 		if (login!=L"" && check_value==L"1"  && comment_n.Trim().GetLength()>0) 
 		{
-			change_comment_dealwise(login,deal,comment_n,comment_o);
+			change_comment_dealwise(login,deal,ocomment_n,ocomment_o);
 			st_Change_Comment_List m_st_Change_Comment_List={};
 			CMTStr::Copy(m_st_Change_Comment_List.Deal,deal);
 			CMTStr::Copy(m_st_Change_Comment_List.Login,login);
@@ -1347,7 +1360,7 @@ void Duplicate_Order::Selected_commentChange()
 			CMTStr::Copy(m_st_Change_Comment_List.New_Comment,comment_n);
 			char *struct_data;
 			//memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));*/
-			_bstr_t bstr_login=login+"-"+comment_o+"|"+login+"-"+comment_n;
+			_bstr_t bstr_login=login+"-"+comment_o+"|"+login+"-"+comment_n+"|"+login+"-"+ocomment_o+"|"+login+"-"+ocomment_n;
 			
 			bstr_final_comment=bstr_final_comment+bstr_login+"|";
 		
