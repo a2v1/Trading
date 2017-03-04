@@ -14,7 +14,13 @@ using namespace rapidjson;
 static char THIS_FILE[] = __FILE__;
 #endif
 int PosEntryAna::insertFilterFlag=0;
+//Structure variable
+PosEntryAna::st_grid_anlysis_array PosEntryAna::m_st_grid_anlysis_Array_Fill;
+PosEntryAna::st_grid_anlysis_array PosEntryAna::m_st_grid_anlysis_Grid_array;
 
+PosEntryAna::st_grid_anlysis PosEntryAna::m_st_grid_anlysis={};
+
+int PosEntryAna::m_selectedclient =0;
 PosEntryAna::PosEntryAna(void)
 {
 	UGXPThemes::UseThemes(false);
@@ -38,38 +44,73 @@ void PosEntryAna::Getdata(_bstr_t m_login)
 	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	session.Open(connection);
 	
-	
-	 SetNumberRows(0);
 			
 	_bstr_t strCommand="select Deal,[Login],Symbol,Time,EntryVolume,EntryPrice from Position_Entry_Analysis where [login]='" + m_login + "'";		  
-	    char* strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);	
+		hr=artists1.Open(session,(LPCTSTR)strCommand);	
 
 		int rownumber=0;
 	    if(SUCCEEDED(hr))
 		 {
+			PosEntryAna::m_st_grid_anlysis_Array_Fill.Clear();
 			while (artists1.MoveNext() == S_OK)
 			 {				 
-				 InsertRow(rownumber);
-				 QuickSetText(0,rownumber,artists1.m_deal);
-				 QuickSetText(1,rownumber,artists1.m_login );
-				 QuickSetText(2,rownumber,artists1.m_symbol);
-				 QuickSetText(3,rownumber,artists1.m_time);
-				 QuickSetText(4,rownumber,artists1.m_EntryVolume);
-				
-				CString str=L"";
-				str.Format(L"%.4f",artists1.m_EntryPrice);
-				QuickSetText(5,rownumber,str );
-				rownumber=rownumber+1;
+				PosEntryAna::m_selectedclient=1;
+				LPTSTR endPtr;
+				double d_price = _tcstod(artists1.m_EntryPrice, &endPtr);												
+				CString price;
+				price.Format(_T("%.2f"),d_price);	
+				PosEntryAna::st_grid_anlysis m_st={};
+			
+				CMTStr::Copy(m_st.m_deal ,artists1.m_deal);
+				CMTStr::Copy(m_st.m_login,artists1.m_login);
+				CMTStr::Copy(m_st.m_symbol ,artists1.m_symbol);
+				CMTStr::Copy(m_st.m_time ,artists1.m_time);
+				CMTStr::Copy(m_st.m_EntryVolume,artists1.m_EntryVolume);
+				CMTStr::Copy(m_st.m_Entryprice,price);
+				PosEntryAna::m_st_grid_anlysis_Array_Fill.Add(&m_st);
 			 }
-			  artists1.Close();
-		 }   
-	
-	
-	 RedrawAll();
-	 m_logfile.LogEvent(L"END PosEntry Ana Grid");
+		  } 
+
+		  if(PosEntryAna::m_selectedclient==0)
+		  {
+		      
+		    AfxMessageBox(L"Data Not Found");
+		  }
+		  PosEntryAna::m_selectedclient=0;
+		 //ASSINGNING into main array
+		 PosEntryAna::m_st_grid_anlysis_Grid_array.Assign(PosEntryAna::m_st_grid_anlysis_Array_Fill);
+
+	    //adding rows set rows
+		RefreshGrid();
+
+	artists1.Close();	
+	session.Close();
+	connection.Close();
+    RedrawAll();
+	m_logfile.LogEvent(L"END PosEntry Ana Grid");
 	
 }
+
+void PosEntryAna::RefreshGrid()
+{
+	int r_count=PosEntryAna::m_st_grid_anlysis_Grid_array.Total();
+
+		int grid_total=GetNumberRows();
+		if (PosEntryAna::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+
+}
+
 void PosEntryAna::OnSetup()
 {
 	CUGCell cell;
@@ -209,15 +250,7 @@ void PosEntryAna::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *poin
 
 	}
 
-	int row_no=GetNumberRows();
-	 for(int f=0;f<row_no;f++)
-	 {
-		 CString val=QuickGetText(0,f);
-		 if(wcscmp( val,L"")==0)
-		{
-			DeleteRow(f);
-	    }
-	 }
+
   RedrawAll();
 }
 int PosEntryAna::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
@@ -550,4 +583,98 @@ void PosEntryAna::gridFilter(int colno,int rows_count,CString col_value)
 		}
 	 }
 	
+}
+
+void PosEntryAna::OnGetCell(int col,long row,CUGCell *cell)
+{		
+		//m_logfile_g.LogEvent(L"Start OnGetCell");
+	    PosEntryAna::st_grid_anlysis mst_grid={};
+
+        int rows_no=0;
+		rows_no=row;		
+		UNREFERENCED_PARAMETER(col);
+		UNREFERENCED_PARAMETER(row);
+		UNREFERENCED_PARAMETER(*cell);		
+		if ( col >= 0 && row == -1 )
+		{	
+		}
+		else if ( row >= 0 && col == -1 )
+		{	
+		}
+		else if ( col >= 0 && row >= 0 )
+		{
+			if (PosEntryAna::insertFilterFlag==1)
+			{
+				rows_no=row-1;				
+				if (row==0)
+				{
+					return;
+				}
+			}
+			if (col==0)
+			{		
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_deal;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==1)
+			{
+
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_login;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==2)
+			{		
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_symbol ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==3)
+			{	
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_time ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==4)
+			{				
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_EntryVolume;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==5)
+			{				
+				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Entryprice  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+		}
 }

@@ -14,7 +14,7 @@ public:
 
 // Dialog Data
 	enum { IDD = IDD_TAB3 };
-	static int m_selectedclient;
+	
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 

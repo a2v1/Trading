@@ -11,7 +11,7 @@
 // tab3 dialog
 
 IMPLEMENT_DYNAMIC(tab3, CDialogEx)
-int tab3::m_selectedclient =0;
+
 tab3::tab3(CWnd* pParent /*=NULL*/)
 	: CDialogEx(tab3::IDD, pParent)
 {
@@ -48,8 +48,6 @@ BOOL tab3::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	posEntryGrid.AttachGrid(this,IDC_STATIC_POSENTRYGRID);
-	posEntryGrid.Getdata(GridTradeAndOrder::m_selected_login);
-
 	for (int f_count=0;f_count<200;f_count++)
 	{
 		if (CMainFrame::arrLogin[f_count]!=L"")
@@ -65,19 +63,13 @@ BOOL tab3::OnInitDialog()
 void tab3::OnBnClickedOk()
 {
 	int item_no=m_ClientCode.GetCurSel();
-	if(tab3::m_selectedclient==0)
-	{
-	tab3::m_selectedclient=1;
+	CString list_code=L"";
+
     if (item_no!=-1)
     {
-		 m_ClientCode.GetLBText(item_no,(LPTSTR)GridTradeAndOrder::m_selected_login);
+		 m_ClientCode.GetLBText(item_no,list_code);
 	}
 	 
-	posEntryGrid.Getdata(GridTradeAndOrder::m_selected_login);
-	}
-	else
-	{
-		tab3::m_selectedclient=0;
-	}
+	posEntryGrid.Getdata((LPCTSTR)list_code);
     posEntryGrid.RedrawAll(); 
 }

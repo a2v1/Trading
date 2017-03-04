@@ -35,7 +35,7 @@ public:
 	CFont m_font;
 	void filter();
 	CUGCell cell1, cell2, cell3, cell4, cell5,cell6, cell7, cell8, cell9, cell10, cell11, cell12, cell13, cell14;
-
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val;
 	//Structure for fill data
 	struct st_OverviewOrder
 	{		 		
@@ -103,7 +103,7 @@ private:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	CString str[14];
+	CString str[10];
 	int	m_nSpinIndex;
 	int run_check;
 	

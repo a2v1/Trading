@@ -47,7 +47,6 @@ BOOL tab4::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	Balance_Grid.AttachGrid(this,IDC_STATIC_BALANCE_TABLE);
-	Balance_Grid.GetData(GridTradeAndOrder::m_selected_login);
 
 	for (int f_count=0;f_count<200;f_count++)
 	{

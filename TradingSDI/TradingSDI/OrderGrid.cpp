@@ -876,12 +876,7 @@ int OrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 					col15_val=L"ALL";					
 				}
 			}
-			}
-
-
-
-
-
+		}
 
 	}
 	return true;
@@ -1720,6 +1715,22 @@ void OrderGrid::GetOrders()
 			InsertRow(0);
 			for (int col_count=0;col_count<16;col_count++)
 			{
+				OrderGrid::col0_val=L"";
+				OrderGrid::col1_val=L"";
+				OrderGrid::col2_val=L"";
+				OrderGrid::col3_val=L"";
+				OrderGrid::col4_val=L"";
+				OrderGrid::col5_val=L"";
+				OrderGrid::col6_val=L"";
+				OrderGrid::col7_val=L"";
+				OrderGrid::col8_val=L"";
+				OrderGrid::col9_val=L"";
+				OrderGrid::col10_val=L"";
+				OrderGrid::col11_val=L"";
+				OrderGrid::col12_val=L"";
+				OrderGrid::col13_val=L"";
+				OrderGrid::col14_val=L"";
+				OrderGrid::col15_val=L"";
 				CUGCell cell;
 				int row=0;
 				int col=col_count;
@@ -1736,6 +1747,7 @@ void OrderGrid::GetOrders()
 		
 		DeleteRow(0);
 		OrderGrid::insertFilterFlag=0;		
+
 	}
 	RedrawAll();
  }

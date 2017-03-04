@@ -11,7 +11,7 @@
 	TCHAR               m_symbol[31];
 	TCHAR               m_time[38];
 	TCHAR               m_EntryVolume[32];
-	float               m_EntryPrice;
+	TCHAR               m_EntryPrice[32];
 	
 	// The following wizard-generated data members contain status
 	// values for the corresponding fields in the column map. You

@@ -720,10 +720,9 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			}
 
 		}
-		
-		ColValue_filter();
+	   
+	  ColValue_filter();
      }
-
 
     return true;
 }
@@ -1281,8 +1280,25 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 		
 		DeleteRow(0);
 		Grid_CheckTrade::insertFilterFlag=0;
-		/*int r_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
-		int grid_total=GetNumberRows();	
+		Grid_CheckTrade::col0_val=L"";
+		Grid_CheckTrade::col1_val=L"";
+		Grid_CheckTrade::col2_val=L"";
+		Grid_CheckTrade::col3_val=L"";
+		Grid_CheckTrade::col4_val=L"";
+		Grid_CheckTrade::col5_val=L"";
+		Grid_CheckTrade::col6_val=L"";
+		Grid_CheckTrade::col7_val=L"";
+		Grid_CheckTrade::col8_val=L"";
+		Grid_CheckTrade::col9_val=L"";
+		Grid_CheckTrade::col10_val=L"";
+
+		int r_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+
+		int grid_total=GetNumberRows();
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
 		if (grid_total!=r_count)
 		{			
 			SetNumberRows(r_count);		
@@ -1290,7 +1306,7 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 		else
 		{			
 			RedrawAll();			
-		}*/
+		}
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
@@ -1721,7 +1737,7 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		 s2.Format(L"Net:-%.2f",netQty);
 
 
-		CMTStr::Copy(N_st.m_time ,s1);
+		 CMTStr::Copy(N_st.m_time ,s1);
 
 
 		CMTStr::Copy(N_st.m_OurComment ,s2);

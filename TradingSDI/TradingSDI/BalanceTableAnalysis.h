@@ -13,22 +13,22 @@
 	TCHAR               m_Symbol[32];
 	TCHAR               m_EntryAction[40];
 	TCHAR               m_EntryVolume[40];	
-	float               m_EntryPrice;
+	TCHAR               m_EntryPrice[40];
 	TCHAR               m_ExitDeal[40];
 	TCHAR               m_ExitTime[40];
 	TCHAR               m_ExitOrder[40];
 	TCHAR               m_ExitAction[40];
 	TCHAR               m_ExitVolume[40];
-	float               m_ExitPrice;  
-	float               m_ProfitPoint_L;
-	float               m_ProfitPoint_P;
-	float               m_Multiplayer;
-	float               m_Balance;
-	float               m_potentialprofitpoint;
-	float               m_PotentialLosspoint;
+	TCHAR               m_ExitPrice[40];  
+	TCHAR               m_ProfitPoint_L[40];
+	TCHAR               m_ProfitPoint_P[40];
+	TCHAR               m_Multiplayer[40];
+	TCHAR               m_Balance[40];
+	TCHAR               m_potentialprofitpoint[40];
+	TCHAR               m_PotentialLosspoint[40];
 	TCHAR               m_DurationTime[38];
-	float               m_high;
-	float               m_low;
+	TCHAR               m_high[40];
+	TCHAR               m_low[40];
 	
 	// The following wizard-generated data members contain status
 	// values for the corresponding fields in the column map. You

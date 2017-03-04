@@ -60,6 +60,18 @@ int OverViewOrderGrid::thred_killed_ok=0;
 
 int OverViewOrderGrid::OverViewOrderGrid_terminate=0;
 
+//filter value global use
+CString OverViewOrderGrid::col0_val=L"";
+CString OverViewOrderGrid::col1_val=L"";
+CString OverViewOrderGrid::col2_val=L"";
+CString OverViewOrderGrid::col3_val=L"";
+CString OverViewOrderGrid::col4_val=L"";
+CString OverViewOrderGrid::col5_val=L"";
+CString OverViewOrderGrid::col6_val=L"";
+CString OverViewOrderGrid::col7_val=L"";
+CString OverViewOrderGrid::col8_val=L"";
+CString OverViewOrderGrid::col9_val=L"";
+
 //_bstr_t OverViewOrderGrid::m_selected_login="0";
 //_bstr_t OverViewOrderGrid::m_selected_Name="0";
 _bstr_t OverViewOrderGrid::strShort("  order by t1.login asc,t1.symbol asc");
@@ -155,15 +167,19 @@ UINT update_data_Order(void *pParam)
 			 {
 				 OverViewOrderGrid::m_OverviewOrder_Array_Fill.Clear();
 				 OverViewOrderGrid::st_OverviewOrder m_st_OverviewOrder={};		
-				 hr=artists1.MoveNext();
 				 while (artists1.MoveNext() == S_OK)
-				 {																	  
+				 {									
+					LPTSTR endPtr;
+				    double d_m_PL = _tcstod(artists1.m_Price, &endPtr);												
+					CString cstrpl;
+					cstrpl.Format(_T("%.2f"),d_m_PL);	
+
 					CMTStr::Copy(m_st_OverviewOrder.Symbol ,artists1.m_Symbol );				 					
 					CMTStr::Copy(m_st_OverviewOrder.Order ,artists1.m_Order );				 												
 					CMTStr::Copy(m_st_OverviewOrder.Time,artists1.m_Time ) ;
 					CMTStr::Copy(m_st_OverviewOrder.Type ,artists1.m_Type );		
 					CMTStr::Copy(m_st_OverviewOrder.Volume ,artists1.m_Volume );
-					CMTStr::Copy(m_st_OverviewOrder.Price,artists1.m_Price);
+					CMTStr::Copy(m_st_OverviewOrder.Price,cstrpl);
 					CMTStr::Copy(m_st_OverviewOrder.Current_Rate ,artists1.m_Current_Rate);		
 					CMTStr::Copy(m_st_OverviewOrder.PL ,artists1.m_PL );
 					CMTStr::Copy(m_st_OverviewOrder.Status,artists1.m_Status);
@@ -175,7 +191,91 @@ UINT update_data_Order(void *pParam)
 			 }
 
 			 OverViewOrderGrid::OverviewOrder_mutex.Lock();	
-			 OverViewOrderGrid::m_OverviewOrder_Grid_array.Assign(OverViewOrderGrid::m_OverviewOrder_Array_Fill);
+
+			  //COLUMN VALUES FILTERATION
+			  int val_type=0;	
+				 val_type=0;
+				 if (OverViewOrderGrid::insertFilterFlag==1 )
+				 {
+					 OverViewOrderGrid::m_OverviewOrder_Grid_array.Clear();
+					 int noof_rowsInStruc=OverViewOrderGrid::m_OverviewOrder_Array_Fill.Total();
+					for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+					{
+						OverViewOrderGrid::st_OverviewOrder m_st_Netposition={};
+						m_st_Netposition=OverViewOrderGrid::m_OverviewOrder_Array_Fill[fcount];
+						int flag=0;				
+						CString col_row_val[9];		
+						col_row_val[0]=m_st_Netposition.Symbol;
+						if (OverViewOrderGrid::col0_val.Trim().GetLength()>0)
+						{
+							col_row_val[0]=col_row_val[0].Mid(0,OverViewOrderGrid::col0_val.Trim().GetLength());
+						}
+						col_row_val[1]=m_st_Netposition.Order;
+						if (OverViewOrderGrid::col1_val.Trim().GetLength()>0)
+						{
+							col_row_val[1]=col_row_val[1].Mid(0,OverViewOrderGrid::col1_val.Trim().GetLength());
+							col_row_val[1]=col_row_val[1].Mid(0,10);
+						}
+						col_row_val[2]=m_st_Netposition.Time ;
+						if (OverViewOrderGrid::col2_val.Trim().GetLength()>0)
+						{
+							col_row_val[2]=col_row_val[2].Mid(0,OverViewOrderGrid::col2_val.Trim().GetLength());
+						}
+						
+						col_row_val[3]=m_st_Netposition.Type ;
+						if (OverViewOrderGrid::col3_val.Trim().GetLength()>0)
+						{
+							col_row_val[3]=col_row_val[3].Mid(0,OverViewOrderGrid::col3_val.Trim().GetLength());
+						}
+
+						col_row_val[4]=m_st_Netposition.Volume;
+						if (OverViewOrderGrid::col4_val.Trim().GetLength()>0)
+						{
+							col_row_val[4]=col_row_val[4].Mid(0,OverViewOrderGrid::col4_val.Trim().GetLength());
+						}
+
+						col_row_val[5]=m_st_Netposition.Price;;
+						boolean bool_col5=Check_numeric_col_filter(OverViewOrderGrid::col5_val,col_row_val[5]);
+
+						col_row_val[6]=m_st_Netposition.Current_Rate;;
+						boolean bool_col6=Check_numeric_col_filter(OverViewOrderGrid::col6_val,col_row_val[6]);
+
+						col_row_val[7]=m_st_Netposition.PL;
+						boolean bool_col7=Check_numeric_col_filter(OverViewOrderGrid::col7_val,col_row_val[7]);
+
+						col_row_val[8]=m_st_Netposition.Status;
+						if (OverViewOrderGrid::col8_val.Trim().GetLength()>0)
+						{
+							col_row_val[8]=col_row_val[8].Mid(0,OverViewOrderGrid::col8_val.Trim().GetLength());
+						}
+
+						col_row_val[9]=m_st_Netposition.Trade_Checked ;
+						if (OverViewOrderGrid::col9_val.Trim().GetLength()>0)
+						{
+							col_row_val[9]=col_row_val[9].Mid(0,OverViewOrderGrid::col9_val.Trim().GetLength());
+						}
+
+						if((OverViewOrderGrid::col0_val.Trim()==col_row_val[0].Trim() || OverViewOrderGrid::col0_val.Trim()==L"ALL"||OverViewOrderGrid::col0_val.Trim()==L"") && (OverViewOrderGrid::col1_val.Trim()==col_row_val[1].Trim() || OverViewOrderGrid::col1_val.Trim()==L"ALL"||OverViewOrderGrid::col1_val.Trim()==L"") && (OverViewOrderGrid::col2_val.Trim()==col_row_val[2].Trim() || OverViewOrderGrid::col2_val.Trim()==L"ALL"||OverViewOrderGrid::col2_val.Trim()==L"")  && (OverViewOrderGrid::col3_val.Trim()==col_row_val[3].Trim() || OverViewOrderGrid::col3_val.Trim()==L"ALL"||OverViewOrderGrid::col3_val.Trim()==L"") && (OverViewOrderGrid::col4_val.Trim()==col_row_val[4].Trim() || OverViewOrderGrid::col4_val.Trim()==L"ALL"||OverViewOrderGrid::col4_val.Trim()==L"")   && (bool_col5==true || OverViewOrderGrid::col5_val.Trim()==L"ALL"||OverViewOrderGrid::col5_val.Trim()==L"")   && (bool_col6==true || OverViewOrderGrid::col6_val.Trim()==L"ALL"||OverViewOrderGrid::col6_val.Trim()==L"")   && (bool_col7==true || OverViewOrderGrid::col7_val.Trim()==L"ALL"||OverViewOrderGrid::col7_val.Trim()==L"")   && (OverViewOrderGrid::col8_val.Trim()==col_row_val[8].Trim() || OverViewOrderGrid::col8_val.Trim()==L"ALL"||OverViewOrderGrid::col8_val.Trim()==L"") && (OverViewOrderGrid::col9_val.Trim()==col_row_val[9].Trim() || OverViewOrderGrid::col9_val.Trim()==L"ALL"||OverViewOrderGrid::col9_val.Trim()==L""))
+				        {
+							 OverViewOrderGrid::m_OverviewOrder_Grid_array.Add(&m_st_Netposition);
+						}
+					}
+				 }
+				 else
+				 {
+					 OverViewOrderGrid::m_OverviewOrder_Grid_array.Assign(OverViewOrderGrid::m_OverviewOrder_Array_Fill);
+				 }
+
+
+
+
+
+
+
+
+
+
+			
 			 OverViewOrderGrid::OverviewOrder_mutex.Unlock();	
 			 Sleep(1000);
 		 }
@@ -450,23 +550,149 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 	if (msg==103)
 	{
 		if(OverViewOrderGrid::insertFilterFlag==1 && row==0)
-	{
-		OverViewOrderGrid::filter_break=1;
-		check_First==0;
-		CString  strval=L"";
-		CUGCell cell;
-		GetCell(col,row,&cell);
-		strval=cell.GetText();
-		OverViewOrderGrid::strFilter="";
-		if (strval!=L"")
 		{
-			gridFilter(col,GetNumberRows(),strval);
+			OverViewOrderGrid::filter_break=1;
+			check_First==0;
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();
+			OverViewOrderGrid::strFilter="";
+
 		}
-	}
-	}
-	
-	
-	return TRUE;	
+
+		if(OverViewOrderGrid::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					col0_val=strval;					
+				}
+				else
+				{
+					col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					col1_val=strval;					
+				}
+				else
+				{
+					col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					col2_val=strval;					
+				}
+				else
+				{
+					col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					col3_val=strval;					
+				}
+				else
+				{
+					col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					col4_val=strval;					
+				}
+				else
+				{
+					col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					col5_val=strval;					
+				}
+				else
+				{
+					col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					col6_val=strval;					
+				}
+				else
+				{
+					col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					col7_val=strval;					
+				}
+				else
+				{
+					col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					col8_val=strval;					
+				}
+				else
+				{
+					col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					col9_val=strval;					
+				}
+				else
+				{
+					col9_val=L"ALL";					
+				}
+			}
+         
+        }
+	  RedrawAll();
+	 }
+	return true;
 }
 
 
@@ -824,7 +1050,7 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
 			addItemToCombobox();
 			OverViewOrderGrid::insertFilterFlag=1;
 			InsertRow(0);
-			for (int col_count=0;col_count<13;col_count++)
+			for (int col_count=0;col_count<10;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -843,6 +1069,16 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
 		DeleteRow(0);
 		OverViewOrderGrid::insertFilterFlag=0;
 		OverViewOrderGrid::strFilter=" ";
+		OverViewOrderGrid::col0_val=L"";
+		OverViewOrderGrid::col1_val=L"";
+		OverViewOrderGrid::col2_val=L"";
+		OverViewOrderGrid::col3_val=L"";
+		OverViewOrderGrid::col4_val=L"";
+		OverViewOrderGrid::col5_val=L"";
+		OverViewOrderGrid::col6_val=L"";
+		OverViewOrderGrid::col7_val=L"";
+		OverViewOrderGrid::col8_val=L"";
+		OverViewOrderGrid::col9_val=L"";
 	}
 	RedrawAll();
  }
@@ -881,32 +1117,38 @@ void OverViewOrderGrid::addItemToCombobox()
 	CStringArray arr7;
 	CStringArray arr8;
 	CStringArray arr9;
-	CStringArray arr10;
-	CStringArray arr11;
-	CStringArray arr12;
-	CStringArray arr13;
 	try
 	{
 	int rows=1;
-	rows=GetNumberRows();
+	
 	
 	CString str_val=L"";
 	
-	for (int forcount=0;forcount<14;forcount++)
+	for (int forcount=0;forcount<10;forcount++)
 	{
 		str[forcount]=L"ALL\n";		
 	}
+	OverViewOrderGrid::OverviewOrder_mutex.Lock();	
+	st_OverviewOrder_Array m_array_filter;
+	m_array_filter.Assign(GridTradeAndOrder::m_gridAndOrder_Array_Fill);
+	OverViewOrderGrid::OverviewOrder_mutex.Unlock();	
+
+	rows=m_array_filter.Total();
+
 	for (int forcount=0;forcount<rows;forcount++)
 	{
-		for (int clocount=0;clocount<14;clocount++)
+
+		st_OverviewOrder m_st_for_filter={};
+		m_st_for_filter=m_array_filter[forcount];
+
+
+		for (int clocount=0;clocount<10;clocount++)
 		{
-			str_val=QuickGetText(clocount,forcount);
-			str_val=str_val.Trim();
-			
-			if (str_val!=L"")
-			{
-				if (clocount==0)
+
+			  if (clocount==0)
 				{
+					str_val=m_st_for_filter.Symbol;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -917,6 +1159,8 @@ void OverViewOrderGrid::addItemToCombobox()
 
 				if (clocount==1)
 				{
+					str_val=m_st_for_filter.Order;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -927,9 +1171,15 @@ void OverViewOrderGrid::addItemToCombobox()
 
 				if (clocount==2)
 				{
+					str_val=m_st_for_filter.Time ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
+
 					if (CheckvalueInArray(arr2,str_val)==false )
 					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
+						str[clocount]=str[clocount]+str_val+L"\n";									
 						arr2.Add(str_val);
 					}
 				}
@@ -938,6 +1188,8 @@ void OverViewOrderGrid::addItemToCombobox()
 
 				if (clocount==3)
 				{
+					str_val=m_st_for_filter.Type;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr3,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -947,6 +1199,8 @@ void OverViewOrderGrid::addItemToCombobox()
 
 				if (clocount==4)
 				{
+					str_val=m_st_for_filter.Volume;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr4,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -955,6 +1209,8 @@ void OverViewOrderGrid::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
+					str_val=m_st_for_filter.Price;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -963,6 +1219,8 @@ void OverViewOrderGrid::addItemToCombobox()
 				}
 				if (clocount==6)
 				{
+					str_val=m_st_for_filter.Current_Rate;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr6,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -971,6 +1229,9 @@ void OverViewOrderGrid::addItemToCombobox()
 				}
 				if (clocount==7)
 				{
+					
+					str_val=m_st_for_filter.PL;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr7,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -979,6 +1240,8 @@ void OverViewOrderGrid::addItemToCombobox()
 				}
 				if (clocount==8)
 				{
+					str_val=m_st_for_filter.Status;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr8,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -987,47 +1250,14 @@ void OverViewOrderGrid::addItemToCombobox()
 				}
 				if (clocount==9)
 				{
+					str_val=m_st_for_filter.Trade_Checked;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr9,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr9.Add(str_val);
 					}
 				}
-				if (clocount==10)
-				{
-					if (CheckvalueInArray(arr10,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr10.Add(str_val);
-					}
-				}
-				if (clocount==11)
-				{
-					if (CheckvalueInArray(arr11,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr11.Add(str_val);
-					}
-				}
-				if (clocount==12)
-				{
-					if (CheckvalueInArray(arr12,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr12.Add(str_val);
-					}
-				}
-				if (clocount==13)
-				{
-					if (CheckvalueInArray(arr13,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr13.Add(str_val);
-					}
-				}
-				
-
-			}
 
 		}												
 	}
@@ -1035,7 +1265,8 @@ void OverViewOrderGrid::addItemToCombobox()
 	catch(_com_error & ce)
 			{
 				AfxMessageBox(ce.Description()+L"addItemToCombobox");			
-			} 
+
+	       }
 }
  
 

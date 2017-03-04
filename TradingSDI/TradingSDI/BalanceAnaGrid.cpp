@@ -14,6 +14,13 @@ static char THIS_FILE[] = __FILE__;
 #endif
 int BalanceAnaGrid::insertFilterFlag=0;
 
+//Structure variable
+BalanceAnaGrid::st_grid_balanalysis_array BalanceAnaGrid::m_st_grid_anlysis_Array_Fill;
+BalanceAnaGrid::st_grid_balanalysis_array BalanceAnaGrid::m_st_grid_anlysis_Grid_array;
+
+BalanceAnaGrid::st_grid_balanalysis BalanceAnaGrid::m_st_grid_anlysis={};
+
+int BalanceAnaGrid::m_selectedclient =0;
 BalanceAnaGrid::BalanceAnaGrid(void)
 {
 	UGXPThemes::UseThemes(false);
@@ -38,82 +45,140 @@ void BalanceAnaGrid::GetData(_bstr_t m_login)
 	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	hr=session.Open(connection);
 
-	SetNumberRows(0);
 	  _bstr_t strCommand ="";
 	  strCommand="select [Login],Deal,[Time],[Order],Symbol,EntryAction,EntryVolume,EntryPrice,ExitDeal,ExitTime,ExitOrder,ExitAction,ExitVolume,ExitPrice,ProfitPoint_L,ProfitPoint_P,Multiplayer,Balance,potentialprofitpoint,PotentialLosspoint,DurationTime,high,low from BalanceTableAnalysis where [login]='" + m_login + "'";
 		
-        char* strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);	
+	  hr=artists1.Open(session,(LPCTSTR)strCommand);	
 
 		 if(SUCCEEDED(hr))
 		 {
-			int rownumber=0;
-			 
+			
+			 BalanceAnaGrid::m_st_grid_anlysis_Array_Fill.Clear();
 			 while (artists1.MoveNext() == S_OK)
 			 {
-				 InsertRow(rownumber);
-				 QuickSetText(0,rownumber,artists1.m_Login);
-				 QuickSetText(1,rownumber,artists1.m_deal );
-				 QuickSetText(2,rownumber,artists1.m_Time);
-				 QuickSetText(3,rownumber,artists1.m_Order);
-				 QuickSetText(4,rownumber,artists1.m_Symbol);
-				 QuickSetText(5,rownumber,artists1.m_EntryAction);
-				 QuickSetText(6,rownumber,artists1.m_EntryVolume );
 
-				 CString str=L"";
-				 str.Format(L"%.4f",artists1.m_EntryPrice);
-				 QuickSetText(7,rownumber,str);
+				BalanceAnaGrid::m_selectedclient=1;
+				LPTSTR endPtr;
+				CString price=L"";
+				CString exit_price=L"";
+				CString ProfitPoint_L=L"";
+				CString ProfitPoint_P=L"";
+				CString Multiplayer=L"";
+				CString Balance=L"";
+				CString potentialprofitpoint=L"";
+				CString PotentialLosspoint=L"";
+				CString DurationTime=L"";
+				CString high=L"";
+				CString low=L"";
 
-				 QuickSetText(8,rownumber,artists1.m_ExitDeal);
-				 QuickSetText(9,rownumber,artists1.m_ExitTime);
-				 QuickSetText(10,rownumber,artists1.m_ExitOrder );
-				 QuickSetText(11,rownumber,artists1.m_ExitAction);
-				 QuickSetText(12,rownumber,artists1.m_ExitVolume);
+				double d_price = _tcstod(artists1.m_EntryPrice, &endPtr);												
+				price.Format(_T("%.2f"),d_price);	
 
-				 CString str1=L"";
-				 str1.Format(L"%.2f",artists1.m_ExitPrice);
-				 QuickSetText(13,rownumber,str1);
+				double d_exit_price = _tcstod(artists1.m_ExitPrice, &endPtr);												
+				exit_price.Format(_T("%.2f"),d_price);
 
-			     CString str2=L"";
-				 str2.Format(L"%.2f",artists1.m_ProfitPoint_L);
-				 QuickSetText(14,rownumber,str2 );
+				double d_ProfitPoint_L = _tcstod(artists1.m_ProfitPoint_L, &endPtr);												
+				ProfitPoint_L.Format(_T("%.2f"),d_price);
 
-				 CString str3=L"";
-				 str3.Format(L"%.2f",artists1.m_ProfitPoint_P);
-				 QuickSetText(15,rownumber,str3 );
-				 CString str4=L"";
-				 str4.Format(L"%.2f",artists1.m_Multiplayer);
-				 QuickSetText(16,rownumber,str4 );
-				 CString str5=L"";
-				 str5.Format(L"%.3f",artists1.m_Balance);
-				 QuickSetText(17,rownumber,str5 );
-				 CString str6=L"";
-				 str6.Format(L"%.2f",artists1.m_potentialprofitpoint);
-				 QuickSetText(18,rownumber,str6 );
+				double d_ProfitPoint_P = _tcstod(artists1.m_ProfitPoint_P, &endPtr);												
+				ProfitPoint_P.Format(_T("%.2f"),d_price);
 
-				 CString str7=L"";
-				 str7.Format(L"%.2f",artists1.m_PotentialLosspoint);
-				 QuickSetText(19,rownumber,str7 );
-				 QuickSetText(20,rownumber,artists1.m_DurationTime );
+				double d_Multiplayer = _tcstod(artists1.m_Multiplayer, &endPtr);												
+				Multiplayer.Format(_T("%.2f"),d_price);
 
-				 CString str8=L"";
-				 str8.Format(L"%.4f",artists1.m_high);
-				 QuickSetText(21,rownumber,str8 );
+				double d_Balance = _tcstod(artists1.m_Balance, &endPtr);												
+				Balance.Format(_T("%.2f"),d_price);
 
-				 CString str9=L"";
-				 str9.Format(L"%.4f",artists1.m_low);
-				 QuickSetText(22,rownumber,str9 );
+				double d_potentialprofitpoint = _tcstod(artists1.m_potentialprofitpoint, &endPtr);												
+				potentialprofitpoint.Format(_T("%.2f"),d_price);
 
-				 rownumber=rownumber+1;
+				double d_PotentialLosspoint = _tcstod(artists1.m_PotentialLosspoint, &endPtr);												
+				PotentialLosspoint.Format(_T("%.2f"),d_price);
+
+				double d_DurationTime = _tcstod(artists1.m_DurationTime, &endPtr);												
+				DurationTime.Format(_T("%.2f"),d_price);
+
+				double d_high = _tcstod(artists1.m_high, &endPtr);												
+				high.Format(_T("%.2f"),d_price);
+
+				double d_low = _tcstod(artists1.m_low, &endPtr);												
+				low.Format(_T("%.2f"),d_price);
+				
+				BalanceAnaGrid::st_grid_balanalysis m_st={};
+			
+				CMTStr::Copy(m_st.m_login ,artists1.m_Login);
+				CMTStr::Copy(m_st.m_deal,artists1.m_deal);
+				CMTStr::Copy(m_st.m_time ,artists1.m_Time);
+				CMTStr::Copy(m_st.m_Order ,artists1.m_Order);
+				CMTStr::Copy(m_st.m_symbol,artists1.m_Symbol);
+				CMTStr::Copy(m_st.m_EntryAction,artists1.m_EntryAction);
+
+
+				CMTStr::Copy(m_st.m_EntryVolume ,artists1.m_EntryVolume);
+				CMTStr::Copy(m_st.m_Entryprice,price);
+				CMTStr::Copy(m_st.m_ExitDeal ,artists1.m_ExitDeal);
+				CMTStr::Copy(m_st.m_ExitTime ,artists1.m_ExitTime);
+				CMTStr::Copy(m_st.m_ExitOrder,artists1.m_ExitOrder);
+				CMTStr::Copy(m_st.m_ExitAction,artists1.m_ExitAction);
+
+				
+				CMTStr::Copy(m_st.m_ExitVolume ,artists1.m_ExitVolume);
+				CMTStr::Copy(m_st.m_ExitPrice,exit_price);
+				CMTStr::Copy(m_st.m_ProfitPoint_L ,ProfitPoint_L);
+				CMTStr::Copy(m_st.m_ProfitPoint_P ,ProfitPoint_P);
+				CMTStr::Copy(m_st.m_Multiplayer,Multiplayer);
+				CMTStr::Copy(m_st.m_Balance,Balance);
+
+
+				CMTStr::Copy(m_st.m_potentialprofitpoint ,potentialprofitpoint);
+				CMTStr::Copy(m_st.m_DurationTime,PotentialLosspoint);
+				CMTStr::Copy(m_st.m_high ,high);
+				CMTStr::Copy(m_st.m_low ,low);
+
+				BalanceAnaGrid::m_st_grid_anlysis_Array_Fill.Add(&m_st);
 			 }
-			  
-			   artists1.Close();
-		 }   
-           
+         }   
+
+		  if(BalanceAnaGrid::m_selectedclient==0)
+		  {
+		      
+		    AfxMessageBox(L"Data Not Found");
+		  }
+		  BalanceAnaGrid::m_selectedclient=0;
+
+		  //ASSINGNING into main array
+		  BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Assign(BalanceAnaGrid::m_st_grid_anlysis_Array_Fill);
+
+	    //adding rows set rows
+		RefreshGrid();
+
+
+    artists1.Close();   
+	session.Close();
+	connection.Close();
 	RedrawAll();
 	logfile.LogEvent(L"END Balance Grid ");
 }
 
+void BalanceAnaGrid::RefreshGrid()
+{
+	int r_count=BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Total();
+
+		int grid_total=GetNumberRows();
+		if (BalanceAnaGrid::insertFilterFlag==1)
+		{
+			r_count=r_count+1;
+		}		
+		if (grid_total!=r_count)
+		{			
+			SetNumberRows(r_count);		
+		}
+		else
+		{			
+			RedrawAll();			
+		}
+
+}
 void BalanceAnaGrid::OnSetup()
 {
 	CUGCell cell;
@@ -340,15 +405,6 @@ void BalanceAnaGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *p
 
 	}
 
-	int row_no=GetNumberRows();
-	 for(int f=0;f<row_no;f++)
-	 {
-		 CString val=QuickGetText(0,f);
-		 if(wcscmp( val,L"")==0)
-		{
-			DeleteRow(f);
-	    }
-	 }
   RedrawAll();
 }
 int BalanceAnaGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
@@ -897,4 +953,292 @@ void BalanceAnaGrid::gridFilter(int colno,int rows_count,CString col_value)
 		 }
 	 }
 	
+}
+
+void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
+{		
+		//m_logfile_g.LogEvent(L"Start OnGetCell");
+	    BalanceAnaGrid::st_grid_balanalysis mst_grid={};
+
+        int rows_no=0;
+		rows_no=row;		
+		UNREFERENCED_PARAMETER(col);
+		UNREFERENCED_PARAMETER(row);
+		UNREFERENCED_PARAMETER(*cell);		
+		if ( col >= 0 && row == -1 )
+		{	
+		}
+		else if ( row >= 0 && col == -1 )
+		{	
+		}
+		else if ( col >= 0 && row >= 0 )
+		{
+			if (BalanceAnaGrid::insertFilterFlag==1)
+			{
+				rows_no=row-1;				
+				if (row==0)
+				{
+					return;
+				}
+			}
+			if (col==0)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_login;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==1)
+			{
+
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_deal;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==2)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_time ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==3)
+			{	
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Order ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+
+
+			else if (col==4)
+			{	
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_symbol ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==5)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_EntryAction;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==6)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_EntryVolume  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+
+			//////////////////////////////
+			else if (col==7)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Entryprice;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==8)
+			{
+
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_ExitDeal;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==9)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ExitTime ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==10)
+			{	
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ExitOrder ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==11)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ExitAction;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==12)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ExitVolume  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			////////////////////////////////////
+			else if (col==13)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ExitPrice;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==14)
+			{
+
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_ProfitPoint_L;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==15)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_ProfitPoint_P ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==16)
+			{	
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Multiplayer ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==17)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_Balance;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==18)
+			{				
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_potentialprofitpoint  ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			////////////////////////////////
+			else if (col==19)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_PotentialLosspoint;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+
+			else if (col==20)
+			{
+
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];				
+				CString tmp=mst_grid.m_DurationTime;				
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+			else if (col==21)
+			{		
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_high ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+				
+			}
+			else if (col==22)
+			{	
+				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
+				CString tmp=mst_grid.m_low ;
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+
+			}
+		}
 }
