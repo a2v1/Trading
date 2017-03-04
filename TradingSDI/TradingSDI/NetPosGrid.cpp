@@ -2570,7 +2570,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 					return bool_col;
 				}
 			}
-			if (filter_value.Mid(0,2)==L"<=")
+			else if (filter_value.Mid(0,2)==L"<=")
 			{
 				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
 				double db_filter_val=0;
@@ -2583,7 +2583,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 				}
 			}
 
-			if (filter_value.Mid(0,1)==L"<")
+			else if (filter_value.Mid(0,1)==L"<")
 			{
 				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
 				double db_filter_val=0;
@@ -2595,7 +2595,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 					return bool_col;
 				}
 			}
-			if (filter_value.Mid(0,1)==L">")
+			else if (filter_value.Mid(0,1)==L">")
 			{
 				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
 				double db_filter_val=0;
@@ -2609,7 +2609,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 			}	
 
 			
-			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			else if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
 			{
 				double db_filter_val=0;
 				LPTSTR endPtr1;				
@@ -2637,7 +2637,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 					return bool_col;
 				}
 			}
-			if (filter_value.Mid(0,1)==L">")
+			else if (filter_value.Mid(0,1)==L">")
 			{
 				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
 				double db_filter_val=0;
@@ -2650,7 +2650,7 @@ boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
 				}
 			}	
 
-			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			else if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
 			{
 				double db_filter_val=0;
 				LPTSTR endPtr1;				

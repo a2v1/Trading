@@ -971,6 +971,12 @@ int OrderGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL can
 
 
 
+		
+
+
+
+
+
 
 			_bstr_t b_strord=strord;
 			_bstr_t b_strchecked=strchecked;
@@ -990,6 +996,211 @@ int OrderGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL can
 			hrn=cmd.Open(session_update,strCommand_char);							 			 		 				 	
 			cmd.Close();
 		}
+
+
+
+
+		if(OrderGrid::insertFilterFlag==1 && row==0 )
+		{
+			
+				CString  strval=L"";
+				CUGCell cell;
+				QuickSetText(col,row,string );
+				GetCell(col,row,&cell);
+				strval=cell.GetText();
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					col0_val=strval;					
+				}
+				else
+				{
+					col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					col1_val=strval;					
+				}
+				else
+				{
+					col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					col2_val=strval;					
+				}
+				else
+				{
+					col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					col3_val=strval;					
+				}
+				else
+				{
+					col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					col4_val=strval;					
+				}
+				else
+				{
+					col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					col5_val=strval;					
+				}
+				else
+				{
+					col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					col6_val=strval;					
+				}
+				else
+				{
+					col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					col7_val=strval;					
+				}
+				else
+				{
+					col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					col8_val=strval;					
+				}
+				else
+				{
+					col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					col9_val=strval;					
+				}
+				else
+				{
+					col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					col10_val=strval;					
+				}
+				else
+				{
+					col10_val=L"ALL";					
+				}
+			}
+
+			if(col==11)
+			{
+				if (strval!=L"")
+				{
+					col11_val=strval;					
+				}
+				else
+				{
+					col11_val=L"ALL";					
+				}
+			}
+
+			if(col==12)
+			{
+				if (strval!=L"")
+				{
+					col12_val=strval;					
+				}
+				else
+				{
+					col12_val=L"ALL";					
+				}
+			}
+
+			if(col==13)
+			{
+				if (strval!=L"")
+				{
+					col13_val=strval;					
+				}
+				else
+				{
+					col13_val=L"ALL";					
+				}
+			}
+
+			if(col==14)
+			{
+				if (strval!=L"")
+				{
+					col14_val=strval;					
+				}
+				else
+				{
+					col14_val=L"ALL";					
+				}
+			}
+
+			if(col==15)
+			{
+				if (strval!=L"")
+				{
+					col15_val=strval;					
+				}
+				else
+				{
+					col15_val=L"ALL";					
+				}
+			}
+			}
 	return TRUE;
 }
 
