@@ -11,9 +11,9 @@ public:
 	TCHAR m_Time[31];
 	TCHAR m_Type[31];
 	TCHAR m_Volume[31];
-	double m_Price;
-	double m_Current_Rate;
-	double m_PL;
+	TCHAR m_Price[31];
+	TCHAR m_Current_Rate[31];
+	TCHAR m_PL[31];
 	TCHAR m_Status[30];
 	TCHAR m_Trade_Checked[30];
 	TCHAR m_Checked_Time[30];
