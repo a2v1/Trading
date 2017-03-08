@@ -225,7 +225,7 @@ boolean  Check_numeric_col_filter1(CString  filter_value,CString  real_value)
 
 void Grid_CheckTrade::RefreshGrid()
 {
-   int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+        int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
 
 		int grid_total=GetNumberRows();
 		if (Grid_CheckTrade::insertFilterFlag==1)
@@ -590,11 +590,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col0_val=strval;					
+					Grid_CheckTrade::col0_val=strval;					
 				}
 				else
 				{
-					col0_val=L"ALL";					
+					Grid_CheckTrade::col0_val=L"ALL";					
 				}
 			}
 
@@ -603,11 +603,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col1_val=strval;					
+					Grid_CheckTrade::col1_val=strval;					
 				}
 				else
 				{
-					col1_val=L"ALL";					
+					Grid_CheckTrade::col1_val=L"ALL";					
 				}
 			}
 
@@ -615,11 +615,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col2_val=strval;					
+					Grid_CheckTrade::col2_val=strval;					
 				}
 				else
 				{
-					col2_val=L"ALL";					
+					Grid_CheckTrade::col2_val=L"ALL";					
 				}
 			}
 
@@ -627,11 +627,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col3_val=strval;					
+					Grid_CheckTrade::col3_val=strval;					
 				}
 				else
 				{
-					col3_val=L"ALL";					
+					Grid_CheckTrade::col3_val=L"ALL";					
 				}
 			}
 
@@ -639,11 +639,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col4_val=strval;					
+					Grid_CheckTrade::col4_val=strval;					
 				}
 				else
 				{
-					col4_val=L"ALL";					
+					Grid_CheckTrade::col4_val=L"ALL";					
 				}
 			}
 
@@ -651,11 +651,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col5_val=strval;					
+					Grid_CheckTrade::col5_val=strval;					
 				}
 				else
 				{
-					col5_val=L"ALL";					
+					Grid_CheckTrade::col5_val=L"ALL";					
 				}
 			}
 
@@ -663,11 +663,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col6_val=strval;					
+					Grid_CheckTrade::col6_val=strval;					
 				}
 				else
 				{
-					col6_val=L"ALL";					
+					Grid_CheckTrade::col6_val=L"ALL";					
 				}
 			}
 
@@ -675,11 +675,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col7_val=strval;					
+					Grid_CheckTrade::col7_val=strval;					
 				}
 				else
 				{
-					col7_val=L"ALL";					
+					Grid_CheckTrade::col7_val=L"ALL";					
 				}
 			}
 
@@ -687,11 +687,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col8_val=strval;					
+					Grid_CheckTrade::col8_val=strval;					
 				}
 				else
 				{
-					col8_val=L"ALL";					
+					Grid_CheckTrade::col8_val=L"ALL";					
 				}
 			}
 
@@ -699,11 +699,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col9_val=strval;					
+					Grid_CheckTrade::col9_val=strval;					
 				}
 				else
 				{
-					col9_val=L"ALL";					
+					Grid_CheckTrade::col9_val=L"ALL";					
 				}
 			}
 
@@ -711,11 +711,11 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col10_val=strval;					
+					Grid_CheckTrade::col10_val=strval;					
 				}
 				else
 				{
-					col10_val=L"ALL";					
+					Grid_CheckTrade::col10_val=L"ALL";					
 				}
 			}
 
@@ -1254,8 +1254,8 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 
  void Grid_CheckTrade::filter()
  {
-	 CMenu *pMnenu;
-	 pMnenu= GetPopupMenu();
+	CMenu *pMnenu;
+	pMnenu= GetPopupMenu();
 	if (Grid_CheckTrade::insertFilterFlag==0)
 	{
 			addItemToCombobox();
@@ -1292,13 +1292,11 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 		Grid_CheckTrade::col9_val=L"";
 		Grid_CheckTrade::col10_val=L"";
 
+		
 		int r_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
 
 		int grid_total=GetNumberRows();
-		if (Grid_CheckTrade::insertFilterFlag==1)
-		{
-			r_count=r_count+1;
-		}		
+
 		if (grid_total!=r_count)
 		{			
 			SetNumberRows(r_count);		
@@ -1307,6 +1305,8 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 		{			
 			RedrawAll();			
 		}
+
+
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
@@ -1350,9 +1350,7 @@ void Grid_CheckTrade::addItemToCombobox()
 	
 	try
 	{
-	int rows=1;
-	rows=GetNumberRows();
-	
+	int rows=1;	
 	CString str_val=L"";
 	
 	for (int forcount=0;forcount<10;forcount++)
@@ -1373,7 +1371,7 @@ void Grid_CheckTrade::addItemToCombobox()
 		{									
 				if (clocount==0)
 				{
-					str_val=m_st_for_filter.m_CommentYN ;
+					str_val=m_st_for_filter.m_CommentYN;
 					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
@@ -1676,7 +1674,6 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		strComment=sel_comment;
 
 		HRESULT hr;
-		char* strCommand_char;
 		if(catpos>=0)
 		{
 			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND [action] IN (0,1) AND  isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
@@ -1685,8 +1682,7 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		{
 			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "'  AND [action] IN (0,1)  " + strfilter + "    order by [deal] desc";		
 		}
-		strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);				
+		hr=artists1.Open(session,(LPCTSTR)strCommand);				
 			 				 
 		if(SUCCEEDED(hr))
 		{
@@ -1703,22 +1699,19 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 			CString vulume;
 			vulume.Format(_T("%.2f"),d_volume);	
 
-
-		    Grid_CheckTrade::st_grid_check m_st={};
-			
-			CMTStr::Copy(m_st.m_CommentYN ,artists1.m_CommentYN);
-			CMTStr::Copy(m_st.m_time,artists1.m_time);
-			CMTStr::Copy(m_st.m_deal ,artists1.m_deal);
-			CMTStr::Copy(m_st.m_order ,artists1.m_order);
-			CMTStr::Copy(m_st.m_symbol,artists1.m_symbol);
-			CMTStr::Copy(m_st.m_Type,artists1.m_Type);
-			CMTStr::Copy(m_st.m_volume,vulume);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_CommentYN ,artists1.m_CommentYN);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_time,artists1.m_time);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_deal ,artists1.m_deal);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_order ,artists1.m_order);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_symbol,artists1.m_symbol);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_Type,artists1.m_Type);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_volume,vulume);
 		
-            CMTStr::Copy(m_st.m_price,cstrpl);
-			CMTStr::Copy(m_st.m_comment,artists1.m_comment);
-			CMTStr::Copy(m_st.m_OurComment,artists1.m_OurComment);
-			CMTStr::Copy(m_st.m_Checked,artists1.m_Checked);
-			Grid_CheckTrade::m_st_grid_check_Array_Fill.Add(&m_st);
+            CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_price,cstrpl);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_comment,artists1.m_comment);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_OurComment,artists1.m_OurComment);
+			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_Checked,artists1.m_Checked);
+			Grid_CheckTrade::m_st_grid_check_Array_Fill.Add(&Grid_CheckTrade::m_st_grid_check);
 		  }
 		 }
 	
@@ -2301,16 +2294,14 @@ void Grid_CheckTrade::Col_sorting()
 
 void Grid_CheckTrade::ColValue_filter()
 {
-
-	    	
-		Grid_CheckTrade::val_type=0;
+      	Grid_CheckTrade::val_type=0;
 		if (Grid_CheckTrade::insertFilterFlag==1 )
 		{
-		Grid_CheckTrade::m_st_grid_check_Grid_array.Clear();
-		int noof_rowsInStruc=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
-		for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
-		{
-			Grid_CheckTrade::st_grid_check m_st_Netposition={};
+		 Grid_CheckTrade::m_st_grid_check_Grid_array.Clear();
+		 int noof_rowsInStruc=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+		 for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+		 {
+			st_grid_check m_st_Netposition={};
 			m_st_Netposition=Grid_CheckTrade::m_st_grid_check_Array_Fill[fcount];
 			int flag=0;				
 			CString col_row_val[11];		
@@ -2377,14 +2368,15 @@ void Grid_CheckTrade::ColValue_filter()
 			{
 				Grid_CheckTrade::m_st_grid_check_Grid_array.Add(&m_st_Netposition);
 			}
-		}
+		  }
 		}
 		else
 		{
+		
 			Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
 		}
 
-		RefreshGrid();
+	RefreshGrid();
 
 }
 

@@ -196,8 +196,8 @@ BOOL DlgHelp::OnInitDialog()
       return(FALSE);
      }
 //--- create IMTConfirm object
-   m_confirm=m_dealer->ConfirmCreate();
-   if(!m_confirm)
+    m_confirm=m_dealer->ConfirmCreate();
+    if(!m_confirm)
      {
       AfxMessageBox(L"Failed to create interface.");
       EndDialog(IDCANCEL);
@@ -465,6 +465,7 @@ RECT.bottom  =RECT.bottom +2;
 //m_taxt_total
 
 	DlgHelp dlg;
+
 	dlg.DoModal();
 	if (DlgHelp::login_checkYN==0)
 	{
