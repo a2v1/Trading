@@ -1601,7 +1601,7 @@ void CMainFrame::OnDefinesymbol()
 
 	CRect rect;
 	GetClientRect(&rect);
-	m_DefineMarginDlg.MoveWindow( 1,48,415,538);
+	m_DefineMarginDlg.MoveWindow( 1,48,400,538);
 	m_DefineMarginDlg.ShowWindow(SW_NORMAL);
 	
 }
