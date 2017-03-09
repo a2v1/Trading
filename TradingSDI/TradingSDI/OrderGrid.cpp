@@ -3433,7 +3433,8 @@ void OrderGrid::Selected_ActivateOrder()
 			{*/
 				_bstr_t strCommand="";
 				_bstr_t bstrorder=order;
-				strCommand="exec Proc_order_Passed_By_Manager '" + bstrorder + "'";
+				_bstr_t pass_manager=CDealer::admin_login_name; 
+				strCommand="exec Proc_order_Passed_By_Manager '" + bstrorder + "','" + pass_manager + "'";
 				char* strCommand_char=(char*)strCommand;
 				hrn=cmd.Open(session_update,strCommand_char);							 			 		 				 	
 			//}

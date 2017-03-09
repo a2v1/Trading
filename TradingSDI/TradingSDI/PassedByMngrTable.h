@@ -15,6 +15,7 @@ public:
 	TCHAR m_Status[50];
 	TCHAR m_Type[50];
 	TCHAR m_SubType[50];
+	TCHAR m_PassedTime[50];
 
 
 	DBSTATUS  m_Section_s;
@@ -30,6 +31,7 @@ public:
 	DBSTATUS m_Status_s;
 	DBSTATUS m_Type_s;
 	DBSTATUS m_SubType_s;
+	DBSTATUS m_PassedTime_s;
 		
 	DBLENGTH m_Section_l;
 	DBLENGTH m_login_l;
@@ -44,6 +46,7 @@ public:
 	DBLENGTH m_Status_l;
 	DBLENGTH m_Type_l;
 	DBLENGTH m_SubType_l;
+	DBLENGTH m_PassedTime_l;
 
 BEGIN_COLUMN_MAP(CPassedBYMngrTable)
 		COLUMN_ENTRY_LENGTH_STATUS(1, m_Section,m_Section_l , m_Section_s)
@@ -59,5 +62,6 @@ BEGIN_COLUMN_MAP(CPassedBYMngrTable)
 		COLUMN_ENTRY_LENGTH_STATUS(11,  m_Status,m_Status_l , m_Status_s)
 		COLUMN_ENTRY_LENGTH_STATUS(12, m_Type, m_Type_l, m_Type_s)
 		COLUMN_ENTRY_LENGTH_STATUS(13,  m_SubType, m_SubType_l, m_SubType_s)
+		COLUMN_ENTRY_LENGTH_STATUS(14,  m_PassedTime, m_PassedTime_l, m_PassedTime_s)
 	END_COLUMN_MAP()	
 };

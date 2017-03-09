@@ -13,6 +13,7 @@
 //+------------------------------------------------------------------+
 //| Constructor                        
 int CDealer::admin_login=0;
+CString  CDealer::admin_login_name=L"";
 //+------------------------------------------------------------------+
 CDealer::CDealer() : m_manager(NULL),m_admin(NULL),m_login(0),m_request(NULL),m_confirm(NULL),
      m_stop_flag(FALSE),m_thread_dealer(NULL),m_connected(FALSE),
@@ -459,6 +460,7 @@ int CDealer::login(CString server,CString login,CString password)
     }
 
 	//if (login==L"1000" ||login==L"1007"||login==L"1017")
+	CDealer::admin_login_name=login;
 	if (login==L"1007"||login==L"1017")
 	{
 		CDealer::admin_login=1;

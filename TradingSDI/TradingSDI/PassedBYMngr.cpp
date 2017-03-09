@@ -119,34 +119,38 @@ void CPassedBYMngr::OnSheetSetup(int sheetNumber)
 	SetDefFont(0);
 	SetSH_Width(0);		
 			
-	SetNumberCols(13);
+	SetNumberCols(15);
 
-	QuickSetText(0,-1,L"Passed By Manager");
-	SetColWidth(0,140);
-	QuickSetText(1,-1,L"Login");
-	SetColWidth(1,70);
-	QuickSetText(2,-1,L"Order#");	
-	SetColWidth(2,70);			
-	QuickSetText(3,-1,L"Order_In_Time");
-	SetColWidth(3,180);			
-	QuickSetText(4,-1,L"Deal#");
-	SetColWidth(4,70);
-	QuickSetText(5,-1,L"Symbol");	
-	SetColWidth(5,100);
-	QuickSetText(6,-1,L"Type");
-	SetColWidth(6,70);
-	QuickSetText(7,-1,L"Volume");
-	SetColWidth(7,80);			
-	QuickSetText(8,-1,L"Price");
-	SetColWidth(8,70);
-	QuickSetText(9,-1,L"Comment");
-	SetColWidth(9,80);	
-	QuickSetText(10,-1,L"Status");
-	SetColWidth(10,60);
-	QuickSetText(11,-1,L"Type");
+	QuickSetText(0,-1,L"SL No");
+	SetColWidth(0,50);
+	QuickSetText(1,-1,L"Passed By Manager");
+	SetColWidth(1,140);
+	QuickSetText(2,-1,L"Login");
+	SetColWidth(2,70);
+	QuickSetText(3,-1,L"Order#");	
+	SetColWidth(3,70);			
+	QuickSetText(4,-1,L"Order_In_Time");
+	SetColWidth(4,180);			
+	QuickSetText(5,-1,L"Deal#");
+	SetColWidth(5,70);
+	QuickSetText(6,-1,L"Symbol");	
+	SetColWidth(6,100);
+	QuickSetText(7,-1,L"Type");
+	SetColWidth(7,70);
+	QuickSetText(8,-1,L"Volume");
+	SetColWidth(8,80);			
+	QuickSetText(9,-1,L"Price");
+	SetColWidth(9,70);
+	QuickSetText(10,-1,L"Comment");
+	SetColWidth(10,80);	
+	QuickSetText(11,-1,L"Status");
 	SetColWidth(11,60);
-	QuickSetText(12,-1,L"SubType");
+	QuickSetText(12,-1,L"Type");
 	SetColWidth(12,60);
+	QuickSetText(13,-1,L"SubType");
+	SetColWidth(13,60);
+	QuickSetText(14,-1,L"PassedTime");
+	SetColWidth(14,160);
 												
 	// Header font
 	for(int i = 0; i < GetNumberCols(); i++)
@@ -167,8 +171,8 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 		m_st_Dealing_Grid_array.Clear();
 	}
 	CString getColvalue=L"";
-	CString col_filter_val[13];	
-	for(int c=0;c<13;c++)
+	CString col_filter_val[15];	
+	for(int c=0;c<15;c++)
 	{
 		col_filter_val[c]=QuickGetText(c,0);
 	}
@@ -180,105 +184,111 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 		m_st_Netposition=m_st_Dealing_Array[fcount];
 		
 		int flag=0;				
-		CString col_row_val[13];
+		CString col_row_val[15];
 		CString cstr_time=m_st_Netposition.Section ;
 		
-		col_row_val[0]=m_st_Netposition.Section  ;
-		if (col_filter_val[0].Trim().GetLength()>0)
-		{
-			col_row_val[0]=col_row_val[0].Mid(0,col_filter_val[0].Trim().GetLength());
-		}
-		col_row_val[1]=m_st_Netposition.Login   ;
+		col_row_val[1]=m_st_Netposition.Section  ;
 		if (col_filter_val[1].Trim().GetLength()>0)
 		{
 			col_row_val[1]=col_row_val[1].Mid(0,col_filter_val[1].Trim().GetLength());
 		}
-
-
-		CString str_deal=L"";
-		str_deal.Format(L"%.0f",m_st_Netposition.Order  );
-		col_row_val[2]=str_deal  ;
+		col_row_val[2]=m_st_Netposition.Login   ;
 		if (col_filter_val[2].Trim().GetLength()>0)
 		{
 			col_row_val[2]=col_row_val[2].Mid(0,col_filter_val[2].Trim().GetLength());
 		}
 
-		CString str_Order=L"";
-		str_Order.Format(L"%d",m_st_Netposition.Order_In_Time  );
-		col_row_val[3]=str_Order  ;		
+
+		CString str_deal=L"";
+		str_deal.Format(L"%.0f",m_st_Netposition.Order  );
+		col_row_val[3]=str_deal  ;
 		if (col_filter_val[3].Trim().GetLength()>0)
 		{
 			col_row_val[3]=col_row_val[3].Mid(0,col_filter_val[3].Trim().GetLength());
+		}
+
+		CString str_Order=L"";
+		str_Order.Format(L"%d",m_st_Netposition.Order_In_Time  );
+		col_row_val[4]=str_Order  ;		
+		if (col_filter_val[4].Trim().GetLength()>0)
+		{
+			col_row_val[4]=col_row_val[4].Mid(0,col_filter_val[4].Trim().GetLength());
 		}
 
 
 
 		
 		str_deal.Format(L"%d",m_st_Netposition.Deal );
-		col_row_val[4]=str_deal  ;
-		if (col_filter_val[4].Trim().GetLength()>0)
-		{
-			col_row_val[4]=col_row_val[4].Mid(0,col_filter_val[4].Trim().GetLength());
-		}
-
-		
-		str_Order=m_st_Netposition.Symbol;
-		col_row_val[5]=str_Order  ;		
+		col_row_val[5]=str_deal  ;
 		if (col_filter_val[5].Trim().GetLength()>0)
 		{
 			col_row_val[5]=col_row_val[5].Mid(0,col_filter_val[5].Trim().GetLength());
 		}
+
 		
-		str_Order=m_st_Netposition.Type1 ;
-		col_row_val[6]=str_Order ;
+		str_Order=m_st_Netposition.Symbol;
+		col_row_val[6]=str_Order  ;		
 		if (col_filter_val[6].Trim().GetLength()>0)
 		{
 			col_row_val[6]=col_row_val[6].Mid(0,col_filter_val[6].Trim().GetLength());
 		}
-
-		str_Order.Format(L"%.2f",m_st_Netposition.Volume );
-		col_row_val[7]=str_Order  ;
+		
+		str_Order=m_st_Netposition.Type1 ;
+		col_row_val[7]=str_Order ;
 		if (col_filter_val[7].Trim().GetLength()>0)
 		{
 			col_row_val[7]=col_row_val[7].Mid(0,col_filter_val[7].Trim().GetLength());
 		}
 
-		str_Order.Format(L"%.2f",m_st_Netposition.Price );
-		col_row_val[8]=str_Order;
+		str_Order.Format(L"%.2f",m_st_Netposition.Volume );
+		col_row_val[8]=str_Order  ;
 		if (col_filter_val[8].Trim().GetLength()>0)
 		{
 			col_row_val[8]=col_row_val[8].Mid(0,col_filter_val[8].Trim().GetLength());
-		}			
+		}
 
-		str_Order=m_st_Netposition.Comment ;
-		col_row_val[9]=str_Order ;
+		str_Order.Format(L"%.2f",m_st_Netposition.Price );
+		col_row_val[9]=str_Order;
 		if (col_filter_val[9].Trim().GetLength()>0)
 		{
 			col_row_val[9]=col_row_val[9].Mid(0,col_filter_val[9].Trim().GetLength());
-		}
+		}			
 
-		str_Order=m_st_Netposition.Status ;
+		str_Order=m_st_Netposition.Comment ;
 		col_row_val[10]=str_Order ;
 		if (col_filter_val[10].Trim().GetLength()>0)
 		{
 			col_row_val[10]=col_row_val[10].Mid(0,col_filter_val[10].Trim().GetLength());
 		}
 
-		str_Order=m_st_Netposition.Type ;
+		str_Order=m_st_Netposition.Status ;
 		col_row_val[11]=str_Order ;
 		if (col_filter_val[11].Trim().GetLength()>0)
 		{
 			col_row_val[11]=col_row_val[11].Mid(0,col_filter_val[11].Trim().GetLength());
 		}
-		str_Order=m_st_Netposition.SubType ;
+
+		str_Order=m_st_Netposition.Type ;
 		col_row_val[12]=str_Order ;
 		if (col_filter_val[12].Trim().GetLength()>0)
 		{
 			col_row_val[12]=col_row_val[12].Mid(0,col_filter_val[12].Trim().GetLength());
 		}
+		str_Order=m_st_Netposition.SubType ;
+		col_row_val[13]=str_Order ;
+		if (col_filter_val[13].Trim().GetLength()>0)
+		{
+			col_row_val[13]=col_row_val[13].Mid(0,col_filter_val[13].Trim().GetLength());
+		}
 
+		str_Order=m_st_Netposition.PassedTime  ;
+		col_row_val[14]=str_Order ;
+		if (col_filter_val[14].Trim().GetLength()>0)
+		{
+			col_row_val[14]=col_row_val[14].Mid(0,col_filter_val[14].Trim().GetLength());
+		}
 
-		if((col_filter_val[0].Trim()==col_row_val[0].Trim() || col_filter_val[0].Trim()==L"ALL"||col_filter_val[0].Trim()==L"") && (col_filter_val[1].Trim()==col_row_val[1].Trim() || col_filter_val[1].Trim()==L"ALL"||col_filter_val[1].Trim()==L"") && (col_filter_val[2].Trim()==col_row_val[2].Trim() || col_filter_val[2].Trim()==L"ALL"||col_filter_val[2].Trim()==L"")  && (col_filter_val[3].Trim()==col_row_val[3].Trim() || col_filter_val[3].Trim()==L"ALL"||col_filter_val[3].Trim()==L"")  && (col_filter_val[4].Trim()==col_row_val[4].Trim() || col_filter_val[4].Trim()==L"ALL"||col_filter_val[4].Trim()==L"")   && (col_filter_val[5].Trim()==col_row_val[5].Trim() || col_filter_val[5].Trim()==L"ALL"||col_filter_val[5].Trim()==L"")   && (col_filter_val[6].Trim()==col_row_val[6].Trim() || col_filter_val[6].Trim()==L"ALL"||col_filter_val[6].Trim()==L"")   && (col_filter_val[7].Trim()==col_row_val[7].Trim() || col_filter_val[7].Trim()==L"ALL"||col_filter_val[7].Trim()==L"")  && (col_filter_val[8].Trim()==col_row_val[8].Trim() || col_filter_val[8].Trim()==L"ALL"||col_filter_val[8].Trim()==L"")&&(col_filter_val[9].Trim()==col_row_val[9].Trim() || col_filter_val[9].Trim()==L"ALL"||col_filter_val[9].Trim()==L"") && (col_filter_val[10].Trim()==col_row_val[10].Trim() || col_filter_val[10].Trim()==L"ALL"||col_filter_val[10].Trim()==L"")&&(col_filter_val[11].Trim()==col_row_val[11].Trim() || col_filter_val[11].Trim()==L"ALL"||col_filter_val[11].Trim()==L"") && (col_filter_val[12].Trim()==col_row_val[12].Trim() || col_filter_val[12].Trim()==L"ALL"||col_filter_val[12].Trim()==L""))
+		if((col_filter_val[0].Trim()==col_row_val[0].Trim() || col_filter_val[0].Trim()==L"ALL"||col_filter_val[0].Trim()==L"") && (col_filter_val[1].Trim()==col_row_val[1].Trim() || col_filter_val[1].Trim()==L"ALL"||col_filter_val[1].Trim()==L"") && (col_filter_val[2].Trim()==col_row_val[2].Trim() || col_filter_val[2].Trim()==L"ALL"||col_filter_val[2].Trim()==L"")  && (col_filter_val[3].Trim()==col_row_val[3].Trim() || col_filter_val[3].Trim()==L"ALL"||col_filter_val[3].Trim()==L"")  && (col_filter_val[4].Trim()==col_row_val[4].Trim() || col_filter_val[4].Trim()==L"ALL"||col_filter_val[4].Trim()==L"")   && (col_filter_val[5].Trim()==col_row_val[5].Trim() || col_filter_val[5].Trim()==L"ALL"||col_filter_val[5].Trim()==L"")   && (col_filter_val[6].Trim()==col_row_val[6].Trim() || col_filter_val[6].Trim()==L"ALL"||col_filter_val[6].Trim()==L"")   && (col_filter_val[7].Trim()==col_row_val[7].Trim() || col_filter_val[7].Trim()==L"ALL"||col_filter_val[7].Trim()==L"")  && (col_filter_val[8].Trim()==col_row_val[8].Trim() || col_filter_val[8].Trim()==L"ALL"||col_filter_val[8].Trim()==L"")&&(col_filter_val[9].Trim()==col_row_val[9].Trim() || col_filter_val[9].Trim()==L"ALL"||col_filter_val[9].Trim()==L"") && (col_filter_val[10].Trim()==col_row_val[10].Trim() || col_filter_val[10].Trim()==L"ALL"||col_filter_val[10].Trim()==L"")&&(col_filter_val[11].Trim()==col_row_val[11].Trim() || col_filter_val[11].Trim()==L"ALL"||col_filter_val[11].Trim()==L"") && (col_filter_val[12].Trim()==col_row_val[12].Trim() || col_filter_val[12].Trim()==L"ALL"||col_filter_val[12].Trim()==L"")&& (col_filter_val[13].Trim()==col_row_val[13].Trim() || col_filter_val[13].Trim()==L"ALL"||col_filter_val[13].Trim()==L"") && (col_filter_val[14].Trim()==col_row_val[14].Trim() || col_filter_val[14].Trim()==L"ALL"||col_filter_val[14].Trim()==L""))
 		{						
 			m_st_Dealing_Grid_array.Add(&m_st_Netposition);						
 		}
@@ -452,7 +462,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 			}
 			else
 			{
-if (val_type==0)
+			if (val_type==0)
 				{
 					if (col_click==0)
 					{
@@ -642,6 +652,21 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			if (col==0)
 			{				
+				
+				int r_val=0;
+				if(CPassedBYMngr::insertFilterFlag==0)
+				{
+					r_val=row+1;
+				}
+				else
+				{
+					r_val=row;
+				}
+				cell->SetNumber(r_val);
+				
+			}
+			else if (col==1)
+			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];				
 				CString tmp=mst_grid.Section ;				
 				CString str_get_value=cell->GetText();
@@ -650,7 +675,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==1)
+			else if (col==2)
 			{
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
@@ -661,7 +686,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==2)
+			else if (col==3)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				double m_order=mst_grid.Order  ;
@@ -674,7 +699,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==3)
+			else if (col==4)
 			{			
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=mst_grid.Order_In_Time ;				
@@ -684,7 +709,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==4)
+			else if (col==5)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				int m_deal=mst_grid.Deal ;
@@ -697,7 +722,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==5)
+			else if (col==6)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=mst_grid.Symbol ;
@@ -707,7 +732,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==6)
+			else if (col==7)
 			{	
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=mst_grid.Type1;
@@ -717,7 +742,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==7)
+			else if (col==8)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"";
@@ -728,7 +753,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==8)
+			else if (col==9)
 			{	
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
@@ -740,7 +765,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==9)
+			else if (col==10)
 			{	
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
@@ -751,7 +776,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==10)
+			else if (col==11)
 			{	
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
@@ -762,7 +787,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==11)
+			else if (col==12)
 			{	
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
@@ -774,11 +799,22 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
-			else if (col==12)
+			else if (col==13)
 			{	
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=mst_grid.SubType;										
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==14)
+			{	
+				
+				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				CString tmp=mst_grid.PassedTime ;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -822,7 +858,7 @@ void CPassedBYMngr::filter()
 			addItemToCombobox();
 			CPassedBYMngr::insertFilterFlag=1;
 			InsertRow(0);
-			for (int col_count=0;col_count<13;col_count++)
+			for (int col_count=0;col_count<15;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -870,13 +906,16 @@ void CPassedBYMngr::addItemToCombobox()
 	CStringArray arr10;	
 	CStringArray arr11;	
 	CStringArray arr12;
-	
+
+	CStringArray arr13;
+	CStringArray arr14;
+	CPassedBYMngr::dealing_mutex.Lock();	
 	try
 	{
 		int rows=1;
 		rows=m_st_Dealing_Array.Total();	
 		CString str_val=L"";	
-		for (int forcount=0;forcount<13;forcount++)
+		for (int forcount=0;forcount<15;forcount++)
 		{
 			str[forcount]=L"ALL\n";		
 		}
@@ -884,12 +923,12 @@ void CPassedBYMngr::addItemToCombobox()
 		{
 			 st_Dealing m_st_Netposition={};
 			 m_st_Netposition=m_st_Dealing_Array[forcount];
-			for (int clocount=0;clocount<13;clocount++)
-			{											
+			for (int clocount=0;clocount<15;clocount++)
+			{		
 					if (clocount==0)
 					{
 						
-						str_val=m_st_Netposition.Section;
+						str_val.Format(L"%d",m_st_Netposition.SerialNo);
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr,str_val)==false && str_val!=L"")
 						{
@@ -897,35 +936,34 @@ void CPassedBYMngr::addItemToCombobox()
 							arr.Add(str_val);							
 						}
 					}
+
 					if (clocount==1)
 					{
-						str_val=m_st_Netposition.Login ;
+						
+						str_val=m_st_Netposition.Section;
 						str_val=str_val.Trim();
-						if (CheckvalueInArray(arr1,str_val)==false  && str_val!=L"")
+						if (CheckvalueInArray(arr1,str_val)==false && str_val!=L"")
 						{
 							str[1]=str[1]+str_val+L"\n";										
-							arr1.Add(str_val);
+							arr.Add(str_val);							
 						}
 					}
-
-
 					if (clocount==2)
 					{
-						double  u_deal=m_st_Netposition.Order  ;
-						str_val.Format(L"%.0f",u_deal );
+						str_val=m_st_Netposition.Login ;
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr2,str_val)==false  && str_val!=L"")
 						{
 							str[2]=str[2]+str_val+L"\n";										
-							arr2.Add(str_val);
+							arr1.Add(str_val);
 						}
 					}
 
 
 					if (clocount==3)
 					{
-						
-						str_val.Format(L"%d",m_st_Netposition.Order_In_Time);
+						double  u_deal=m_st_Netposition.Order  ;
+						str_val.Format(L"%.0f",u_deal );
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr3,str_val)==false  && str_val!=L"")
 						{
@@ -934,10 +972,11 @@ void CPassedBYMngr::addItemToCombobox()
 						}
 					}
 
+
 					if (clocount==4)
 					{
 						
-						str_val.Format(L"%d",m_st_Netposition.Deal );
+						str_val.Format(L"%d",m_st_Netposition.Order_In_Time);
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr4,str_val)==false  && str_val!=L"")
 						{
@@ -945,9 +984,11 @@ void CPassedBYMngr::addItemToCombobox()
 							arr4.Add(str_val);
 						}
 					}
+
 					if (clocount==5)
 					{
-						str_val=m_st_Netposition.Symbol;
+						
+						str_val.Format(L"%d",m_st_Netposition.Deal );
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr5,str_val)==false  && str_val!=L"")
 						{
@@ -955,10 +996,9 @@ void CPassedBYMngr::addItemToCombobox()
 							arr5.Add(str_val);
 						}
 					}
-
 					if (clocount==6)
 					{
-						str_val=m_st_Netposition.Type1  ;
+						str_val=m_st_Netposition.Symbol;
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr6,str_val)==false  && str_val!=L"")
 						{
@@ -966,10 +1006,11 @@ void CPassedBYMngr::addItemToCombobox()
 							arr6.Add(str_val);
 						}
 					}
+
 					if (clocount==7)
 					{
-						
-						str_val.Format(L"%.2f",m_st_Netposition.Volume);
+						str_val=m_st_Netposition.Type1  ;
+						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr7,str_val)==false  && str_val!=L"")
 						{
 							str[7]=str[7]+str_val+L"\n";										
@@ -977,18 +1018,18 @@ void CPassedBYMngr::addItemToCombobox()
 						}
 					}
 					if (clocount==8)
-					{						
-						str_val.Format(L"%.2f",m_st_Netposition.Price);
+					{
+						
+						str_val.Format(L"%.2f",m_st_Netposition.Volume);
 						if (CheckvalueInArray(arr8,str_val)==false  && str_val!=L"")
 						{
 							str[8]=str[8]+str_val+L"\n";										
 							arr8.Add(str_val);
 						}
-					}	
+					}
 					if (clocount==9)
 					{						
-						str_val=m_st_Netposition.Comment;
-						str_val=str_val.Trim();
+						str_val.Format(L"%.2f",m_st_Netposition.Price);
 						if (CheckvalueInArray(arr9,str_val)==false  && str_val!=L"")
 						{
 							str[9]=str[9]+str_val+L"\n";										
@@ -996,28 +1037,30 @@ void CPassedBYMngr::addItemToCombobox()
 						}
 					}	
 					if (clocount==10)
-					{						
-						str_val=m_st_Netposition.Status;
+					{	
+						//str_val=m_st_Netposition.Comment;
+						str_val.Format(L"%s",m_st_Netposition.Comment);
+
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr10,str_val)==false  && str_val!=L"")
 						{
 							str[10]=str[10]+str_val+L"\n";										
 							arr10.Add(str_val);
 						}
-					}
+					}	
 					if (clocount==11)
 					{						
-						str_val=m_st_Netposition.Type;
+						str_val=m_st_Netposition.Status;
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr11,str_val)==false  && str_val!=L"")
 						{
-							str[11]=str[11]+str_val+L"\n";										
+							str[11]=str[110]+str_val+L"\n";										
 							arr11.Add(str_val);
 						}
 					}
 					if (clocount==12)
 					{						
-						str_val=m_st_Netposition.SubType;
+						str_val=m_st_Netposition.Type;
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr12,str_val)==false  && str_val!=L"")
 						{
@@ -1025,9 +1068,29 @@ void CPassedBYMngr::addItemToCombobox()
 							arr12.Add(str_val);
 						}
 					}
+					if (clocount==13)
+					{						
+						str_val=m_st_Netposition.SubType;
+						str_val=str_val.Trim();
+						if (CheckvalueInArray(arr13,str_val)==false  && str_val!=L"")
+						{
+							str[13]=str[13]+str_val+L"\n";										
+							arr13.Add(str_val);
+						}
+					}
+					if (clocount==14)
+					{						
+						str_val=m_st_Netposition.PassedTime ;
+						str_val=str_val.Trim();
+						if (CheckvalueInArray(arr14,str_val)==false  && str_val!=L"")
+						{
+							str[14]=str[14]+str_val+L"\n";										
+							arr14.Add(str_val);
+						}
+					}
                }												
 		}
-		for(int f=0;f<13;f++)
+		for(int f=0;f<15;f++)
 		{
 			colShorting(f);
 		}		
@@ -1036,6 +1099,8 @@ void CPassedBYMngr::addItemToCombobox()
 	{
 		AfxMessageBox(ce.Description()+L"addItemToCombobox");			
 	} 
+
+	CPassedBYMngr::dealing_mutex.Unlock();	
 }
 
 BOOLEAN  CPassedBYMngr::CheckvalueInArray(const CStringArray& arr,CString strval) 
@@ -1156,6 +1221,7 @@ UINT PassedByMnger(void *pParam)
 					CMTStr::Copy(m_st_Dealing.Status,artists1.m_Status);
 					CMTStr::Copy(m_st_Dealing.Type,artists1.m_Type);
 					CMTStr::Copy(m_st_Dealing.SubType,artists1.m_SubType);
+					CMTStr::Copy(m_st_Dealing.PassedTime ,artists1.m_PassedTime);
 					CPassedBYMngr::m_st_Dealing_Array.Add(&m_st_Dealing);
 				 }
 				 artists1.Close();				    									 			 				 

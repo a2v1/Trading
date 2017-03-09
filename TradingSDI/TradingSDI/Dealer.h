@@ -62,6 +62,7 @@ public:
 	void CDealer::getJournal(SYSTEMTIME dFrom,SYSTEMTIME dTo);
 	IMTDeal* deal;		
 	static int admin_login;
+	static CString admin_login_name;
  IMTManagerAPI    *m_manager;        // Manager interface
  IMTAdminAPI  *m_admin;
                      CDealer();

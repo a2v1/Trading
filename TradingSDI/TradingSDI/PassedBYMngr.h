@@ -13,12 +13,13 @@ public:
 	~CPassedBYMngr(void);
 public:
 	CWinThread* m_pThreads;
-	CString str[13];
+	CString str[15];
 
 	int col_click,a_d;
 
 	struct st_Dealing
-	{		 		
+	{	
+		int SerialNo;
 		wchar_t Section[100];
 		wchar_t Login[100];
 		double Order;
@@ -32,6 +33,7 @@ public:
 		wchar_t Status[100];
 		wchar_t Type[100];
 		wchar_t SubType[100];
+		wchar_t PassedTime[100];
 	};
 	typedef TMTArray<st_Dealing> st_Dealing_Array;
 	static st_Dealing_Array m_st_Dealing_Array;	
