@@ -1803,7 +1803,7 @@ int NetPosGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 COleDateTime date1, date2;
 switch ( m_iSortCol )
 	{
-case 0:
+ case 0:
     
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1812,7 +1812,7 @@ case 0:
 
 		break;
 
-case 3:
+ case 3:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1820,7 +1820,7 @@ case 3:
 			retVal = 1;
 
 		break;
-case 4:
+ case 4:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1828,7 +1828,7 @@ case 4:
 			retVal = 1;
 
 		break;
-case 5:
+ case 5:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1836,7 +1836,7 @@ case 5:
 			retVal = 1;
 
 		break;
-case 6:
+ case 6:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1844,7 +1844,7 @@ case 6:
 			retVal = 1;
 
 		break;
-case 7:
+ case 7:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1852,7 +1852,7 @@ case 7:
 			retVal = 1;
 
 		break;
-case 8:
+ case 8:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1860,7 +1860,7 @@ case 8:
 			retVal = 1;
 
 		break;
-case 9:
+ case 9:
 		
     if( cell1->GetNumber() < cell2->GetNumber())
 			retVal = -1;
@@ -1869,7 +1869,7 @@ case 9:
 
 		break;
 
-case 10:
+ case 10:
 		
        date1.ParseDateTime( cell1->GetText(), VAR_DATEVALUEONLY );
 		date2.ParseDateTime( cell2->GetText(), VAR_DATEVALUEONLY );
@@ -1888,7 +1888,7 @@ case 10:
 
 		break;
 
-case 15:
+ case 15:
 		
         date1.ParseDateTime( cell1->GetText(), VAR_DATEVALUEONLY );
 		date2.ParseDateTime( cell2->GetText(), VAR_DATEVALUEONLY );
@@ -1907,7 +1907,7 @@ case 15:
 
 		break;
 		
-default:
+ default:
 		if( CString(cell1->GetText()) == "" )
 			return 1;
 		else if( CString(cell2->GetText()) == "" )

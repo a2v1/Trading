@@ -1581,7 +1581,7 @@ void CMainFrame::OnSymbolgroupmapping()
 {
 	CRect rect;
 	GetClientRect(&rect);
-	m_SymbolDlg.MoveWindow( 1,48,430,600);
+	m_SymbolDlg.MoveWindow( 1,48,410,550);
 	m_SymbolDlg.ShowWindow(SW_NORMAL);
 		
 }

@@ -8,7 +8,6 @@
 #include "resource.h"
 #include"symbol_map.h"
 #include "help_search.h"
-#include "TableGroup_Symbol.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
 no_namespace rename("EOF", "EndOfFile")
 
@@ -35,6 +34,7 @@ BEGIN_MESSAGE_MAP(symbol_grp, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &symbol_grp::OnBnClickedButton1)	
 	ON_BN_CLICKED(IDOK, &symbol_grp::OnBnClickedOk)
 	ON_EN_KILLFOCUS(IDC_EDIT1, &symbol_grp::OnEnKillfocusEdit1)
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
@@ -48,7 +48,7 @@ BOOL symbol_grp::OnInitDialog()
 	symbol_map.SetColWidth(0,340);	
 	symbol_map.QuickSetText(0,-1,L"SYMBOL");
 
-	//getSymbolData();
+	
 
 	return TRUE;  // return TRUE unless you set the focus to a control	
 }
@@ -62,27 +62,18 @@ void symbol_grp::OnBnClickedButton1()
 void symbol_grp::OnBnClickedOk()
 {
 	_bstr_t valField1("");
-		_bstr_t valField2("");		
-		_bstr_t valField3("");
-		_bstr_t cmd("");
-		CString  strsqlcommand;				 	
-		HRESULT hr = S_OK;		 
-		CoInitialize(NULL);
-          // Define string variables.		 
-		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");		 
-        _RecordsetPtr pRstAuthors = NULL;
- 
-      // Call Create instance to instantiate the Record set
-      hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
-      if(FAILED(hr))
-      {           
-      }		
-	  
-	  
+	_bstr_t str_cmd("");
 	 CString Symbol_group=L"";
-	// GetDlgItemText(IDC_EDIT1,Symbol_group);
+	_bstr_t  b_symbol_group("");
+	CoInitialize(NULL);		
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	if(SUCCEEDED(hr))
+	{
+	  hr=session.Open(connection);							
+	}
+
 	 m_textcntrl.GetWindowText(Symbol_group);
-	 _bstr_t  b_symbol_group=Symbol_group;
+	 b_symbol_group=Symbol_group;
 	int noofrows=symbol_map.GetNumberRows();
 	for (int f_count=0;f_count<noofrows-1;f_count++)
 	{
@@ -90,54 +81,85 @@ void symbol_grp::OnBnClickedOk()
 		valField1=symbol_map.QuickGetText(0,f_count);
 		strf=symbol_map.QuickGetText(0,f_count);
 		
-		if (strf!=L"")
+		if (valField1.length()!=0)
 		{
-			cmd=cmd+" insert into Symbol_Group(Group_name,Symbol) values('" + b_symbol_group + "','" + valField1 + "');";
+			str_cmd=str_cmd+" insert into Symbol_Group(Group_name,Symbol) values('" + b_symbol_group + "','" + valField1 + "');";
 		}
 	}	
-	cmd=" delete  from Symbol_Group where Group_name='" + b_symbol_group + "';"+cmd;
-	
-	pRstAuthors->Open(cmd,strCnn, adOpenStatic,adLockReadOnly,adCmdText);    			
+	str_cmd=" delete  from Symbol_Group where Group_name='" + b_symbol_group + "';"+str_cmd;
 
+	hr=cmd.Open(session,(LPCTSTR)str_cmd);	
+			
 	AfxMessageBox(L"Symbol Group  has been updated");
-	//CDialogEx::OnOK();
+	cmd.Close();
+	session.Close();
+	connection.Close();	
 }
 
 void symbol_grp::getSymbolData(_bstr_t group_symbol)
 {
-	HRESULT hr;
-	CoInitialize(NULL);
-	CDataSource connection;
-	CSession session;
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
-
-	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
-	
-	session.Open(connection);
-	
-		_bstr_t strCommand="";	
-		
-		strCommand="select symbol,'0' as 'margin' from Symbol_Group where Group_name='" + group_symbol + "'";		
-		char* strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);				
-		int rows_count=0;
+	CoInitialize(NULL);		
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	if(SUCCEEDED(hr))
+	{
+	 hr=session.Open(connection);							
+	}
 		if(SUCCEEDED(hr))
-		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			symbol_map.QuickSetText(0,rows_count,artists1.m_Symbol ); 
-			rows_count=rows_count+1;
+		{			 
+			
+			_bstr_t strCommand="";	
+			strCommand="select symbol,'0' as 'margin' from Symbol_Group where Group_name='" + group_symbol + "'";		
+			hr=artists1.Open(session,(LPCTSTR)strCommand);		
+
+			int rows_count=0;
+			if(SUCCEEDED(hr))
+			{
+				while (artists1.MoveNext() == S_OK)
+				{
+					symbol_map.QuickSetText(0,rows_count,artists1.m_Symbol ); 
+					rows_count=rows_count+1;
+				}
+			}
+		  artists1.Close();
 		}
-		}
-		artists1.Close();	
-		session.Close();
-		connection.Close();
+
+	session.Close();
+	connection.Close();	
 }
 
 void symbol_grp::OnEnKillfocusEdit1()
 {
 	CString tvalue=L"";
-	 m_textcntrl.GetWindowText(tvalue);
-	 _bstr_t bstrval=tvalue;
-	getSymbolData(bstrval);
+	m_textcntrl.GetWindowText(tvalue);
+	int row=0,total=0;
+	total=symbol_map.GetNumberRows();
+	if(!tvalue.IsEmpty())
+	{
+		for(row;row<total;row++)
+		{
+			symbol_map.QuickSetText(0,row,L""); 
+		}
+		getSymbolData((LPCTSTR)tvalue);
+	}
+	else
+	{
+		for(row;row<total;row++)
+		{
+			symbol_map.QuickSetText(0,row,L""); 
+		}
+	}
+	
 }
+
+void symbol_grp::OnClose()
+{
+	// TODO: Add your message handler code here and/or call default
+	session.Close();
+	connection.Close();	
+	CoUninitialize();
+	CDialogEx::OnClose();
+}
+
+
+

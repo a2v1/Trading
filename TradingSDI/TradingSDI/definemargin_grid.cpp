@@ -59,13 +59,13 @@ int definemargin_grid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 int retVal = 0;
 switch(m_iSortCol)
 {
-case 1:
+  case 1:
 	if( cell1->GetNumber() < cell2->GetNumber())
 					retVal = -1;
 				if( cell1->GetNumber() > cell2->GetNumber())
 					retVal = 1;
         break;
-default:
+  default:
 		if( CString(cell1->GetText()) == "" )
 			return 1;
 		else if( CString(cell2->GetText()) == "" )

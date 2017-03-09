@@ -5,7 +5,7 @@
 #include "TradingSDI.h"
 #include "define_margin.h"
 #include "afxdialogex.h"
-#include "TableGroup_Symbol.h"
+
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
 no_namespace rename("EOF", "EndOfFile")
 // define_margin dialog
@@ -56,30 +56,19 @@ BOOL define_margin::OnInitDialog()
 void define_margin::OnBnClickedOk()
 {
 	_bstr_t valField1("");
-		_bstr_t valField2("");		
-		_bstr_t valField3("");
-		_bstr_t cmd("");
-		CString  strsqlcommand;				 	
-		HRESULT hr = S_OK;		 
-		CoInitialize(NULL);
-          // Define string variables.		 
-		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");		 
-        _RecordsetPtr pRstAuthors = NULL;
- 
-      // Call Create instance to instantiate the Record set
-      hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
-      if(FAILED(hr))
-      {           
-      }		
-	  
-	  
+	_bstr_t str_cmd("");
 	 CString Symbol_group=L"";
-	// GetDlgItemText(IDC_EDIT1,Symbol_group);
-	 //m_textcntrl.GetWindowText(Symbol_group);
-	 _bstr_t  b_symbol_group=Symbol_group;
-	int noofrows=d_grid.GetNumberRows();
-	for (int f_count=0;f_count<noofrows-1;f_count++)
+	_bstr_t  b_symbol_group("");		 	
+	CoInitialize(NULL);		
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	if(SUCCEEDED(hr))
 	{
+	  hr=session.Open(connection);							
+	}
+	  
+	 int noofrows=d_grid.GetNumberRows();
+	 for (int f_count=0;f_count<noofrows-1;f_count++)
+	 {
 		CString strf=L"";
 		Symbol_group=d_grid.QuickGetText(0,f_count);
 		b_symbol_group=Symbol_group;
@@ -96,15 +85,16 @@ void define_margin::OnBnClickedOk()
 		
 		if (strf!=L"")
 		{
-			//select group_name,margin from Symbol_group_margin
-			cmd=cmd+" delete  from Symbol_group_margin where Group_name='" + b_symbol_group + "'; insert into Symbol_group_margin(Group_name,margin) values('" + b_symbol_group + "','" + valField1 + "');";
+			str_cmd=str_cmd+" delete  from Symbol_group_margin where Group_name='" + b_symbol_group + "'; insert into Symbol_group_margin(Group_name,margin) values('" + b_symbol_group + "','" + valField1 + "');";
 		}
 	}	
-	
-	
-	pRstAuthors->Open(cmd,strCnn, adOpenStatic,adLockReadOnly,adCmdText);    			
+
+	hr=cmd.Open(session,(LPCTSTR)str_cmd);	  			
 
 	AfxMessageBox(L"Group Margin has been updated");
+	cmd.Close();
+	session.Close();
+	connection.Close();
 }
 
 

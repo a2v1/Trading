@@ -1,7 +1,7 @@
 #pragma once
 #include "symbol_map.h"
 #include "afxwin.h"
-
+#include "TableGroup_Symbol.h"
 // symbol_grp dialog
 
 class symbol_grp : public CDialogEx
@@ -16,6 +16,12 @@ public:
 // Dialog Data
 	enum { IDD = IDD_SYMBOL_GRP };
 
+	//data base connection
+	CDataSource connection;
+    CSession session;
+    HRESULT hr;
+	CCommand<CNoAccessor, CNoRowset> cmd;
+
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
@@ -27,4 +33,5 @@ public:
 	afx_msg void OnBnClickedOk();
 	CEdit m_textcntrl;
 	afx_msg void OnEnKillfocusEdit1();
+	afx_msg void OnClose();
 };

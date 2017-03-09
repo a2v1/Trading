@@ -40,7 +40,7 @@ Editable_Grid::~Editable_Grid()
 void Editable_Grid::OnSetup()
 {
 	SetNumberCols(2);
-	SetNumberRows(50);
+	
 		//soritng
 	m_iArrowIndex = AddCellType( &m_sortArrow );
 
@@ -72,31 +72,55 @@ void Editable_Grid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL pro
 
 int Editable_Grid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {
-	if( flags & UG_SORT_DESCENDING )
-	{
-		CUGCell *ptr = cell1;
-		cell1 = cell2;
-		cell2 = ptr;
-	}
-int retVal = 0;		
 
-switch( cell1->GetDataType()  )
-				{
+if( flags & UG_SORT_DESCENDING )
+{
+	CUGCell *ptr = cell1;
+	cell1 = cell2;
+	cell2 = ptr;
+}
+int retVal = 0;		
+switch ( m_iSortCol )
+{
+  case 0:
+    
+	  if( cell1->GetNumber() < cell2->GetNumber())
+			retVal = -1;
+		if( cell1->GetNumber() > cell2->GetNumber())
+			retVal = 1;
+
+		break;	
 	
-				case UGCELLDATA_NUMBER:
-				case UGCELLDATA_BOOL:
-				case UGCELLDATA_CURRENCY:
-						if( cell1->GetNumber() < cell2->GetNumber())
-							retVal = -1;
-						if( cell1->GetNumber() > cell2->GetNumber())
-							retVal = 1;
+  case 1:
+		if( cell1->GetNumber() < cell2->GetNumber())
+			retVal = -1;
+		if( cell1->GetNumber() > cell2->GetNumber())
+			retVal = 1;
+
+		break;
+  default:
+		if( CString(cell1->GetText()) == "" )
+			return 1;
+		else if( CString(cell2->GetText()) == "" )
+			return -1;
+
+		switch( cell1->GetDataType() )
+		{
+			case UGCELLDATA_NUMBER:
+			case UGCELLDATA_BOOL:
+			case UGCELLDATA_CURRENCY:
+				if( cell1->GetNumber() < cell2->GetNumber())
+					retVal = -1;
+				if( cell1->GetNumber() > cell2->GetNumber())
+					retVal = 1;
+
 				break;
 
-				default:
-					retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-				}
-			
-	return retVal;
+			default:
+			 retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
+		}
+ }
+ return retVal;
 }
 
 void Editable_Grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed)
@@ -141,7 +165,6 @@ void Editable_Grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *po
 
 	}
 	
-		
 	RedrawAll();
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "definemargin_grid.h"
-
+#include <atldbcli.h>
+#include "TableGroup_Symbol.h"
 // define_margin dialog
 
 class define_margin : public CDialogEx
@@ -10,6 +11,12 @@ class define_margin : public CDialogEx
 public:
 	define_margin(CWnd* pParent = NULL);   // standard constructor
 	virtual ~define_margin();
+
+	//data base connection
+	CDataSource connection;
+    CSession session;
+    HRESULT hr;
+	CCommand<CNoAccessor, CNoRowset> cmd;
 
 // Dialog Data
 	enum { IDD = IDD_DEFINE_MARGIN };

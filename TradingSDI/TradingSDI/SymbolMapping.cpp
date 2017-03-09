@@ -188,9 +188,10 @@ void SymbolMapping::OnBnClickedButton2()
 void SymbolMapping::getSymbolData()
 {
 	 //by oledb
+	 CString str_command=L"";
 	 CCommand<CAccessor<Symbol_MapTable> > table;				 	
-		char* strCommand_char="select symbol,mapping_symbol from symbol_mapping";
-		hr=table.Open(session,strCommand_char);							 			 		 				 
+		str_command="select symbol,mapping_symbol from symbol_mapping";
+		hr=table.Open(session,(LPCTSTR)str_command);							 			 		 				 
 
 		if(SUCCEEDED(hr))
 		{
