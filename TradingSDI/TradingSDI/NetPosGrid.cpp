@@ -69,7 +69,7 @@ NetPosGrid::NetpositionArray NetPosGrid::m_NetpositionArray;
 NetPosGrid::SymbolMultiplyer NetPosGrid::m_SymbolMultiplyer;
 NetPosGrid::st_multiplyer NetPosGrid::m_st_multiplyer={};
 NetPosGrid::Symbol_rate NetPosGrid::m_Symbol_rate={};
-NetPosGrid::Symbol_rateArray NetPosGrid::m_Symbol_rateArray;
+NetPosGrid::Symbol_rateArray NetPosGrid::m_Symbol_rateArray;  
 
 NetPosGrid::NetpositionArray NetPosGrid::m_client_lost;
 
