@@ -17,7 +17,7 @@ public:
 	virtual void OnSetup();
 	virtual void OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed);
 	virtual void OnKeyDown(UINT *vcKey,BOOL processed);
-	//virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
+	virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
     //sorting
 	virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
 };

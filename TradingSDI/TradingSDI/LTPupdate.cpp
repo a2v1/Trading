@@ -14,9 +14,6 @@ BEGIN_MESSAGE_MAP(LTPupdate,CUGCtrl)
 END_MESSAGE_MAP()
 
 
-_bstr_t LTPupdate::cellvalue("");
-int LTPupdate::data_display=0;
-int LTPupdate::Grid_Rows_Count=0;
 LTPupdate::LTPupdate(void)
 {
 }

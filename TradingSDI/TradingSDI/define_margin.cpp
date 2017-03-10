@@ -25,11 +25,13 @@ define_margin::~define_margin()
 void define_margin::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT1, m_textsearch);
 }
 
 
 BEGIN_MESSAGE_MAP(define_margin, CDialogEx)
 	ON_BN_CLICKED(IDOK, &define_margin::OnBnClickedOk)
+	ON_EN_CHANGE(IDC_EDIT1, &define_margin::OnEnChangeEdit1)
 END_MESSAGE_MAP()
 
 
@@ -100,10 +102,7 @@ void define_margin::OnBnClickedOk()
 
 void define_margin::getSymbolData()
 {
-	HRESULT hr;
-	CoInitialize(NULL);
-	CDataSource connection;
-	CSession session;
+    CoInitialize(NULL);
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
 
 	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
@@ -113,19 +112,58 @@ void define_margin::getSymbolData()
 		_bstr_t strCommand="";	
 		
 		strCommand="select DISTINCT  Group_name,'0' as 'margin' from Symbol_Group  where Group_name not in (select Group_name from Symbol_group_margin) union all select group_name,margin from Symbol_group_margin";		
-		char* strCommand_char=(char*)strCommand;
-		hr=artists1.Open(session,strCommand_char);				
+		hr=artists1.Open(session,(LPCTSTR)strCommand);				
 		int rows_count=0;
 		if(SUCCEEDED(hr))
 		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			d_grid.QuickSetText(0,rows_count,artists1.m_Symbol ); 
-			d_grid.QuickSetText(1,rows_count,artists1.m_margin ); 
-			rows_count=rows_count+1;
-		}
+			while (artists1.MoveNext() == S_OK)
+			{
+				d_grid.InsertRow(rows_count);
+				d_grid.QuickSetText(0,rows_count,artists1.m_Symbol ); 
+				d_grid.QuickSetText(1,rows_count,artists1.m_margin ); 
+				rows_count=rows_count+1;
+			}
 		}
 		artists1.Close();	
 		session.Close();
 		connection.Close();
+
+}
+
+void define_margin::OnEnChangeEdit1()
+{
+	// TODO:  If this is a RICHEDIT control, the control will not
+	// TODO: Add your control notification handler code here
+	d_grid.SetNumberRows(0);
+	CString text_value=L"";
+	CoInitialize(NULL);
+	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
+
+	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	if(SUCCEEDED(hr))
+	{
+		hr=session.Open(connection);
+	}
+	//getting value from textbox
+	m_textsearch.GetWindowTextW(text_value);
+	
+	CString strCommand=L"";
+	strCommand.Format(L"select DISTINCT  Group_name,'0' as 'margin' from Symbol_Group  where Group_name not in (select Group_name from Symbol_group_margin) union all select group_name,margin from Symbol_group_margin where Group_name like '%s%s'",text_value,L"%");		
+
+	hr=artists1.Open(session,(LPCTSTR)strCommand);
+	int rows_count=0;
+	if(SUCCEEDED(hr))
+	{
+		while (artists1.MoveNext() == S_OK)
+		{
+		d_grid.InsertRow(rows_count);
+		d_grid.QuickSetText(0,rows_count,artists1.m_Symbol ); 
+		d_grid.QuickSetText(1,rows_count,artists1.m_margin ); 
+		rows_count=rows_count+1;
+		}
+	}
+	artists1.Close();	
+	session.Close();
+	connection.Close();
+	
 }

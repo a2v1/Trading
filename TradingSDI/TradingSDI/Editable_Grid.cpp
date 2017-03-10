@@ -80,46 +80,37 @@ if( flags & UG_SORT_DESCENDING )
 	cell2 = ptr;
 }
 int retVal = 0;		
+CString szComp1=L"";
+CString szComp2=L"";
+
 switch ( m_iSortCol )
 {
   case 0:
     
-	  if( cell1->GetNumber() < cell2->GetNumber())
-			retVal = -1;
-		if( cell1->GetNumber() > cell2->GetNumber())
-			retVal = 1;
+	 	szComp1=cell1->GetText();
+		szComp2=cell2->GetText();
+
+		if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
+		{
+		  retVal=szComp1.Compare(szComp2);
+		}
 
 		break;	
 	
   case 1:
-		if( cell1->GetNumber() < cell2->GetNumber())
-			retVal = -1;
-		if( cell1->GetNumber() > cell2->GetNumber())
-			retVal = 1;
+		szComp1=cell1->GetText();
+		szComp2=cell2->GetText();
+
+		if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
+		{
+		  retVal=szComp1.Compare(szComp2);
+		}
 
 		break;
   default:
-		if( CString(cell1->GetText()) == "" )
-			return 1;
-		else if( CString(cell2->GetText()) == "" )
-			return -1;
-
-		switch( cell1->GetDataType() )
-		{
-			case UGCELLDATA_NUMBER:
-			case UGCELLDATA_BOOL:
-			case UGCELLDATA_CURRENCY:
-				if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-
-			default:
-			 retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-		}
- }
+	     retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
+}
+ 
  return retVal;
 }
 

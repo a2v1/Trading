@@ -2,6 +2,8 @@
 #include "definemargin_grid.h"
 #include <atldbcli.h>
 #include "TableGroup_Symbol.h"
+#include "afxwin.h"
+
 // define_margin dialog
 
 class define_margin : public CDialogEx
@@ -30,4 +32,6 @@ public:
 	afx_msg void OnBnClickedOk();
 	void define_margin::getSymbolData();
 	
+	CEdit m_textsearch;
+	afx_msg void OnEnChangeEdit1();
 };
