@@ -16,13 +16,13 @@ using namespace rapidjson;
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
 no_namespace rename("EOF", "EndOfFile")
 
-#define WM_MY_THREAD_MESSAGE1				WM_APP+200
+#define WM_MY_THREAD_MESSAGE1					WM_APP+200
 #define WM_MY_THREAD_MESSAGE_ROWSNO1			WM_APP+201
-#define WM_MY_THREAD_MESSAGE_REFRESH1		WM_APP+202
+#define WM_MY_THREAD_MESSAGE_REFRESH1			WM_APP+202
 #define GRID_ROWS_COUNT1						WM_APP+203
-#define DELETE_ROW1	     					WM_APP+204
-#define DELETE_THREAD	     				WM_APP+205
-#define ROW_NO_FIND	     					WM_APP+206
+#define DELETE_ROW1	     						WM_APP+204
+#define DELETE_THREAD	     					WM_APP+205
+#define ROW_NO_FIND	     						WM_APP+206
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -46,6 +46,7 @@ GridTradeAndOrder::st_gridAndOrder_Array GridTradeAndOrder::m_gridAndOrder_Grid_
 GridTradeAndOrder::st_gridAndOrder_Array GridTradeAndOrder::m_gridAndOrder_Array;
 CMutex GridTradeAndOrder::gridAndOrder_mutex;
 
+GridTradeAndOrder::st_gridAndOrder GridTradeAndOrder::m_st_Dealing={};
 //others
 CString GridTradeAndOrder::m_c_symbol=L"";
 int GridTradeAndOrder::value_row_no=0;
@@ -96,17 +97,17 @@ extern  CLogFile m_logfile_g;
 GridTradeAndOrder::GridTradeAndOrder()
 {
 	GridTradeAndOrder::thread_check=0;
-	m_logfile_g.LogEvent(L"Start GridTradeAndOrder");	
+	//m_logfile_g.LogEvent(L"Start GridTradeAndOrder");	
 	 t = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
 	 bstr_currenttime=t;
 	 GridTradeAndOrder::grid_populate_check=0;
 	UGXPThemes::UseThemes(false);
-	m_logfile_g.LogEvent(L"End GridTradeAndOrder");
+	//m_logfile_g.LogEvent(L"End GridTradeAndOrder");
 }
 
 GridTradeAndOrder::~GridTradeAndOrder()
 {
-	m_logfile_g.LogEvent(L"Start GridTradeAndOrder");
+	//m_logfile_g.LogEvent(L"Start GridTradeAndOrder");
 	try
 	{
 
@@ -133,13 +134,13 @@ GridTradeAndOrder::~GridTradeAndOrder()
 		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
 	}
 	
-m_logfile_g.LogEvent(L"End GridTradeAndOrder");
+//m_logfile_g.LogEvent(L"End GridTradeAndOrder");
    
 }
 
 LRESULT GridTradeAndOrder::DeleteThred(WPARAM wParam, LPARAM lParam)
 {
-	m_logfile_g.LogEvent(L"Start DeleteThred");
+	//m_logfile_g.LogEvent(L"Start DeleteThred");
 	DWORD exit_code= NULL;
 	if (m_pThreads != NULL)
 	{
@@ -154,14 +155,14 @@ LRESULT GridTradeAndOrder::DeleteThred(WPARAM wParam, LPARAM lParam)
 	}
 	
 	GridTradeAndOrder::thred_killed_ok=0;
-	m_logfile_g.LogEvent(L"End DeleteThred");
+	//m_logfile_g.LogEvent(L"End DeleteThred");
 	return 0;
 }
 
 UINT update_data_Trade(void*);
 UINT update_data_Trade(void *pParam)
 {
-	m_logfile_g.LogEvent(L"Start update_data_Trade");
+	//m_logfile_g.LogEvent(L"Start update_data_Trade");
 	
 	GridTradeAndOrder* pThis= (GridTradeAndOrder*)pParam;	
 	CoInitialize(NULL);
@@ -187,7 +188,7 @@ UINT update_data_Trade(void *pParam)
 			 if(SUCCEEDED(hr))
 			 {
 				 GridTradeAndOrder::m_gridAndOrder_Array_Fill.Clear();
-				 GridTradeAndOrder::st_gridAndOrder m_st_Dealing={};				 
+				 //GridTradeAndOrder::st_gridAndOrder m_st_Dealing={};				 
 				 while (artists1.MoveNext() == S_OK)
 				 {									
                     LPTSTR endPtr;
@@ -195,22 +196,53 @@ UINT update_data_Trade(void *pParam)
 					CString cstrpl;
 					cstrpl.Format(_T("%.2f"),d_m_PL);	
 
-					CMTStr::Copy(m_st_Dealing.Symbol ,artists1.m_Symbol );				 					
-					CMTStr::Copy(m_st_Dealing.Order ,artists1.m_Order );				 												
-					CMTStr::Copy(m_st_Dealing.Time,artists1.m_Time ) ;
-					CMTStr::Copy(m_st_Dealing.Type ,artists1.m_Type );		
-					CMTStr::Copy(m_st_Dealing.Volume ,artists1.m_Volume );	
-					CMTStr::Copy(m_st_Dealing.Price,cstrpl) ;
-					CMTStr::Copy(m_st_Dealing.Type ,artists1.m_Current_Rate);		
-					CMTStr::Copy(m_st_Dealing.Volume ,artists1.m_PL);
-					CMTStr::Copy(m_st_Dealing.Status,artists1.m_Status);
-					CMTStr::Copy(m_st_Dealing.Trade_Checked,artists1.m_Trade_Checked);
-					CMTStr::Copy(m_st_Dealing.Checked_Time,artists1.m_Checked_Time);
-					CMTStr::Copy(m_st_Dealing.Limit,artists1.m_Limit);
-					CMTStr::Copy(m_st_Dealing.Remark2,artists1.m_Remark2);
+					CString cstr_Symbol=artists1.m_Symbol;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Symbol ,cstr_Symbol);				 					
+					CString cstr_Order=artists1.m_Order;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Order ,cstr_Order);
+
+					CString cstr_Time=artists1.m_Time;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Time,cstr_Time ) ;
+
+					CString cstr_Type=artists1.m_Type ;
+
+					
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Type ,cstr_Type);		
+
+					CString cstr_Volume=artists1.m_Volume ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Volume ,cstr_Volume);	
+
+					
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Price,cstrpl) ;
+
+					CString cstr_Current_Rate=artists1.m_Current_Rate ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Type ,cstr_Current_Rate);
+
+					CString cstr_PL=artists1.m_PL ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Volume ,cstr_PL);
+
+
+					CString cstr_Status=artists1.m_Status ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Status,cstr_Status);
+
+
+					CString cstr_Trade_Checked=artists1.m_Trade_Checked ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Trade_Checked,cstr_Trade_Checked);
+
+
+					CString cstr_Checked_Time=artists1.m_Checked_Time ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Checked_Time,cstr_Checked_Time);
+
+
+					CString cstr_Limit=artists1.m_Limit;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Limit,cstr_Limit);
+
+
+					CString cstr_Remark2=artists1.m_Remark2;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Remark2,cstr_Remark2);
 					
 
-					GridTradeAndOrder::m_gridAndOrder_Array_Fill.Add(&m_st_Dealing);
+					GridTradeAndOrder::m_gridAndOrder_Array_Fill.Add(&GridTradeAndOrder::m_st_Dealing);
 				 }
 				 artists1.Close();				    									 			 				 
 			 }
@@ -636,7 +668,7 @@ UINT update_data_Trade(void *pParam)
 
     session.Close();
 	connection.Close();
-	m_logfile_g.LogEvent(L"End update_data_Trade");
+	//m_logfile_g.LogEvent(L"End update_data_Trade");
     return 0;
 }
 
@@ -650,7 +682,7 @@ LRESULT GridTradeAndOrder::GridRefresh(WPARAM wParam, LPARAM lParam)
 
 LRESULT GridTradeAndOrder::rownofind(WPARAM wParam, LPARAM lParam)
 {
-m_logfile_g.LogEvent(L"Start rownofind");
+//m_logfile_g.LogEvent(L"Start rownofind");
 CString m_symbol=L"";
 if(OverViewOrderGrid::thred_kill==0)
   {
@@ -680,7 +712,7 @@ if(OverViewOrderGrid::thred_kill==0)
 	}
 
  }
-m_logfile_g.LogEvent(L"End rownofind");
+//m_logfile_g.LogEvent(L"End rownofind");
   return value_row_no;
 }
 
@@ -688,7 +720,7 @@ m_logfile_g.LogEvent(L"End rownofind");
 
 LRESULT GridTradeAndOrder::OnThreadMessage(WPARAM wParam, LPARAM lParam)
 {
-	m_logfile_g.LogEvent(L"Start GridTradeOrder Onthreaad msg");
+	//m_logfile_g.LogEvent(L"Start GridTradeOrder Onthreaad msg");
 	HRESULT hr = S_OK;	
 	int col= (int)wParam;
 	int row= (int)lParam;
@@ -727,7 +759,7 @@ LRESULT GridTradeAndOrder::OnThreadMessage(WPARAM wParam, LPARAM lParam)
 			
 		//RedrawCell(col,row+1);
 	}
-	m_logfile_g.LogEvent(L"End GridTradeOrder Onthreaad msg");
+	//m_logfile_g.LogEvent(L"End GridTradeOrder Onthreaad msg");
 	return 0;
 	
 }
@@ -741,13 +773,13 @@ LRESULT GridTradeAndOrder::GridRowCount(WPARAM wParam, LPARAM lParam)
 
 LRESULT GridTradeAndOrder::RowDelete(WPARAM wParam, LPARAM lParam)
 {
-	m_logfile_g.LogEvent(L"Start RowDelete");
+	//m_logfile_g.LogEvent(L"Start RowDelete");
 	int row= (int)wParam;
 	for(int f=0;f<13;f++)
 	{
 		QuickSetText(f,row,L"");
 	}
-	m_logfile_g.LogEvent(L"End RowDelete");
+	//m_logfile_g.LogEvent(L"End RowDelete");
 	//DeleteRow(row);
 	return 0;
 }
@@ -756,7 +788,7 @@ LRESULT GridTradeAndOrder::RowDelete(WPARAM wParam, LPARAM lParam)
 
 LRESULT GridTradeAndOrder::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
 {
-	m_logfile_g.LogEvent(L"Start OnThreadMessage_RowsNo");
+	//m_logfile_g.LogEvent(L"Start OnThreadMessage_RowsNo");
 	int val= (int)wParam;
 	int flag= (int)lParam;
 	if(flag==0)
@@ -767,7 +799,7 @@ LRESULT GridTradeAndOrder::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
 	{
 		InsertRow(val);
 	}
-		m_logfile_g.LogEvent(L"End OnThreadMessage_RowsNo");
+		//m_logfile_g.LogEvent(L"End OnThreadMessage_RowsNo");
 		return 0;
 }
 
@@ -787,7 +819,7 @@ LRESULT GridTradeAndOrder::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
 //		<none>
 void GridTradeAndOrder::OnSheetSetup(int sheetNumber)
 {
-	m_logfile_g.LogEvent(L"Start OnSheetSetup");
+	//m_logfile_g.LogEvent(L"Start OnSheetSetup");
 	int	nRow = 0, nCol = 0;
 	// ****************************************************************
 	// ** Set up columns
@@ -845,14 +877,14 @@ void GridTradeAndOrder::OnSheetSetup(int sheetNumber)
 	{
 		QuickSetFont(i, -1, 1);
 	}
-m_logfile_g.LogEvent(L"End OnSheetSetup");
+//m_logfile_g.LogEvent(L"End OnSheetSetup");
 }
 
 		
 
 void GridTradeAndOrder::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
 {
-	m_logfile_g.LogEvent(L"Start OnDClicked");
+	//m_logfile_g.LogEvent(L"Start OnDClicked");
 	
 
 	//CDialog mySettings( IDD_TAB_DATA );
@@ -877,13 +909,13 @@ void GridTradeAndOrder::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL
 	{
 		StartEdit();
 	}
-	m_logfile_g.LogEvent(L"End OnDClicked");
+	//m_logfile_g.LogEvent(L"End OnDClicked");
 }	
 			 
 
 void GridTradeAndOrder::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed)
 {
-	m_logfile_g.LogEvent(L"Start OnTH_LClicked");
+	//m_logfile_g.LogEvent(L"Start OnTH_LClicked");
 	UNREFERENCED_PARAMETER(row);
 	UNREFERENCED_PARAMETER(rect);
 	UNREFERENCED_PARAMETER(point);
@@ -943,7 +975,7 @@ void GridTradeAndOrder::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT
 	
 	RedrawAll();
 	
-m_logfile_g.LogEvent(L"End OnTH_LClicked");
+//m_logfile_g.LogEvent(L"End OnTH_LClicked");
 }
 int GridTradeAndOrder::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
 {
@@ -955,7 +987,7 @@ int GridTradeAndOrder::OnCellTypeNotify(long ID,int col,long row,long msg,long p
 int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	
-	m_logfile_g.LogEvent(L"Start OnDropList");
+	//m_logfile_g.LogEvent(L"Start OnDropList");
 	if (msg==103)
 	{
 		if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
@@ -1137,7 +1169,7 @@ int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 	  }
 	 RedrawAll();
 	}
-	m_logfile_g.LogEvent(L"End OnDropList");
+	//m_logfile_g.LogEvent(L"End OnDropList");
 	return true;
 	
 }
@@ -1157,7 +1189,7 @@ int GridTradeAndOrder::OnDropList(long ID,int col,long row,long msg,long param)
 
 _bstr_t GridTradeAndOrder::get_string(CString  MainStr,CString SepStr)
 {
-	m_logfile_g.LogEvent(L"Start get_string");
+	//m_logfile_g.LogEvent(L"Start get_string");
 	int str_len=MainStr.GetLength();
 	CString strcode=L"";	
 	_bstr_t b_strreturn="";
@@ -1198,7 +1230,7 @@ _bstr_t GridTradeAndOrder::get_string(CString  MainStr,CString SepStr)
 	b_strreturn="("+b_strreturn+")";
 
 
-	m_logfile_g.LogEvent(L"End  get_string");
+	//m_logfile_g.LogEvent(L"End  get_string");
 	return b_strreturn;
 
 }
@@ -1207,7 +1239,7 @@ _bstr_t GridTradeAndOrder::get_string(CString  MainStr,CString SepStr)
 
 int GridTradeAndOrder::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
 {
-	m_logfile_g.LogEvent(L"Start  OnEditFinish");
+	//m_logfile_g.LogEvent(L"Start  OnEditFinish");
 	if(GridTradeAndOrder::insertFilterFlag==1 && row==0)
 	{
 		GridTradeAndOrder::filter_break=1;
@@ -1224,7 +1256,7 @@ int GridTradeAndOrder::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,
 	}
 	RedrawAll();
 
-	m_logfile_g.LogEvent(L"End  OnEditFinish");
+	//m_logfile_g.LogEvent(L"End  OnEditFinish");
 	return true;
 	
 }
@@ -1233,7 +1265,7 @@ int GridTradeAndOrder::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,
 
 void GridTradeAndOrder::OnMenuCommand(int col,long row,int section,int item)
 {
-	m_logfile_g.LogEvent(L"Start  OnMenuCommand");
+	//m_logfile_g.LogEvent(L"Start  OnMenuCommand");
 	UNREFERENCED_PARAMETER(col);
 	UNREFERENCED_PARAMETER(row);
 	UNREFERENCED_PARAMETER(section);
@@ -1259,7 +1291,7 @@ void GridTradeAndOrder::OnMenuCommand(int col,long row,int section,int item)
 		
 	}
 
-	m_logfile_g.LogEvent(L"End  OnMenuCommand");
+	//m_logfile_g.LogEvent(L"End  OnMenuCommand");
 }
 
 
@@ -1267,7 +1299,7 @@ void GridTradeAndOrder::OnMenuCommand(int col,long row,int section,int item)
 
 int GridTradeAndOrder::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {
-	m_logfile_g.LogEvent(L"Start  OnSortEvaluate");
+	//m_logfile_g.LogEvent(L"Start  OnSortEvaluate");
 	if( flags & UG_SORT_DESCENDING )
 	{
 		CUGCell *ptr = cell1;
@@ -1381,7 +1413,7 @@ int GridTradeAndOrder::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 				retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
 		}
 	}
-	m_logfile_g.LogEvent(L"End  OnSortEvaluate");
+	//m_logfile_g.LogEvent(L"End  OnSortEvaluate");
 	return retVal;
 }
 
@@ -1394,10 +1426,10 @@ int GridTradeAndOrder::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 //		<none>
 void GridTradeAndOrder::OnTabSelected(int ID)
 {
-	m_logfile_g.LogEvent(L"Start  OnTabSelected");
+	//m_logfile_g.LogEvent(L"Start  OnTabSelected");
 	SetSheetNumber(ID);
 	PostMessage(WM_SIZE, 0, 0L);
-	m_logfile_g.LogEvent(L"End  OnTabSelected");
+	//m_logfile_g.LogEvent(L"End  OnTabSelected");
 }
 
 
@@ -1472,7 +1504,7 @@ void GridTradeAndOrder::OnTimer(UINT nIDEvent)
 
  void GridTradeAndOrder::filter()
  {
-	 m_logfile_g.LogEvent(L"Start  filter");
+	 //m_logfile_g.LogEvent(L"Start  filter");
 	if (GridTradeAndOrder::insertFilterFlag==0)
 	{
 			addItemToCombobox();
@@ -1514,14 +1546,14 @@ void GridTradeAndOrder::OnTimer(UINT nIDEvent)
 	}
 	RedrawAll();
 
-	m_logfile_g.LogEvent(L"End  filter");
+	//m_logfile_g.LogEvent(L"End  filter");
  }
 
 
 
 BOOLEAN  GridTradeAndOrder::CheckvalueInArray(const CStringArray& arr,CString strval) 
 {
-	m_logfile_g.LogEvent(L"Start  CheckvalueInArray");
+	//m_logfile_g.LogEvent(L"Start  CheckvalueInArray");
 	try
 	{
 	int arrcount=arr.GetCount();
@@ -1532,7 +1564,7 @@ BOOLEAN  GridTradeAndOrder::CheckvalueInArray(const CStringArray& arr,CString st
 			return true;
 		}
 	}
-	m_logfile_g.LogEvent(L"End  CheckvalueInArray");
+	//m_logfile_g.LogEvent(L"End  CheckvalueInArray");
     return false  ;
 	}
 	catch(_com_error & ce)
@@ -1543,7 +1575,7 @@ BOOLEAN  GridTradeAndOrder::CheckvalueInArray(const CStringArray& arr,CString st
  
 void GridTradeAndOrder::addItemToCombobox()
 {
-	m_logfile_g.LogEvent(L"Start  CheckvalueInArray");
+	//m_logfile_g.LogEvent(L"Start  CheckvalueInArray");
 	CStringArray arr;
 	CStringArray arr1;
 	CStringArray arr2;
@@ -1740,14 +1772,14 @@ void GridTradeAndOrder::addItemToCombobox()
 
 	} 
 
-	m_logfile_g.LogEvent(L"End  CheckvalueInArray");
+	//m_logfile_g.LogEvent(L"End  CheckvalueInArray");
 }
  
 
 
 void GridTradeAndOrder::OnSetup()
 {
-	m_logfile_g.LogEvent(L"Start  OnSetup()");
+	//m_logfile_g.LogEvent(L"Start  OnSetup()");
 	// Set up the Tab controls
 	c1_click=0;
 	c2_click=0;
@@ -1831,12 +1863,12 @@ void GridTradeAndOrder::OnSetup()
 	//m_SocketThred=AfxBeginThread(update_data_Order, this);		
 
 	run_check=0;		
-	m_logfile_g.LogEvent(L"End  OnSetup()");
+	//m_logfile_g.LogEvent(L"End  OnSetup()");
 }
 
 void GridTradeAndOrder::gridFilter(int colno,int rows_count,CString col_value)
 {
-	m_logfile_g.LogEvent(L"Start gridFilter");
+	//m_logfile_g.LogEvent(L"Start gridFilter");
 	CString getColvalue=L"";
 	
 	for(int fcount=rows_count-1;fcount>0;fcount--)
@@ -1913,17 +1945,17 @@ void GridTradeAndOrder::gridFilter(int colno,int rows_count,CString col_value)
 		}
 		}
 	}
-	m_logfile_g.LogEvent(L"End gridFilter");
+	//m_logfile_g.LogEvent(L"End gridFilter");
 }
 
 int GridTradeAndOrder::OnCanViewMove(int oldcol,long oldrow,int newcol,long newrow)
 {
-	m_logfile_g.LogEvent(L"Start OnCanViewMove");
+	//m_logfile_g.LogEvent(L"Start OnCanViewMove");
 	UNREFERENCED_PARAMETER(oldcol);
 	UNREFERENCED_PARAMETER(oldrow);
 	UNREFERENCED_PARAMETER(newcol);
 	UNREFERENCED_PARAMETER(newrow);
-	m_logfile_g.LogEvent(L"End  OnCanViewMove");
+	//m_logfile_g.LogEvent(L"End  OnCanViewMove");
 	return TRUE;
 }
 

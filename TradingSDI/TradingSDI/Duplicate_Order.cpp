@@ -1350,7 +1350,7 @@ void Duplicate_Order::Selected_commentChange()
 		CString check_value=QuickGetText(10,fcount);
 		_bstr_t strdeal=deal;
 		
-		if (login!=L"" && check_value==L"1"  && comment_n.Trim().GetLength()>0) 
+		if (login!=L"" && check_value==L"1" ) 
 		{
 			change_comment_dealwise(login,deal,ocomment_n,ocomment_o);
 			st_Change_Comment_List m_st_Change_Comment_List={};
@@ -1359,12 +1359,10 @@ void Duplicate_Order::Selected_commentChange()
 			CMTStr::Copy(m_st_Change_Comment_List.Old_Comment,comment_o);
 			CMTStr::Copy(m_st_Change_Comment_List.New_Comment,comment_n);
 			char *struct_data;
-			//memcpy(struct_data,&m_st_Change_Comment_List,sizeof(st_Change_Comment_List));*/
 			_bstr_t bstr_login=login+"-"+comment_o+"|"+login+"-"+comment_n+"|"+login+"-"+ocomment_o+"|"+login+"-"+ocomment_n;
 			
 			bstr_final_comment=bstr_final_comment+bstr_login+"|";
 		
-
 			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}

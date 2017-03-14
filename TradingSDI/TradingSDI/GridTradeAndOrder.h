@@ -64,7 +64,7 @@ public:
 	static int col_click;
     static int a_d;
 
-
+	static st_gridAndOrder m_st_Dealing;
 protected:
 
 	LRESULT OnThreadMessage(WPARAM, LPARAM);
