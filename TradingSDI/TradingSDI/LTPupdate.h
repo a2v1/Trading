@@ -7,9 +7,6 @@ class LTPupdate :public CUGCtrl
 public:
 	LTPupdate(void);
 	~LTPupdate(void);
-	static _bstr_t cellvalue;
-	static int data_display; 
-	static int Grid_Rows_Count;
 	//SORT
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
