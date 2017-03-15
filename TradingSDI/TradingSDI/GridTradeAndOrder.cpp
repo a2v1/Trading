@@ -216,10 +216,10 @@ UINT update_data_Trade(void *pParam)
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Price,cstrpl) ;
 
 					CString cstr_Current_Rate=artists1.m_Current_Rate ;
-					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Type ,cstr_Current_Rate);
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Current_Rate ,cstr_Current_Rate);
 
 					CString cstr_PL=artists1.m_PL ;
-					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Volume ,cstr_PL);
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.PL  ,cstr_PL);
 
 
 					CString cstr_Status=artists1.m_Status ;
