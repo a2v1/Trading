@@ -113,7 +113,7 @@ NetPosGrid::Client_Details NetPosGrid::m_Client_Details={};
 
 NetPosGrid::NetpositionArray NetPosGrid::m_NetpositionArray_For_Grid;
 NetPosGrid::st_Netposition NetPosGrid::m_st_Netposition_For_Grid={};
-NetPosGrid::Netposition_Ignore_comment_Array NetPosGrid::m_Netposition_Ignore_comment_Array;
+NetPosGrid::NetpositionArray NetPosGrid::m_Netposition_Ignore_comment_Array;
 
 NetPosGrid::Client_Balance_Array NetPosGrid::m_Client_Balance_Array;
 double NetPosGrid::Pre_balance=0;	
@@ -3557,161 +3557,175 @@ UINT Update_Netposition(LPVOID pParam)
 				NetPosGrid::m_Netposition_Ignore_comment_Array.Clear();
 
 				NetPosGrid::mutex_Symbol_ltp.Lock();
-				int client_total=NetPosGrid::m_login_in_m_Array.Total() ;
-				int symbol_total=NetPosGrid::m_Symbol_in_m_Array.Total();
-				NetPosGrid::mutex_Symbol_ltp.Unlock();
-				for (int c=0;c<client_total;c++)
+				int net_pos_total=NetPosGrid::m_NetpositionArray.Total();	
+				for(int n=0;n<net_pos_total;n++)
 				{
-					NetPosGrid::login_in_m m_login_in_m={};
-					m_login_in_m=NetPosGrid::m_login_in_m_Array[c];
-					CString str_login_m=m_login_in_m.V_login;					
-					for (int s=0;s<symbol_total;s++)
+					NetPosGrid::st_Netposition m_st_np={};
+					m_st_np=NetPosGrid::m_NetpositionArray[n];
+					CString str_client=m_st_np.m_login ;					
+					int check_comment=str_client.Find('-');
+					if(check_comment==-1)
 					{
-						NetPosGrid::Symbol_in_m m_symbol_in_m={};
-						m_symbol_in_m=NetPosGrid::m_Symbol_in_m_Array[s];
-						CString str_symbol=m_symbol_in_m.V_symbol ;
-						NetPosGrid::mutex_Symbol_ltp.Lock();
-						int net_pos_total=NetPosGrid::m_NetpositionArray.Total();	
-
-						double m_d_pre_qty=0;
-						double m_d_incre_qty=0;
-						double m_d_netqty=0;
-						double m_d_avg_rate=0;
-						double m_d_Floating_Profit=0;
-						double m_d_Balance=0;
-
-						double m_p_pre_qty=0;
-						double m_p_incre_qty=0;
-						double m_p_netqty=0;
-						double m_p_avg_rate=0;
-						double m_p_Floating_Profit=0;
-						double m_p_Balance=0;
-						double m_d_last_rate=0;
-
-						for(int n=0;n<net_pos_total;n++)
-						{
-							NetPosGrid::st_Netposition m_st_np={};
-							m_st_np=NetPosGrid::m_NetpositionArray[n];
-							CString str_login=m_st_np.m_login;
-							if (str_login.Find('-')>0)
-							{
-								str_login=str_login.Mid(0,str_login.Find('-'));
-							}
-							if (wcscmp(str_login_m,str_login)==0 && wcscmp(str_symbol,m_st_np.m_symbol)==0)
-							{
-								LPTSTR endPtr1;																
-								m_d_pre_qty=_tcstod(m_st_np.m_pre_qty, &endPtr1);						
-								m_d_pre_qty=m_d_pre_qty+m_p_pre_qty;
-								m_p_pre_qty=m_d_pre_qty;
-								
-								m_d_incre_qty=_tcstod(m_st_np.m_incre_qty, &endPtr1);						
-								m_d_incre_qty=m_d_incre_qty+m_p_incre_qty;
-								m_p_incre_qty=m_d_incre_qty;
-
-								m_d_netqty=_tcstod(m_st_np.m_netqty , &endPtr1);				
-								
-								double net_total_qty=1;
-								if ((m_d_netqty+m_p_netqty)!=0)
-								{
-									net_total_qty=m_d_netqty+m_p_netqty;
-								}
-								m_d_avg_rate=_tcstod(m_st_np.m_avg_rate , &endPtr1); 															
-								m_d_avg_rate=(((m_p_avg_rate*m_p_netqty)+(m_d_netqty*m_d_avg_rate))/net_total_qty);
-								m_d_avg_rate=abs(m_d_avg_rate);
-								m_p_avg_rate=m_d_avg_rate;
-								
-								m_d_netqty=m_d_netqty+m_p_netqty;
-								m_p_netqty=m_d_netqty;
-								
-								m_d_Floating_Profit=_tcstod(m_st_np.m_Floating_Profit , &endPtr1);				
-								m_d_Floating_Profit=m_d_Floating_Profit+m_p_Floating_Profit;
-								m_p_Floating_Profit=m_d_Floating_Profit;
-
-								m_d_Balance=_tcstod(m_st_np.m_Balance, &endPtr1);				
-								m_d_Balance=m_d_Balance+m_p_Balance;
-								m_p_Balance=m_d_Balance;
-
-
-								m_d_last_rate=_tcstod(m_st_np.m_last_rate, &endPtr1);				
-							}
-						}
-						NetPosGrid::mutex_Symbol_ltp.Unlock();
-						NetPosGrid::st_Netposition_Ignore_comment m_st_comment={};
-						CMTStr::Copy(m_st_comment.m_login,str_login_m);
-						CString str_name=L"";
-						CString str_group1=L"";
-						CString str_group2=L"";
-						CString str_group3=L"";
-						CString str_group4=L"";
-
-						CString m_pre_qty_str=L"";
-						m_pre_qty_str.Format(L"%.0f",m_d_pre_qty);
-						CString m_incre_qty_str=L"";
-						m_incre_qty_str.Format(L"%.0f",m_d_incre_qty);
-						CString m_netqty_str=L"";
-						m_netqty_str.Format(L"%.0f",m_d_netqty);
-						CString m_avg_rate_str=L"";
-						m_avg_rate_str.Format(L"%.0f",m_d_avg_rate);
-						CString m_last_rate_str=L"";
-						m_last_rate_str.Format(L"%.0f",m_d_last_rate);
-						CString m_Floating_Profit_str=L"";
-						m_Floating_Profit_str.Format(L"%.0f",m_d_Floating_Profit);
-						CString m_Balance_str=L"";
-						m_Balance_str.Format(L"%.0f",m_d_Balance);
-
-						//Getting group and name of login
-						int client_total=NetPosGrid::m_Client_Details_Array.Total();
-						for (int cl=0;cl<client_total;cl++)
-						{
-							NetPosGrid::Client_Details m_cl={};
-							m_cl=NetPosGrid::m_Client_Details_Array[cl];
-							if (wcscmp(m_cl.V_login,str_login_m)==0)
-							{
-								str_name=m_cl.V_Name;
-								str_group1=m_cl.client_group ;
-								str_group2=m_cl.Client_Group1;
-								str_group3=m_cl.Client_Group2;
-								str_group4=m_cl.Client_Group4;
-							}
-						}
-						//End of getting name and group of Login							
-						if (m_d_Balance!=0 || m_d_netqty!=0)
-						{
-							CMTStr::Copy(m_st_comment.m_Name ,str_name);
-							CMTStr::Copy(m_st_comment.m_symbol ,str_symbol);				
-							CMTStr::Copy(m_st_comment.m_pre_qty ,m_pre_qty_str) ;						
-							CMTStr::Copy(m_st_comment.m_incre_qty ,m_incre_qty_str);				
-							CMTStr::Copy(m_st_comment.m_netqty ,m_netqty_str) ;				
-							CMTStr::Copy(m_st_comment.m_avg_rate ,m_avg_rate_str );				
-							CMTStr::Copy(m_st_comment.m_last_rate ,m_last_rate_str );				
-							CMTStr::Copy(m_st_comment.m_Floating_Profit ,m_Floating_Profit_str );				
-							CMTStr::Copy(m_st_comment.m_Balance ,m_Balance_str) ;				
-							CMTStr::Copy(m_st_comment.m_last_update ,L"") ;
-							CMTStr::Copy(m_st_comment.m_Group1 ,str_group1) ;
-							CMTStr::Copy(m_st_comment.m_Group2 ,str_group2);
-							CMTStr::Copy(m_st_comment.m_Group3 ,str_group3);
-							CMTStr::Copy(m_st_comment.m_Checked_Status ,L"");
-							CMTStr::Copy(m_st_comment.m_Checked_Time ,L"");
-							CMTStr::Copy(m_st_comment.m_Alloted_Limit ,L"");
-							CMTStr::Copy(m_st_comment.m_Remark2 ,L"");				
-							CMTStr::Copy(m_st_comment.m_Standing_Avg_rate ,L"");				
-							CMTStr::Copy(m_st_comment.m_Sq_Balance ,L"");				
-							CMTStr::Copy(m_st_comment.m_pl_volume ,L"");
-						
-							NetPosGrid::m_Netposition_Ignore_comment_Array.Add(&m_st_comment);
-						}
+						NetPosGrid::m_Netposition_Ignore_comment_Array.Add(&m_st_np);
 					}
 				}
+				NetPosGrid::mutex_Symbol_ltp.Unlock();
 
 
 
+
+				////for (int c=0;c<client_total;c++)
+				////{
+				////	NetPosGrid::login_in_m m_login_in_m={};
+				////	m_login_in_m=NetPosGrid::m_login_in_m_Array[c];
+				////	CString str_login_m=m_login_in_m.V_login;					
+				////	for (int s=0;s<symbol_total;s++)
+				////	{
+				////		NetPosGrid::Symbol_in_m m_symbol_in_m={};
+				////		m_symbol_in_m=NetPosGrid::m_Symbol_in_m_Array[s];
+				////		CString str_symbol=m_symbol_in_m.V_symbol ;
+				////		NetPosGrid::mutex_Symbol_ltp.Lock();
+				////		int net_pos_total=NetPosGrid::m_NetpositionArray.Total();	
+
+				////		double m_d_pre_qty=0;
+				////		double m_d_incre_qty=0;
+				////		double m_d_netqty=0;
+				////		double m_d_avg_rate=0;
+				////		double m_d_Floating_Profit=0;
+				////		double m_d_Balance=0;
+
+				////		double m_p_pre_qty=0;
+				////		double m_p_incre_qty=0;
+				////		double m_p_netqty=0;
+				////		double m_p_avg_rate=0;
+				////		double m_p_Floating_Profit=0;
+				////		double m_p_Balance=0;
+				////		double m_d_last_rate=0;
+
+				////		for(int n=0;n<net_pos_total;n++)
+				////		{
+				////			NetPosGrid::st_Netposition m_st_np={};
+				////			m_st_np=NetPosGrid::m_NetpositionArray[n];
+				////			CString str_login=m_st_np.m_login;
+				////			if (str_login.Find('-')>0)
+				////			{
+				////				str_login=str_login.Mid(0,str_login.Find('-'));
+				////			}
+				////			if (wcscmp(str_login_m,str_login)==0 && wcscmp(str_symbol,m_st_np.m_symbol)==0)
+				////			{
+				////				LPTSTR endPtr1;																
+				////				m_d_pre_qty=_tcstod(m_st_np.m_pre_qty, &endPtr1);						
+				////				m_d_pre_qty=m_d_pre_qty+m_p_pre_qty;
+				////				m_p_pre_qty=m_d_pre_qty;
+				////				
+				////				m_d_incre_qty=_tcstod(m_st_np.m_incre_qty, &endPtr1);						
+				////				m_d_incre_qty=m_d_incre_qty+m_p_incre_qty;
+				////				m_p_incre_qty=m_d_incre_qty;
+
+				////				m_d_netqty=_tcstod(m_st_np.m_netqty , &endPtr1);				
+				////				
+				////				double net_total_qty=1;
+				////				if ((m_d_netqty+m_p_netqty)!=0)
+				////				{
+				////					net_total_qty=m_d_netqty+m_p_netqty;
+				////				}
+				////				m_d_avg_rate=_tcstod(m_st_np.m_avg_rate , &endPtr1); 															
+				////				m_d_avg_rate=(((m_p_avg_rate*m_p_netqty)+(m_d_netqty*m_d_avg_rate))/net_total_qty);
+				////				m_d_avg_rate=abs(m_d_avg_rate);
+				////				m_p_avg_rate=m_d_avg_rate;
+				////				
+				////				m_d_netqty=m_d_netqty+m_p_netqty;
+				////				m_p_netqty=m_d_netqty;
+				////				
+				////				m_d_Floating_Profit=_tcstod(m_st_np.m_Floating_Profit , &endPtr1);				
+				////				m_d_Floating_Profit=m_d_Floating_Profit+m_p_Floating_Profit;
+				////				m_p_Floating_Profit=m_d_Floating_Profit;
+
+				////				m_d_Balance=_tcstod(m_st_np.m_Balance, &endPtr1);				
+				////				m_d_Balance=m_d_Balance+m_p_Balance;
+				////				m_p_Balance=m_d_Balance;
+
+
+				////				m_d_last_rate=_tcstod(m_st_np.m_last_rate, &endPtr1);				
+				////			}
+				////		}
+				////		NetPosGrid::mutex_Symbol_ltp.Unlock();
+				////		NetPosGrid::st_Netposition_Ignore_comment m_st_comment={};
+				////		CMTStr::Copy(m_st_comment.m_login,str_login_m);
+				////		CString str_name=L"";
+				////		CString str_group1=L"";
+				////		CString str_group2=L"";
+				////		CString str_group3=L"";
+				////		CString str_group4=L"";
+
+				////		CString m_pre_qty_str=L"";
+				////		m_pre_qty_str.Format(L"%.0f",m_d_pre_qty);
+				////		CString m_incre_qty_str=L"";
+				////		m_incre_qty_str.Format(L"%.0f",m_d_incre_qty);
+				////		CString m_netqty_str=L"";
+				////		m_netqty_str.Format(L"%.0f",m_d_netqty);
+				////		CString m_avg_rate_str=L"";
+				////		m_avg_rate_str.Format(L"%.0f",m_d_avg_rate);
+				////		CString m_last_rate_str=L"";
+				////		m_last_rate_str.Format(L"%.0f",m_d_last_rate);
+				////		CString m_Floating_Profit_str=L"";
+				////		m_Floating_Profit_str.Format(L"%.0f",m_d_Floating_Profit);
+				////		CString m_Balance_str=L"";
+				////		m_Balance_str.Format(L"%.0f",m_d_Balance);
+
+				////		//Getting group and name of login
+				////		int client_total=NetPosGrid::m_Client_Details_Array.Total();
+				////		for (int cl=0;cl<client_total;cl++)
+				////		{
+				////			NetPosGrid::Client_Details m_cl={};
+				////			m_cl=NetPosGrid::m_Client_Details_Array[cl];
+				////			if (wcscmp(m_cl.V_login,str_login_m)==0)
+				////			{
+				////				str_name=m_cl.V_Name;
+				////				str_group1=m_cl.client_group ;
+				////				str_group2=m_cl.Client_Group1;
+				////				str_group3=m_cl.Client_Group2;
+				////				str_group4=m_cl.Client_Group4;
+				////			}
+				////		}
+				////		//End of getting name and group of Login							
+				////		if (m_d_Balance!=0 || m_d_netqty!=0)
+				////		{
+				////			CMTStr::Copy(m_st_comment.m_Name ,str_name);
+				////			CMTStr::Copy(m_st_comment.m_symbol ,str_symbol);				
+				////			CMTStr::Copy(m_st_comment.m_pre_qty ,m_pre_qty_str) ;						
+				////			CMTStr::Copy(m_st_comment.m_incre_qty ,m_incre_qty_str);				
+				////			CMTStr::Copy(m_st_comment.m_netqty ,m_netqty_str) ;				
+				////			CMTStr::Copy(m_st_comment.m_avg_rate ,m_avg_rate_str );				
+				////			CMTStr::Copy(m_st_comment.m_last_rate ,m_last_rate_str );				
+				////			CMTStr::Copy(m_st_comment.m_Floating_Profit ,m_Floating_Profit_str );				
+				////			CMTStr::Copy(m_st_comment.m_Balance ,m_Balance_str) ;				
+				////			CMTStr::Copy(m_st_comment.m_last_update ,L"") ;
+				////			CMTStr::Copy(m_st_comment.m_Group1 ,str_group1) ;
+				////			CMTStr::Copy(m_st_comment.m_Group2 ,str_group2);
+				////			CMTStr::Copy(m_st_comment.m_Group3 ,str_group3);
+				////			CMTStr::Copy(m_st_comment.m_Checked_Status ,L"");
+				////			CMTStr::Copy(m_st_comment.m_Checked_Time ,L"");
+				////			CMTStr::Copy(m_st_comment.m_Alloted_Limit ,L"");
+				////			CMTStr::Copy(m_st_comment.m_Remark2 ,L"");				
+				////			CMTStr::Copy(m_st_comment.m_Standing_Avg_rate ,L"");				
+				////			CMTStr::Copy(m_st_comment.m_Sq_Balance ,L"");				
+				////			CMTStr::Copy(m_st_comment.m_pl_volume ,L"");
+				////		
+				////			NetPosGrid::m_Netposition_Ignore_comment_Array.Add(&m_st_comment);
+				////		}
+				////	}
+				////}
+
+
+				//NetPosGrid::m_Netposition_Ignore_comment_Array.Add(&m_st_comment);
 
 
 			NetPosGrid::m_NetpositionArray_For_Grid.Clear();
 			int noof_rowsInStruc=NetPosGrid::m_Netposition_Ignore_comment_Array.Total();	
 			for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
 			{
-				NetPosGrid::st_Netposition_Ignore_comment m_st_Netposition={};
+				NetPosGrid::st_Netposition m_st_Netposition={};
 				m_st_Netposition=NetPosGrid::m_Netposition_Ignore_comment_Array[fcount];
 				int flag=0;				
 				CString col_row_val[21];		
