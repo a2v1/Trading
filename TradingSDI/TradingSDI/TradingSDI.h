@@ -35,6 +35,7 @@ public:
 
 	
 	DECLARE_MESSAGE_MAP()
+
 };
 
 extern CTradingSDIApp theApp;
