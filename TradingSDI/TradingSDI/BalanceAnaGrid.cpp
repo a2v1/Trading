@@ -21,6 +21,37 @@ BalanceAnaGrid::st_grid_balanalysis_array BalanceAnaGrid::m_st_grid_anlysis_Grid
 BalanceAnaGrid::st_grid_balanalysis BalanceAnaGrid::m_st_grid_anlysis={};
 
 int BalanceAnaGrid::m_selectedclient =0;
+
+int BalanceAnaGrid::val_type=0;
+int BalanceAnaGrid::col_click=0;
+int BalanceAnaGrid::a_d=0;
+int BalanceAnaGrid::filter_break=0;
+
+CString BalanceAnaGrid::col0_val=L"";
+CString BalanceAnaGrid::col1_val=L"";
+CString BalanceAnaGrid::col2_val=L"";
+CString BalanceAnaGrid::col3_val=L"";
+CString BalanceAnaGrid::col4_val=L"";
+CString BalanceAnaGrid::col5_val=L"";
+CString BalanceAnaGrid::col6_val=L"";
+CString BalanceAnaGrid::col7_val=L"";
+CString BalanceAnaGrid::col8_val=L"";
+CString BalanceAnaGrid::col9_val=L"";
+CString BalanceAnaGrid::col10_val=L"";
+CString BalanceAnaGrid::col11_val=L"";
+CString BalanceAnaGrid::col12_val=L"";
+CString BalanceAnaGrid::col13_val=L"";
+CString BalanceAnaGrid::col14_val=L"";
+CString BalanceAnaGrid::col15_val=L"";
+CString BalanceAnaGrid::col16_val=L"";
+CString BalanceAnaGrid::col17_val=L"";
+CString BalanceAnaGrid::col18_val=L"";
+CString BalanceAnaGrid::col19_val=L"";
+CString BalanceAnaGrid::col20_val=L"";
+CString BalanceAnaGrid::col21_val=L"";
+CString BalanceAnaGrid::col22_val=L"";
+CString BalanceAnaGrid::col23_val=L"";
+
 BalanceAnaGrid::BalanceAnaGrid(void)
 {
 	UGXPThemes::UseThemes(false);
@@ -30,6 +61,122 @@ BalanceAnaGrid::BalanceAnaGrid(void)
 BalanceAnaGrid::~BalanceAnaGrid(void)
 {
 	UGXPThemes::CleanUp();
+}
+boolean Check_numeric_col_filter_balance_analysis(CString  filter_value,CString  real_value);
+boolean  Check_numeric_col_filter_balance_analysis(CString  filter_value,CString  real_value)
+{
+		boolean bool_col=false;		
+		double temp_double=0;
+		LPTSTR endPtr;
+		temp_double= _tcstod(real_value, &endPtr);	
+		filter_value=filter_value.Trim();
+		if (filter_value.GetLength()>2)
+		{
+			if (filter_value.Mid(0,2)==L">=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,2)==L"<=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
+
+			
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+
+		}
+		else
+		{
+
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
+
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+		}
+		return bool_col;
 }
 
 void BalanceAnaGrid::GetData(_bstr_t m_login)
@@ -75,34 +222,34 @@ void BalanceAnaGrid::GetData(_bstr_t m_login)
 				price.Format(_T("%.2f"),d_price);	
 
 				double d_exit_price = _tcstod(artists1.m_ExitPrice, &endPtr);												
-				exit_price.Format(_T("%.2f"),d_price);
+				exit_price.Format(_T("%.2f"),d_exit_price);
 
 				double d_ProfitPoint_L = _tcstod(artists1.m_ProfitPoint_L, &endPtr);												
-				ProfitPoint_L.Format(_T("%.2f"),d_price);
+				ProfitPoint_L.Format(_T("%.2f"),d_ProfitPoint_L);
 
 				double d_ProfitPoint_P = _tcstod(artists1.m_ProfitPoint_P, &endPtr);												
-				ProfitPoint_P.Format(_T("%.2f"),d_price);
+				ProfitPoint_P.Format(_T("%.2f"),d_ProfitPoint_P);
 
 				double d_Multiplayer = _tcstod(artists1.m_Multiplayer, &endPtr);												
-				Multiplayer.Format(_T("%.2f"),d_price);
+				Multiplayer.Format(_T("%.2f"),d_Multiplayer);
 
 				double d_Balance = _tcstod(artists1.m_Balance, &endPtr);												
-				Balance.Format(_T("%.2f"),d_price);
+				Balance.Format(_T("%.2f"),d_Balance);
 
 				double d_potentialprofitpoint = _tcstod(artists1.m_potentialprofitpoint, &endPtr);												
-				potentialprofitpoint.Format(_T("%.2f"),d_price);
+				potentialprofitpoint.Format(_T("%.2f"),d_potentialprofitpoint);
 
 				double d_PotentialLosspoint = _tcstod(artists1.m_PotentialLosspoint, &endPtr);												
-				PotentialLosspoint.Format(_T("%.2f"),d_price);
+				PotentialLosspoint.Format(_T("%.2f"),d_PotentialLosspoint);
 
 				double d_DurationTime = _tcstod(artists1.m_DurationTime, &endPtr);												
-				DurationTime.Format(_T("%.2f"),d_price);
+				DurationTime.Format(_T("%.2f"),d_DurationTime);
 
 				double d_high = _tcstod(artists1.m_high, &endPtr);												
-				high.Format(_T("%.2f"),d_price);
+				high.Format(_T("%.2f"),d_high);
 
 				double d_low = _tcstod(artists1.m_low, &endPtr);												
-				low.Format(_T("%.2f"),d_price);
+				low.Format(_T("%.2f"),d_low);
 				
 				BalanceAnaGrid::st_grid_balanalysis m_st={};
 			
@@ -137,7 +284,7 @@ void BalanceAnaGrid::GetData(_bstr_t m_login)
 
 				BalanceAnaGrid::m_st_grid_anlysis_Array_Fill.Add(&m_st);
 			 }
-         }   
+          }   
 
 		  if(BalanceAnaGrid::m_selectedclient==0)
 		  {
@@ -257,28 +404,611 @@ int BalanceAnaGrid::OnCellTypeNotify(long ID,int col,long row,long msg,long para
 
 int BalanceAnaGrid::OnDropList(long ID,int col,long row,long msg,long param)
 {
-if(BalanceAnaGrid::insertFilterFlag==1 && row==0 )
+  	if (msg==103)
 	{
-		CString  strval=L"";
-		CUGCell cell;
-		GetCell(col,row,&cell);
-		strval=cell.GetText();
-		
-		if (strval!=L"")
+		if(BalanceAnaGrid::insertFilterFlag==1 && row==0)
 		{
-			gridFilter(col,GetNumberRows(),strval);
+			BalanceAnaGrid::filter_break=1;
+		//	check_First==0;
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();
+		//	BalanceAnaGrid::strFilter="";		
 		}
-		else
-		{
-			gridFilter(GetNumberCols(),GetNumberRows(),L"ALL");
-		}
+
 		
-	}
+
+		if(BalanceAnaGrid::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col0_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col1_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col2_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col3_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col4_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col5_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col6_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col7_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col8_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col9_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col10_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col10_val=L"ALL";					
+				}
+			}
+
+			//////////////////////
+			if(col==11)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col11_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col11_val=L"ALL";					
+				}
+			}
+
+
+			if(col==12)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col12_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col12_val=L"ALL";					
+				}
+			}
+
+			if(col==13)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col13_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col13_val=L"ALL";					
+				}
+			}
+
+			if(col==14)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col14_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col14_val=L"ALL";					
+				}
+			}
+
+			if(col==15)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col15_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col15_val=L"ALL";					
+				}
+			}
+
+			if(col==16)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col16_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col16_val=L"ALL";					
+				}
+			}
+
+			if(col==17)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col17_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col17_val=L"ALL";					
+				}
+			}
+
+			if(col==18)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col18_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col18_val=L"ALL";					
+				}
+			}
+
+			if(col==19)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col19_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col19_val=L"ALL";					
+				}
+			}
+
+			if(col==20)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col20_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col20_val=L"ALL";					
+				}
+			}
+
+			if(col==21)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col21_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col21_val=L"ALL";					
+				}
+			}
+
+			if(col==22)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col22_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col22_val=L"ALL";					
+				}
+			}
+		 }
+	   
+	  ColValue_filter();
+     }
 	RedrawAll();
 	return true;
 }
 	
+int BalanceAnaGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
+{
+	    QuickSetText(col,row,string);	
 
+	 	if(BalanceAnaGrid::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col0_val=strval;					
+				}
+				else
+				{
+					BalanceAnaGrid::col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col1_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col2_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col3_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col4_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col5_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col6_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col7_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col8_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col9_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col10_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col10_val=L"ALL";					
+				}
+			}
+
+			//////////////////////
+			if(col==11)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col11_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col11_val=L"ALL";					
+				}
+			}
+
+
+			if(col==12)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col12_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col12_val=L"ALL";					
+				}
+			}
+
+			if(col==13)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col13_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col13_val=L"ALL";					
+				}
+			}
+
+			if(col==14)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col14_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col14_val=L"ALL";					
+				}
+			}
+
+			if(col==15)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col15_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col15_val=L"ALL";					
+				}
+			}
+
+			if(col==16)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col16_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col16_val=L"ALL";					
+				}
+			}
+
+			if(col==17)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col17_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col17_val=L"ALL";					
+				}
+			}
+
+			if(col==18)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col18_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col18_val=L"ALL";					
+				}
+			}
+
+			if(col==19)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col19_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col19_val=L"ALL";					
+				}
+			}
+
+			if(col==20)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col20_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col20_val=L"ALL";					
+				}
+			}
+
+			if(col==21)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col21_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col21_val=L"ALL";					
+				}
+			}
+
+			if(col==22)
+			{
+				if (strval!=L"")
+				{
+					BalanceAnaGrid::col22_val=string;					
+				}
+				else
+				{
+					BalanceAnaGrid::col22_val=L"ALL";					
+				}
+		  }
+	}
+    
+	ColValue_filter();
+
+	RedrawAll();
+
+	return true;
+}
 
 void BalanceAnaGrid::OnSheetSetup(int sheetNumber)
 {
@@ -372,8 +1102,27 @@ void BalanceAnaGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *p
 	UNREFERENCED_PARAMETER(*point);
 	UNREFERENCED_PARAMETER(processed);
 
+	BalanceAnaGrid::col_click=col;
 	if( updn == 0)
 		return;
+
+	if (col_click!=col)
+	{
+		a_d=0;
+	}
+	else
+	{
+		if (a_d==0)
+		{
+			a_d=1;
+		}
+		else
+		{
+			a_d=0;
+		}
+	}
+
+
 
 	QuickSetCellType( m_iSortCol, -1, 0 );
 
@@ -405,173 +1154,12 @@ void BalanceAnaGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *p
 
 	}
 
-  RedrawAll();
+	Col_sorting();
+  
+    RedrawAll();
 }
-int BalanceAnaGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
-{
-	if( flags & UG_SORT_DESCENDING )
-	{
-		CUGCell *ptr = cell1;
-		cell1 = cell2;
-		cell2 = ptr;
-	}
 
-int retVal = 0;
 
-switch ( m_iSortCol )
-{
-case 0:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-
-case 1:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 2:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 3:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-
-case 5:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 6:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 7:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 8:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 9:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 10:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 12:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 11:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-
-case 13:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 14:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 16:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 17:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 18:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 19:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 20:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 21:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-case 22:
-          if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-		   if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-		   	break;
-default:
-		if( CString(cell1->GetText()) == "" )
-			return 1;
-		else if( CString(cell2->GetText()) == "" )
-			return -1;
-
-		switch( cell1->GetDataType() )
-		{
-			case UGCELLDATA_NUMBER:
-			case UGCELLDATA_BOOL:
-			case UGCELLDATA_CURRENCY:
-				if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-				break;
-
-			default:
-				retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-		}
-    }
-return retVal;
-}
 void BalanceAnaGrid::InitMenu()
 {
 	CMenu submenu;
@@ -587,24 +1175,22 @@ void BalanceAnaGrid::OnMenuCommand(int col,long row,int section,int item)
 	UNREFERENCED_PARAMETER(row);
 	UNREFERENCED_PARAMETER(section);
 	// init. local variables
-	
-	CMenu* pMenu;
-	pMenu = GetPopupMenu();
 
-switch( item )
-{
-case 2001:
-	       {
+
+	switch( item )
+	{
+		case 2001:
+			{
 					filter();
 					break;
-		   }
-}
-RedrawAll();
+			}
+	}
+    RedrawAll();
 }
 
 void BalanceAnaGrid::filter()
 {
-	 CMenu *pMnenu;
+	CMenu *pMnenu;
 	pMnenu= GetPopupMenu();
 
 	if ( BalanceAnaGrid::insertFilterFlag==0)
@@ -632,6 +1218,33 @@ void BalanceAnaGrid::filter()
 		
 		DeleteRow(0);
 		BalanceAnaGrid::insertFilterFlag=0;
+
+		BalanceAnaGrid::col0_val=L"";
+		BalanceAnaGrid::col1_val=L"";
+		BalanceAnaGrid::col2_val=L"";
+		BalanceAnaGrid::col3_val=L"";
+		BalanceAnaGrid::col4_val=L"";
+		BalanceAnaGrid::col5_val=L"";
+		BalanceAnaGrid::col6_val=L"";
+		BalanceAnaGrid::col7_val=L"";
+		BalanceAnaGrid::col8_val=L"";
+		BalanceAnaGrid::col9_val=L"";
+		BalanceAnaGrid::col10_val=L"";
+
+		BalanceAnaGrid::col11_val=L"";
+		BalanceAnaGrid::col12_val=L"";
+		BalanceAnaGrid::col13_val=L"";
+		BalanceAnaGrid::col14_val=L"";
+		BalanceAnaGrid::col15_val=L"";
+		BalanceAnaGrid::col16_val=L"";
+		BalanceAnaGrid::col17_val=L"";
+		BalanceAnaGrid::col18_val=L"";
+		BalanceAnaGrid::col19_val=L"";
+		BalanceAnaGrid::col20_val=L"";
+		BalanceAnaGrid::col21_val=L"";
+		BalanceAnaGrid::col22_val=L"";
+	
+		ColValue_filter();
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
@@ -686,25 +1299,32 @@ void BalanceAnaGrid::addItemToCombobox()
 	try
 	{
 	int rows=1;
-	rows=GetNumberRows();
+	
 	
 	CString str_val=L"";
-	
+
 	for (int forcount=0;forcount<24;forcount++)
 	{
 		str[forcount]=L"ALL\n";		
 	}
+
+	st_grid_balanalysis_array m_array_filter;
+	m_array_filter.Assign(BalanceAnaGrid::m_st_grid_anlysis_Array_Fill);
+	
+	rows=m_array_filter.Total();
 	for (int forcount=0;forcount<rows;forcount++)
 	{
+		st_grid_balanalysis m_st_for_filter={};
+	    m_st_for_filter=m_array_filter[forcount];
+
 		for (int clocount=0;clocount<24;clocount++)
 		{
-			str_val=QuickGetText(clocount,forcount);
-			str_val=str_val.Trim();
-			
-			if (str_val!=L"")
-			{
-				if (clocount==0)
+		    
+			   if (clocount==0)
 				{
+					str_val=m_st_for_filter.m_login;
+					str_val=str_val.Trim();
+
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -715,6 +1335,8 @@ void BalanceAnaGrid::addItemToCombobox()
 
 				if (clocount==1)
 				{
+					str_val=m_st_for_filter.m_deal;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -725,6 +1347,20 @@ void BalanceAnaGrid::addItemToCombobox()
 
 				if (clocount==2)
 				{
+				
+					UINT64 m_time=_wtoi( m_st_for_filter.m_time);
+				    CString tmp=L"";
+				    CMTStr256 str_time;
+				    SMTFormat::FormatDateTime(str_time,m_time,true,true);
+				    tmp=str_time.Str();
+
+				//	str_val=m_st_for_filter.m_time ;
+					str_val=tmp.Trim();
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr2,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -736,6 +1372,8 @@ void BalanceAnaGrid::addItemToCombobox()
 
 				if (clocount==3)
 				{
+					str_val=m_st_for_filter.m_Order;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr3,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -745,6 +1383,8 @@ void BalanceAnaGrid::addItemToCombobox()
 
 				if (clocount==4)
 				{
+					str_val=m_st_for_filter.m_symbol;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr4,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -753,6 +1393,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
+					str_val=m_st_for_filter.m_EntryAction;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -761,6 +1403,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==6)
 				{
+					str_val=m_st_for_filter.m_EntryVolume;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr6,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -769,6 +1413,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==7)
 				{
+					str_val=m_st_for_filter.m_Entryprice;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr7,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -777,6 +1423,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==8)
 				{
+					str_val=m_st_for_filter.m_ExitDeal;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr8,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -785,6 +1433,19 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==9)
 				{
+					UINT64 m_time=_wtoi( m_st_for_filter.m_ExitTime);
+				    CString tmp=L"";
+				    CMTStr256 str_time;
+				    SMTFormat::FormatDateTime(str_time,m_time,true,true);
+				    tmp=str_time.Str();
+
+				//	str_val=m_st_for_filter.m_time ;
+					str_val=tmp.Trim();
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr9,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -793,6 +1454,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==10)
 				{
+					str_val=m_st_for_filter.m_ExitOrder;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr10,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -801,6 +1464,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==11)
 				{
+					str_val=m_st_for_filter.m_ExitAction;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr11,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -809,6 +1474,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==12)
 				{
+					str_val=m_st_for_filter.m_ExitVolume;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr12,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -817,6 +1484,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==13)
 				{
+					str_val=m_st_for_filter.m_ExitPrice;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr13,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -825,6 +1494,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==14)
 				{
+					str_val=m_st_for_filter.m_ProfitPoint_L;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr14,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -833,6 +1504,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==15)
 				{
+					str_val=m_st_for_filter.m_ProfitPoint_P;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr15,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -841,6 +1514,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==16)
 				{
+					str_val=m_st_for_filter.m_Multiplayer;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr16,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -849,6 +1524,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==17)
 				{
+					str_val=m_st_for_filter.m_Balance;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr17,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -857,6 +1534,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==18)
 				{
+					str_val=m_st_for_filter.m_potentialprofitpoint;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr18,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -865,6 +1544,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==19)
 				{
+					str_val=m_st_for_filter.m_PotentialLosspoint;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr19,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -873,6 +1554,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==20)
 				{
+					str_val=m_st_for_filter.m_DurationTime;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr20,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -881,6 +1564,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==21)
 				{
+					str_val=m_st_for_filter.m_high;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr21,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -889,6 +1574,8 @@ void BalanceAnaGrid::addItemToCombobox()
 				}
 				if (clocount==22)
 				{
+					str_val=m_st_for_filter.m_low;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr22,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -900,7 +1587,7 @@ void BalanceAnaGrid::addItemToCombobox()
 			}
 
 		}												
-	}
+	
 	}
 	catch(_com_error & ce)
 			{
@@ -908,52 +1595,52 @@ void BalanceAnaGrid::addItemToCombobox()
 			} 
 }
 
-void BalanceAnaGrid::gridFilter(int colno,int rows_count,CString col_value)
-{
-	
-	CString getColvalue=L"";
-	CString col_filter_val[23];
-	
-	for(int c=0;c<23;c++)
-	{
-		col_filter_val[c]=QuickGetText(c,0);
-	}
-	for(int fcount=rows_count-1;fcount>0;fcount--)
-	{
-		int flag=0;		
-		
-		CString col_row_val[23];
-		for(int c=0;c<23;c++)
-		{
-			col_row_val[c]=QuickGetText(c,fcount);
-		}
-		if((col_filter_val[0]==col_row_val[0] || col_filter_val[0]==L"ALL"||col_filter_val[0]==L"") && (col_filter_val[1]==col_row_val[1] || col_filter_val[1]==L"ALL"||col_filter_val[1]==L"") && (col_filter_val[2]==col_row_val[2] || col_filter_val[2]==L"ALL"||col_filter_val[2]==L"")  && (col_filter_val[3]==col_row_val[3] || col_filter_val[3]==L"ALL"||col_filter_val[3]==L"")  && (col_filter_val[4]==col_row_val[4] || col_filter_val[4]==L"ALL"||col_filter_val[4]==L"")   && (col_filter_val[5]==col_row_val[5] || col_filter_val[5]==L"ALL"||col_filter_val[5]==L"")   && (col_filter_val[6]==col_row_val[6] || col_filter_val[6]==L"ALL"||col_filter_val[6]==L"")   && (col_filter_val[7]==col_row_val[7] || col_filter_val[7]==L"ALL"||col_filter_val[7]==L"")   && (col_filter_val[8]==col_row_val[8] || col_filter_val[8]==L"ALL"||col_filter_val[8]==L"") && (col_filter_val[9]==col_row_val[9] || col_filter_val[9]==L"ALL"||col_filter_val[9]==L"") &&(col_filter_val[10]==col_row_val[10] || col_filter_val[10]==L"ALL"||col_filter_val[10]==L"")&&(col_filter_val[11]==col_row_val[11] || col_filter_val[11]==L"ALL"||col_filter_val[11]==L"")&&(col_filter_val[12]==col_row_val[12] || col_filter_val[12]==L"ALL"||col_filter_val[12]==L"") &&(col_filter_val[13]==col_row_val[13] || col_filter_val[13]==L"ALL"||col_filter_val[13]==L"")&&(col_filter_val[14]==col_row_val[14] || col_filter_val[14]==L"ALL"||col_filter_val[14]==L"")&&(col_filter_val[15]==col_row_val[15] || col_filter_val[15]==L"ALL"||col_filter_val[15]==L"")&&(col_filter_val[16]==col_row_val[16] || col_filter_val[16]==L"ALL"||col_filter_val[16]==L"")&&(col_filter_val[17]==col_row_val[17] || col_filter_val[17]==L"ALL"||col_filter_val[17]==L"")&&(col_filter_val[18]==col_row_val[18] || col_filter_val[18]==L"ALL"||col_filter_val[18]==L"")&&(col_filter_val[19]==col_row_val[19] || col_filter_val[19]==L"ALL"||col_filter_val[19]==L"")&&(col_filter_val[20]==col_row_val[20] || col_filter_val[20]==L"ALL"||col_filter_val[20]==L"")&&(col_filter_val[21]==col_row_val[21] || col_filter_val[21]==L"ALL"||col_filter_val[21]==L"")&&(col_filter_val[22]==col_row_val[22] || col_filter_val[22]==L"ALL"||col_filter_val[22]==L""))
-		{			
-			CString checkblakval=QuickGetText(0,fcount);
-			checkblakval=checkblakval.Trim();
-			if(checkblakval.Trim().GetLength()>0)
-			{
-				flag=1;
-			}			
-		}
-		else
-		{			
-			flag=0;			
-		}
-				
-		
-		if (flag==1)
-		{
-			SetRowHeight(fcount, 20);
-		}
-		else
-		{   
-			 SetRowHeight(fcount, 0);
-		
-		 }
-	 }
-	
-}
+//void BalanceAnaGrid::gridFilter(int colno,int rows_count,CString col_value)
+//{
+//	
+//	CString getColvalue=L"";
+//	CString col_filter_val[23];
+//	
+//	for(int c=0;c<23;c++)
+//	{
+//		col_filter_val[c]=QuickGetText(c,0);
+//	}
+//	for(int fcount=rows_count-1;fcount>0;fcount--)
+//	{
+//		int flag=0;		
+//		
+//		CString col_row_val[23];
+//		for(int c=0;c<23;c++)
+//		{
+//			col_row_val[c]=QuickGetText(c,fcount);
+//		}
+//		if((col_filter_val[0]==col_row_val[0] || col_filter_val[0]==L"ALL"||col_filter_val[0]==L"") && (col_filter_val[1]==col_row_val[1] || col_filter_val[1]==L"ALL"||col_filter_val[1]==L"") && (col_filter_val[2]==col_row_val[2] || col_filter_val[2]==L"ALL"||col_filter_val[2]==L"")  && (col_filter_val[3]==col_row_val[3] || col_filter_val[3]==L"ALL"||col_filter_val[3]==L"")  && (col_filter_val[4]==col_row_val[4] || col_filter_val[4]==L"ALL"||col_filter_val[4]==L"")   && (col_filter_val[5]==col_row_val[5] || col_filter_val[5]==L"ALL"||col_filter_val[5]==L"")   && (col_filter_val[6]==col_row_val[6] || col_filter_val[6]==L"ALL"||col_filter_val[6]==L"")   && (col_filter_val[7]==col_row_val[7] || col_filter_val[7]==L"ALL"||col_filter_val[7]==L"")   && (col_filter_val[8]==col_row_val[8] || col_filter_val[8]==L"ALL"||col_filter_val[8]==L"") && (col_filter_val[9]==col_row_val[9] || col_filter_val[9]==L"ALL"||col_filter_val[9]==L"") &&(col_filter_val[10]==col_row_val[10] || col_filter_val[10]==L"ALL"||col_filter_val[10]==L"")&&(col_filter_val[11]==col_row_val[11] || col_filter_val[11]==L"ALL"||col_filter_val[11]==L"")&&(col_filter_val[12]==col_row_val[12] || col_filter_val[12]==L"ALL"||col_filter_val[12]==L"") &&(col_filter_val[13]==col_row_val[13] || col_filter_val[13]==L"ALL"||col_filter_val[13]==L"")&&(col_filter_val[14]==col_row_val[14] || col_filter_val[14]==L"ALL"||col_filter_val[14]==L"")&&(col_filter_val[15]==col_row_val[15] || col_filter_val[15]==L"ALL"||col_filter_val[15]==L"")&&(col_filter_val[16]==col_row_val[16] || col_filter_val[16]==L"ALL"||col_filter_val[16]==L"")&&(col_filter_val[17]==col_row_val[17] || col_filter_val[17]==L"ALL"||col_filter_val[17]==L"")&&(col_filter_val[18]==col_row_val[18] || col_filter_val[18]==L"ALL"||col_filter_val[18]==L"")&&(col_filter_val[19]==col_row_val[19] || col_filter_val[19]==L"ALL"||col_filter_val[19]==L"")&&(col_filter_val[20]==col_row_val[20] || col_filter_val[20]==L"ALL"||col_filter_val[20]==L"")&&(col_filter_val[21]==col_row_val[21] || col_filter_val[21]==L"ALL"||col_filter_val[21]==L"")&&(col_filter_val[22]==col_row_val[22] || col_filter_val[22]==L"ALL"||col_filter_val[22]==L""))
+//		{			
+//			CString checkblakval=QuickGetText(0,fcount);
+//			checkblakval=checkblakval.Trim();
+//			if(checkblakval.Trim().GetLength()>0)
+//			{
+//				flag=1;
+//			}			
+//		}
+//		else
+//		{			
+//			flag=0;			
+//		}
+//				
+//		
+//		if (flag==1)
+//		{
+//			SetRowHeight(fcount, 20);
+//		}
+//		else
+//		{   
+//			 SetRowHeight(fcount, 0);
+//		
+//		 }
+//	 }
+//	
+//}
 
 void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
 {		
@@ -1007,7 +1694,12 @@ void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==2)
 			{		
 				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
-				CString tmp=mst_grid.m_time ;
+
+				UINT64 m_time=_wtoi( mst_grid.m_time);
+				CString tmp=L"";
+				CMTStr256 str;
+				SMTFormat::FormatDateTime(str,m_time,true,true);
+				tmp=str.Str();
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1088,7 +1780,12 @@ void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==9)
 			{		
 				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
-				CString tmp=mst_grid.m_ExitTime ;
+
+				UINT64 m_time=_wtoi( mst_grid.m_ExitTime);
+				CString tmp=L"";
+				CMTStr256 str;
+				SMTFormat::FormatDateTime(str,m_time,true,true);
+				tmp=str.Str();
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1229,8 +1926,8 @@ void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
 				}
 				
 			}
-			else if (col==22)
-			{	
+		  else if (col==22)
+		  {	
 				mst_grid=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[rows_no];
 				CString tmp=mst_grid.m_low ;
 				CString str_get_value=cell->GetText();
@@ -1239,6 +1936,725 @@ void BalanceAnaGrid::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 
+		   }
+	}
+}
+
+
+void BalanceAnaGrid::Col_sorting()
+{
+	int t_rows=BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Total();
+	BalanceAnaGrid::st_grid_balanalysis first_st={};
+	BalanceAnaGrid::st_grid_balanalysis next_st={};
+	BalanceAnaGrid::st_grid_balanalysis swap_st={};
+	BalanceAnaGrid::val_type=0;
+	if (BalanceAnaGrid::col_click==6||BalanceAnaGrid::col_click==7 ||BalanceAnaGrid::col_click==12|| BalanceAnaGrid::col_click==13||BalanceAnaGrid::col_click==14 || BalanceAnaGrid::col_click==15||BalanceAnaGrid::col_click==16 || BalanceAnaGrid::col_click==17||BalanceAnaGrid::col_click==18 || BalanceAnaGrid::col_click==19||BalanceAnaGrid::col_click==20 || BalanceAnaGrid::col_click==21||BalanceAnaGrid::col_click==22|| BalanceAnaGrid::col_click==23)
+	{
+		BalanceAnaGrid::val_type=1;
+	}
+	for (int i=0;i<t_rows;i++)
+	{
+		first_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+		for (int j=i+1;j<t_rows;j++)
+		{
+			next_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[j];
+			if (BalanceAnaGrid::a_d==0)
+			{
+				if (BalanceAnaGrid::val_type==0)
+				{
+					if (BalanceAnaGrid::col_click==0)
+					{
+						if (wcscmp(first_st.m_login  ,next_st.m_login)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_login ,swap_st.m_login);							
+						}
+					}
+					
+					if (BalanceAnaGrid::col_click==1)
+					{
+						if (wcscmp(first_st.m_deal  ,next_st.m_deal)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal  ,swap_st.m_deal);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==2)
+					{
+						if (wcscmp(first_st.m_time   ,next_st.m_time)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_time ,swap_st.m_time  );							
+						}
+					}	
+
+					if (BalanceAnaGrid::col_click==3)
+					{
+						if (wcscmp(first_st.m_Order   ,next_st.m_Order   )>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Order   ,swap_st.m_Order  );							
+						}
+					}
+
+					//////////////////////////////////
+					
+					if (BalanceAnaGrid::col_click==4)
+					{
+						if (wcscmp(first_st.m_symbol  ,next_st.m_symbol)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol  ,swap_st.m_symbol);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==5)
+					{
+						if (wcscmp(first_st.m_EntryAction   ,next_st.m_EntryAction)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryAction ,swap_st.m_EntryAction  );							
+						}
+					}	
+
+					////////////////////////////////////
+					if (BalanceAnaGrid::col_click==8)
+					{
+						if (wcscmp(first_st.m_ExitDeal   ,next_st.m_ExitDeal)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitDeal ,swap_st.m_ExitDeal);							
+						}
+					}
+
+					if (BalanceAnaGrid::col_click==9)
+					{
+						if (wcscmp(first_st.m_ExitTime   ,next_st.m_ExitTime)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitTime ,swap_st.m_ExitTime);							
+						}
+					}
+					
+					if (BalanceAnaGrid::col_click==10)
+					{
+						if (wcscmp(first_st.m_ExitOrder  ,next_st.m_ExitOrder)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitOrder  ,swap_st.m_ExitOrder);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==11)
+					{
+						if (wcscmp(first_st.m_ExitAction   ,next_st.m_ExitAction)>0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitAction ,swap_st.m_ExitAction  );							
+						}
+					}	
+
+				}	
+				else
+				{
+					if (BalanceAnaGrid::col_click==6)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_EntryVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_EntryVolume, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryVolume  ,swap_st.m_EntryVolume);							
+						}
+					}
+
+
+					if (BalanceAnaGrid::col_click==7)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Entryprice, &endPtr1);
+						double val2=_tcstod(next_st.m_Entryprice, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Entryprice  ,swap_st.m_Entryprice);							
+						}
+					}
+
+					if (BalanceAnaGrid::col_click==12)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ExitVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_ExitVolume, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitVolume  ,swap_st.m_ExitVolume);							
+						}
+					}
+
+					
+					if (BalanceAnaGrid::col_click==13)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ExitPrice, &endPtr1);
+						double val2=_tcstod(next_st.m_ExitPrice, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitPrice ,swap_st.m_ExitPrice);							
+						}
+					}
+					///////////////////////////
+					if (BalanceAnaGrid::col_click==14)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ProfitPoint_L, &endPtr1);
+						double val2=_tcstod(next_st.m_ProfitPoint_L, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ProfitPoint_L  ,swap_st.m_ProfitPoint_L);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==15)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ProfitPoint_P, &endPtr1);
+						double val2=_tcstod(next_st.m_ProfitPoint_P, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ProfitPoint_P ,swap_st.m_ProfitPoint_P);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==16)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Multiplayer, &endPtr1);
+						double val2=_tcstod(next_st.m_Multiplayer, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Multiplayer  ,swap_st.m_Multiplayer);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==17)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Balance, &endPtr1);
+						double val2=_tcstod(next_st.m_Balance, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Balance ,swap_st.m_Balance);							
+						}
+					}
+					/////////////////////////////
+					if (BalanceAnaGrid::col_click==18)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_potentialprofitpoint, &endPtr1);
+						double val2=_tcstod(next_st.m_potentialprofitpoint, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_potentialprofitpoint  ,swap_st.m_potentialprofitpoint);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==19)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_PotentialLosspoint, &endPtr1);
+						double val2=_tcstod(next_st.m_PotentialLosspoint, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_PotentialLosspoint ,swap_st.m_PotentialLosspoint);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==20)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_DurationTime, &endPtr1);
+						double val2=_tcstod(next_st.m_DurationTime, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_DurationTime  ,swap_st.m_DurationTime);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==21)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_high, &endPtr1);
+						double val2=_tcstod(next_st.m_high, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_high ,swap_st.m_high);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==22)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_low, &endPtr1);
+						double val2=_tcstod(next_st.m_low, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_low ,swap_st.m_low);							
+						}
+					}
+				
+				}
+			 }
+			else
+			{
+				if (BalanceAnaGrid::val_type==0)
+				{
+
+					if (BalanceAnaGrid::col_click==0)
+					{
+						if (wcscmp(first_st.m_login  ,next_st.m_login)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_login ,swap_st.m_login);							
+						}
+					}
+					
+					if (BalanceAnaGrid::col_click==1)
+					{
+						if (wcscmp(first_st.m_deal  ,next_st.m_deal)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal  ,swap_st.m_deal);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==2)
+					{
+						if (wcscmp(first_st.m_time   ,next_st.m_time)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_time ,swap_st.m_time  );							
+						}
+					}	
+
+					if (BalanceAnaGrid::col_click==3)
+					{
+						if (wcscmp(first_st.m_Order   ,next_st.m_Order   )<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Order   ,swap_st.m_Order  );							
+						}
+					}
+
+					//////////////////////////////////
+					
+					if (BalanceAnaGrid::col_click==4)
+					{
+						if (wcscmp(first_st.m_symbol  ,next_st.m_symbol)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol  ,swap_st.m_symbol);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==5)
+					{
+						if (wcscmp(first_st.m_EntryAction   ,next_st.m_EntryAction)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryAction ,swap_st.m_EntryAction  );							
+						}
+					}	
+
+					////////////////////////////////////
+					if (BalanceAnaGrid::col_click==8)
+					{
+						if (wcscmp(first_st.m_ExitDeal   ,next_st.m_ExitDeal)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitDeal ,swap_st.m_ExitDeal);							
+						}
+					}
+
+					if (BalanceAnaGrid::col_click==9)
+					{
+						if (wcscmp(first_st.m_ExitTime   ,next_st.m_ExitTime)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitTime ,swap_st.m_ExitTime);							
+						}
+					}
+					
+					if (BalanceAnaGrid::col_click==10)
+					{
+						if (wcscmp(first_st.m_ExitOrder  ,next_st.m_ExitOrder)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitOrder  ,swap_st.m_ExitOrder);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==11)
+					{
+						if (wcscmp(first_st.m_ExitAction   ,next_st.m_ExitAction)<0)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitAction ,swap_st.m_ExitAction  );							
+						}
+					}
+
+				}	
+				else
+				{
+
+					
+					if (BalanceAnaGrid::col_click==6)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_EntryVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_EntryVolume, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryVolume  ,swap_st.m_EntryVolume);							
+						}
+					}
+
+					if (BalanceAnaGrid::col_click==7)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Entryprice, &endPtr1);
+						double val2=_tcstod(next_st.m_Entryprice, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Entryprice  ,swap_st.m_Entryprice);							
+						}
+					}
+
+					if (BalanceAnaGrid::col_click==12)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ExitVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_ExitVolume, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitVolume  ,swap_st.m_ExitVolume);							
+						}
+					}
+
+
+					if (BalanceAnaGrid::col_click==13)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ExitPrice, &endPtr1);
+						double val2=_tcstod(next_st.m_ExitPrice, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ExitPrice ,swap_st.m_ExitPrice);							
+						}
+					}
+					///////////////////////////
+					if (BalanceAnaGrid::col_click==14)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ProfitPoint_L, &endPtr1);
+						double val2=_tcstod(next_st.m_ProfitPoint_L, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ProfitPoint_L  ,swap_st.m_ProfitPoint_L);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==15)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_ProfitPoint_P, &endPtr1);
+						double val2=_tcstod(next_st.m_ProfitPoint_P, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_ProfitPoint_P ,swap_st.m_ProfitPoint_P);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==16)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Multiplayer, &endPtr1);
+						double val2=_tcstod(next_st.m_Multiplayer, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Multiplayer  ,swap_st.m_Multiplayer);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==17)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Balance, &endPtr1);
+						double val2=_tcstod(next_st.m_Balance, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Balance ,swap_st.m_Balance);							
+						}
+					}
+					/////////////////////////////
+					if (BalanceAnaGrid::col_click==18)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_potentialprofitpoint, &endPtr1);
+						double val2=_tcstod(next_st.m_potentialprofitpoint, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_potentialprofitpoint  ,swap_st.m_potentialprofitpoint);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==19)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_PotentialLosspoint, &endPtr1);
+						double val2=_tcstod(next_st.m_PotentialLosspoint, &endPtr1);
+						if (val1>val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_PotentialLosspoint ,swap_st.m_PotentialLosspoint);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==20)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_DurationTime, &endPtr1);
+						double val2=_tcstod(next_st.m_DurationTime, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_DurationTime  ,swap_st.m_DurationTime);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==21)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_high, &endPtr1);
+						double val2=_tcstod(next_st.m_high, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_high ,swap_st.m_high);							
+						}
+					}
+					if (BalanceAnaGrid::col_click==22)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_low, &endPtr1);
+						double val2=_tcstod(next_st.m_low, &endPtr1);
+						if (val1<val2)
+						{
+							BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=BalanceAnaGrid::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_low ,swap_st.m_low);							
+						}
+					}				
+			    }
+		    }
+		 }
+	 }
+}
+
+void BalanceAnaGrid::ColValue_filter()
+{
+      	BalanceAnaGrid::val_type=0;
+		if (BalanceAnaGrid::insertFilterFlag==1 )
+		{
+		 BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Clear();
+		 int noof_rowsInStruc=BalanceAnaGrid::m_st_grid_anlysis_Array_Fill.Total();
+		 for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+		 {
+			st_grid_balanalysis m_st_Netposition={};
+			m_st_Netposition=BalanceAnaGrid::m_st_grid_anlysis_Array_Fill[fcount];
+			int flag=0;				
+			CString col_row_val[23];		
+			col_row_val[0]=m_st_Netposition.m_login ;
+			if (BalanceAnaGrid::col0_val.Trim().GetLength()>0)
+			{
+				col_row_val[0]=col_row_val[0].Mid(0,BalanceAnaGrid::col0_val.Trim().GetLength());
 			}
+			col_row_val[1]=m_st_Netposition.m_deal ;
+			if (BalanceAnaGrid::col1_val.Trim().GetLength()>0)
+			{
+				col_row_val[1]=col_row_val[1].Mid(0,BalanceAnaGrid::col1_val.Trim().GetLength());
+				
+			}
+
+			UINT64 m_time=_wtoi( m_st_Netposition.m_time);
+			CString tmp=L"";
+			CMTStr256 str_time;
+			SMTFormat::FormatDateTime(str_time,m_time,true,true);
+			tmp=str_time.Str();
+			col_row_val[2]=tmp;
+
+			if (BalanceAnaGrid::col2_val.Trim().GetLength()>0)
+			{
+				col_row_val[2]=col_row_val[2].Mid(0,BalanceAnaGrid::col2_val.Trim().GetLength());
+				col_row_val[2]=col_row_val[2].Mid(0,10);
+			}
+						
+			col_row_val[3]=m_st_Netposition.m_Order ;
+			if (BalanceAnaGrid::col3_val.Trim().GetLength()>0)
+			{
+				col_row_val[3]=col_row_val[3].Mid(0,BalanceAnaGrid::col3_val.Trim().GetLength());
+			}
+
+
+			/////////////////////////////////
+			col_row_val[4]=m_st_Netposition.m_symbol ;
+			if (BalanceAnaGrid::col4_val.Trim().GetLength()>0)
+			{
+				col_row_val[4]=col_row_val[4].Mid(0,BalanceAnaGrid::col4_val.Trim().GetLength());
+			}
+			col_row_val[5]=m_st_Netposition.m_EntryAction ;
+			if (BalanceAnaGrid::col5_val.Trim().GetLength()>0)
+			{
+				col_row_val[5]=col_row_val[5].Mid(0,BalanceAnaGrid::col5_val.Trim().GetLength());
+				//col_row_val[1]=col_row_val[1].Mid(0,10);
+			}
+		
+						
+			col_row_val[8]=m_st_Netposition.m_ExitDeal;
+			if (BalanceAnaGrid::col8_val.Trim().GetLength()>0)
+			{
+				col_row_val[8]=col_row_val[8].Mid(0,BalanceAnaGrid::col8_val.Trim().GetLength());
+			}
+			/////////////////////////////
+
+			UINT64 m_exit_time=_wtoi( m_st_Netposition.m_ExitTime);
+			CString exit_tmp=L"";
+			CMTStr256 str_exit_time;
+			SMTFormat::FormatDateTime(str_exit_time,m_exit_time,true,true);
+			exit_tmp=str_exit_time.Str();
+
+			col_row_val[9]=exit_tmp.Trim();
+
+			if (BalanceAnaGrid::col9_val.Trim().GetLength()>0)
+			{
+				col_row_val[9]=col_row_val[9].Mid(0,BalanceAnaGrid::col9_val.Trim().GetLength());
+				col_row_val[9]=col_row_val[9].Mid(0,10);
+			}
+
+			col_row_val[10]=m_st_Netposition.m_ExitOrder;
+			if (BalanceAnaGrid::col10_val.Trim().GetLength()>0)
+			{
+				col_row_val[10]=col_row_val[10].Mid(0,BalanceAnaGrid::col10_val.Trim().GetLength());
+				
+			}
+			col_row_val[11]=m_st_Netposition.m_ExitAction;
+			if (BalanceAnaGrid::col11_val.Trim().GetLength()>0)
+			{
+				col_row_val[11]=col_row_val[11].Mid(0,BalanceAnaGrid::col11_val.Trim().GetLength());
+			}
+			
+			col_row_val[6]=m_st_Netposition.m_EntryVolume;
+			boolean bool_col6=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col6_val,col_row_val[6]);
+
+
+			col_row_val[7]=m_st_Netposition.m_Entryprice;
+			boolean bool_col7=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col7_val,col_row_val[7]);
+
+			col_row_val[12]=m_st_Netposition.m_ExitVolume ;
+			boolean bool_col12=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col12_val,col_row_val[12]);
+
+			col_row_val[13]=m_st_Netposition.m_ExitPrice;
+			boolean bool_col13=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col13_val,col_row_val[13]);
+
+			col_row_val[14]=m_st_Netposition.m_ProfitPoint_L;
+			boolean bool_col14=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col14_val,col_row_val[14]);
+
+			col_row_val[15]=m_st_Netposition.m_ProfitPoint_P;
+			boolean bool_col15=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col15_val,col_row_val[15]);
+
+			col_row_val[16]=m_st_Netposition.m_Multiplayer;
+			boolean bool_col16=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col16_val,col_row_val[16]);
+
+			col_row_val[17]=m_st_Netposition.m_Balance;
+			boolean bool_col17=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col17_val,col_row_val[17]);
+
+			col_row_val[18]=m_st_Netposition.m_potentialprofitpoint;
+			boolean bool_col18=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col18_val,col_row_val[18]);
+
+			col_row_val[19]=m_st_Netposition.m_PotentialLosspoint;
+			boolean bool_col19=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col19_val,col_row_val[19]);
+
+			col_row_val[20]=m_st_Netposition.m_DurationTime;
+			boolean bool_col20=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col20_val,col_row_val[20]);
+
+			col_row_val[21]=m_st_Netposition.m_high;
+			boolean bool_col21=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col21_val,col_row_val[21]);
+
+			col_row_val[22]=m_st_Netposition.m_low;
+			boolean bool_col22=Check_numeric_col_filter_balance_analysis(BalanceAnaGrid::col22_val,col_row_val[22]);
+
+			
+			if((BalanceAnaGrid::col0_val.Trim()==col_row_val[0].Trim() || BalanceAnaGrid::col0_val.Trim()==L"ALL"||BalanceAnaGrid::col0_val.Trim()==L"") && (BalanceAnaGrid::col1_val.Trim()==col_row_val[1].Trim() || BalanceAnaGrid::col1_val.Trim()==L"ALL"||BalanceAnaGrid::col1_val.Trim()==L"") && (BalanceAnaGrid::col2_val.Trim()==col_row_val[2].Trim() || BalanceAnaGrid::col2_val.Trim()==L"ALL"||BalanceAnaGrid::col2_val.Trim()==L"")  && (BalanceAnaGrid::col3_val.Trim()==col_row_val[3].Trim() || BalanceAnaGrid::col3_val.Trim()==L"ALL"||BalanceAnaGrid::col3_val.Trim()==L"") && (BalanceAnaGrid::col4_val.Trim()==col_row_val[4].Trim() || BalanceAnaGrid::col4_val.Trim()==L"ALL"||BalanceAnaGrid::col4_val.Trim()==L"")   && (BalanceAnaGrid::col5_val.Trim()==col_row_val[5].Trim() || BalanceAnaGrid::col5_val.Trim()==L"ALL"||BalanceAnaGrid::col5_val.Trim()==L"") &&(bool_col6==true || BalanceAnaGrid::col6_val.Trim()==L"ALL"||BalanceAnaGrid::col6_val.Trim()==L"")   && (bool_col7==true || BalanceAnaGrid::col7_val.Trim()==L"ALL"||BalanceAnaGrid::col7_val.Trim()==L"")  && (BalanceAnaGrid::col8_val.Trim()==col_row_val[8].Trim() || BalanceAnaGrid::col8_val.Trim()==L"ALL"||BalanceAnaGrid::col8_val.Trim()==L"")  && (BalanceAnaGrid::col9_val.Trim()==col_row_val[9].Trim() || BalanceAnaGrid::col9_val.Trim()==L"ALL"||BalanceAnaGrid::col9_val.Trim()==L"") && (BalanceAnaGrid::col10_val.Trim()==col_row_val[10].Trim() || BalanceAnaGrid::col10_val.Trim()==L"ALL"||BalanceAnaGrid::col0_val.Trim()==L"") && (BalanceAnaGrid::col11_val.Trim()==col_row_val[11].Trim() || BalanceAnaGrid::col11_val.Trim()==L"ALL"||BalanceAnaGrid::col11_val.Trim()==L"")   && (bool_col12==true || BalanceAnaGrid::col12_val.Trim()==L"ALL"||BalanceAnaGrid::col12_val.Trim()==L"")   &&(bool_col13==true || BalanceAnaGrid::col13_val.Trim()==L"ALL"||BalanceAnaGrid::col13_val.Trim()==L"")  &&(bool_col14==true || BalanceAnaGrid::col14_val.Trim()==L"ALL"||BalanceAnaGrid::col14_val.Trim()==L"") && (bool_col15==true || BalanceAnaGrid::col15_val.Trim()==L"ALL"||BalanceAnaGrid::col15_val.Trim()==L"") && (bool_col16==true || BalanceAnaGrid::col16_val.Trim()==L"ALL"||BalanceAnaGrid::col16_val.Trim()==L"") && (bool_col17==true || BalanceAnaGrid::col17_val.Trim()==L"ALL"||BalanceAnaGrid::col17_val.Trim()==L"") && (bool_col18==true || BalanceAnaGrid::col18_val.Trim()==L"ALL"||BalanceAnaGrid::col18_val.Trim()==L"")  && (bool_col19==true || BalanceAnaGrid::col19_val.Trim()==L"ALL"||BalanceAnaGrid::col19_val.Trim()==L"")  && (bool_col20==true || BalanceAnaGrid::col20_val.Trim()==L"ALL"||BalanceAnaGrid::col20_val.Trim()==L"") && (bool_col21==true || BalanceAnaGrid::col21_val.Trim()==L"ALL"||BalanceAnaGrid::col21_val.Trim()==L"")   && (bool_col22==true || BalanceAnaGrid::col22_val.Trim()==L"ALL"||BalanceAnaGrid::col22_val.Trim()==L"")) 
+			{
+				BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Add(&m_st_Netposition);
+			}
+		  }
 		}
+		else
+		{
+		
+			BalanceAnaGrid::m_st_grid_anlysis_Grid_array.Assign(BalanceAnaGrid::m_st_grid_anlysis_Array_Fill);
+		}
+
+
+	RefreshGrid();
+
 }

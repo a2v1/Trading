@@ -261,7 +261,7 @@ UINT update_Label(void *pParam)
 			pThis->SendMessage(MY_THREAD_UPDATE, 1,1);			 		 		
 		}
 	 }
-	return 0;
+	 return 0;
 	}
 
 

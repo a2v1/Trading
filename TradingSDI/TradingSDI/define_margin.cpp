@@ -132,7 +132,6 @@ void define_margin::getSymbolData()
 
 void define_margin::OnEnChangeEdit1()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
 	// TODO: Add your control notification handler code here
 	d_grid.SetNumberRows(0);
 	CString text_value=L"";

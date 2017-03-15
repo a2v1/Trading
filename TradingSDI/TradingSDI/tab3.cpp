@@ -47,7 +47,10 @@ BOOL tab3::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	m_ClientCode.SetWindowTextW(GridTradeAndOrder::m_selected_login);
+
 	posEntryGrid.AttachGrid(this,IDC_STATIC_POSENTRYGRID);
+
 	for (int f_count=0;f_count<200;f_count++)
 	{
 		if (CMainFrame::arrLogin[f_count]!=L"")
@@ -56,20 +59,19 @@ BOOL tab3::OnInitDialog()
 		}
 	}
 
-	return TRUE;  
+	return TRUE;
 }
 
 
 void tab3::OnBnClickedOk()
 {
 	int item_no=m_ClientCode.GetCurSel();
-	CString list_code=L"";
 
     if (item_no!=-1)
     {
-		 m_ClientCode.GetLBText(item_no,list_code);
+		 m_ClientCode.GetLBText(item_no,(LPTSTR)GridTradeAndOrder::m_selected_login);
 	}
 	 
-	posEntryGrid.Getdata((LPCTSTR)list_code);
+	posEntryGrid.Getdata((LPTSTR)GridTradeAndOrder::m_selected_login);
     posEntryGrid.RedrawAll(); 
 }

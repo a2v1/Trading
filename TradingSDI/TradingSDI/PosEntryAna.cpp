@@ -21,6 +21,18 @@ PosEntryAna::st_grid_anlysis_array PosEntryAna::m_st_grid_anlysis_Grid_array;
 PosEntryAna::st_grid_anlysis PosEntryAna::m_st_grid_anlysis={};
 
 int PosEntryAna::m_selectedclient =0;
+int PosEntryAna::val_type=0;
+int PosEntryAna::col_click=0;
+int PosEntryAna::a_d=0;
+int PosEntryAna::filter_break=0;
+
+CString PosEntryAna::col0_val=L"";
+CString PosEntryAna::col1_val=L"";
+CString PosEntryAna::col2_val=L"";
+CString PosEntryAna::col3_val=L"";
+CString PosEntryAna::col4_val=L"";
+CString PosEntryAna::col5_val=L"";
+
 PosEntryAna::PosEntryAna(void)
 {
 	UGXPThemes::UseThemes(false);
@@ -31,6 +43,124 @@ PosEntryAna::~PosEntryAna(void)
 {
 	UGXPThemes::CleanUp();
 }
+
+boolean Check_numeric_col_filter_analysis(CString  filter_value,CString  real_value);
+boolean  Check_numeric_col_filter_analysis(CString  filter_value,CString  real_value)
+{
+		boolean bool_col=false;		
+		double temp_double=0;
+		LPTSTR endPtr;
+		temp_double= _tcstod(real_value, &endPtr);	
+		filter_value=filter_value.Trim();
+		if (filter_value.GetLength()>2)
+		{
+			if (filter_value.Mid(0,2)==L">=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,2)==L"<=")
+			{
+				CString o_real_val=filter_value.Mid(2,filter_value.GetLength()-2);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<=db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
+
+			
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+
+		}
+		else
+		{
+
+			if (filter_value.Mid(0,1)==L"<")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double<db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+			if (filter_value.Mid(0,1)==L">")
+			{
+				CString o_real_val=filter_value.Mid(1,filter_value.GetLength()-1);
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(o_real_val, &endPtr1);	
+				if (temp_double>db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}	
+
+			if (filter_value.Mid(0,1)!=L">" &&  filter_value.Mid(0,1)!=L"<")
+			{
+				double db_filter_val=0;
+				LPTSTR endPtr1;				
+				db_filter_val= _tcstod(filter_value, &endPtr1);	
+				if (temp_double==db_filter_val)
+				{
+					bool_col=true;
+					return bool_col;
+				}
+			}
+		}
+		return bool_col;
+}
+
 
 void PosEntryAna::Getdata(_bstr_t m_login)
 {
@@ -217,8 +347,25 @@ void PosEntryAna::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *poin
 	UNREFERENCED_PARAMETER(*point);
 	UNREFERENCED_PARAMETER(processed);
 
+	PosEntryAna::col_click=col;
 	if( updn == 0)
 		return;
+
+	if (col_click!=col)
+	{
+		a_d=0;
+	}
+	else
+	{
+		if (a_d==0)
+		{
+			a_d=1;
+		}
+		else
+		{
+			a_d=0;
+		}
+	}
 
 	QuickSetCellType( m_iSortCol, -1, 0 );
 
@@ -250,7 +397,8 @@ void PosEntryAna::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *poin
 
 	}
 
-
+  Col_sorting();
+  
   RedrawAll();
 }
 int PosEntryAna::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
@@ -331,25 +479,198 @@ int PosEntryAna::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
 
 int PosEntryAna::OnDropList(long ID,int col,long row,long msg,long param)
 {
-if(PosEntryAna::insertFilterFlag==1 && row==0 )
+   if (msg==103)
 	{
-		CString  strval=L"";
-		CUGCell cell;
-		GetCell(col,row,&cell);
-		strval=cell.GetText();
-		
-		if (strval!=L"")
+		if(PosEntryAna::insertFilterFlag==1 && row==0)
 		{
-			gridFilter(col,GetNumberRows(),strval);
+			PosEntryAna::filter_break=1;
+		//	check_First==0;
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();
+		//	PosEntryAna::strFilter="";		
 		}
-		else
-		{
-			gridFilter(GetNumberCols(),GetNumberRows(),L"ALL");
-		}
+
 		
-	}
-	RedrawAll();
+
+		if(PosEntryAna::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col0_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col1_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col2_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col3_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col4_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col5_val=strval;					
+				}
+				else
+				{
+
+
+					PosEntryAna::col5_val=L"ALL";					
+				}
+			}
+
+		}
+	   
+	  ColValue_filter();
+     }
 	return true;
+}
+
+
+int PosEntryAna::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
+{
+	    QuickSetText(col,row,string);		
+
+     	if(PosEntryAna::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col0_val=strval;					
+				}
+				else
+				{
+					PosEntryAna::col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col1_val=string;					
+				}
+				else
+				{
+					PosEntryAna::col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col2_val=string;					
+				}
+				else
+				{
+					PosEntryAna::col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col3_val=string;					
+				}
+				else
+				{
+					PosEntryAna::col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col4_val=string;					
+				}
+				else
+				{
+					PosEntryAna::col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					PosEntryAna::col5_val=string;					
+				}
+				else
+				{
+					PosEntryAna::col5_val=L"ALL";					
+				}
+			}
+     }
+
+  ColValue_filter();
+  return true;
 }
 
 void PosEntryAna::InitMenu()
@@ -369,21 +690,21 @@ void PosEntryAna::OnMenuCommand(int col,long row,int section,int item)
 	CMenu* pMenu;
 	pMenu = GetPopupMenu();
 
-switch( item )
-{
-case 2001:
-	       {
+	switch( item )
+	{
+	   case 2001:
+			{
 				filter();
 				break;
-		   }
-}
-RedrawAll();
+			}
+	}
+	RedrawAll();
 }
 
 void PosEntryAna::filter()
 {
 	 CMenu *pMnenu;
-	pMnenu= GetPopupMenu();
+   	pMnenu= GetPopupMenu();
 
 	if ( PosEntryAna::insertFilterFlag==0)
 	{
@@ -410,6 +731,15 @@ void PosEntryAna::filter()
 		
 		DeleteRow(0);
 		PosEntryAna::insertFilterFlag=0;
+		PosEntryAna::col0_val=L"";
+		PosEntryAna::col1_val=L"";
+		PosEntryAna::col2_val=L"";
+		PosEntryAna::col3_val=L"";
+		PosEntryAna::col4_val=L"";
+		PosEntryAna::col5_val=L"";
+		
+		ColValue_filter();
+
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	RedrawAll();
@@ -448,25 +778,29 @@ void PosEntryAna::addItemToCombobox()
 	try
 	{
 	int rows=1;
-	rows=GetNumberRows();
-	
 	CString str_val=L"";
 	
 	for (int forcount=0;forcount<6;forcount++)
 	{
 		str[forcount]=L"ALL\n";		
 	}
+
+	st_grid_anlysis_array m_array_filter;
+	m_array_filter.Assign(PosEntryAna::m_st_grid_anlysis_Array_Fill);
+	
+	rows=m_array_filter.Total();
 	for (int forcount=0;forcount<rows;forcount++)
 	{
+
+		st_grid_anlysis m_st_for_filter={};
+	    m_st_for_filter=m_array_filter[forcount];
+
 		for (int clocount=0;clocount<6;clocount++)
 		{
-			str_val=QuickGetText(clocount,forcount);
-			str_val=str_val.Trim();
-			
-			if (str_val!=L"")
-			{
 				if (clocount==0)
 				{
+					str_val=m_st_for_filter.m_deal;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -477,6 +811,11 @@ void PosEntryAna::addItemToCombobox()
 
 				if (clocount==1)
 				{
+					str_val=m_st_for_filter.m_login ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr1,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -487,17 +826,36 @@ void PosEntryAna::addItemToCombobox()
 
 				if (clocount==2)
 				{
+					str_val=m_st_for_filter.m_symbol ;
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr2,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr2.Add(str_val);
 					}
+					
 				}
 
 
 
 				if (clocount==3)
 				{
+
+					UINT64 m_time=_wtoi( m_st_for_filter.m_time);
+				    CString tmp=L"";
+				    CMTStr256 str_time;
+				    SMTFormat::FormatDateTime(str_time,m_time,true,true);
+				    tmp=str_time.Str();
+
+				//	str_val=m_st_for_filter.m_time ;
+					str_val=tmp.Trim();
+					if (str_val.GetLength()>10)
+					{
+						str_val=str_val.Mid(0,10);
+					}
 					if (CheckvalueInArray(arr3,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -507,6 +865,8 @@ void PosEntryAna::addItemToCombobox()
 
 				if (clocount==4)
 				{
+					str_val=m_st_for_filter.m_EntryVolume ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr4,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
@@ -515,24 +875,18 @@ void PosEntryAna::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
+					str_val=m_st_for_filter.m_Entryprice ;
+					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr5.Add(str_val);
 					}
 				}
-				if (clocount==6)
-				{
-					if (CheckvalueInArray(arr6,str_val)==false )
-					{
-						str[clocount]=str[clocount]+str_val+L"\n";										
-						arr6.Add(str_val);
-					}
-				}
+		
 			}
 
 		}												
-	}
 	}
 	catch(_com_error & ce)
 			{
@@ -540,50 +894,50 @@ void PosEntryAna::addItemToCombobox()
 			} 
 }
 
-void PosEntryAna::gridFilter(int colno,int rows_count,CString col_value)
-{
-	
-	CString getColvalue=L"";
-	CString col_filter_val[7];
-	
-	for(int c=0;c<7;c++)
-	{
-		col_filter_val[c]=QuickGetText(c,0);
-	}
-	for(int fcount=rows_count-1;fcount>0;fcount--)
-	{
-		int flag=0;		
-		
-		CString col_row_val[7];
-		for(int c=0;c<7;c++)
-		{
-			col_row_val[c]=QuickGetText(c,fcount);
-		}
-	  if((col_filter_val[0]==col_row_val[0] || col_filter_val[0]==L"ALL"||col_filter_val[0]==L"") && (col_filter_val[1]==col_row_val[1] || col_filter_val[1]==L"ALL"||col_filter_val[1]==L"") && (col_filter_val[2]==col_row_val[2] || col_filter_val[2]==L"ALL"||col_filter_val[2]==L"")  && (col_filter_val[3]==col_row_val[3] || col_filter_val[3]==L"ALL"||col_filter_val[3]==L"")  && (col_filter_val[4]==col_row_val[4] || col_filter_val[4]==L"ALL"||col_filter_val[4]==L"")   && (col_filter_val[5]==col_row_val[5] || col_filter_val[5]==L"ALL"||col_filter_val[5]==L"")&&(col_filter_val[6]==col_row_val[6] || col_filter_val[6]==L"ALL"||col_filter_val[6]==L""))
-	   {			
-			CString checkblakval=QuickGetText(0,fcount);
-			checkblakval=checkblakval.Trim();
-			if(checkblakval.Trim().GetLength()>0)
-			{
-				flag=1;
-			}			
-		}
-		else
-		{			
-			flag=0;			
-		}
-		
-	    if (flag==1)
-		{
-			SetRowHeight(fcount, 20);
-		}
-		else
-		{   
-			 SetRowHeight(fcount, 0);
-		}
-	 }
-	
-}
+//void PosEntryAna::gridFilter(int colno,int rows_count,CString col_value)
+//{
+//	
+//	CString getColvalue=L"";
+//	CString col_filter_val[7];
+//	
+//	for(int c=0;c<7;c++)
+//	{
+//		col_filter_val[c]=QuickGetText(c,0);
+//	}
+//	for(int fcount=rows_count-1;fcount>0;fcount--)
+//	{
+//		int flag=0;		
+//		
+//		CString col_row_val[7];
+//		for(int c=0;c<7;c++)
+//		{
+//			col_row_val[c]=QuickGetText(c,fcount);
+//		}
+//	  if((col_filter_val[0]==col_row_val[0] || col_filter_val[0]==L"ALL"||col_filter_val[0]==L"") && (col_filter_val[1]==col_row_val[1] || col_filter_val[1]==L"ALL"||col_filter_val[1]==L"") && (col_filter_val[2]==col_row_val[2] || col_filter_val[2]==L"ALL"||col_filter_val[2]==L"")  && (col_filter_val[3]==col_row_val[3] || col_filter_val[3]==L"ALL"||col_filter_val[3]==L"")  && (col_filter_val[4]==col_row_val[4] || col_filter_val[4]==L"ALL"||col_filter_val[4]==L"")   && (col_filter_val[5]==col_row_val[5] || col_filter_val[5]==L"ALL"||col_filter_val[5]==L"")&&(col_filter_val[6]==col_row_val[6] || col_filter_val[6]==L"ALL"||col_filter_val[6]==L""))
+//	   {			
+//			CString checkblakval=QuickGetText(0,fcount);
+//			checkblakval=checkblakval.Trim();
+//			if(checkblakval.Trim().GetLength()>0)
+//			{
+//				flag=1;
+//			}			
+//		}
+//		else
+//		{			
+//			flag=0;			
+//		}
+//		
+//	    if (flag==1)
+//		{
+//			SetRowHeight(fcount, 20);
+//		}
+//		else
+//		{   
+//			 SetRowHeight(fcount, 0);
+//		}
+//	 }
+//	
+//}
 
 void PosEntryAna::OnGetCell(int col,long row,CUGCell *cell)
 {		
@@ -648,7 +1002,11 @@ void PosEntryAna::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==3)
 			{	
 				mst_grid=PosEntryAna::m_st_grid_anlysis_Grid_array[rows_no];
-				CString tmp=mst_grid.m_time ;
+				UINT64 m_time=_wtoi( mst_grid.m_time);
+				CString tmp=L"";
+				CMTStr256 str;
+				SMTFormat::FormatDateTime(str,m_time,true,true);
+				tmp=str.Str();
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -676,5 +1034,241 @@ void PosEntryAna::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
+     }
+}
+
+
+void PosEntryAna::Col_sorting()
+{
+	int t_rows=PosEntryAna::m_st_grid_anlysis_Grid_array.Total();
+	PosEntryAna::st_grid_anlysis first_st={};
+	PosEntryAna::st_grid_anlysis next_st={};
+	PosEntryAna::st_grid_anlysis swap_st={};
+	PosEntryAna::val_type=0;
+	if (PosEntryAna::col_click==4 || PosEntryAna::col_click==5)
+	{
+		PosEntryAna::val_type=1;
+	}
+	for (int i=0;i<t_rows;i++)
+	{
+		first_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+		for (int j=i+1;j<t_rows;j++)
+		{
+			next_st=PosEntryAna::m_st_grid_anlysis_Grid_array[j];
+			if (PosEntryAna::a_d==0)
+			{
+				if (PosEntryAna::val_type==0)
+				{
+					if (PosEntryAna::col_click==0)
+					{
+						if (wcscmp(first_st.m_deal   ,next_st.m_deal)>0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal ,swap_st.m_deal);							
+						}
+					}
+					
+					if (PosEntryAna::col_click==1)
+					{
+						if (wcscmp(first_st.m_login  ,next_st.m_login)>0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_login  ,swap_st.m_login);							
+						}
+					}
+					if (PosEntryAna::col_click==2)
+					{
+						if (wcscmp(first_st.m_symbol   ,next_st.m_symbol)>0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol ,swap_st.m_symbol  );							
+						}
+					}	
+
+					if (PosEntryAna::col_click==3)
+					{
+						if (wcscmp(first_st.m_time   ,next_st.m_time   )>0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_time   ,swap_st.m_time  );							
+						}
+					}
+
+				}	
+				else
+				{
+					if (PosEntryAna::col_click==4)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_EntryVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_EntryVolume, &endPtr1);
+						if (val1>val2)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryVolume  ,swap_st.m_EntryVolume);							
+						}
+					}
+					if (PosEntryAna::col_click==5)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Entryprice, &endPtr1);
+						double val2=_tcstod(next_st.m_Entryprice, &endPtr1);
+						if (val1>val2)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Entryprice ,swap_st.m_Entryprice);							
+						}
+					}
+				}
+			 }
+			else
+			{
+				if (PosEntryAna::val_type==0)
+				{
+
+					if (PosEntryAna::col_click==0)
+					{
+						if (wcscmp(first_st.m_deal   ,next_st.m_deal)<0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_deal ,swap_st.m_deal);							
+						}
+					}
+					
+					if (PosEntryAna::col_click==1)
+					{
+						if (wcscmp(first_st.m_login  ,next_st.m_login)<0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_login  ,swap_st.m_login);							
+						}
+					}
+					if (PosEntryAna::col_click==2)
+					{
+						if (wcscmp(first_st.m_symbol   ,next_st.m_symbol)<0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_symbol ,swap_st.m_symbol  );							
+						}
+					}	
+
+					if (PosEntryAna::col_click==3)
+					{
+						if (wcscmp(first_st.m_time   ,next_st.m_time   )<0)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_time   ,swap_st.m_time  );							
+						}
+					}
+
+				}	
+				else
+				{
+					if (PosEntryAna::col_click==4)
+					{						
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_EntryVolume, &endPtr1);
+						double val2=_tcstod(next_st.m_EntryVolume, &endPtr1);
+						if (val1<val2)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_EntryVolume  ,swap_st.m_EntryVolume);							
+						}
+					}
+					if (PosEntryAna::col_click==5)
+					{
+						LPTSTR endPtr1;								
+						double val1=_tcstod(first_st.m_Entryprice, &endPtr1);
+						double val2=_tcstod(next_st.m_Entryprice, &endPtr1);
+						if (val1<val2)
+						{
+							PosEntryAna::m_st_grid_anlysis_Grid_array.Shift(j,i-j);
+							swap_st=PosEntryAna::m_st_grid_anlysis_Grid_array[i];
+							CMTStr::Copy(first_st.m_Entryprice ,swap_st.m_Entryprice);							
+						}
+				    }				
+			    }
+		    }
+		 }
+	 }
+}
+
+void PosEntryAna::ColValue_filter()
+{
+      	PosEntryAna::val_type=0;
+		if (PosEntryAna::insertFilterFlag==1 )
+		{
+		 PosEntryAna::m_st_grid_anlysis_Grid_array.Clear();
+		 int noof_rowsInStruc=PosEntryAna::m_st_grid_anlysis_Array_Fill.Total();
+		 for(int fcount=0;fcount<noof_rowsInStruc;fcount++)
+		 {
+			 st_grid_anlysis m_st_Netposition={};
+			m_st_Netposition=PosEntryAna::m_st_grid_anlysis_Array_Fill[fcount];
+			int flag=0;				
+			CString col_row_val[11];		
+			col_row_val[0]=m_st_Netposition.m_deal ;
+			if (PosEntryAna::col0_val.Trim().GetLength()>0)
+			{
+				col_row_val[0]=col_row_val[0].Mid(0,PosEntryAna::col0_val.Trim().GetLength());
+			}
+			col_row_val[1]=m_st_Netposition.m_login ;
+			if (PosEntryAna::col1_val.Trim().GetLength()>0)
+			{
+				col_row_val[1]=col_row_val[1].Mid(0,PosEntryAna::col1_val.Trim().GetLength());
+				//col_row_val[1]=col_row_val[1].Mid(0,10);
+			}
+			col_row_val[2]=m_st_Netposition.m_symbol;
+			if (PosEntryAna::col2_val.Trim().GetLength()>0)
+			{
+				col_row_val[2]=col_row_val[2].Mid(0,PosEntryAna::col2_val.Trim().GetLength());
+			}
+
+			UINT64 m_time=_wtoi( m_st_Netposition.m_time);
+			CString tmp=L"";
+			CMTStr256 str_time;
+			SMTFormat::FormatDateTime(str_time,m_time,true,true);
+			tmp=str_time.Str();
+
+		    col_row_val[3]=tmp;
+
+			if (PosEntryAna::col3_val.Trim().GetLength()>0)
+			{
+				col_row_val[3]=col_row_val[3].Mid(0,PosEntryAna::col3_val.Trim().GetLength());
+				col_row_val[3]=col_row_val[3].Mid(0,10);
+			}
+
+
+			col_row_val[4]=m_st_Netposition.m_EntryVolume;
+			boolean bool_col4=Check_numeric_col_filter_analysis(PosEntryAna::col4_val,col_row_val[4]);
+
+			col_row_val[5]=m_st_Netposition.m_Entryprice;
+			boolean bool_col5=Check_numeric_col_filter_analysis(PosEntryAna::col5_val,col_row_val[5]);
+
+			
+			if((PosEntryAna::col0_val.Trim()==col_row_val[0].Trim() || PosEntryAna::col0_val.Trim()==L"ALL"||PosEntryAna::col0_val.Trim()==L"") && (PosEntryAna::col1_val.Trim()==col_row_val[1].Trim() || PosEntryAna::col1_val.Trim()==L"ALL"||PosEntryAna::col1_val.Trim()==L"") && (PosEntryAna::col2_val.Trim()==col_row_val[2].Trim() || PosEntryAna::col2_val.Trim()==L"ALL"||PosEntryAna::col2_val.Trim()==L"")  && (PosEntryAna::col3_val.Trim()==col_row_val[3].Trim() || PosEntryAna::col3_val.Trim()==L"ALL"||PosEntryAna::col3_val.Trim()==L"") && (bool_col4==true || PosEntryAna::col4_val.Trim()==L"ALL"||PosEntryAna::col4_val.Trim()==L"")   && (bool_col5==true || PosEntryAna::col5_val.Trim()==L"ALL"||PosEntryAna::col5_val.Trim()==L"")) 
+			{
+				PosEntryAna::m_st_grid_anlysis_Grid_array.Add(&m_st_Netposition);
+			}
+		  }
 		}
+		else
+		{
+		
+			PosEntryAna::m_st_grid_anlysis_Grid_array.Assign(PosEntryAna::m_st_grid_anlysis_Array_Fill);
+		}
+
+
+	RefreshGrid();
+
 }

@@ -46,6 +46,9 @@ void tab4::OnClose()
 BOOL tab4::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	 m_clientcombo.SetWindowTextW(GridTradeAndOrder::m_selected_login);
+
 	Balance_Grid.AttachGrid(this,IDC_STATIC_BALANCE_TABLE);
 
 	for (int f_count=0;f_count<200;f_count++)
