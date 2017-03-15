@@ -21,6 +21,14 @@ public:
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
 	static int m_selectedclient;
+
+	//manual sorting and filtering variables
+	static int val_type;
+	static int col_click;
+	static int a_d;
+	static int filter_break;
+	//Storing filter value 
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val,col16_val,col17_val,col18_val,col19_val,col20_val,col21_val,col22_val,col23_val;
 	//Structure for fill data
 	struct st_grid_balanalysis
 	{		 	
@@ -61,7 +69,6 @@ public:
     static st_grid_balanalysis_array m_st_grid_anlysis_Grid_array;
 
 
-
 	
 public:
 	
@@ -76,14 +83,19 @@ public:
 	virtual int OnDropList(long ID,int col,long row,long msg,long param);
 	//mouse and key strokes
 	virtual  int OnCellTypeNotify(long ID,int col,long row,long msg,long param);
-	void    gridFilter(int colno,int rows_count,CString col_value);
+	//void    gridFilter(int colno,int rows_count,CString col_value);
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
 	void addItemToCombobox();
 	virtual void OnSetup();
 	virtual void OnSheetSetup(int sheetNumber);
 	void GetData(_bstr_t m_login);
 	virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
-	virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
+	//virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
+	virtual  int OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag);
+
+	//sorting and filtering
+	void Col_sorting();
+	void ColValue_filter();
 };
 
 #endif

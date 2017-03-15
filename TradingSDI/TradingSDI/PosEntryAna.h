@@ -20,6 +20,12 @@ public:
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
 	static int m_selectedclient;
+	static int val_type;
+	static int col_click;
+	static int a_d;
+	static int filter_break;
+	//Storing filter value 
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val;
 	//Structure for fill data
 	struct st_grid_anlysis
 	{		 		
@@ -41,7 +47,7 @@ public:
 	void RefreshGrid();
 	void InitMenu();
 	void filter();
-	void    gridFilter(int colno,int rows_count,CString col_value);
+	//void    gridFilter(int colno,int rows_count,CString col_value);
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
 	void addItemToCombobox();
 	//movement and sizing
@@ -51,13 +57,18 @@ public:
 	void Getdata(_bstr_t m_login);
 	//mouse and key strokes
 	virtual  int OnCellTypeNotify(long ID,int col,long row,long msg,long param);
-	
+
+	virtual  int OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag);
 	//set text
 	void OnGetCell(int col,long row,CUGCell *cell);
 	//menu notifications
 	virtual void OnMenuCommand(int col,long row,int section,int item);
 	virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
 	virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
+
+	//sorting and filtering
+	void Col_sorting();
+	void ColValue_filter();
 
 };
 #endif

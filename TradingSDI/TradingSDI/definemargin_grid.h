@@ -10,6 +10,7 @@ public:
 	int m_iArrowIndex;
 	CUGSortArrowType m_sortArrow;
 	int m_iSortCol;
+	static int sorting_flag;
 protected:
 	 DECLARE_MESSAGE_MAP()
 

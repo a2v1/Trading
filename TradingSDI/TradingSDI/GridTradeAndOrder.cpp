@@ -2016,7 +2016,11 @@ void GridTradeAndOrder::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==2)
 			{				
 				mst_grid=GridTradeAndOrder::m_gridAndOrder_Grid_array[rows_no];
-				CString tmp=mst_grid.Time ;
+				UINT64 m_time=_wtoi( mst_grid.Time);
+				CString tmp=L"";
+				CMTStr256 str_time;
+				SMTFormat::FormatDateTime(str_time,m_time,true,true);
+				tmp=str_time.Str();
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{

@@ -9,6 +9,7 @@ BEGIN_MESSAGE_MAP(definemargin_grid,CUGCtrl)
 	
 END_MESSAGE_MAP()
 
+int definemargin_grid::sorting_flag=0;
 
 definemargin_grid::definemargin_grid(void)
 {
@@ -61,34 +62,35 @@ double num1, num2;
 CString szComp1=L"";
 CString szComp2=L"";
 
-switch(m_iSortCol)
-{
- case 0:
-	    szComp1=cell1->GetText();
-		szComp2=cell2->GetText();
+ switch(m_iSortCol)
+ {
+	  
+	  case 0:
+			szComp1=cell1->GetText();
+			szComp2=cell2->GetText();
 
-		if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
-		{
-			retVal=szComp1.CompareNoCase(szComp2);
-		}
-		break;
+			if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
+			{
+				retVal=szComp1.CompareNoCase(szComp2);
+			}
+			break;
 
-  case 1:
-        num1 = cell1->GetNumber();
-		num2 = cell2->GetNumber();
+	  case 1:
+			num1 = cell1->GetNumber();
+			num2 = cell2->GetNumber();
 
-		if(num1!=-1 && num2!=-1)
-		{
-			if(num1 < num2)
-				retVal = -1;
-			if(num1 > num2)
-				retVal = 1;
-		}
-        break;
-  default:
-		retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-}
-	return retVal;
+			if(num1!=0 && num2!=0)
+			{
+				if(num1 < num2)
+					retVal = -1;
+				if(num1 > num2)
+					retVal = 1;
+			}
+			break;
+	  default:
+			retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
+	}
+  return retVal;
 }
 
 void definemargin_grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed)
@@ -132,7 +134,6 @@ void definemargin_grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT
 		QuickSetCellTypeEx( m_iSortCol, -1, UGCT_SORTARROWUP );
 
 	}
-	
 		
 	RedrawAll();
 }
