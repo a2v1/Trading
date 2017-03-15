@@ -177,8 +177,10 @@ UINT update_data_Trade(void *pParam)
 		hr=session.Open(connection);
 		while (GridTradeAndOrder::thread_check==0)
 		{				
-            _bstr_t strCommand="";		
-		     strCommand="select vt1.symbol,'' as 'order',vt3.lastTime,case when vt1.netqty>0 then 'BUY' when vt1.netqty<0 then 'SELL' else '' end  as 'TYPE',vt1.netqty as 'VOLUME',vt1.avgrate as 'Price',vt2.last_tick as 'CURRENT_RATE' ,case when vt1.netqty<0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.contractSize when vt1.netqty>0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.contractSize else 0  end as 'PL',vt3.[status],vt6.TotalTrade,vt7.Checked_time,vt8.limit,vt7.REMARK2  from  (select PositionAverageAccounting.Symbol,PositionAverageAccounting.multiplayer as 'contractSize',totalvolume/10000 as 'NetQty', WavgPrice as 'AVGRate' from PositionAverageAccounting where  PositionAverageAccounting.[login]='" + GridTradeAndOrder::m_selected_login + "' and totalvolume<>0   )vt1 left outer join (select t1.symbol,last_tick.last_tick from last_tick left outer join symbol_mapping as t1 on t1.mapping_Symbol=last_tick.symbol) vt2 on vt1.symbol=vt2.symbol left outer join (select t1.symbol,t1.LastTime,t1.Last_Deal,case when ([type]=0 or [type]=1) then 'MARKET' else 'LIMIT' end  as 'STATUS' from (select symbol,max([time]) 'LastTime',max([order])  as 'Last_Deal' from  Deal_Table_Accounting where Deal_Table_Accounting.[login]='" + GridTradeAndOrder::m_selected_login + "'   group by Deal_Table_Accounting.Symbol ) t1 left outer join mt5_orders_history on t1.last_deal=mt5_orders_history.[order])vt3 on vt1.symbol=vt3.symbol left outer join (select [symbol],cast(sum(case when col1=1 then col2 else 0 end) as varchar(20))+'/' +cast(sum(col2) as varchar(20)) as 'TotalTrade' from  (select [symbol],isnull(checked,0) as 'Col1',count (isnull(checked,0)) as 'Col2' from mt5_deals left outer join Trade_Checked on mt5_deals.Deal=Trade_Checked.Deal  LEFT  outer join client on client.V_login=cast(mt5_deals.[login]  as varchar(20))  where (cast(mt5_deals.[login] as varchar(50))='" + GridTradeAndOrder::m_selected_login + "' and comment='' and  isnull(Comment_YN,'N') ='Y')  or (cast(mt5_deals.[login] as varchar(50))='" + GridTradeAndOrder::m_selected_login + "' and isnull(Comment_YN,'N') <>'Y') group by [symbol],isnull(checked,0) )t1 group by [symbol])vt6 on vt6.symbol=vt1.symbol  left outer join (select * from Position_Check where [login]='" + GridTradeAndOrder::m_selected_login + "')vt7 on vt1.symbol=vt7.symbol left outer join ( select [login],symbol,cast(isnull(limit,0) as varchar(20))+'/'+cast(isnull(LimitSell,0) as varchar(20)) as limit from Limit_Mapping where [login]='" + GridTradeAndOrder::m_selected_login + "')vt8 on  vt1.symbol=vt8.symbol";
+            _bstr_t strCommand="";	
+
+			
+		     strCommand="standing '" + GridTradeAndOrder::m_selected_login + "'";
 	    
 			 if(SUCCEEDED(hr))
 			 {
@@ -215,10 +217,16 @@ UINT update_data_Trade(void *pParam)
 					
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Price,cstrpl) ;
 
-					CString cstr_Current_Rate=artists1.m_Current_Rate ;
+
+					double d_Current_Rate = _tcstod(artists1.m_Current_Rate, &endPtr);																						
+					CString cstr_Current_Rate=L"";
+					cstr_Current_Rate.Format(_T("%.4f"),d_m_PL);	
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Current_Rate ,cstr_Current_Rate);
 
+
+					double d_PL = _tcstod(artists1.m_PL, &endPtr);																																
 					CString cstr_PL=artists1.m_PL ;
+					cstr_PL.Format(_T("%.0f"),d_PL);	
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.PL  ,cstr_PL);
 
 

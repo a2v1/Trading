@@ -440,6 +440,16 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 
 	Col_sorting();
 	
+	if (col==0)
+	{
+		CUGCell cell;
+		GetColDefault( 0, &cell );				
+		QuickSetCellType(0,-1,UGCT_CHECKBOX);	
+		QuickSetCellTypeEx(0,-1,UGCT_CHECKBOXCHECKMARK);
+		SetColDefault( 0, &cell );
+		QuickSetLabelText(0,-1,L"Comment");
+		
+	}
 	//first_time_check=0;
 	RedrawAll();
 	//first_time_check=1;
@@ -1734,11 +1744,17 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		
 
 		//grid row added
+		CUGCell cell;
+		GetColDefault( 0, &cell );		
+		QuickSetLabelText(0,-1,L"Comment");
+		QuickSetCellType(0,-1,UGCT_CHECKBOX);	
+		QuickSetCellTypeEx(0,-1,UGCT_CHECKBOXCHECKMARK);
+		SetColDefault( 0, &cell );
 		RefreshGrid();
 
 		//checkbox in grid 
 		int row=0;
-		CUGCell cell;
+		
 	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
         for(row;row<r_count-1;row++)
 	    {
@@ -1746,6 +1762,9 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 			QuickSetCellType(10,row,UGCT_CHECKBOX);	
 			QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
 			SetColDefault( 10, &cell );
+
+
+
 			QuickSetCellType(0,row,UGCT_CHECKBOX);	
 			QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
 
@@ -2025,6 +2044,26 @@ int Grid_CheckTrade::OnCheckbox(long ID,int col,long row,long msg,long param)
 	
 			RedrawCell(fcount,row);		
 		}	
+	}
+	if(row==-1)
+	{
+		if(param == 1)
+		{
+			int grid_row_count= GetNumberRows();
+			for(int i=0;i<grid_row_count-1;i++)
+			{
+				QuickSetText(0,i,L"1");
+			}
+		}
+		else
+		{
+			int grid_row_count= GetNumberRows();
+			for(int i=0;i<grid_row_count-1;i++)
+			{
+				QuickSetText(0,i,L"0");
+			}
+		}
+		RedrawAll();
 	}
 	return TRUE;
 }

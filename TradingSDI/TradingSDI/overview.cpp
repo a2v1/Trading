@@ -117,6 +117,7 @@ BEGIN_MESSAGE_MAP(overview, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON3, &overview::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_CHECK2, &overview::OnBnClickedCheck2)
 	ON_WM_TIMER()
+	ON_STN_CLICKED(IDC_STATIC_FrGrid_Trade2, &overview::OnStnClickedStaticFrgridTrade2)
 END_MESSAGE_MAP()
 
 // overview message handlers
@@ -235,7 +236,7 @@ UINT update_Label(void *pParam)
 
 
 		overview::profit=L"0";
-		strCommand="select isnull(sum(PL),0),'' as 'v','' as 'ba','' as  'TYPE','' as  'volume', '' as Price,'' as Current_rate,''  as 'PL',''   as 'Status',''   as 'TradeStatus'  from (SELECT vt1.symbol,'' as 'order',vt3.lastTime,'' as 'TYPE',vt1.netqty as 'VOLUME',vt1.avgrate as 'Price',vt2.last_tick as 'CURRENT_RATE' ,case when vt1.netqty<0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.Multiplayer when vt1.netqty>0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.Multiplayer else 0  end as 'PL',vt3.[status] from  (select PositionAverageAccounting.Symbol,PositionAverageAccounting.multiplayer,totalvolume/10000 as 'NetQty', wavgprice as 'AVGRate' from PositionAverageAccounting where  PositionAverageAccounting.[login]='" + GridTradeAndOrder::m_selected_login + "'  and totalvolume<>0    )vt1 left outer join (select t1.symbol,last_tick.last_tick from last_tick left outer join symbol_mapping as t1 on t1.mapping_Symbol=last_tick.symbol) vt2 on vt1.symbol=vt2.symbol left outer join (select t1.symbol,t1.LastTime,t1.Last_Deal,case when ([type]=0 or [type]=1) then 'MARKET' else 'LIMIT' end  as 'STATUS' from (select symbol,max([time]) 'LastTime',max([order])  as 'Last_Deal' from  Deal_Table_Accounting where  Deal_Table_Accounting.[login]='" + GridTradeAndOrder::m_selected_login + "'   group by Deal_Table_Accounting.Symbol ) t1 left outer join mt5_orders_history on t1.last_deal=mt5_orders_history.[order])vt3 on vt1.symbol=vt3.symbol) vt6";
+		strCommand="select isnull(sum(PL),0),'' as 'v','' as 'ba','' as  'TYPE','' as  'volume', '' as Price,'' as Current_rate,''  as 'PL',''   as 'Status',''   as 'TradeStatus'  from (SELECT vt1.symbol,'' as 'order',vt3.lastTime,'' as 'TYPE',vt1.netqty as 'VOLUME',vt1.avgrate as 'Price',vt2.last_tick as 'CURRENT_RATE' ,case when vt1.netqty<0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.Multiplayer when vt1.netqty>0 then (isnull(vt2.last_tick,0)-vt1.avgrate)*vt1.netqty*vt1.Multiplayer else 0  end as 'PL',vt3.[status] from  (select PositionAverageAccounting.Symbol,PositionAverageAccounting.multiplayer,totalvolume/10000 as 'NetQty', wavgprice as 'AVGRate' from PositionAverageAccounting where  PositionAverageAccounting.[login]='" + GridTradeAndOrder::m_selected_login + "'  and totalvolume<>0    )vt1 left outer join (select t1.symbol,last_tick.last_tick from tradedatabase.dbo.last_tick left outer join tradedatabase.dbo.symbol_mapping as t1 on t1.mapping_Symbol=tradedatabase.dbo.last_tick.symbol) vt2 on vt1.symbol=vt2.symbol left outer join (select t1.symbol,t1.LastTime,t1.Last_Deal,case when ([type]=0 or [type]=1) then 'MARKET' else 'LIMIT' end  as 'STATUS' from (select symbol,max([time]) 'LastTime',max([order])  as 'Last_Deal' from  Deal_Table_Accounting where  Deal_Table_Accounting.[login]='" + GridTradeAndOrder::m_selected_login + "'   group by Deal_Table_Accounting.Symbol ) t1 left outer join tradedatabase.dbo.mt5_orders_history on t1.last_deal=tradedatabase.dbo.mt5_orders_history.[order])vt3 on vt1.symbol=vt3.symbol) vt6";
 		strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);				
 		if(SUCCEEDED(hr))
@@ -554,4 +555,10 @@ void overview::OnTimer(UINT_PTR nIDEvent)
 	}*/
 
 	CDialogEx::OnTimer(nIDEvent);
+}
+
+
+void overview::OnStnClickedStaticFrgridTrade2()
+{
+	// TODO: Add your control notification handler code here
 }

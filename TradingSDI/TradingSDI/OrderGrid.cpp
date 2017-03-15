@@ -1558,7 +1558,7 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				GetColDefault( 11, &MYcell);			
 				QuickSetCellType(11,rows_no,UGCT_DROPLIST);
 				QuickSetCellTypeEx(11,rows_no,UGCT_DROPLISTHIDEBUTTON);
-				QuickSetLabelText(11,rows_no,L"Type1\nType2\n");
+				QuickSetLabelText(11,rows_no,L"ORDER\nTIME\n");
 				SetColDefault( 11, &MYcell);
 
 				mst_grid=m_st_Order_GridArray[rows_no];
@@ -1585,12 +1585,12 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 
 
 				Cell11_text=Cell11_text.MakeUpper();
-				if (wcscmp(Cell11_text,L"TYPE1")==0)
+				if (wcscmp(Cell11_text,L"ORDER")==0)
 				{
 					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\n");
 					SetColDefault( 12, &MYcell);
 				}
-				if (wcscmp(Cell11_text,L"TYPE2")==0)
+				if (wcscmp(Cell11_text,L"TIME")==0)
 				{
 					QuickSetLabelText(12,rows_no,L"TDH\nSAT\n\OL\n");
 					SetColDefault( 12, &MYcell);
