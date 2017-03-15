@@ -549,7 +549,7 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	if (msg==103)
 	{
-		/*if(OverViewOrderGrid::insertFilterFlag==1 && row==0)
+		if(OverViewOrderGrid::insertFilterFlag==1 && row==0)
 		{
 			OverViewOrderGrid::filter_break=1;
 			check_First==0;
@@ -689,7 +689,7 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 				}
 			}
          
-        }*/
+        }
 	  RedrawAll();
 	 }
 	return true;
@@ -1037,10 +1037,10 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
  {
 	if (OverViewOrderGrid::insertFilterFlag==0)
 	{
-		//	addItemToCombobox();
+			addItemToCombobox();
 			OverViewOrderGrid::insertFilterFlag=1;
 			InsertRow(0);
-			for (int col_count=0;col_count<12;col_count++)
+			for (int col_count=0;col_count<13;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -1049,8 +1049,8 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
 				cell.SetCellType(UGCT_DROPLIST);
 				cell.SetCellTypeEx(UGCT_DROPLISTHIDEBUTTON);
 				cell.SetParam(CELLTYPE_IS_EDITABLE);
-			//	QuickSetRange(col,row,col,row,&cell);
-			//	QuickSetLabelText(col,row,str[col_count]);
+				QuickSetRange(col,row,col,row,&cell);
+				QuickSetLabelText(col,row,str[col_count]);
 			}
 	}
 	else
