@@ -131,7 +131,7 @@ public:
 	};
 	typedef TMTArray<st_Netposition_Ignore_comment> Netposition_Ignore_comment_Array;
 
-	static Netposition_Ignore_comment_Array m_Netposition_Ignore_comment_Array;
+	static NetpositionArray m_Netposition_Ignore_comment_Array;
 	
 
 
