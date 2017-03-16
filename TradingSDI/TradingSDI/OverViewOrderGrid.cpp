@@ -549,7 +549,7 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	if (msg==103)
 	{
-		if(OverViewOrderGrid::insertFilterFlag==1 && row==0)
+		/*if(OverViewOrderGrid::insertFilterFlag==1 && row==0)
 		{
 			OverViewOrderGrid::filter_break=1;
 			check_First==0;
@@ -572,11 +572,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col0_val=strval;					
+					OverViewOrderGrid::col0_val=strval;					
 				}
 				else
 				{
-					col0_val=L"ALL";					
+					OverViewOrderGrid::col0_val=L"ALL";					
 				}
 			}
 
@@ -585,11 +585,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col1_val=strval;					
+					OverViewOrderGrid::col1_val=strval;					
 				}
 				else
 				{
-					col1_val=L"ALL";					
+					OverViewOrderGrid::col1_val=L"ALL";					
 				}
 			}
 
@@ -597,11 +597,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col2_val=strval;					
+					OverViewOrderGrid::col2_val=strval;					
 				}
 				else
 				{
-					col2_val=L"ALL";					
+					OverViewOrderGrid::col2_val=L"ALL";					
 				}
 			}
 
@@ -609,11 +609,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col3_val=strval;					
+					OverViewOrderGrid::col3_val=strval;					
 				}
 				else
 				{
-					col3_val=L"ALL";					
+					OverViewOrderGrid::col3_val=L"ALL";					
 				}
 			}
 
@@ -621,11 +621,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col4_val=strval;					
+					OverViewOrderGrid::col4_val=strval;					
 				}
 				else
 				{
-					col4_val=L"ALL";					
+					OverViewOrderGrid::col4_val=L"ALL";					
 				}
 			}
 
@@ -633,11 +633,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col5_val=strval;					
+					OverViewOrderGrid::col5_val=strval;					
 				}
 				else
 				{
-					col5_val=L"ALL";					
+					OverViewOrderGrid::col5_val=L"ALL";					
 				}
 			}
 
@@ -645,11 +645,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col6_val=strval;					
+					OverViewOrderGrid::col6_val=strval;					
 				}
 				else
 				{
-					col6_val=L"ALL";					
+					OverViewOrderGrid::col6_val=L"ALL";					
 				}
 			}
 
@@ -657,11 +657,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col7_val=strval;					
+					OverViewOrderGrid::col7_val=strval;					
 				}
 				else
 				{
-					col7_val=L"ALL";					
+					OverViewOrderGrid::col7_val=L"ALL";					
 				}
 			}
 
@@ -669,11 +669,11 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col8_val=strval;					
+					OverViewOrderGrid::col8_val=strval;					
 				}
 				else
 				{
-					col8_val=L"ALL";					
+					OverViewOrderGrid::col8_val=L"ALL";					
 				}
 			}
 
@@ -681,15 +681,15 @@ int OverViewOrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					col9_val=strval;					
+					OverViewOrderGrid::col9_val=strval;					
 				}
 				else
 				{
-					col9_val=L"ALL";					
+					OverViewOrderGrid::col9_val=L"ALL";					
 				}
 			}
          
-        }
+        }*/
 	  RedrawAll();
 	 }
 	return true;
@@ -768,7 +768,7 @@ int OverViewOrderGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,
 		OverViewOrderGrid::strFilter="";
 		if (strval!=L"")
 		{
-			gridFilter(col,GetNumberRows(),strval);
+			//gridFilter(col,GetNumberRows(),strval);
 		}
 	}
 	return TRUE;
@@ -800,13 +800,7 @@ void OverViewOrderGrid::OnMenuCommand(int col,long row,int section,int item)
 	
 	switch( item )
 	{
-		
-		case 2000:
-		{
-			FindDialog();
-//			Trace( _T( "Displayed the grid's Find Dialog." ) );
-			break;
-		}
+	
 		case 2001:
 		{
 			filter();
@@ -1017,14 +1011,10 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
 
  void OverViewOrderGrid::InitMenu()
 {
-	CMenu submenu;
-	CMenu * menu = GetPopupMenu();
-	
 	EnableMenu(TRUE);
 	
 	
 	AddMenuItem( 2001, _T( "Filter" ) );
-	AddMenuItem( 2000, _T( "Find Dialog" ) );
 	
 	
 }
@@ -1047,10 +1037,10 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
  {
 	if (OverViewOrderGrid::insertFilterFlag==0)
 	{
-			addItemToCombobox();
+		//	addItemToCombobox();
 			OverViewOrderGrid::insertFilterFlag=1;
 			InsertRow(0);
-			for (int col_count=0;col_count<10;col_count++)
+			for (int col_count=0;col_count<12;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -1059,8 +1049,8 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
 				cell.SetCellType(UGCT_DROPLIST);
 				cell.SetCellTypeEx(UGCT_DROPLISTHIDEBUTTON);
 				cell.SetParam(CELLTYPE_IS_EDITABLE);
-				QuickSetRange(col,row,col,row,&cell);
-				QuickSetLabelText(col,row,str[col_count]);
+			//	QuickSetRange(col,row,col,row,&cell);
+			//	QuickSetLabelText(col,row,str[col_count]);
 			}
 	}
 	else
@@ -1130,7 +1120,7 @@ void OverViewOrderGrid::addItemToCombobox()
 	}
 	OverViewOrderGrid::OverviewOrder_mutex.Lock();	
 	st_OverviewOrder_Array m_array_filter;
-	m_array_filter.Assign(GridTradeAndOrder::m_gridAndOrder_Array_Fill);
+	m_array_filter.Assign(OverViewOrderGrid::m_OverviewOrder_Array_Fill);
 	OverViewOrderGrid::OverviewOrder_mutex.Unlock();	
 
 	rows=m_array_filter.Total();

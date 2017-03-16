@@ -293,7 +293,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 			m_st_Dealing_Grid_array.Add(&m_st_Netposition);						
 		}
 		
-	 }
+	  }
 		else
 		{
 			m_st_Dealing_Grid_array.Assign(m_st_Dealing_Array);	
@@ -1243,10 +1243,6 @@ void CPassedBYMngr::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *po
 	UNREFERENCED_PARAMETER(rect);
 	UNREFERENCED_PARAMETER(point);
 	UNREFERENCED_PARAMETER(processed);
-
-	if( updn == 0)
-		return;
-
 
 	col_click=col;
 	if( updn == 0)

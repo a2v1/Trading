@@ -1161,15 +1161,10 @@ void CNPBPSType1Grid::OnMenuCommand(int col,long row,int section,int item)
 	UNREFERENCED_PARAMETER(row);
 	UNREFERENCED_PARAMETER(section);
 	// init. local variables
-	
-	CMenu* pMenu;
-	pMenu = GetPopupMenu();
-
-	CMenu* submenu=pMenu->GetSubMenu(1);
 
 	switch( item )
 	{
-	case 2001:
+	  case 2001:
 			   {
 						filter();
 						break;
@@ -1599,12 +1594,9 @@ UINT Show_NPBPStype1(void *pParam)
 		{				
 			CString strCommand=L"";		
 			strCommand.Format(L"proc_Type1");        
-			_bstr_t bstrCommand="";
-			bstrCommand=strCommand;
-			char* strCommand_char=(char*)bstrCommand;
 			 if(SUCCEEDED(hr))
 			 {
-				hr=artists1.Open(session,strCommand_char);							 
+				hr=artists1.Open(session,(LPCTSTR)strCommand);							 
 			 }
 			 		
 			 if(SUCCEEDED(hr))

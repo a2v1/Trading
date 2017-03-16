@@ -19,7 +19,7 @@ protected:
 	  
 	 //Array to hold the list of Grid tab pages for CTabCtrl
     int m_GridID[4];
-    //Grid Array Variable to hold the dialogs
+    //Grid Array Variable to hold the Grid
 	CUGCtrl *m_Grid[4];
     int m_tabCurrent;
     int m_nPageCount;

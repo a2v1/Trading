@@ -23,12 +23,13 @@ IMPLEMENT_DYNCREATE(CTradingSDIView, CTabView)
 	
 BEGIN_MESSAGE_MAP(CTradingSDIView, CTabView)
 	// Standard printing commands
-	ON_WM_CREATE()		
+	ON_WM_CREATE()	
+	//ON_REGISTERED_MESSAGE(AFX_WM_CHANGE_ACTIVE_TAB, &CTradingSDIView::OnAfxWmChangingActiveTab)
 END_MESSAGE_MAP()
 CTradingSDIView::CTradingSDIView()
 {
 	// TODO: add construction code here
-
+	
 }
 CTradingSDIView::~CTradingSDIView()
 {
@@ -55,13 +56,14 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CTabView::OnCreate(lpCreateStruct) == -1)
 		return -1;
-	
-		CMFCTabCtrl m_tab;
+	    CMFCTabCtrl m_tab;
 		CRect m_rect;
 		m_rect.SetRectEmpty();
 		m_tab.DestroyWindow();
 		m_tab.Create(CMFCTabCtrl::STYLE_3D_VS2005,m_rect,this,1,CMFCTabCtrl::LOCATION_TOP);
 		m_tab.EnableTabSwap(false);
+		
+
 
 		AddView(RUNTIME_CLASS(COrderForm),_T("Order"),0);
 		AddView(RUNTIME_CLASS(CNetPosForm),_T("NetPosition"),1);
@@ -71,11 +73,38 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		AddView(RUNTIME_CLASS(CGroupWiseNetPosForm),_T("GroupWiseNetPos"),5);
 		AddView(RUNTIME_CLASS(CAuditForm),_T("Audit"),6);
 
+
 		//AfxMessageBox(L"CTradingSDIView::OnCreate");
 	return 0;
 }
 
 // CTradingSDIView diagnostics
+LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
+{
+	CMFCTabCtrl* pTab = (CMFCTabCtrl*)lParam;
+	
+	//CWnd *pWnd = pTab->GetActiveWnd();
+	//if(pWnd !=NULL)
+	//{
+	//	// determine what tab you want to activate
+	//	// I used tab #1 just for demonstration purpose
+	//	pTab->SetActiveTab(1);
+
+	//	// do not allow any further tab activation
+	//	return 1;
+	//}
+
+	
+	if(pTab->GetActiveTab()==1)
+	{
+	  AfxMessageBox(L"tab 1 is actvated ");
+	  
+	}
+
+	return 0;
+}
+
+
 
 #ifdef _DEBUG
 
