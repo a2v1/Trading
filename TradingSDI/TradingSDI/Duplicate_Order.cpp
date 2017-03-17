@@ -1321,6 +1321,8 @@ void Duplicate_Order::Selected_commentChange()
 	CString comment_n=L"";
 	CString ocomment_o=L"";
 	CString ocomment_n=L"";
+	CString Comment_To=L"";
+	CString Opp_deal=L"";
 	CoInitialize(NULL);
 	_RecordsetPtr pRstAuthors = NULL;
 	 HRESULT hr = S_OK;
@@ -1333,14 +1335,23 @@ void Duplicate_Order::Selected_commentChange()
 	for (int fcount=0;fcount<rows_count;fcount++)
 	{
 		login=QuickGetText(0,fcount);
+		
 		deal=QuickGetText(2,fcount);
 		comment_o=QuickGetText(8,fcount);
+
+		
+
 		ocomment_o=comment_o;
 		if (comment_o.Find('-')>=0)
 		{
 			comment_o=comment_o.Mid(0,comment_o.Find('-'));
 		}
 		comment_n=QuickGetText(9,fcount);
+
+		Comment_To=comment_n;
+		Opp_deal=QuickGetText(10,fcount);
+
+
 		ocomment_n=comment_n;
 		if (comment_n.Find('-')>=0)
 		{
@@ -1349,6 +1360,9 @@ void Duplicate_Order::Selected_commentChange()
 		
 		CString check_value=QuickGetText(10,fcount);
 		_bstr_t strdeal=deal;
+
+		_bstr_t bstr_Comment_To=Comment_To;
+		_bstr_t bstr_Opp_deal=Opp_deal;
 		
 		if (login!=L"" && check_value==L"1" ) 
 		{
@@ -1363,7 +1377,7 @@ void Duplicate_Order::Selected_commentChange()
 			
 			bstr_final_comment=bstr_final_comment+bstr_login+"|";
 		
-			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0'; ";
+			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0','" + bstr_Comment_To + "','" + bstr_Opp_deal + "'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}
 	}	

@@ -1378,7 +1378,7 @@ void CCodesChanged::colShorting( int index)
 	str[index]=L"ALL"+final_str;
 }
 
-UINT Show_CCodesChanged(void *pParam);
+
 UINT Show_CCodesChanged(void *pParam)
 {
 	CCodesChanged* pThis= (CCodesChanged*)pParam;	
