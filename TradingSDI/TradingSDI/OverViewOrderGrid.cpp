@@ -32,11 +32,11 @@ static char THIS_FILE[] = __FILE__;
 BEGIN_MESSAGE_MAP(OverViewOrderGrid,CUGCtrl)	
 	ON_WM_SIZE()
 	ON_WM_TIMER()
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE1, OnThreadMessage)
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE_ROWSNO1, OnThreadMessage_RowsNo)		
-	ON_MESSAGE(WM_MY_THREAD_MESSAGE_REFRESH1, GridRefresh)		
-	ON_MESSAGE(GRID_ROWS_COUNT1, GridRowCount)		
-	ON_MESSAGE(DELETE_ROW1, RowDelete)	
+//	ON_MESSAGE(WM_MY_THREAD_MESSAGE1, OnThreadMessage)
+//	ON_MESSAGE(WM_MY_THREAD_MESSAGE_ROWSNO1, OnThreadMessage_RowsNo)		
+//	ON_MESSAGE(WM_MY_THREAD_MESSAGE_REFRESH1, GridRefresh)		
+//	ON_MESSAGE(GRID_ROWS_COUNT1, GridRowCount)		
+//	ON_MESSAGE(DELETE_ROW1, RowDelete)	
 	//ON_MESSAGE(DELETE_THREAD,DeleteThred)
 END_MESSAGE_MAP()
 //Structure variable
@@ -795,15 +795,13 @@ void OverViewOrderGrid::OnMenuCommand(int col,long row,int section,int item)
 	UNREFERENCED_PARAMETER(row);
 	UNREFERENCED_PARAMETER(section);
 	// init. local variables
-	CMenu* pMenu;
-	pMenu = GetPopupMenu();
-	
+
 	switch( item )
 	{
 	
 		case 2001:
 		{
-			filter();
+			//filter();
 //			Trace( _T( "Displayed the grid's Replace Dialog." ) );
 			break;
 		}
@@ -1036,11 +1034,11 @@ void OverViewOrderGrid::OnTimer(UINT nIDEvent)
  void OverViewOrderGrid::filter()
  {
 	if (OverViewOrderGrid::insertFilterFlag==0)
-	{
-			addItemToCombobox();
+	{	
 			OverViewOrderGrid::insertFilterFlag=1;
-			InsertRow(0);
-			for (int col_count=0;col_count<13;col_count++)
+			addItemToCombobox();
+		    InsertRow(0);
+			for (int col_count=0;col_count<10;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -1113,7 +1111,6 @@ void OverViewOrderGrid::addItemToCombobox()
 	
 	
 	CString str_val=L"";
-	
 	for (int forcount=0;forcount<10;forcount++)
 	{
 		str[forcount]=L"ALL\n";		
@@ -1139,7 +1136,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Symbol;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr,str_val)==false )
+					if (CheckvalueInArray(arr,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr.Add(str_val);
@@ -1151,7 +1148,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Order;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr1,str_val)==false )
+					if (CheckvalueInArray(arr1,str_val)==false && !str_val.IsEmpty() )
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr1.Add(str_val);
@@ -1167,7 +1164,7 @@ void OverViewOrderGrid::addItemToCombobox()
 						str_val=str_val.Mid(0,10);
 					}
 
-					if (CheckvalueInArray(arr2,str_val)==false )
+					if (CheckvalueInArray(arr2,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";									
 						arr2.Add(str_val);
@@ -1180,7 +1177,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Type;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr3,str_val)==false )
+					if (CheckvalueInArray(arr3,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr3.Add(str_val);
@@ -1191,7 +1188,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Volume;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr4,str_val)==false )
+					if (CheckvalueInArray(arr4,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr4.Add(str_val);
@@ -1201,7 +1198,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Price;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr5,str_val)==false )
+					if (CheckvalueInArray(arr5,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr5.Add(str_val);
@@ -1211,7 +1208,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Current_Rate;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr6,str_val)==false )
+					if (CheckvalueInArray(arr6,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr6.Add(str_val);
@@ -1222,7 +1219,7 @@ void OverViewOrderGrid::addItemToCombobox()
 					
 					str_val=m_st_for_filter.PL;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr7,str_val)==false )
+					if (CheckvalueInArray(arr7,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr7.Add(str_val);
@@ -1232,7 +1229,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Status;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr8,str_val)==false )
+					if (CheckvalueInArray(arr8,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr8.Add(str_val);
@@ -1242,7 +1239,7 @@ void OverViewOrderGrid::addItemToCombobox()
 				{
 					str_val=m_st_for_filter.Trade_Checked;
 					str_val=str_val.Trim();
-					if (CheckvalueInArray(arr9,str_val)==false )
+					if (CheckvalueInArray(arr9,str_val)==false && !str_val.IsEmpty())
 					{
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr9.Add(str_val);
@@ -1473,11 +1470,14 @@ void OverViewOrderGrid::OnGetCell(int col,long row,CUGCell *cell)
 			if (col==0)
 			{				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];				
-				CString tmp=mst_grid.Symbol ;				
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				CString tmp=mst_grid.Symbol;
+				if(!tmp.IsEmpty())
 				{
+				  CString str_get_value=cell->GetText();
+				  if (wcscmp(str_get_value,tmp)!=0)
+				  {
 					cell->SetText(tmp);
+				  }
 				}
 			}
 			else if (col==1)
@@ -1485,94 +1485,121 @@ void OverViewOrderGrid::OnGetCell(int col,long row,CUGCell *cell)
 				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
 				CString tmp=mst_grid.Order ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==2)
 			{				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
 				CString tmp=mst_grid.Time ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==3)
 			{			
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
-				CString tmp=mst_grid.Type ;				
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				CString tmp=mst_grid.Type ;	
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==4)
 			{				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
-				CString tmp=mst_grid.Volume ;				
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				CString tmp=mst_grid.Volume ;	
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==5)
 			{				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
 				CString tmp=mst_grid.Price  ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==6)
 			{	
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
 				CString tmp=mst_grid.Current_Rate  ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==7)
 			{				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
 				CString tmp=mst_grid.PL ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
 				
-			    }
+					}
+				}
 			}
 
 			else if (col==8)
 			{	
 				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
-				CString tmp=mst_grid.Status;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				CString tmp=mst_grid.Status;	
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 			else if (col==9)
 			{	
 				
 				mst_grid=OverViewOrderGrid::m_OverviewOrder_Grid_array[rows_no];
-				CString tmp=mst_grid.Trade_Checked;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
+				CString tmp=mst_grid.Trade_Checked;	
+				if(!tmp.IsEmpty())
 				{
-					cell->SetText(tmp);
+					CString str_get_value=cell->GetText();
+					if (wcscmp(str_get_value,tmp)!=0)
+					{
+						cell->SetText(tmp);
+					}
 				}
 			}
 		
