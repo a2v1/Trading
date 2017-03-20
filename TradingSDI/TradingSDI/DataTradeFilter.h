@@ -58,7 +58,7 @@ BEGIN_COLUMN_MAP(DataTradeFilter)
 		COLUMN_ENTRY_LENGTH_STATUS(8, m_comment, m_comment_Length, m_comment_status)
 		COLUMN_ENTRY_LENGTH_STATUS(9, m_OurComment, m_OurComment_Length, m_OurComment_status)
 		COLUMN_ENTRY_LENGTH_STATUS(10, m_Checked, m_Checked_Length, m_Checked_status)		
-		COLUMN_ENTRY_LENGTH_STATUS(11, m_CommentYN, m_CommentYN_Length, m_CommentYN_status)		
+		COLUMN_ENTRY_LENGTH_STATUS(11, m_CommentYN, m_CommentYN_Length, m_CommentYN_status )		
 		COLUMN_ENTRY_LENGTH_STATUS(12, m_Opp_Deal, m_Opp_Deal_Length, m_Opp_Deal_status)		
 	END_COLUMN_MAP()
 	
