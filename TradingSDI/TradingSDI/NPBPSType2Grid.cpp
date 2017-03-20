@@ -1352,7 +1352,7 @@ void CNPBPSType2Grid::addItemToCombobox()
 	try
 	{
 		int rows=1;
-		rows=m_st_Dealing_Array.Total();	
+		rows=m_st_Dealing_Array_fill.Total();	
 		CString str_val=L"";	
 		for (int forcount=0;forcount<18;forcount++)
 		{
@@ -1361,7 +1361,7 @@ void CNPBPSType2Grid::addItemToCombobox()
 		for (int forcount=0;forcount<rows;forcount++)
 		{
 			 st_Dealing m_st_Netposition={};
-			 m_st_Netposition=m_st_Dealing_Array[forcount];
+			 m_st_Netposition=m_st_Dealing_Array_fill[forcount];
 			for (int clocount=0;clocount<18;clocount++)
 			{											
 					if (clocount==0)
