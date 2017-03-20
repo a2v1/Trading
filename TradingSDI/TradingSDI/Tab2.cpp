@@ -108,7 +108,7 @@ void Tab2::OnBnClickedOk()
 		 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 
 
-		 str_new= " exec update_CommentChangeYN '" + str_deal + "','" + commentYN + "','',''; ";
+		 str_new= " exec update_CommentChangeYN '" + str_deal + "','" + commentYN + "','','','N'; ";
 		 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		 
 		 

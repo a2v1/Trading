@@ -662,7 +662,7 @@ int Duplicate_Order::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BO
 		 CString Opp_deal=string;
 		_bstr_t bstr_Opp_deal=Opp_deal;
 		_bstr_t strCommand="";
-		strCommand=" exec update_CommentChangeYN '" + strdeal + "','1','" + bstr_Comment_To + "','" + bstr_Opp_deal + "'; ";
+		strCommand=" exec update_CommentChangeYN '" + strdeal + "','1','" + bstr_Comment_To + "','" + bstr_Opp_deal + "','N' ; ";
 		char* strCommand_char=(char*)strCommand;
 		l_hr=l_cmd.Open(l_session,strCommand_char);							 			 		 				 	
 		l_cmd.Close();
@@ -1359,7 +1359,7 @@ void Duplicate_Order::Selected_commentChange()
 			
 			bstr_final_comment=bstr_final_comment+bstr_login+"|";
 		
-			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0','" + bstr_Comment_To + "','" + bstr_Opp_deal + "'; ";
+			 str_new= " exec update_CommentChangeYN '" + strdeal + "','0','" + bstr_Comment_To + "','" + bstr_Opp_deal + "','Y'; ";
 			 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}
 	}	
