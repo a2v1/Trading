@@ -66,6 +66,12 @@ _bstr_t Duplicate_Order::bstr_currenttime("");
 
 Duplicate_Order::Comment_ChangeArray Duplicate_Order::m_Comment_ChangeArray;
 Duplicate_Order::st_Comment_Change Duplicate_Order::m_st_Comment_Change={};
+
+
+CDataSource l_connection;
+CSession l_session;	
+HRESULT l_hr;
+CCommand<CNoAccessor, CNoRowset> l_cmd;
 /////////////////////////////////////////////////////////////////////////////
 //Standard MyCug construction/destruction
 Duplicate_Order::Duplicate_Order()
@@ -142,7 +148,7 @@ UINT update_data_Duplicate_Order(void *pParam)
 		while (true )
 		{				
 			_bstr_t strCommand="";		
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',[login] as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where ISNULL(Change_YN,0)='1' order by slno asc";        
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',[login] as 'Checked',isnull(change_YN,0) as 'Change_YN',Opp_Deal  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where ISNULL(Change_YN,0)='1' order by slno asc";        
 			char* strCommand_char=(char*)strCommand;
 			hr=artists1.Open(session,strCommand_char);							 					 		 				 
 			 int intRows=0;		 
@@ -170,6 +176,7 @@ UINT update_data_Duplicate_Order(void *pParam)
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.price ,cstrpl);											
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.comment ,artists1.m_comment);											
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.OurComment ,artists1.m_OurComment);	
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.Opposite_Deal  ,artists1.m_Opp_Deal );
 					Duplicate_Order::m_Comment_ChangeArray.Add(&Duplicate_Order::m_st_Comment_Change);
 				 }
 				 artists1.Close();
@@ -286,6 +293,7 @@ LRESULT Duplicate_Order::OnThreadMessage(WPARAM wParam, LPARAM lParam)
 		CString array_price=m_cc.price;				
 		CString array_login=m_cc.login ;
 		CString array_Change_YN=m_cc.Change_YN ;
+		CString array_oppdeal=m_cc.Opposite_Deal;
 		int grid_total=GetNumberRows();
 		int check_new=1;
 		for (int r=0;r<grid_total;r++)
@@ -327,6 +335,7 @@ LRESULT Duplicate_Order::OnThreadMessage(WPARAM wParam, LPARAM lParam)
 			QuickSetCellTypeEx(10,r_no,UGCT_CHECKBOXCHECKMARK);
 			SetColDefault( 10, &cell );
 			QuickSetText(10,r_no,L"0");
+			QuickSetText(11,r_no,array_oppdeal);
 			//Opposite_Deal
 			
 		}
@@ -374,27 +383,20 @@ LRESULT Duplicate_Order::OnThreadMessage_RowsNo(WPARAM wParam, LPARAM lParam)
 	}
 		return 0;
 }
-/////////////////////////////////////////////////////////////////////////////
-//	OnSheetSetup	
-//		This notification is called for each additional sheet that the grid
-//		might contain, here you can customize each sheet in the grid.
-//	Params:
-//		sheetNumber - idndex of current sheet
-//	Return:
-//		<none>
 
 void Duplicate_Order::OnSheetSetup(int sheetNumber)
 {
 	int	nRow = 0, nCol = 0;
-	// ****************************************************************
-	// ** Set up columns
-	// ****************************************************************
+
+	
+	l_hr=l_connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	if(SUCCEEDED(l_hr))
+	{
+		l_session.Open(l_connection);
+	}
+
 	CUGCell cell;
 
-	//COutputWnd::m_wndOutputOrder.GetGridDefault(&cell);
-	//cell.SetBackColor(MY_COLOR_BACK);
-	//cell.SetTextColor(MY_COLOR_TEXT);
-	//SetGridDefault(&cell);
 	EnableExcelBorders(TRUE);
 	SetHighlightRow(TRUE, FALSE);
 	SetDoubleBufferMode(TRUE);
@@ -451,10 +453,6 @@ void Duplicate_Order::OnSheetSetup(int sheetNumber)
 		
 	RedrawAll();
 }
-
-
-
-
 int Duplicate_Order::OnCheckbox(long ID,int col,long row,long msg,long param)
 {
 	if(row==-1)
@@ -478,8 +476,6 @@ int Duplicate_Order::OnCheckbox(long ID,int col,long row,long msg,long param)
 
 	return TRUE;
 }
-
-
 
 void Duplicate_Order::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
 {
@@ -607,19 +603,6 @@ int Duplicate_Order::OnDropList(long ID,int col,long row,long msg,long param)
     return true;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////
-//	OnEditFinish
-//		This notification is sent when the edit is being finised
-//	Params:
-//		col, row	- coordinates of the edit cell
-//		edit		- pointer to the edit control
-//		string		- actual string that user typed in
-//		cancelFlag	- indicates if the edit is being cancelled
-//	Return:
-//		TRUE - to allow the edit it proceede
-//		FALSE - to force the user back to editing of that same cell
-
 _bstr_t Duplicate_Order::get_string(CString  MainStr,CString SepStr)
 {
 	int str_len=MainStr.GetLength();
@@ -664,30 +647,29 @@ _bstr_t Duplicate_Order::get_string(CString  MainStr,CString SepStr)
 
 }
 
-
-
 int Duplicate_Order::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
 {
 
-	
-	return TRUE;
+	if (col==11)
+	{
+		CString deal=QuickGetText(2,row);
+		_bstr_t strdeal=deal;
 
+		CString comment_n=QuickGetText(9,row);
+
+		_bstr_t bstr_Comment_To=comment_n;
+
+		 CString Opp_deal=string;
+		_bstr_t bstr_Opp_deal=Opp_deal;
+		_bstr_t strCommand="";
+		strCommand=" exec update_CommentChangeYN '" + strdeal + "','1','" + bstr_Comment_To + "','" + bstr_Opp_deal + "'; ";
+		char* strCommand_char=(char*)strCommand;
+		l_hr=l_cmd.Open(l_session,strCommand_char);							 			 		 				 	
+		l_cmd.Close();
+	}
+	return TRUE;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////
-//	OnMenuCommand
-//		This notification is called when the user has selected a menu item
-//		in the pop-up menu.
-//	Params:
-//		col, row - the cell coordinates of where the menu originated from
-//		setcion - identify for which portion of the gird the menu is for.
-//				  possible sections:
-//						UG_TOPHEADING, UG_SIDEHEADING,UG_GRID
-//						UG_HSCROLL  UG_VSCROLL  UG_CORNERBUTTON
-//		item - ID of the menu item selected
-//	Return:
-//		<none>
 void Duplicate_Order::OnMenuCommand(int col,long row,int section,int item)
 {
 	UNREFERENCED_PARAMETER(col);
@@ -1349,7 +1331,7 @@ void Duplicate_Order::Selected_commentChange()
 		comment_n=QuickGetText(9,fcount);
 
 		Comment_To=comment_n;
-		Opp_deal=QuickGetText(10,fcount);
+		Opp_deal=QuickGetText(11,fcount);
 
 
 		ocomment_n=comment_n;

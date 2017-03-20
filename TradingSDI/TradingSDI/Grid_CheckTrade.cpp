@@ -85,8 +85,8 @@ long Grid_CheckTrade::rgIndices[2];
 _bstr_t Grid_CheckTrade::bstr_currenttime("");
 COLORREF Grid_CheckTrade::rows_color_checked=RGB(255,0,0);
 COLORREF Grid_CheckTrade::rows_color_unchecked=RGB(255,255,255);
-/////////////////////////////////////////////////////////////////////////////
-//Standard MyCug construction/destruction
+
+
 Grid_CheckTrade::Grid_CheckTrade()
 {
 	 t = CTime::GetCurrentTime().Format("%Y-%m-%d %H:%M:%S");
@@ -315,8 +315,7 @@ void Grid_CheckTrade::OnSheetSetup(int sheetNumber)
 	
 	// Number
 			SetNumberCols(11);
-			QuickSetText(0,-1,L"Comment");
-			SetColWidth(0,80);
+			
 			QuickSetText(1,-1,L"Time");
 			SetColWidth(1,100);
 			QuickSetText(2,-1,L"Deal");
@@ -330,7 +329,7 @@ void Grid_CheckTrade::OnSheetSetup(int sheetNumber)
 			SetColWidth(4,100);
 			
 			QuickSetText(5,-1,L"Type");
-			SetColWidth(5,100);
+			SetColWidth(5,70);
 			QuickSetText(6,-1,L"Volume");	
 			SetColWidth(6,100);
 			QuickSetText(7,-1,L"Price");
@@ -344,6 +343,15 @@ void Grid_CheckTrade::OnSheetSetup(int sheetNumber)
 			QuickSetText(10,-1,L"Tally");
 			SetColWidth(10,50);						
 			
+			CUGCell cell;
+			QuickSetCellType(0,-1,UGCT_CHECKBOX);	
+			QuickSetCellTypeEx(0,-1,UGCT_CHECKBOXCHECKMARK);
+			GetCell(0,-1,&cell);
+			cell.SetParam(CELLTYPE_IS_EDITABLE);
+
+			QuickSetLabelText(0,-1,L"Comment");
+			SetColWidth(0,80);
+
 	// Header font
 	for(int i = 1; i < GetNumberCols(); i++)
 	{
@@ -437,11 +445,10 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 //		Trace( _T( "Sorted column %d descending" ), iCol );
 	}
 
-
+	shorting_check=1;
 	Col_sorting();
 	
-	if (col==0)
-	{
+	
 		CUGCell cell;
 		GetColDefault( 0, &cell );				
 		QuickSetCellType(0,-1,UGCT_CHECKBOX);	
@@ -449,11 +456,10 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 		SetColDefault( 0, &cell );
 		QuickSetLabelText(0,-1,L"Comment");
 		
-	}
-	//first_time_check=0;
-	RedrawAll();
-	//first_time_check=1;
 	
+	
+	Populate_Data();
+	shorting_check=0;
 }
 int Grid_CheckTrade::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
 {
@@ -466,108 +472,7 @@ int Grid_CheckTrade::OnCellTypeNotify(long ID,int col,long row,long msg,long par
 	}
 	return 0;
 }
-//void Grid_CheckTrade::gridFilter(int colno,int rows_count,CString col_value)
-//{
-//	CString getColvalue=L"";
-//	
-//	for(int fcount=rows_count-2;fcount>0;fcount--)
-//	{
-//		getColvalue=QuickGetText(colno,fcount);
-//
-//
-//		col_value=col_value.Trim();
-//		CString fcar=col_value.Mid(0,1);
-//		CString comp_value=col_value.Mid(1,col_value.GetLength()-1);
-//		if(fcar==L">"||fcar==L"<")
-//		{
-//			if (fcar==L">")
-//			{
-//				if(getColvalue>comp_value )
-//				{
-//					SetRowHeight(fcount, 20);
-//			     	//AfxMessageBox(L"Hide Row");
-//				}
-//				else
-//				{
-//					SetRowHeight(fcount, 0);	
-//				}
-//			}
-//			if (fcar==L"<")
-//			{
-//				if(getColvalue<comp_value )
-//				{
-//				    SetRowHeight(fcount, 20);
-//					//AfxMessageBox(L"Hide Row");
-//				}
-//				else
-//				{
-//					SetRowHeight(fcount, 0);
-//				}
-//			}
-//		}
-//
-//		else
-//		{
-//
-//		if(getColvalue==col_value || col_value==L"ALL")
-//		{
-//			SetRowHeight(fcount, 20);
-//			//AfxMessageBox(L"Hide Row");
-//		}
-//		else
-//		{
-//			SetRowHeight(fcount, 0);
-//		}
-//		}
-//	}
-//	
-//	 
-//		 double totbuyqty=0;
-//		 double totsellqty=0;
-//		 double buyqty=0;
-//		 double sellqty=0;
-//	for(int fcount=0;fcount<rows_count-1;fcount++)
-//	{
-//		buyqty=0;
-//		sellqty=0;
-//		CString strType=QuickGetText(5,fcount);
-//		CString strQty=QuickGetText(6,fcount);
-//		
-//		int row_height=0;
-//		
-//		row_height=GetRowHeight(fcount);
-//
-//		LPTSTR endPtr;
-//		if (row_height!=0)
-//		{
-//			if (strType=="Buy" )
-//			{
-//				buyqty  = _tcstod(strQty, &endPtr);												
-//				totbuyqty= totbuyqty+buyqty;
-//			}
-//			if (strType=="Sell")
-//			{
-//				sellqty  = _tcstod(strQty, &endPtr);	
-//				totsellqty =totsellqty+sellqty;
-//			}
-//		}
-//	  }
-//	
-//			CString cstrpl;
-//			cstrpl.Format(_T("%.2f"),totbuyqty );	
-//
-//			QuickSetText(1,rows_count-1,L"Total");
-//			QuickSetText(2,rows_count-1,L"");
-//			QuickSetText(3,rows_count-1,L"");
-//			QuickSetText(4,rows_count-1,L"Buy Qty:-");
-//			QuickSetText(5,rows_count-1,cstrpl);
-//			QuickSetText(6,rows_count-1,L"Sell Qty:-");
-//			cstrpl.Format(_T("%.2f"),totsellqty  );	
-//			QuickSetText(7,rows_count-1,cstrpl);
-//
-//
-//
-//}
+
 int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	
@@ -728,7 +633,10 @@ int Grid_CheckTrade::OnDropList(long ID,int col,long row,long msg,long param)
 
 		}
 	   
-	  ColValue_filter();
+	    shorting_check=1;
+		ColValue_filter();
+		Populate_Data();
+		shorting_check=0;
      }
 
     return true;
@@ -782,7 +690,7 @@ _bstr_t Grid_CheckTrade::get_string(CString  MainStr,CString SepStr)
 int Grid_CheckTrade::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
 {
 	
-		QuickSetText(col,row,string);					
+		//QuickSetText(col,row,string);					
 
 		if(Grid_CheckTrade::insertFilterFlag==1 && row==0 )
 		{
@@ -923,7 +831,10 @@ int Grid_CheckTrade::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BO
 					Grid_CheckTrade::col10_val=L"ALL";					
 				}
 			}
-
+			shorting_check=1;
+			ColValue_filter();
+			Populate_Data();
+			shorting_check=0;
 		}
 	   
 
@@ -932,7 +843,7 @@ int Grid_CheckTrade::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BO
 		
 
 
-	  ColValue_filter();
+	  
 	
 	
 	
@@ -1075,24 +986,6 @@ void Grid_CheckTrade::OnMenuCommand(int col,long row,int section,int item)
 	}
 }
 			
-			
-	
-
-
-
-/////////////////////////////////////////////////////////////////////////////
-//	OnSortEvaluate
-//		Sent as a result of the 'SortBy' call, this is called for each cell
-//		comparison and allows for customization of the sorting routines.
-//		We provide following code as example of what could be done here,
-//		you migh have to modify it to give your application customized sorting.
-//	Params:
-//		cell1, cell2	- pointers to cells that are compared
-//		flags			- identifies sort direction
-//	Return:
-//		value less than zero to identify that the cell1 comes before cell2
-//		value equal to zero to identify that the cell1 and cell2 are equal
-//		value greater than zero to identify that the cell1 comes after cell2
 int Grid_CheckTrade::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {
  if( flags & UG_SORT_DESCENDING )
@@ -1103,89 +996,9 @@ int Grid_CheckTrade::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 	}
 
 
-	COleDateTime date1, date2;
-
-	int retVal = 0;
-
-	BYTE color1, color2;
-
-	switch ( m_iSortCol )
-	{
 	
-	case 1:
-		date1.ParseDateTime( cell1->GetText(), VAR_DATEVALUEONLY );
-		date2.ParseDateTime( cell2->GetText(), VAR_DATEVALUEONLY );
-
-		// If a date is invalid, move it to the bottom, by always making it >
-		// ( the valid code is 0 )
-		if (date1.GetStatus())
-			return 1;
-		if (date2.GetStatus())
-			return -1;
-		
-		if( date1 < date2 )
-			retVal = -1;
-		if( date1 > date2 )
-			retVal = 1;
-
-		break;
-	case 2:
-		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-
-	case 3:
-		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-    case 6:
-		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-
-	case 7:
-		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-
-
-
-	default:
-		if( CString(cell1->GetText()) == "" )
-			return 1;
-		else if( CString(cell2->GetText()) == "" )
-			return -1;
-
-		switch( cell1->GetDataType() )
-		{
-			case UGCELLDATA_NUMBER:
-			case UGCELLDATA_BOOL:
-			case UGCELLDATA_CURRENCY:
-				if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
-
-				break;
-
-			default:
-				retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-		}
-	}
-
-	return retVal;
+	
+	return 0;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1289,12 +1102,15 @@ void Grid_CheckTrade::OnTimer(UINT nIDEvent)
 		Grid_CheckTrade::col9_val=L"";
 		Grid_CheckTrade::col10_val=L"";
 		
+		shorting_check=1;
 		ColValue_filter();
+		Populate_Data();
+		shorting_check=0;
 
 		pMnenu->CheckMenuItem(2001,MF_UNCHECKED);
 	}
 	//first_time_check=0;
-	RedrawAll();
+	//RedrawAll();
 	//first_time_check=1;
  }
 
@@ -1501,6 +1317,7 @@ void Grid_CheckTrade::addItemToCombobox()
 void Grid_CheckTrade::OnSetup()
 {
 	check_color=0;
+	shorting_check=0;
 	val=L"";
 	// Set up the Tab controls
 	c1_click=0;
@@ -1705,121 +1522,9 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 	
 
 
-		//ASSINGNING MAIN ARRAY TO OTHER 
-		Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
-
-		//End of Updating Data In New Structure
-		Grid_CheckTrade::st_grid_check N_st={};
-		//CMTStr::Copy(N_st.m_CommentYN ,L"Total:-");
-
-		 CString s1 = L"";        
-		 int trade_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
-		 s1.Format(L"Count:-%d",trade_count);
-
-		 CString s2 = L"";   
-
-		 double netQty=getColumnSum_in_struct(6,0)-getColumnSum_in_struct(6,1);
-		 s2.Format(L"Net:-%.2f",netQty);
-
-
-		 CMTStr::Copy(N_st.m_time ,s1);
-
-
-		CMTStr::Copy(N_st.m_comment ,s2);
-        CMTStr::Copy(N_st.m_symbol ,L"Buy Qty:-");
-		CMTStr::Copy(N_st.m_volume ,L"Sell Qty:-");
-
-	    CString temp_buy_total=L"";
-	    temp_buy_total.Format(L"%.2f",getColumnSum_in_struct(6,0));
-		CMTStr::Copy(N_st.m_Type,temp_buy_total);
-
-		CString temp_sell_total=L"";
-	    temp_sell_total.Format(L"%.2f",getColumnSum_in_struct(6,1));
-		CMTStr::Copy(N_st.m_price,temp_sell_total);
-
-	
-		Grid_CheckTrade::m_st_grid_check_Grid_array.Add(&N_st);
 		
-
-		
-
-		//grid row added
-		CUGCell cell;
-		GetColDefault( 0, &cell );		
-		QuickSetLabelText(0,-1,L"Comment");
-		QuickSetCellType(0,-1,UGCT_CHECKBOX);	
-		QuickSetCellTypeEx(0,-1,UGCT_CHECKBOXCHECKMARK);
-		SetColDefault( 0, &cell );
-		RefreshGrid();
-
-		//checkbox in grid 
-		int row=0;
-		
-	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
-        for(row;row<r_count-1;row++)
-	    {
-			GetColDefault( 10, &cell );			
-			QuickSetCellType(10,row,UGCT_CHECKBOX);	
-			QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
-			SetColDefault( 10, &cell );
-
-
-
-			QuickSetCellType(0,row,UGCT_CHECKBOX);	
-			QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
-
-
-			GetCell(10,row,&cell);
-			cell.SetParam(CELLTYPE_IS_EDITABLE);
-
-			GetCell(9,row,&cell);
-			cell.SetParam(CELLTYPE_IS_EDITABLE);
-
-			GetCell(0,row,&cell);
-			cell.SetParam(CELLTYPE_IS_EDITABLE);
-	    }
-		
-
-		//checkbox initialization in grid rows
-		
-		first_time_check=0;
-		 RedrawAll();		
 		 
-
-
-		 int row_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
-		 for(int r=0;r<row_count;r++)
-		 {
-			 st_grid_check mst={};
-			 mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[r];
-		  if (_tcscmp(mst.m_Checked,_T("1"))==0 )
-			{
-				for (int fcount=0;fcount<=10;fcount++)
-				{
-					CUGCell cell;
-					GetCell(fcount,r,&cell);
-					int nCellTypeIndex = cell.GetCellType();
-					int nParam = cell.GetParam();					
-					cell.SetBackColor(Grid_CheckTrade::rows_color_checked);
-					SetCell(fcount,r ,&cell);
-				}
-			}
-			else
-			{
-				for (int fcount=0;fcount<=10;fcount++)
-				{
-					CUGCell cell;
-					GetCell(fcount,r,&cell);
-					int nCellTypeIndex = cell.GetCellType();
-					int nParam = cell.GetParam();					
-					cell.SetBackColor(Grid_CheckTrade::rows_color_unchecked);
-					SetCell(fcount,r ,&cell);
-				}
-			}		         
-		 }
-	
-		 RedrawAll();
-		 first_time_check=1;
+		 Populate_Data();
 		
          artists1.Close();	
 		 session.Close();
@@ -1831,173 +1536,170 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		AfxMessageBox(ce.Description());			
 	}
 }
-
-void Grid_CheckTrade::OnGetCell(int col,long row,CUGCell *cell)
+void Grid_CheckTrade::Populate_Data()
 {
-
-		/*if (check_color==0)
-		{*/
-		//m_logfile_g.LogEvent(L"Start OnGetCell");
-	    Grid_CheckTrade::st_grid_check mst_grid={};
-
-        int rows_no=0;
-		rows_no=row;		
-		UNREFERENCED_PARAMETER(col);
-		UNREFERENCED_PARAMETER(row);
-		UNREFERENCED_PARAMETER(*cell);		
-		if ( col >= 0 && row == -1 )
-		{	
-		}
-		else if ( row >= 0 && col == -1 )
-		{	
-		}
-		else if ( col >= 0 && row >= 0 )
+//ASSINGNING MAIN ARRAY TO OTHER 
+		if (shorting_check==0)
 		{
-			if (Grid_CheckTrade::insertFilterFlag==1)
+			Grid_CheckTrade::m_st_grid_check_Grid_array.Clear();
+			Grid_CheckTrade::m_st_grid_check_Grid_array.Assign(Grid_CheckTrade::m_st_grid_check_Array_Fill);
+		
+
+			//End of Updating Data In New Structure
+			Grid_CheckTrade::st_grid_check N_st={};
+			//CMTStr::Copy(N_st.m_CommentYN ,L"Total:-");
+
+			 CString s1 = L"";        
+			 int trade_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+			 s1.Format(L"Count:-%d",trade_count);
+
+			 CString s2 = L"";   
+
+			 double netQty=getColumnSum_in_struct(6,0)-getColumnSum_in_struct(6,1);
+			 s2.Format(L"Net:-%.2f",netQty);
+
+
+			 CMTStr::Copy(N_st.m_time ,s1);
+
+
+			CMTStr::Copy(N_st.m_comment ,s2);
+			CMTStr::Copy(N_st.m_symbol ,L"Buy Qty:-");
+			CMTStr::Copy(N_st.m_volume ,L"Sell Qty:-");
+
+			CString temp_buy_total=L"";
+			temp_buy_total.Format(L"%.2f",getColumnSum_in_struct(6,0));
+			CMTStr::Copy(N_st.m_Type,temp_buy_total);
+
+			CString temp_sell_total=L"";
+			temp_sell_total.Format(L"%.2f",getColumnSum_in_struct(6,1));
+			CMTStr::Copy(N_st.m_price,temp_sell_total);
+
+	
+			Grid_CheckTrade::m_st_grid_check_Grid_array.Add(&N_st);
+		}
+		int row=0;
+		
+	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
+		SetNumberRows(r_count);
+		if (Grid_CheckTrade::insertFilterFlag==1)
+		{
+			
+			row=1;
+		}
+		
+		
+        for(row;row<r_count;row++)
+	    {
+			//InsertRow(row);
+			if(r_count-1!=row)
 			{
-				rows_no=row-1;				
-				if (row==0)
-				{
-					return;
-				}
-			}
-			if (col==0 && first_time_check==0)
-			{		
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_CommentYN;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}				
-			}
+				CUGCell cell;
+				GetColDefault( 10, &cell );			
+				QuickSetCellType(10,row,UGCT_CHECKBOX);	
+				QuickSetCellTypeEx(10,row,UGCT_CHECKBOXCHECKMARK);
+				SetColDefault( 10, &cell );
 
-			else if (col==1)
+				QuickSetCellType(0,row,UGCT_CHECKBOX);	
+				QuickSetCellTypeEx(0,row,UGCT_CHECKBOXCHECKMARK);
+				GetCell(0,row,&cell);
+				cell.SetParam(CELLTYPE_IS_EDITABLE);
+
+				GetCell(10,row,&cell);
+				cell.SetParam(CELLTYPE_IS_EDITABLE);
+				GetCell(9,row,&cell);
+				cell.SetParam(CELLTYPE_IS_EDITABLE);				
+			}
+			else
 			{
-
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];				
-				CString tmp=mst_grid.m_time;				
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-
-			}
-			else if (col==2)
-			{		
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_deal ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
+				CUGCell cell;
+				GetColDefault( 10, &cell );			
+				QuickSetCellType(10,row,UGCT_NORMALLABELTEXT );	
 				
-			}
-			else if (col==3)
-			{	
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_order ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
+				SetColDefault( 10, &cell );
 
+				QuickSetCellType(0,row,UGCT_NORMALLABELTEXT);	
+								
 			}
-			else if (col==4)
-			{				
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_symbol ;				
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-			}
-			else if (col==5)
-			{				
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_Type  ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-			}
-			else if (col==6)
-			{	
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_volume  ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-			}
-			else if (col==7)
-			{				
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_price ;
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				
-			    }
-			}
+			Grid_CheckTrade::st_grid_check mst_grid={};
+			mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[row];
+			
+			  CString tmp=mst_grid.m_CommentYN;										
+			  QuickSetText(0,row,tmp);	
+			  tmp=mst_grid.m_time;				
+			  QuickSetText(1,row,tmp);	
+			  tmp=mst_grid.m_deal ;
+			  QuickSetText(2,row,tmp);	
+			  tmp=mst_grid.m_order ;
+			  QuickSetText(3,row,tmp);	
+			  tmp=mst_grid.m_symbol ;					
+			  QuickSetText(4,row,tmp);	
+			  tmp=mst_grid.m_Type  ;
+			  QuickSetText(5,row,tmp);	
+			  tmp=mst_grid.m_volume  ;
+			  QuickSetText(6,row,tmp);	
+			  tmp=mst_grid.m_price ;	
+			  QuickSetText(7,row,tmp);	
+			  tmp=mst_grid.m_comment ;	
+			  QuickSetText(8,row,tmp);	
+			  tmp=mst_grid.m_OurComment;	
+			  QuickSetText(9,row,tmp);	
+			  tmp=mst_grid.m_Checked;	
+			  QuickSetText(10,row,tmp);										
 
-			else if (col==8)
-			{	
-				
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_comment;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-			}
-			else if (col==9 && first_time_check==0)
-			{	
-				
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_OurComment;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-			}
-			else if (col==10 && first_time_check==0)
-			{	
-				mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[rows_no];
-				CString tmp=mst_grid.m_Checked;										
-				CString str_get_value=cell->GetText();
-				if (wcscmp(str_get_value,tmp)!=0)
-				{
-					cell->SetText(tmp);
-				}
-					
-			}
 
-				/*check_color=1;
-				val=QuickGetText(10,row);															
-				check_color=0;*/
+			if(r_count-1!=row)
+			{
+				if (_tcscmp(mst_grid.m_Checked,_T("1"))==0 )
+				{
+					for (int fcount=0;fcount<=10;fcount++)
+					{
+						CUGCell cell;
+						GetCell(fcount,row,&cell);
+						int nCellTypeIndex = cell.GetCellType();
+						int nParam = cell.GetParam();					
+						cell.SetBackColor(Grid_CheckTrade::rows_color_checked);
+						SetCell(fcount,row ,&cell);
+					}
+				}
+				else if(_tcscmp(mst_grid.m_Checked,_T("0"))==0 || _tcscmp(mst_grid.m_Checked,_T(""))==0 )
+				{
+					for (int fcount=0;fcount<=10;fcount++)
+					{
+						CUGCell cell;
+						GetCell(fcount,row,&cell);
+						int nCellTypeIndex = cell.GetCellType();
+						int nParam = cell.GetParam();					
+						cell.SetBackColor(Grid_CheckTrade::rows_color_unchecked);
+						SetCell(fcount,row ,&cell);
+					}
+				}
+			}
+			else
+			{
+					for (int fcount=0;fcount<=10;fcount++)
+					{
+						CUGCell cell;
+						GetCell(fcount,row,&cell);
+						int nCellTypeIndex = cell.GetCellType();
+						int nParam = cell.GetParam();					
+						cell.SetBackColor(RGB(255,255,255));
+						SetCell(fcount,row ,&cell);
+					}
+			}
+		}
+		
+
+		//checkbox initialization in grid rows
+		
+		
+		 RedrawAll();		
+		 
+
 }
-//}
-//else
-//{
-//	if (_tcscmp(val,L"1")==0 )
-//	{
-//		cell->SetBackColor(Grid_CheckTrade::rows_color_checked);					
-//	}
-//	else
-//	{
-//		cell->SetBackColor(Grid_CheckTrade::rows_color_unchecked);					
-//	}
-//}
+void Grid_CheckTrade::OnGetCell(int col,long row,CUGCell *cell)
+{		
+	    
+
 }
 
 
@@ -2053,6 +1755,7 @@ int Grid_CheckTrade::OnCheckbox(long ID,int col,long row,long msg,long param)
 			for(int i=0;i<grid_row_count-1;i++)
 			{
 				QuickSetText(0,i,L"1");
+				RedrawCell(0,i);		
 			}
 		}
 		else
@@ -2061,9 +1764,10 @@ int Grid_CheckTrade::OnCheckbox(long ID,int col,long row,long msg,long param)
 			for(int i=0;i<grid_row_count-1;i++)
 			{
 				QuickSetText(0,i,L"0");
+				RedrawCell(0,i);		
 			}
 		}
-		RedrawAll();
+		
 	}
 	return TRUE;
 }

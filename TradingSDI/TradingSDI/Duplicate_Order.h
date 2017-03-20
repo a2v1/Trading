@@ -4,7 +4,11 @@
 class Duplicate_Order:public CUGCtrl
 {
 public:
-int short_click;
+
+	
+
+
+	int short_click;
 	struct st_Comment_Change
 	{
 		wchar_t  time[60];
@@ -40,7 +44,7 @@ int short_click;
 	Change_Comment_List_Array m_Change_Comment_List_Array;
 
 	
-	
+
 
 	static int filter_break;
 	static int insertFilterFlag;

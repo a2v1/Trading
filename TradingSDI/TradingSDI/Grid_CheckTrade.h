@@ -52,7 +52,7 @@ public:
 
 	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val;
 
-
+int shorting_check;
 int first_time_check;
 int check_color;
 CString val;
@@ -182,6 +182,9 @@ public:
 	void Col_sorting();
 	void ColValue_filter();
 	void RefreshGrid();
+
+
+	void Populate_Data();
 	//focus rect setup
 	
 };
