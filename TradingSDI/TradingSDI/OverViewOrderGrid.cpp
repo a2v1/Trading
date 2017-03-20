@@ -249,13 +249,13 @@ UINT update_data_Order(void *pParam)
 							col_row_val[8]=col_row_val[8].Mid(0,OverViewOrderGrid::col8_val.Trim().GetLength());
 						}
 
-						col_row_val[9]=m_st_Netposition.Trade_Checked ;
+						/*col_row_val[9]=m_st_Netposition.Trade_Checked ;
 						if (OverViewOrderGrid::col9_val.Trim().GetLength()>0)
 						{
 							col_row_val[9]=col_row_val[9].Mid(0,OverViewOrderGrid::col9_val.Trim().GetLength());
-						}
+						}*/
 
-						if((OverViewOrderGrid::col0_val.Trim()==col_row_val[0].Trim() || OverViewOrderGrid::col0_val.Trim()==L"ALL"||OverViewOrderGrid::col0_val.Trim()==L"") && (OverViewOrderGrid::col1_val.Trim()==col_row_val[1].Trim() || OverViewOrderGrid::col1_val.Trim()==L"ALL"||OverViewOrderGrid::col1_val.Trim()==L"") && (OverViewOrderGrid::col2_val.Trim()==col_row_val[2].Trim() || OverViewOrderGrid::col2_val.Trim()==L"ALL"||OverViewOrderGrid::col2_val.Trim()==L"")  && (OverViewOrderGrid::col3_val.Trim()==col_row_val[3].Trim() || OverViewOrderGrid::col3_val.Trim()==L"ALL"||OverViewOrderGrid::col3_val.Trim()==L"") && (OverViewOrderGrid::col4_val.Trim()==col_row_val[4].Trim() || OverViewOrderGrid::col4_val.Trim()==L"ALL"||OverViewOrderGrid::col4_val.Trim()==L"")   && (bool_col5==true || OverViewOrderGrid::col5_val.Trim()==L"ALL"||OverViewOrderGrid::col5_val.Trim()==L"")   && (bool_col6==true || OverViewOrderGrid::col6_val.Trim()==L"ALL"||OverViewOrderGrid::col6_val.Trim()==L"")   && (bool_col7==true || OverViewOrderGrid::col7_val.Trim()==L"ALL"||OverViewOrderGrid::col7_val.Trim()==L"")   && (OverViewOrderGrid::col8_val.Trim()==col_row_val[8].Trim() || OverViewOrderGrid::col8_val.Trim()==L"ALL"||OverViewOrderGrid::col8_val.Trim()==L"") && (OverViewOrderGrid::col9_val.Trim()==col_row_val[9].Trim() || OverViewOrderGrid::col9_val.Trim()==L"ALL"||OverViewOrderGrid::col9_val.Trim()==L""))
+						if((OverViewOrderGrid::col0_val.Trim()==col_row_val[0].Trim() || OverViewOrderGrid::col0_val.Trim()==L"ALL"||OverViewOrderGrid::col0_val.Trim()==L"") && (OverViewOrderGrid::col1_val.Trim()==col_row_val[1].Trim() || OverViewOrderGrid::col1_val.Trim()==L"ALL"||OverViewOrderGrid::col1_val.Trim()==L"") && (OverViewOrderGrid::col2_val.Trim()==col_row_val[2].Trim() || OverViewOrderGrid::col2_val.Trim()==L"ALL"||OverViewOrderGrid::col2_val.Trim()==L"")  && (OverViewOrderGrid::col3_val.Trim()==col_row_val[3].Trim() || OverViewOrderGrid::col3_val.Trim()==L"ALL"||OverViewOrderGrid::col3_val.Trim()==L"") && (OverViewOrderGrid::col4_val.Trim()==col_row_val[4].Trim() || OverViewOrderGrid::col4_val.Trim()==L"ALL"||OverViewOrderGrid::col4_val.Trim()==L"")   && (bool_col5==true || OverViewOrderGrid::col5_val.Trim()==L"ALL"||OverViewOrderGrid::col5_val.Trim()==L"")   && (bool_col6==true || OverViewOrderGrid::col6_val.Trim()==L"ALL"||OverViewOrderGrid::col6_val.Trim()==L"")   && (bool_col7==true || OverViewOrderGrid::col7_val.Trim()==L"ALL"||OverViewOrderGrid::col7_val.Trim()==L"")   && (OverViewOrderGrid::col8_val.Trim()==col_row_val[8].Trim() || OverViewOrderGrid::col8_val.Trim()==L"ALL"||OverViewOrderGrid::col8_val.Trim()==L"")/* && (OverViewOrderGrid::col9_val.Trim()==col_row_val[9].Trim() || OverViewOrderGrid::col9_val.Trim()==L"ALL"||OverViewOrderGrid::col9_val.Trim()==L"")*/)
 				        {
 							 OverViewOrderGrid::m_OverviewOrder_Grid_array.Add(&m_st_Netposition);
 						}
@@ -801,7 +801,7 @@ void OverViewOrderGrid::OnMenuCommand(int col,long row,int section,int item)
 	
 		case 2001:
 		{
-			//filter();
+			filter();
 //			Trace( _T( "Displayed the grid's Replace Dialog." ) );
 			break;
 		}
@@ -1129,7 +1129,7 @@ void OverViewOrderGrid::addItemToCombobox()
 		m_st_for_filter=m_array_filter[forcount];
 
 
-		for (int clocount=0;clocount<10;clocount++)
+		for (int clocount=0;clocount<9;clocount++)
 		{
 
 			  if (clocount==0)
@@ -1235,7 +1235,7 @@ void OverViewOrderGrid::addItemToCombobox()
 						arr8.Add(str_val);
 					}
 				}
-				if (clocount==9)
+				/*if (clocount==9)
 				{
 					str_val=m_st_for_filter.Trade_Checked;
 					str_val=str_val.Trim();
@@ -1244,7 +1244,7 @@ void OverViewOrderGrid::addItemToCombobox()
 						str[clocount]=str[clocount]+str_val+L"\n";										
 						arr9.Add(str_val);
 					}
-				}
+				}*/
 
 		}												
 	}
