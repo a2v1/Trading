@@ -65,6 +65,7 @@ public:
 	virtual void OnMenuCommand(int col,long row,int section,int item);
 	virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
 	virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
+	virtual void OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed);
 
 	//sorting and filtering
 	void Col_sorting();

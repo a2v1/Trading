@@ -92,7 +92,7 @@ public:
 	virtual void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
 	//virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
 	virtual  int OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag);
-
+	virtual void OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed);
 	//sorting and filtering
 	void Col_sorting();
 	void ColValue_filter();

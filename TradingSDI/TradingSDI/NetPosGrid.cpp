@@ -425,8 +425,12 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 			{
 				
 				mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
-				CString tmp=mst_grid.m_last_update     ;
-				CString str_get_value=cell->GetText();
+				UINT64 m_time=_wtoi( mst_grid.m_last_update);
+				CString tmp=L"";
+				CMTStr256 str_time;
+				SMTFormat::FormatDateTime(str_time,m_time,true,true);
+			    tmp=str_time.Str();
+            	CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
 					cell->SetText(tmp);
@@ -2361,8 +2365,14 @@ void NetPosGrid::addItemToCombobox()
 					}
 					if (clocount==10)
 					{
-						str_val=m_st_Netposition.m_last_update ;
-						str_val=str_val.Trim();
+						
+						UINT64 m_time=_wtoi( m_st_Netposition.m_last_update);
+						CString tmp=L"";
+						CMTStr256 str_time;
+						SMTFormat::FormatDateTime(str_time,m_time,true,true);
+						tmp=str_time.Str();
+       
+						str_val=tmp.Trim();
 						if (CheckvalueInArray(arr10,str_val)==false  && str_val!=L"")
 						{
 							str[10]=str[10]+str_val+L"\n";										
@@ -3450,10 +3460,17 @@ UINT Update_Netposition(LPVOID pParam)
 				col_row_val[9]=m_st_Netposition.m_Balance ;
 				boolean bool_col9=Check_numeric_col_filter(NetPosGrid::col9_val,col_row_val[9]);
 
-				col_row_val[10]=m_st_Netposition.m_last_update ;
+				////////////////////
+				UINT64 m_exit_time=_wtoi( m_st_Netposition.m_last_update);
+			    CString exit_tmp=L"";
+			    CMTStr256 str_exit_time;
+			    SMTFormat::FormatDateTime(str_exit_time,m_exit_time,true,true);
+			    exit_tmp=str_exit_time.Str();
+				col_row_val[10]=exit_tmp.Trim();
 				if (NetPosGrid::col10_val.Trim().GetLength()>0)
 				{
 					col_row_val[10]=col_row_val[10].Mid(0,NetPosGrid::col10_val.Trim().GetLength());
+					col_row_val[10]=col_row_val[10].Mid(0,10);
 				}
 				col_row_val[11]=m_st_Netposition.m_Group1 ;
 				if (NetPosGrid::col11_val.Trim().GetLength()>0)

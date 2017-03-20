@@ -161,6 +161,28 @@ boolean  Check_numeric_col_filter_analysis(CString  filter_value,CString  real_v
 		return bool_col;
 }
 
+void PosEntryAna::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
+{
+	CUGCell cell;
+	GetCell(col,row,&cell);
+	int nCellTypeIndex = cell.GetCellType();
+	int nParam = cell.GetParam();
+	CString string;
+	if(cell.GetLabelText() != NULL)
+		string = cell.GetLabelText();
+
+	if(processed){
+		if(cell.GetCellType() == m_nSpinIndex)
+			return ;
+	}
+
+	if(nParam == CELLTYPE_IS_EDITABLE || string == "CELLTYPE_IS_EDITABLE")
+	{
+		StartEdit();
+	}
+	
+
+}	
 
 void PosEntryAna::Getdata(_bstr_t m_login)
 {

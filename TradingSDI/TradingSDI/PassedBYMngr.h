@@ -50,7 +50,7 @@ public:
 	st_shortingArray m_str_array;
 
 	static  int insertFilterFlag;
-
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val;
 public:
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
@@ -70,5 +70,10 @@ public:
 	void InitMenu();
 	void gridFilter(int colno,int rows_count,CString col_value);
 	void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
+	virtual int OnDropList(long ID,int col,long row,long msg,long param);
+	//virtual int OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag);
+	//virtual void OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed);
+	////mouse and key strokes
+	virtual  int OnCellTypeNotify(long ID,int col,long row,long msg,long param);
 };
 #endif

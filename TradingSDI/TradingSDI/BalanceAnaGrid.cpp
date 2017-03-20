@@ -402,6 +402,31 @@ int BalanceAnaGrid::OnCellTypeNotify(long ID,int col,long row,long msg,long para
 	}
 }
 
+void BalanceAnaGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
+{
+	CUGCell cell;
+	GetCell(col,row,&cell);
+	int nCellTypeIndex = cell.GetCellType();
+	int nParam = cell.GetParam();
+	CString string;
+	if(cell.GetLabelText() != NULL)
+		string = cell.GetLabelText();
+
+	if(processed){
+		if(cell.GetCellType() == m_nSpinIndex)
+			return ;
+	}
+
+	if(nParam == CELLTYPE_IS_EDITABLE || string == "CELLTYPE_IS_EDITABLE")
+	{
+		StartEdit();
+	}
+	
+
+}	
+
+
+
 int BalanceAnaGrid::OnDropList(long ID,int col,long row,long msg,long param)
 {
   	if (msg==103)
