@@ -707,16 +707,16 @@ int Grid_CheckTrade::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BO
 		if (rows_count>=0)
 		{
 			CString str_grid_deal=QuickGetText(2,row);
-			int cc=m_st_grid_check_Array_Fill.Total();
+			int cc=m_st_grid_check_Grid_array.Total();
 			st_grid_check mst={};
 			for (int k=0;k<cc;k++)
 			{
 				
-				mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[k];				 
+				mst=m_st_grid_check_Grid_array[k];				 
 				if(CMTStr::Compare(str_grid_deal,mst.m_deal)==0)
 				{
 					CMTStr::Copy(mst.m_OurComment,string);			
-					m_st_grid_check_Grid_array.Update(rows_count,&mst);
+					m_st_grid_check_Grid_array.Update(k,&mst);
 					break;
 				}
 			}
