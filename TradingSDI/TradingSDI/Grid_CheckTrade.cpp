@@ -1481,17 +1481,18 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		HRESULT hr;
 		if(catpos>=0)
 		{
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND [action] IN (0,1) AND  isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN','' as 'm_Opp_Deal'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "' AND [action] IN (0,1) AND  isnull(comment,'')='" + strComment + "'   " + strfilter + "    order by [deal] desc";		
 		}
 		else
 		{
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "'  AND [action] IN (0,1)  " + strfilter + "    order by [deal] desc";		
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',cast(volume as float)/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',isnull(checked,'0') as 'Checked',isnull(change_YN,0) as 'Change_YN','' as 'm_Opp_Deal'  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where [login]='" + strMainCode + "'  AND [action] IN (0,1)  " + strfilter + "    order by [deal] desc";		
 		}
 		hr=artists1.Open(session,(LPCTSTR)strCommand);				
 			 				 
 		if(SUCCEEDED(hr))
 		{
 		 Grid_CheckTrade::m_st_grid_check_Array_Fill.Clear();
+		 hr=artists1.MoveNext();
 		 while (artists1.MoveNext() == S_OK)
 		 {
 			 
