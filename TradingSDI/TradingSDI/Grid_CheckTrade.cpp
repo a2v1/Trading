@@ -1535,7 +1535,7 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 		if(SUCCEEDED(hr))
 		{
 		 Grid_CheckTrade::m_st_grid_check_Array_Fill.Clear();
-		 hr=artists1.MoveNext();
+		 
 		 while (artists1.MoveNext() == S_OK)
 		 {
 			 
