@@ -446,7 +446,10 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 	}
 
 	shorting_check=1;
-	Col_sorting();
+	if (col!=0 && col!=9 && col!=10)
+	{
+		Col_sorting();
+	}
 	
 	
 		CUGCell cell;
@@ -458,7 +461,8 @@ void Grid_CheckTrade::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 		
 	
 	
-	Populate_Data();
+		Populate_Data();
+	
 	shorting_check=0;
 }
 int Grid_CheckTrade::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
@@ -669,8 +673,7 @@ _bstr_t Grid_CheckTrade::get_string(CString  MainStr,CString SepStr)
 			}
 			b_strCode="";
 		}
-	}
-	
+	}	
 	if (b_strreturn!=bstrcomp)
 	{
 		b_strreturn=b_strreturn+","+"'"+b_strCode+"'";
@@ -689,8 +692,48 @@ _bstr_t Grid_CheckTrade::get_string(CString  MainStr,CString SepStr)
 
 int Grid_CheckTrade::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
 {
-	
-		//QuickSetText(col,row,string);					
+
+	if (col==9)
+	{
+		int rows_count=0;
+		if(Grid_CheckTrade::insertFilterFlag==1)
+		{
+			rows_count=row-1;
+		}
+		else
+		{
+			rows_count=row;
+		}
+		if (rows_count>=0)
+		{
+			CString str_grid_deal=QuickGetText(2,row);
+			int cc=m_st_grid_check_Array_Fill.Total();
+			st_grid_check mst={};
+			for (int k=0;k<cc;k++)
+			{
+				
+				mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[k];				 
+				if(CMTStr::Compare(str_grid_deal,mst.m_deal)==0)
+				{
+					CMTStr::Copy(mst.m_OurComment,string);			
+					m_st_grid_check_Grid_array.Update(rows_count,&mst);
+					break;
+				}
+			}
+			
+			int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+			for (int fr=0;fr<rr_count;fr++)
+			{
+				st_grid_check mst1={};
+				mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+				if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+				{
+					Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+					break;
+				}
+			}
+		}
+	}
 
 		if(Grid_CheckTrade::insertFilterFlag==1 && row==0 )
 		{
@@ -1578,21 +1621,28 @@ void Grid_CheckTrade::Populate_Data()
 	
 			Grid_CheckTrade::m_st_grid_check_Grid_array.Add(&N_st);
 		}
-		int row=0;
+		int row_o=0;
 		
 	    int r_count=Grid_CheckTrade::m_st_grid_check_Grid_array.Total();
-		SetNumberRows(r_count);
+		int r_count_o=r_count;
+		
 		if (Grid_CheckTrade::insertFilterFlag==1)
 		{
+			r_count=r_count+1;
 			
-			row=1;
 		}
 		
 		
-        for(row;row<r_count;row++)
+		SetNumberRows(r_count);
+        for(row_o;row_o<r_count_o;row_o++)
 	    {
+			int row=row_o;
+			if (Grid_CheckTrade::insertFilterFlag==1)
+			{
+				row=row_o+1;			
+			}
 			//InsertRow(row);
-			if(r_count-1!=row)
+			if(r_count_o-1!=row_o)
 			{
 				CUGCell cell;
 				GetColDefault( 10, &cell );			
@@ -1622,7 +1672,7 @@ void Grid_CheckTrade::Populate_Data()
 								
 			}
 			Grid_CheckTrade::st_grid_check mst_grid={};
-			mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[row];
+			mst_grid=Grid_CheckTrade::m_st_grid_check_Grid_array[row_o];
 			
 			  CString tmp=mst_grid.m_CommentYN;										
 			  QuickSetText(0,row,tmp);	
@@ -1652,7 +1702,13 @@ void Grid_CheckTrade::Populate_Data()
 			{
 				if (_tcscmp(mst_grid.m_Checked,_T("1"))==0 )
 				{
-					for (int fcount=0;fcount<=10;fcount++)
+
+					int fcount=0;
+					if (Grid_CheckTrade::insertFilterFlag==1)
+					{
+						fcount=1;
+					}	
+					for (fcount;fcount<=10;fcount++)
 					{
 						CUGCell cell;
 						GetCell(fcount,row,&cell);
@@ -1664,7 +1720,14 @@ void Grid_CheckTrade::Populate_Data()
 				}
 				else if(_tcscmp(mst_grid.m_Checked,_T("0"))==0 || _tcscmp(mst_grid.m_Checked,_T(""))==0 )
 				{
-					for (int fcount=0;fcount<=10;fcount++)
+					int fcount=0;
+					if (Grid_CheckTrade::insertFilterFlag==1)
+					{
+						fcount=1;
+					}
+		
+
+					for (fcount;fcount<=10;fcount++)
 					{
 						CUGCell cell;
 						GetCell(fcount,row,&cell);
@@ -1677,7 +1740,14 @@ void Grid_CheckTrade::Populate_Data()
 			}
 			else
 			{
-					for (int fcount=0;fcount<=10;fcount++)
+					int fcount=0;
+					if (Grid_CheckTrade::insertFilterFlag==1)
+					{
+						fcount=1;
+					}
+		
+
+					for (fcount;fcount<=10;fcount++)
 					{
 						CUGCell cell;
 						GetCell(fcount,row,&cell);
@@ -1687,12 +1757,7 @@ void Grid_CheckTrade::Populate_Data()
 						SetCell(fcount,row ,&cell);
 					}
 			}
-		}
-		
-
-		//checkbox initialization in grid rows
-		
-		
+		}								
 		 RedrawAll();		
 		 
 
@@ -1727,8 +1792,101 @@ void Grid_CheckTrade::OnKeyDown(UINT *vcKey,BOOL processed)
 
 int Grid_CheckTrade::OnCheckbox(long ID,int col,long row,long msg,long param)
 {
+	int rows_count=0;
+	if(Grid_CheckTrade::insertFilterFlag==1)
+	{
+		rows_count=row+1;
+	}
+	else
+	{
+		rows_count=row;
+	}
+	if(col==0 && row!=-1)
+	{
+		if(param == 1)
+		{								
+			st_grid_check mst={};
+			mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+			 
+			CMTStr::Copy(mst.m_CommentYN ,L"1");
+			m_st_grid_check_Grid_array.Update(rows_count,&mst);			
+
+			int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+			for (int fr=0;fr<rr_count;fr++)
+			{
+				st_grid_check mst1={};
+				mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+				if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+				{
+					Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+					break;
+				}
+			}
+			
+		}
+		else
+		{			
+			
+			st_grid_check mst={};
+			mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+			CMTStr::Copy(mst.m_CommentYN,L"0");			
+			m_st_grid_check_Grid_array.Update(rows_count,&mst);
+			int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+			for (int fr=0;fr<rr_count;fr++)
+			{
+				st_grid_check mst1={};
+				mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+				if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+				{
+					Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+					break;
+				}
+			}
+		}
+	}
 	if(col==10)
 	{
+
+		if(param == 1)
+		{					
+			
+			st_grid_check mst={};
+			mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+			CMTStr::Copy(mst.m_Checked,L"1");			
+			m_st_grid_check_Grid_array.Update(rows_count,&mst);
+			int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+			for (int fr=0;fr<rr_count;fr++)
+			{
+				st_grid_check mst1={};
+				mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+				if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+				{
+					Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+					break;
+				}
+			}
+		}
+		else
+		{			
+			
+			st_grid_check mst={};
+			mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+			CMTStr::Copy(mst.m_Checked,L"0");			
+			m_st_grid_check_Grid_array.Update(rows_count,&mst);
+			int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+			for (int fr=0;fr<rr_count;fr++)
+			{
+				st_grid_check mst1={};
+				mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+				if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+				{
+					Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+					break;
+				}
+			}
+		}
+
+
 		for (int fcount=0;fcount<=10;fcount++)
 		{
 			CUGCell cell;
@@ -1738,37 +1896,99 @@ int Grid_CheckTrade::OnCheckbox(long ID,int col,long row,long msg,long param)
 			if(param == 1)
 			{					
 				cell.SetBackColor(Grid_CheckTrade::rows_color_checked);
+				
 			}
 			else
 			{			
 				cell.SetBackColor(Grid_CheckTrade::rows_color_unchecked );
+				
 			}
 			SetCell(fcount,row ,&cell);
 	
 			RedrawCell(fcount,row);		
 		}	
 	}
-	if(row==-1)
+	if(row==-1 && col==0)
 	{
+
 		if(param == 1)
 		{
 			int grid_row_count= GetNumberRows();
-			for(int i=0;i<grid_row_count-1;i++)
+			int i=0;
+			if(Grid_CheckTrade::insertFilterFlag==1)
 			{
+				i=i+1;;
+			}
+			
+			for(i;i<grid_row_count-1;i++)
+			{
+
+				if(Grid_CheckTrade::insertFilterFlag==1)
+				{
+					rows_count=i-1;
+				}
+				else
+				{
+					rows_count=i;
+				}
+
 				QuickSetText(0,i,L"1");
-				RedrawCell(0,i);		
+				st_grid_check mst={};
+				mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+				CMTStr::Copy(mst.m_CommentYN ,L"1");				
+				m_st_grid_check_Grid_array.Update(rows_count,&mst);
+				int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+				for (int fr=0;fr<rr_count;fr++)
+				{
+					st_grid_check mst1={};
+					mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+					if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+					{
+						Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+						break;
+					}
+				}
 			}
 		}
 		else
 		{
 			int grid_row_count= GetNumberRows();
-			for(int i=0;i<grid_row_count-1;i++)
+			int i=0;
+			if(Grid_CheckTrade::insertFilterFlag==1)
 			{
+				i=i+1;;
+			}
+			for(i;i<grid_row_count-1;i++)
+			{
+
+				if(Grid_CheckTrade::insertFilterFlag==1)
+				{
+					rows_count=i-1;
+				}
+				else
+				{
+					rows_count=i;
+				}
+
 				QuickSetText(0,i,L"0");
-				RedrawCell(0,i);		
+				st_grid_check mst={};
+				mst=Grid_CheckTrade::m_st_grid_check_Array_Fill[rows_count];				 
+				CMTStr::Copy(mst.m_CommentYN,L"0");				
+				m_st_grid_check_Grid_array.Update(rows_count,&mst);
+				int rr_count=Grid_CheckTrade::m_st_grid_check_Array_Fill.Total();
+				for (int fr=0;fr<rr_count;fr++)
+				{
+					st_grid_check mst1={};
+					mst1=Grid_CheckTrade::m_st_grid_check_Array_Fill[fr];
+					if(CMTStr::Compare(mst1.m_deal,mst.m_deal)==0)
+					{
+						Grid_CheckTrade::m_st_grid_check_Array_Fill.Update(rows_count,&mst);
+						break;
+					}
+				}
 			}
 		}
-		
+		RedrawAll();
 	}
 	return TRUE;
 }
