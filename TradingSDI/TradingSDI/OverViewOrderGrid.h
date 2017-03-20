@@ -103,7 +103,7 @@ private:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	CString str[14];
+	CString str[10];
 	int	m_nSpinIndex;
 	int run_check;
 	
