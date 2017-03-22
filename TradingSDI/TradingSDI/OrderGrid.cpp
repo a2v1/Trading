@@ -2773,7 +2773,9 @@ void OrderGrid::OnSetup()
 
 
 
-	m_pThreads=AfxBeginThread(update_data_PBNPS_Order, this);		
+	m_pThreads=AfxBeginThread(update_data_PBNPS_Order, this);	
+
+
 	
 
 	
