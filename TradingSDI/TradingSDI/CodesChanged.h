@@ -45,14 +45,6 @@ public:
 	static CMutex dealing_mutex;
 		
 
-	struct st_shorting
-	 {
-		wchar_t  m_symbol[200];		
-	 };
-	typedef TMTArray<st_shorting> st_shortingArray;
-
-	st_shortingArray m_str_array;
-
 	static  int insertFilterFlag;
 
 	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val,col16_val,col17_val;
@@ -73,7 +65,6 @@ public:
 	void filter();
 	void addItemToCombobox();
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
-	void colShorting( int index);
 	void InitMenu();
 	void gridFilter(int colno,int rows_count,CString col_value);
 	void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);

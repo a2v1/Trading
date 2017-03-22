@@ -795,7 +795,7 @@ void NetPosGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point
 	QuickSetText(8,GetNumberRows()-1,tempval);
 	RedrawAll();
 
-
+	
 }
 int NetPosGrid::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
 {
@@ -1410,16 +1410,16 @@ void NetPosGrid::OnMenuCommand(int col,long row,int section,int item)
 	pMenu = GetPopupMenu();
 
 	CMenu* submenu=pMenu->GetSubMenu(1);
-
+	
 switch( item )
 {
-case 2001:
+   case 2001:
 	       {
 					filter();
 					break;
 		   }
-		  
-case 1000:
+
+  case 1000:
 		   {
 			   if(submenu->GetMenuState(1000,MF_CHECKED))
 			   {
@@ -1436,7 +1436,7 @@ case 1000:
 			   }
                 break;
 		   }
-case 1001:
+  case 1001:
 		   {
 
 		      
@@ -1456,7 +1456,7 @@ case 1001:
 			   break;
 
 		   }
- case 1002:
+   case 1002:
 		   {
 
 		      
@@ -1477,7 +1477,7 @@ case 1001:
 			   break;
 
 		   }
- case 1003:
+   case 1003:
 		   {
 
 		      
@@ -1496,7 +1496,7 @@ case 1001:
 			   break;
 
 		   }
- case 1004:
+  case 1004:
 		   {
 
 		      
@@ -1516,7 +1516,7 @@ case 1001:
 			   break;
 
 		   }
- case 1005:
+   case 1005:
 		   {
 
 		      
@@ -1537,7 +1537,7 @@ case 1001:
 			   break;
 
 		   }
- case 1006:
+   case 1006:
 		   {
 
 		      
@@ -1555,7 +1555,7 @@ case 1001:
 			   }
 			   break;
 		   }
- case 1007:
+   case 1007:
 		   {		      
 			   if(submenu->GetMenuState(1007,MF_CHECKED))
 			   {
@@ -1573,7 +1573,7 @@ case 1001:
 			   break;
 
 		   }
- case 1008:
+    case 1008:
 		   {
 
 		      
@@ -1593,7 +1593,7 @@ case 1001:
 			   break;
 
 		   }
- case 1009:
+   case 1009:
 		   {
 
 		      
@@ -1613,7 +1613,7 @@ case 1001:
 			   break;
 
 		   }
- case 1010:
+   case 1010:
 		   {
 
 		      
@@ -1633,7 +1633,7 @@ case 1001:
 			   break;
 
 		   }
- case 1011:
+   case 1011:
 		   {
 
 		      
@@ -1653,7 +1653,7 @@ case 1001:
 			   break;
 
 		   }
- case 1012:
+    case 1012:
 		   {
 
 		      
@@ -1673,7 +1673,7 @@ case 1001:
 			   break;
 
 		   }
- case 1013:
+   case 1013:
 		   {
 
 		      
@@ -1693,7 +1693,7 @@ case 1001:
 			   break;
 
 		   }
-case 1014:
+   case 1014:
 		   {
 
 		      
@@ -1713,7 +1713,7 @@ case 1014:
 			   break;
 
 		   }
-case 1015:
+   case 1015:
 		   {
 
 		      
@@ -1732,7 +1732,7 @@ case 1015:
 			   break;
 
 		   }
-case 1016:
+   case 1016:
 		   {
 
 		      
@@ -1751,7 +1751,7 @@ case 1016:
 			   break;
 
 		   }
-case 1017:
+   case 1017:
 		   {
 
 		      
@@ -2371,8 +2371,11 @@ void NetPosGrid::addItemToCombobox()
 						CMTStr256 str_time;
 						SMTFormat::FormatDateTime(str_time,m_time,true,true);
 						tmp=str_time.Str();
-       
 						str_val=tmp.Trim();
+                        if (str_val.GetLength()>10)
+					    {
+						    str_val=str_val.Mid(0,10);
+					    }
 						if (CheckvalueInArray(arr10,str_val)==false  && str_val!=L"")
 						{
 							str[10]=str[10]+str_val+L"\n";										
