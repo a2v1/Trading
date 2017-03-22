@@ -2828,7 +2828,7 @@ UINT update_data_PBNPS_Order(void *pParam)
 					LPTSTR endPtr;
 					double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
 					CString cstrpl;
-					cstrpl.Format(_T("%.2f"),d_m_PL);	
+					cstrpl.Format(_T("%.4f"),d_m_PL);	
 					CMTStr::Copy(OrderGrid::m_st_Order_Update.price ,cstrpl);											
 					CMTStr::Copy(OrderGrid::m_st_Order_Update.comment ,artists1.m_comment);											
 					CMTStr::Copy(OrderGrid::m_st_Order_Update.OurComment ,artists1.m_OurComment);	

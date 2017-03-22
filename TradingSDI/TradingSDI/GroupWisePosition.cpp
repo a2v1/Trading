@@ -218,28 +218,28 @@ void GroupWiseNetPos::OnTimer(UINT nIDEvent)
 		}
 
 		//CString str_Order=L"";
-		str_Order.Format(L"%.2f",m_st_Netposition.avg_rate );
+		str_Order.Format(L"%.4f",m_st_Netposition.avg_rate );
 		col_row_val[5]=str_Order  ;		
 		if (col_filter_val[5].Trim().GetLength()>0)
 		{
 			col_row_val[5]=col_row_val[5].Mid(0,col_filter_val[5].Trim().GetLength());
 		}
 		
-		str_Order.Format(L"%.2f",m_st_Netposition.current_rate );
+		str_Order.Format(L"%.4f",m_st_Netposition.current_rate );
 		col_row_val[6]=str_Order ;
 		if (col_filter_val[6].Trim().GetLength()>0)
 		{
 			col_row_val[6]=col_row_val[6].Mid(0,col_filter_val[6].Trim().GetLength());
 		}
 
-		str_Order.Format(L"%.2f",m_st_Netposition.pl  );
+		str_Order.Format(L"%.4f",m_st_Netposition.pl  );
 		col_row_val[7]=str_Order  ;
 		if (col_filter_val[7].Trim().GetLength()>0)
 		{
 			col_row_val[7]=col_row_val[7].Mid(0,col_filter_val[7].Trim().GetLength());
 		}
 
-		str_Order.Format(L"%.2f",m_st_Netposition.Total_Amount   );
+		str_Order.Format(L"%.4f",m_st_Netposition.Total_Amount   );
 		col_row_val[8]=str_Order  ;
 		if (col_filter_val[8].Trim().GetLength()>0)
 		{
@@ -610,7 +610,7 @@ void GroupWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				double  m_avgrate=mst_grid.avg_rate ;
 				CString tmp=L"" ;
-				tmp.Format(L"%.2f",m_avgrate);
+				tmp.Format(L"%.4f",m_avgrate);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -621,7 +621,7 @@ void GroupWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 			{	
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"" ;
-				tmp.Format(L"%.2f",mst_grid.current_rate);
+				tmp.Format(L"%.4f",mst_grid.current_rate);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -632,7 +632,7 @@ void GroupWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.pl);
+				tmp.Format(L"%.4f",mst_grid.pl);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -644,7 +644,7 @@ void GroupWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.Total_Amount);											
+				tmp.Format(L"%.4f",mst_grid.Total_Amount);											
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -808,7 +808,7 @@ void GroupWiseNetPos::addItemToCombobox()
 					if (clocount==5)
 					{
 						double  u_order=m_st_Netposition.avg_rate ;
-						str_val.Format(L"%.2f",u_order) ;
+						str_val.Format(L"%.4f",u_order) ;
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr5,str_val)==false  && str_val!=L"")
 						{
@@ -820,7 +820,7 @@ void GroupWiseNetPos::addItemToCombobox()
 					if (clocount==6)
 					{
 						double current_rate=m_st_Netposition.current_rate  ;
-						str_val.Format(L"%.2f",current_rate);
+						str_val.Format(L"%.4f",current_rate);
 						if (CheckvalueInArray(arr6,str_val)==false  && str_val!=L"")
 						{
 							str[6]=str[6]+str_val+L"\n";										
@@ -830,7 +830,7 @@ void GroupWiseNetPos::addItemToCombobox()
 					if (clocount==7)
 					{
 						
-						str_val.Format(L"%.2f",m_st_Netposition.pl);
+						str_val.Format(L"%.4f",m_st_Netposition.pl);
 						if (CheckvalueInArray(arr7,str_val)==false  && str_val!=L"")
 						{
 							str[7]=str[7]+str_val+L"\n";										
@@ -839,7 +839,7 @@ void GroupWiseNetPos::addItemToCombobox()
 					}
 					if (clocount==8)
 					{						
-						str_val.Format(L"%.2f",m_st_Netposition.Total_Amount);
+						str_val.Format(L"%.4f",m_st_Netposition.Total_Amount);
 						if (CheckvalueInArray(arr8,str_val)==false  && str_val!=L"")
 						{
 							str[8]=str[8]+str_val+L"\n";										

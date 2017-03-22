@@ -172,7 +172,7 @@ UINT update_data_Duplicate_Order(void *pParam)
 					LPTSTR endPtr;
 					double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
 					CString cstrpl;
-					cstrpl.Format(_T("%.2f"),d_m_PL);	
+					cstrpl.Format(_T("%.4f"),d_m_PL);	
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.price ,cstrpl);											
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.comment ,artists1.m_comment);											
 					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.OurComment ,artists1.m_OurComment);	
@@ -583,8 +583,8 @@ int Duplicate_Order::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	if (msg==103)
 	{
-		if(Duplicate_Order::insertFilterFlag==1 && row==0)
-	{
+	  if(Duplicate_Order::insertFilterFlag==1 && row==0)
+	  {
 		Duplicate_Order::filter_break=1;
 		check_First==0;
 		CString  strval=L"";
@@ -596,7 +596,7 @@ int Duplicate_Order::OnDropList(long ID,int col,long row,long msg,long param)
 		{
 			gridFilter(col,GetNumberRows(),strval);
 		}
-	}
+	  }
 	RedrawAll();
 	}
 
@@ -1157,7 +1157,7 @@ void Duplicate_Order::gridFilter(int colno,int rows_count,CString col_value)
 	
 	CString getColvalue=L"";
 	
-for(int fcount=rows_count;fcount>-1;fcount--)
+   for(int fcount=rows_count;fcount>-1;fcount--)
 
    {
 	

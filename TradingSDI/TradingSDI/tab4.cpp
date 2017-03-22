@@ -65,13 +65,14 @@ BOOL tab4::OnInitDialog()
 
 void tab4::OnBnClickedOk()
 {
+	CString selected_code=L"";
 	int item_no=m_clientcombo.GetCurSel();
-
+	m_clientcombo.GetWindowTextW(selected_code);
 	if (item_no!=-1)
     {
-		m_clientcombo.GetLBText(item_no,(LPTSTR)GridTradeAndOrder::m_selected_login);
+		m_clientcombo.GetLBText(item_no,selected_code);
 	}
 	 
-	Balance_Grid.GetData(GridTradeAndOrder::m_selected_login);
+	Balance_Grid.GetData((LPCTSTR)selected_code);
 	Balance_Grid.RedrawAll();
 }

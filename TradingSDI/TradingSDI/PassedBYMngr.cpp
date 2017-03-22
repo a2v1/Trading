@@ -239,7 +239,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 
 			
 			hold_filtrVal.Format(L"%d",m_st_Netposition.Deal );
-			col_row_val[5]=hold_filtrVal  ;
+			col_row_val[5]=hold_filtrVal;
 			if (CPassedBYMngr::col5_val.Trim().GetLength()>0)
 			{
 				col_row_val[5]=col_row_val[5].Mid(0,CPassedBYMngr::col5_val.Trim().GetLength());
@@ -269,7 +269,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 			}
 
 		
-			hold_filtrVal.Format(L"%.2f",m_st_Netposition.Price );
+			hold_filtrVal.Format(L"%.4f",m_st_Netposition.Price );
 			col_row_val[9]=hold_filtrVal;
 			if (CPassedBYMngr::col9_val.Trim().GetLength()>0)
 			{
@@ -333,7 +333,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 	
 
 	int val_type=0;
-	if (col_click==0||col_click==1)
+	if (col_click==1||col_click==2)
 	{
 		val_type=0;
 	}
@@ -351,7 +351,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 			{
 				if (val_type==0)
 				{
-					if (col_click==0)
+					if (col_click==1)
 					{
 						if (wcscmp(first_st.Section ,next_st.Section )>0)
 						{
@@ -360,7 +360,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Section ,swap_st.Section );							
 						}
 					}
-					if (col_click==1)
+					if (col_click==2)
 					{
 						if (wcscmp(first_st.Login  ,next_st.Login  )>0)
 						{
@@ -372,7 +372,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 				}
 				else
 				{
-					if (col_click==2)
+					if (col_click==3)
 					{															
 						double d_val1=first_st.Order ;															
 						double d_val2=next_st.Order;						
@@ -384,7 +384,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 						}
 					}
 					//Order_In_Time
-					if (col_click==3)
+					if (col_click==4)
 					{															
 						if (wcscmp(first_st.Order_In_Time  ,next_st.Order_In_Time  )>0)
 						{
@@ -393,7 +393,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Order_In_Time  ,swap_st.Order_In_Time );							
 						}
 					}
-					if (col_click==4)
+					if (col_click==5)
 					{															
 						int d_val1=first_st.Deal ;															
 						int d_val2=next_st.Deal;						
@@ -404,7 +404,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							first_st.Deal =swap_st.Deal ;							
 						}
 					}
-					if (col_click==5)
+					if (col_click==6)
 					{															
 						if (wcscmp(first_st.Symbol  ,next_st.Symbol  )>0)
 						{
@@ -413,7 +413,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Symbol  ,swap_st.Symbol );							
 						}
 					}
-					if (col_click==6)
+					if (col_click==7)
 					{															
 						if (wcscmp(first_st.Type1  ,next_st.Type1  )>0)
 						{
@@ -422,7 +422,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Type1  ,swap_st.Type1 );							
 						}
 					}
-					if (col_click==7)
+					if (col_click==8)
 					{															
 						double d_val1=first_st.Volume  ;															
 						double d_val2=next_st.Volume;
@@ -433,7 +433,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							first_st.Volume =swap_st.Volume;							
 						}
 					}
-					if (col_click==8)
+					if (col_click==9)
 					{															
 						double d_val1=first_st.Price   ;															
 						double d_val2=next_st.Price;
@@ -444,7 +444,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							first_st.Price =swap_st.Price;					
 						}
 					}
-					if (col_click==9)
+					if (col_click==10)
 					{															
 						if (wcscmp(first_st.Comment  ,next_st.Comment  )>0)
 						{
@@ -453,7 +453,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Comment  ,swap_st.Comment );							
 						}
 					}
-					if (col_click==10)
+					if (col_click==11)
 					{															
 						if (wcscmp(first_st.Status  ,next_st.Status  )>0)
 						{
@@ -462,7 +462,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Status  ,swap_st.Status );							
 						}
 					}
-					if (col_click==11)
+					if (col_click==12)
 					{															
 						if (wcscmp(first_st.Type  ,next_st.Type  )>0)
 						{
@@ -471,13 +471,22 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Type  ,swap_st.Type );							
 						}
 					}
-					if (col_click==12)
+					if (col_click==13)
 					{															
 						if (wcscmp(first_st.SubType  ,next_st.SubType  )>0)
 						{
 							m_st_Dealing_Grid_array.Shift(j,i-j);
 							swap_st=m_st_Dealing_Grid_array[i];
 							CMTStr::Copy(first_st.SubType  ,swap_st.SubType );							
+						}
+					}
+					if (col_click==14)
+					{															
+						if (wcscmp(first_st.PassedTime  ,next_st.PassedTime  )>0)
+						{
+							m_st_Dealing_Grid_array.Shift(j,i-j);
+							swap_st=m_st_Dealing_Grid_array[i];
+							CMTStr::Copy(first_st.PassedTime  ,swap_st.PassedTime );							
 						}
 					}
 	
@@ -487,7 +496,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 			{
 			if (val_type==0)
 				{
-					if (col_click==0)
+					if (col_click==1)
 					{
 						if (wcscmp(first_st.Section ,next_st.Section )<0)
 						{
@@ -496,7 +505,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Section ,swap_st.Section );							
 						}
 					}
-					if (col_click==1)
+					if (col_click==2)
 					{
 						if (wcscmp(first_st.Login  ,next_st.Login  )<0)
 						{
@@ -508,7 +517,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 				}
 				else
 				{
-					if (col_click==2)
+					if (col_click==3)
 					{															
 						double d_val1=first_st.Order ;															
 						double d_val2=next_st.Order;						
@@ -520,7 +529,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 						}
 					}
 
-					if (col_click==3)
+					if (col_click==4)
 					{															
 						if (wcscmp(first_st.Order_In_Time  ,next_st.Order_In_Time  )<0)
 						{
@@ -529,7 +538,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Order_In_Time  ,swap_st.Order_In_Time );							
 						}
 					}
-					if (col_click==4)
+					if (col_click==5)
 					{															
 						int d_val1=first_st.Deal ;															
 						int d_val2=next_st.Deal;						
@@ -540,7 +549,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							first_st.Deal =swap_st.Deal ;							
 						}
 					}
-					if (col_click==5)
+					if (col_click==6)
 					{															
 						if (wcscmp(first_st.Symbol  ,next_st.Symbol  )<0)
 						{
@@ -549,7 +558,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Symbol  ,swap_st.Symbol );							
 						}
 					}
-					if (col_click==6)
+					if (col_click==7)
 					{															
 						if (wcscmp(first_st.Type1  ,next_st.Type1  )<0)
 						{
@@ -558,7 +567,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Type1  ,swap_st.Type1 );							
 						}
 					}
-					if (col_click==7)
+					if (col_click==8)
 					{															
 						double d_val1=first_st.Volume  ;															
 						double d_val2=next_st.Volume;
@@ -569,7 +578,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							first_st.Volume =swap_st.Volume;							
 						}
 					}
-					if (col_click==8)
+					if (col_click==9)
 					{															
 						double d_val1=first_st.Price   ;															
 						double d_val2=next_st.Price;
@@ -578,15 +587,6 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							m_st_Dealing_Grid_array.Shift(j,i-j);
 							swap_st=m_st_Dealing_Grid_array[i];
 							first_st.Price =swap_st.Price;					
-						}
-					}
-					if (col_click==9)
-					{															
-						if (wcscmp(first_st.Comment  ,next_st.Comment  )<0)
-						{
-							m_st_Dealing_Grid_array.Shift(j,i-j);
-							swap_st=m_st_Dealing_Grid_array[i];
-							CMTStr::Copy(first_st.Comment  ,swap_st.Comment );							
 						}
 					}
 					if (col_click==10)
@@ -600,6 +600,15 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 					}
 					if (col_click==11)
 					{															
+						if (wcscmp(first_st.Comment  ,next_st.Comment  )<0)
+						{
+							m_st_Dealing_Grid_array.Shift(j,i-j);
+							swap_st=m_st_Dealing_Grid_array[i];
+							CMTStr::Copy(first_st.Comment  ,swap_st.Comment );							
+						}
+					}
+					if (col_click==12)
+					{															
 						if (wcscmp(first_st.Type  ,next_st.Type  )<0)
 						{
 							m_st_Dealing_Grid_array.Shift(j,i-j);
@@ -607,13 +616,22 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 							CMTStr::Copy(first_st.Type  ,swap_st.Type );							
 						}
 					}
-					if (col_click==12)
+					if (col_click==13)
 					{															
 						if (wcscmp(first_st.SubType  ,next_st.SubType  )<0)
 						{
 							m_st_Dealing_Grid_array.Shift(j,i-j);
 							swap_st=m_st_Dealing_Grid_array[i];
 							CMTStr::Copy(first_st.SubType  ,swap_st.SubType );							
+						}
+					}
+					if (col_click==14)
+					{															
+						if (wcscmp(first_st.PassedTime  ,next_st.PassedTime  )<0)
+						{
+							m_st_Dealing_Grid_array.Shift(j,i-j);
+							swap_st=m_st_Dealing_Grid_array[i];
+							CMTStr::Copy(first_st.PassedTime  ,swap_st.PassedTime );							
 						}
 					}
 	
@@ -781,7 +799,7 @@ void CPassedBYMngr::OnGetCell(int col,long row,CUGCell *cell)
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.Price);											
+				tmp.Format(L"%.4f",mst_grid.Price);											
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1061,7 +1079,7 @@ void CPassedBYMngr::addItemToCombobox()
 					}
 					if (clocount==9)
 					{						
-						str_val.Format(L"%.2f",m_st_Netposition.Price);
+						str_val.Format(L"%.4f",m_st_Netposition.Price);
 						if (CheckvalueInArray(arr9,str_val)==false  && str_val!=L"")
 						{
 							str[9]=str[9]+str_val+L"\n";										

@@ -517,7 +517,7 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 			{
 				
 				mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
-				CString tmp=mst_grid.m_Standing_Avg_rate       ;
+				CString tmp=mst_grid.m_Standing_Avg_rate;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -528,7 +528,7 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 			{
 				
 				mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
-				CString tmp=mst_grid.m_Sq_Balance       ;
+				CString tmp=mst_grid.m_Sq_Balance ;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -539,7 +539,7 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 			{
 				
 				mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
-				CString tmp=mst_grid.m_pl_volume       ;
+				CString tmp=mst_grid.m_pl_volume;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -2094,7 +2094,7 @@ void NetPosGrid::filter()
 			addItemToCombobox();
 			NetPosGrid::insertFilterFlag=1;
 			InsertRow(0);
-			for (int col_count=0;col_count<18;col_count++)
+			for (int col_count=0;col_count<20;col_count++)
 			{
 				CUGCell cell;
 				int row=0;
@@ -2239,13 +2239,16 @@ void NetPosGrid::addItemToCombobox()
 	CStringArray arr15;
 	CStringArray arr16;
 	CStringArray arr17;
+	CStringArray arr18;
+	CStringArray arr19;
+	CStringArray arr20;
 	NetPosGrid::str_grid_filter.Lock();
 	try
 	{
 		int rows=1;
 		rows=m_NetpositionArray.Total();	
 		CString str_val=L"";	
-		for (int forcount=0;forcount<18;forcount++)
+		for (int forcount=0;forcount<20;forcount++)
 		{
 			str[forcount]=L"ALL\n";		
 		}
@@ -2253,7 +2256,7 @@ void NetPosGrid::addItemToCombobox()
 		{
 			st_Netposition m_st_Netposition={};
 			m_st_Netposition=m_NetpositionArray[forcount];
-			for (int clocount=0;clocount<18;clocount++)
+			for (int clocount=0;clocount<20;clocount++)
 			{											
 					if (clocount==0)
 					{
@@ -2451,10 +2454,40 @@ void NetPosGrid::addItemToCombobox()
 							str[17]=str[17]+str_val+L"\n";										
 							arr17.Add(str_val);
 						}
-					}								
+					}		
+					if (clocount==18)
+					{
+						str_val=m_st_Netposition.m_Standing_Avg_rate;
+						str_val=str_val.Trim();
+						if (CheckvalueInArray(arr18,str_val)==false  && str_val!=L"")
+						{
+							str[18]=str[18]+str_val+L"\n";										
+							arr18.Add(str_val);
+						}
+					}	
+					if (clocount==19)
+					{
+						str_val=m_st_Netposition.m_Sq_Balance;
+						str_val=str_val.Trim();
+						if (CheckvalueInArray(arr19,str_val)==false  && str_val!=L"")
+						{
+							str[19]=str[19]+str_val+L"\n";										
+							arr19.Add(str_val);
+						}
+					}	
+				/*	if (clocount==20)
+					{
+						str_val=m_st_Netposition.m_pl_volume;
+						str_val=str_val.Trim();
+						if (CheckvalueInArray(arr20,str_val)==false  && str_val!=L"")
+						{
+							str[20]=str[20]+str_val+L"\n";										
+							arr20.Add(str_val);
+						}
+					}	*/
 			}												
 		}
-		for(int f=0;f<18;f++)
+		for(int f=0;f<20;f++)
 		{
 			colShorting(f);
 		}
@@ -3362,7 +3395,7 @@ UINT Update_Netposition(LPVOID pParam)
 
 						//str_Average.Format( _T("%.2f"), artists1.m_Average);
 						CMTStr::Copy(mst.m_avg_rate ,artists1.m_Average) ;
-						//str_LastRate.Format( _T("%.2f"), artists1.m_LastRate);
+						//str_LastRate.Format( _T("%.4f"), artists1.m_LastRate);
 						CMTStr::Copy(mst.m_last_rate ,artists1.m_LastRate);
 						//str_PL.Format( _T("%.2f"), artists1.m_PL);
 						CMTStr::Copy(mst.m_Floating_Profit ,artists1.m_PL) ;
@@ -3382,11 +3415,11 @@ UINT Update_Netposition(LPVOID pParam)
 						CMTStr::Copy(mst.m_Alloted_Limit ,artists1.m_Alloted_Limit);
 						CMTStr::Copy(mst.m_Remark2 ,artists1.m_Remark2) ;
 
-						//str_Standing_Avg_rate.Format( _T("%.2f"), artists1.m_Standing_Avg_rate);
+						//str_Standing_Avg_rate.Format( _T("%.4f"), artists1.m_Standing_Avg_rate);
 						CMTStr::Copy(mst.m_Standing_Avg_rate ,artists1.m_Standing_Avg_rate);
 						//str_SQ_Balance.Format( _T("%.2f"), artists1.m_SQ_Balance);
 						CMTStr::Copy(mst.m_Sq_Balance , artists1.m_SQ_Balance);
-						//str_pl_volume.Format( _T("%.2f"), artists1.m_pl_volume);
+						//str_pl_volume.Format( _T("%.4f"), artists1.m_pl_volume);
 						CMTStr::Copy(mst.m_pl_volume ,artists1.m_pl_volume);
 						NetPosGrid::m_NetpositionArray.Add(&mst);				
 				  }
@@ -3511,8 +3544,11 @@ UINT Update_Netposition(LPVOID pParam)
 					col_row_val[17]=col_row_val[17].Mid(0,NetPosGrid::col17_val.Trim().GetLength());
 				}
 
-				col_row_val[18]=m_st_Netposition.m_Standing_Avg_rate;
-				if (NetPosGrid::col18_val.Trim().GetLength()>0)
+				/*CString str_convert=L"";
+				str_convert.Format(_T("%.4f"),m_st_Netposition.m_Standing_Avg_rate);*/
+
+				col_row_val[18]=m_st_Netposition.m_Standing_Avg_rate;	
+                if (NetPosGrid::col18_val.Trim().GetLength()>0)
 				{
 					col_row_val[18]=col_row_val[18].Mid(0,NetPosGrid::col18_val.Trim().GetLength());
 				}
@@ -3529,7 +3565,7 @@ UINT Update_Netposition(LPVOID pParam)
 					col_row_val[20]=col_row_val[20].Mid(0,NetPosGrid::col20_val.Trim().GetLength());
 				}
 		
-				if((NetPosGrid::col0_val.Trim()==col_row_val[0].Trim() || NetPosGrid::col0_val.Trim()==L"ALL"||NetPosGrid::col0_val.Trim()==L"") && (NetPosGrid::col1_val.Trim()==col_row_val[1].Trim() || NetPosGrid::col1_val.Trim()==L"ALL"||NetPosGrid::col1_val.Trim()==L"") && (NetPosGrid::col2_val.Trim()==col_row_val[2].Trim() || NetPosGrid::col2_val.Trim()==L"ALL"||NetPosGrid::col2_val.Trim()==L"")  && (bool_col3==true  || NetPosGrid::col3_val.Trim()==L"ALL"||NetPosGrid::col3_val.Trim()==L"")  && (bool_col4==true  ||  NetPosGrid::col4_val.Trim()==L"ALL"||NetPosGrid::col4_val.Trim()==L"")   && (bool_col5==true || NetPosGrid::col5_val.Trim()==L"ALL"||NetPosGrid::col5_val.Trim()==L"")   && (bool_col6==true || NetPosGrid::col6_val.Trim()==L"ALL"||NetPosGrid::col6_val.Trim()==L"")   && (bool_col7==true || NetPosGrid::col7_val.Trim()==L"ALL"||NetPosGrid::col7_val.Trim()==L"")   && (bool_col8==true || NetPosGrid::col8_val.Trim()==L"ALL"||NetPosGrid::col8_val.Trim()==L"") && (bool_col9==true || NetPosGrid::col9_val==L"ALL"||NetPosGrid::col9_val==L"") &&(NetPosGrid::col10_val==col_row_val[10] || NetPosGrid::col10_val==L"ALL"||NetPosGrid::col10_val==L"")&&(NetPosGrid::col11_val==col_row_val[11] || NetPosGrid::col11_val==L"ALL"||NetPosGrid::col11_val==L"")&&(NetPosGrid::col12_val==col_row_val[12] || NetPosGrid::col12_val==L"ALL"||NetPosGrid::col12_val==L"") &&(NetPosGrid::col13_val==col_row_val[13] || NetPosGrid::col13_val==L"ALL"||NetPosGrid::col13_val==L"")&&(NetPosGrid::col14_val==col_row_val[14] || NetPosGrid::col14_val==L"ALL"||NetPosGrid::col14_val==L"")&&(NetPosGrid::col15_val==col_row_val[15] || NetPosGrid::col15_val==L"ALL"||NetPosGrid::col15_val==L"")&&(NetPosGrid::col16_val==col_row_val[16] || NetPosGrid::col16_val==L"ALL"||NetPosGrid::col16_val==L"")&&(NetPosGrid::col17_val==col_row_val[17] || NetPosGrid::col17_val==L"ALL"||NetPosGrid::col17_val==L"")&&(NetPosGrid::col18_val==col_row_val[17] || NetPosGrid::col18_val==L"ALL"||NetPosGrid::col18_val==L"")&&(NetPosGrid::col19_val==col_row_val[17] || NetPosGrid::col19_val==L"ALL"||NetPosGrid::col19_val==L"")&&(NetPosGrid::col20_val==col_row_val[17] || NetPosGrid::col20_val==L"ALL"||NetPosGrid::col20_val==L""))
+				if((NetPosGrid::col0_val.Trim()==col_row_val[0].Trim() || NetPosGrid::col0_val.Trim()==L"ALL"||NetPosGrid::col0_val.Trim()==L"") && (NetPosGrid::col1_val.Trim()==col_row_val[1].Trim() || NetPosGrid::col1_val.Trim()==L"ALL"||NetPosGrid::col1_val.Trim()==L"") && (NetPosGrid::col2_val.Trim()==col_row_val[2].Trim() || NetPosGrid::col2_val.Trim()==L"ALL"||NetPosGrid::col2_val.Trim()==L"")  && (bool_col3==true  || NetPosGrid::col3_val.Trim()==L"ALL"||NetPosGrid::col3_val.Trim()==L"")  && (bool_col4==true  ||  NetPosGrid::col4_val.Trim()==L"ALL"||NetPosGrid::col4_val.Trim()==L"")   && (bool_col5==true || NetPosGrid::col5_val.Trim()==L"ALL"||NetPosGrid::col5_val.Trim()==L"")   && (bool_col6==true || NetPosGrid::col6_val.Trim()==L"ALL"||NetPosGrid::col6_val.Trim()==L"")   && (bool_col7==true || NetPosGrid::col7_val.Trim()==L"ALL"||NetPosGrid::col7_val.Trim()==L"")   && (bool_col8==true || NetPosGrid::col8_val.Trim()==L"ALL"||NetPosGrid::col8_val.Trim()==L"") && (bool_col9==true || NetPosGrid::col9_val==L"ALL"||NetPosGrid::col9_val==L"") &&(NetPosGrid::col10_val==col_row_val[10] || NetPosGrid::col10_val==L"ALL"||NetPosGrid::col10_val==L"")&&(NetPosGrid::col11_val==col_row_val[11] || NetPosGrid::col11_val==L"ALL"||NetPosGrid::col11_val==L"")&&(NetPosGrid::col12_val==col_row_val[12] || NetPosGrid::col12_val==L"ALL"||NetPosGrid::col12_val==L"") &&(NetPosGrid::col13_val==col_row_val[13] || NetPosGrid::col13_val==L"ALL"||NetPosGrid::col13_val==L"")&&(NetPosGrid::col14_val==col_row_val[14] || NetPosGrid::col14_val==L"ALL"||NetPosGrid::col14_val==L"")&&(NetPosGrid::col15_val==col_row_val[15] || NetPosGrid::col15_val==L"ALL"||NetPosGrid::col15_val==L"")&&(NetPosGrid::col16_val==col_row_val[16] || NetPosGrid::col16_val==L"ALL"||NetPosGrid::col16_val==L"")&&(NetPosGrid::col17_val==col_row_val[17] || NetPosGrid::col17_val==L"ALL"||NetPosGrid::col17_val==L"")&&(NetPosGrid::col18_val==col_row_val[18] || NetPosGrid::col18_val==L"ALL"||NetPosGrid::col18_val==L"")&&(NetPosGrid::col19_val==col_row_val[19] || NetPosGrid::col19_val==L"ALL"||NetPosGrid::col19_val==L"")&&(NetPosGrid::col20_val==col_row_val[20] || NetPosGrid::col20_val==L"ALL"||NetPosGrid::col20_val==L""))
 				{						
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_login,m_st_Netposition.m_login);				
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_Name ,m_st_Netposition.m_Name) ;
@@ -3827,6 +3863,8 @@ UINT Update_Netposition(LPVOID pParam)
 					col_row_val[17]=col_row_val[17].Mid(0,NetPosGrid::col17_val.Trim().GetLength());
 				}
 
+				/*CString str_convert=L"";
+				str_convert.Format(_T("%.4f"),m_st_Netposition.m_Standing_Avg_rate);*/
 				col_row_val[18]=m_st_Netposition.m_Standing_Avg_rate;
 				if (NetPosGrid::col18_val.Trim().GetLength()>0)
 				{

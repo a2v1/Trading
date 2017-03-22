@@ -777,7 +777,7 @@ void CCodesChanged::OnTimer(UINT nIDEvent)
 			col_row_val[7]=col_row_val[7].Mid(0,CCodesChanged::col7_val.Trim().GetLength());
 		}
 
-		str_Order.Format(L"%.2f",m_st_Netposition.Price );
+		str_Order.Format(L"%.4f",m_st_Netposition.Price );
 		col_row_val[8]=str_Order;
 		if (CCodesChanged::col8_val.Trim().GetLength()>0)
 		{
@@ -832,7 +832,7 @@ void CCodesChanged::OnTimer(UINT nIDEvent)
 			col_row_val[15]=col_row_val[15].Mid(0,CCodesChanged::col15_val.Trim().GetLength());
 		}	
 
-		str_Order.Format(L"%.2f",m_st_Netposition.Price1 );
+		str_Order.Format(L"%.4f",m_st_Netposition.Price1 );
 		col_row_val[16]=str_Order;
 		if (CCodesChanged::col16_val.Trim().GetLength()>0)
 		{
@@ -1404,7 +1404,7 @@ void CCodesChanged::OnGetCell(int col,long row,CUGCell *cell)
 				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.Price);											
+				tmp.Format(L"%.4f",mst_grid.Price);											
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1495,7 +1495,7 @@ void CCodesChanged::OnGetCell(int col,long row,CUGCell *cell)
 				double m_deal=mst_grid.Price1 ;
 
 				CString tmp=L"" ;
-				tmp.Format(L"%.2f",m_deal);
+				tmp.Format(L"%.4f",m_deal);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1729,7 +1729,7 @@ void CCodesChanged::addItemToCombobox()
 					}
 					if (clocount==8)
 					{						
-						str_val.Format(L"%.2f",m_st_Netposition.Price);
+						str_val.Format(L"%.4f",m_st_Netposition.Price);
 						if (CheckvalueInArray(arr8,str_val)==false  && str_val!=L"")
 						{
 							str[8]=str[8]+str_val+L"\n";										
@@ -1815,7 +1815,7 @@ void CCodesChanged::addItemToCombobox()
 					if (clocount==16)
 					{
 						double  u_deal=m_st_Netposition.Price1  ;
-						str_val.Format(L"%.2f",u_deal );
+						str_val.Format(L"%.4f",u_deal );
 						str_val=str_val.Trim();
 						if (CheckvalueInArray(arr16,str_val)==false  && str_val!=L"")
 						{
