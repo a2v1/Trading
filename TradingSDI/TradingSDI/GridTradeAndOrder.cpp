@@ -195,8 +195,8 @@ UINT update_data_Trade(void *pParam)
 				 {									
                     LPTSTR endPtr;
 				    double d_m_PL = _tcstod(artists1.m_Price, &endPtr);												
-					CString cstrpl;
-					cstrpl.Format(_T("%.2f"),d_m_PL);	
+					CString str_price=L"";
+					str_price.Format(_T("%.4f"),d_m_PL);	
 
 					CString cstr_Symbol=artists1.m_Symbol;
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Symbol ,cstr_Symbol);				 					
@@ -215,7 +215,7 @@ UINT update_data_Trade(void *pParam)
 					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Volume ,cstr_Volume);	
 
 					
-					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Price,cstrpl) ;
+					CMTStr::Copy(GridTradeAndOrder::m_st_Dealing.Price,str_price) ;
 
 
 					double d_Current_Rate = _tcstod(artists1.m_Current_Rate, &endPtr);																						

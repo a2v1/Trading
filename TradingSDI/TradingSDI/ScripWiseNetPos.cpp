@@ -456,7 +456,7 @@ int ScripWiseNetPos::OnDropList(long ID,int col,long row,long msg,long param)
 {
 	if (msg==103)
 	{
-		if(ScripWiseNetPos::insertFilterFlag==1 && row==0)
+	if(ScripWiseNetPos::insertFilterFlag==1 && row==0)
 	{
 		ScripWiseNetPos::filter_break=1;
 		check_First==0;
@@ -904,7 +904,7 @@ void ScripWiseNetPos::gridFilter(int colno,int rows_count,CString col_value)
 		
 	CString getColvalue=L"";
 	
-for(int fcount=rows_count-1;fcount>0;fcount--)
+  for(int fcount=rows_count-1;fcount>0;fcount--)
 
    {
 	

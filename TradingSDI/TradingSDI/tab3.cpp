@@ -32,6 +32,7 @@ void tab3::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(tab3, CDialogEx)
 	ON_BN_CLICKED(IDOK, &tab3::OnBnClickedOk)
 	ON_WM_CLOSE()
+	//ON_BN_CLICKED(IDCANCEL, &tab3::OnBnClickedCancel)
 END_MESSAGE_MAP()
 
 
@@ -66,12 +67,20 @@ BOOL tab3::OnInitDialog()
 void tab3::OnBnClickedOk()
 {
 	int item_no=m_ClientCode.GetCurSel();
-
+	CString selected_code=L"";
+	m_ClientCode.GetWindowTextW(selected_code);
     if (item_no!=-1)
     {
-		 m_ClientCode.GetLBText(item_no,(LPTSTR)GridTradeAndOrder::m_selected_login);
+		 m_ClientCode.GetLBText(item_no,selected_code);
 	}
 	 
-	posEntryGrid.Getdata((LPTSTR)GridTradeAndOrder::m_selected_login);
+	posEntryGrid.Getdata((LPCTSTR)selected_code);
     posEntryGrid.RedrawAll(); 
+}
+
+
+void tab3::OnBnClickedCancel()
+{
+	// TODO: Add your control notification handler code here
+	//CDialogEx::OnCancel();
 }

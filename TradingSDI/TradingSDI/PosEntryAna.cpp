@@ -210,7 +210,7 @@ void PosEntryAna::Getdata(_bstr_t m_login)
 				LPTSTR endPtr;
 				double d_price = _tcstod(artists1.m_EntryPrice, &endPtr);												
 				CString price;
-				price.Format(_T("%.2f"),d_price);	
+				price.Format(_T("%.4f"),d_price);	
 				PosEntryAna::st_grid_anlysis m_st={};
 			
 				CMTStr::Copy(m_st.m_deal ,artists1.m_deal);

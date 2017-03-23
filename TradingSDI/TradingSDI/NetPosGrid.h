@@ -314,7 +314,7 @@ public:
 	//afx_msg void OnTimer( UINT nIDEvent );
 
 	
-	CString str[18];
+	CString str[20];
 	
 	int	m_nSpinIndex;
 	int run_check;

@@ -1541,11 +1541,11 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 			 
 			LPTSTR endPtr;
 			double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
-			CString cstrpl;
-			cstrpl.Format(_T("%.2f"),d_m_PL);	
+			CString price=L"";
+			price.Format(_T("%.4f"),d_m_PL);	
 
 			double d_volume = _tcstod(artists1.m_volume, &endPtr);												
-			CString vulume;
+			CString vulume=L"";
 			vulume.Format(_T("%.2f"),d_volume);	
 
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_CommentYN ,artists1.m_CommentYN);
@@ -1556,7 +1556,7 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_Type,artists1.m_Type);
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_volume,vulume);
 		
-            CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_price,cstrpl);
+            CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_price,price);
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_comment,artists1.m_comment);
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_OurComment,artists1.m_OurComment);
 			CMTStr::Copy(Grid_CheckTrade::m_st_grid_check.m_Checked,artists1.m_Checked);

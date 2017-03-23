@@ -219,10 +219,10 @@ void BalanceAnaGrid::GetData(_bstr_t m_login)
 				CString low=L"";
 
 				double d_price = _tcstod(artists1.m_EntryPrice, &endPtr);												
-				price.Format(_T("%.2f"),d_price);	
+				price.Format(_T("%.4f"),d_price);	
 
 				double d_exit_price = _tcstod(artists1.m_ExitPrice, &endPtr);												
-				exit_price.Format(_T("%.2f"),d_exit_price);
+				exit_price.Format(_T("%.4f"),d_exit_price);
 
 				double d_ProfitPoint_L = _tcstod(artists1.m_ProfitPoint_L, &endPtr);												
 				ProfitPoint_L.Format(_T("%.2f"),d_ProfitPoint_L);
@@ -246,10 +246,10 @@ void BalanceAnaGrid::GetData(_bstr_t m_login)
 				DurationTime.Format(_T("%.2f"),d_DurationTime);
 
 				double d_high = _tcstod(artists1.m_high, &endPtr);												
-				high.Format(_T("%.2f"),d_high);
+				high.Format(_T("%.4f"),d_high);
 
 				double d_low = _tcstod(artists1.m_low, &endPtr);												
-				low.Format(_T("%.2f"),d_low);
+				low.Format(_T("%.4f"),d_low);
 				
 				BalanceAnaGrid::st_grid_balanalysis m_st={};
 			
