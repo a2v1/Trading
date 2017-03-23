@@ -879,7 +879,7 @@ int OrderGrid::OnDropList(long ID,int col,long row,long msg,long param)
 		}
 
 	}
-	return true;
+	return TRUE;
 }
 
 
@@ -988,7 +988,7 @@ int OrderGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL can
 			_bstr_t strCommand="";
 			strCommand="Orderno_check_UPDATE '" + b_strord + "','" + b_strComment_enter + "','" + b_strchecked + "' , '" + b_strTYPE + "', '" + b_strsubtype + "', '" + b_strorderno_2 + "', '" + b_strtrade_time + "'";
 			char* strCommand_char=(char*)strCommand;
-			hrn=cmd.Open(session_update,strCommand_char);							 			 		 				 	
+			hrn=cmd.Open(session_update,strCommand_char);						 			 		 				 	
 			cmd.Close();
 		}
 
@@ -1195,7 +1195,7 @@ int OrderGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL can
 					col15_val=L"ALL";					
 				}
 			}
-			}
+		}
 	return TRUE;
 }
 
@@ -1587,7 +1587,7 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				Cell11_text=Cell11_text.MakeUpper();
 				if (wcscmp(Cell11_text,L"ORDER")==0)
 				{
-					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\n");
+					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 					SetColDefault( 12, &MYcell);
 				}
 				if (wcscmp(Cell11_text,L"TIME")==0)

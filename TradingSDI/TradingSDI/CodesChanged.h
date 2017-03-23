@@ -16,7 +16,8 @@ public:
 	CWinThread* m_pThreads;
 	CString str[18];
 
-	int col_click,a_d;
+	static int col_click;
+	static int a_d;
 
 	struct st_Dealing
 	{		 		

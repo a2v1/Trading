@@ -1282,11 +1282,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col0_val=strval;					
+					col0_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col0_val=L"ALL";					
+					col0_val=L"ALL";					
 				}
 			}
 
@@ -1295,11 +1295,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col1_val=strval;					
+					col1_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col1_val=L"ALL";					
+				    col1_val=L"ALL";					
 				}
 			}
 
@@ -1307,11 +1307,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col2_val=strval;					
+					col2_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col2_val=L"ALL";					
+					col2_val=L"ALL";					
 				}
 			}
 
@@ -1319,11 +1319,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col3_val=strval;					
+					col3_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col3_val=L"ALL";					
+					col3_val=L"ALL";					
 				}
 			}
 
@@ -1331,11 +1331,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col4_val=strval;					
+					col4_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col4_val=L"ALL";					
+					col4_val=L"ALL";					
 				}
 			}
 
@@ -1343,11 +1343,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col5_val=strval;					
+					col5_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col5_val=L"ALL";					
+					col5_val=L"ALL";					
 				}
 			}
 
@@ -1355,11 +1355,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col6_val=strval;					
+					col6_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col6_val=L"ALL";					
+					col6_val=L"ALL";					
 				}
 			}
 
@@ -1367,11 +1367,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col7_val=strval;					
+					col7_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col7_val=L"ALL";					
+					col7_val=L"ALL";					
 				}
 			}
 
@@ -1379,11 +1379,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col8_val=strval;					
+					col8_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col8_val=L"ALL";					
+					col8_val=L"ALL";					
 				}
 			}
 
@@ -1391,11 +1391,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col9_val=strval;					
+					col9_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col9_val=L"ALL";					
+					col9_val=L"ALL";					
 				}
 			}
 
@@ -1403,11 +1403,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col10_val=strval;					
+					col10_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col10_val=L"ALL";					
+					col10_val=L"ALL";					
 				}
 			}
 
@@ -1415,11 +1415,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col11_val=strval;					
+					col11_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col11_val=L"ALL";					
+					col11_val=L"ALL";					
 				}
 			}
 
@@ -1427,11 +1427,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col12_val=strval;					
+					col12_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col12_val=L"ALL";					
+					col12_val=L"ALL";					
 				}
 			}
 
@@ -1439,11 +1439,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col13_val=strval;					
+					col13_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col13_val=L"ALL";					
+					col13_val=L"ALL";					
 				}
 			}
 
@@ -1451,11 +1451,11 @@ int CPassedBYMngr::OnDropList(long ID,int col,long row,long msg,long param)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col14_val=strval;					
+					col14_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col14_val=L"ALL";					
+					col14_val=L"ALL";					
 				}
 			}
         }
@@ -1473,7 +1473,7 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			CString  strval=L"";
 			CUGCell cell;
 			GetCell(col,row,&cell);
-			strval=cell.GetText();	
+			strval=string;	
 		}
 
 		if(CPassedBYMngr::insertFilterFlag==1 && row==0 )
@@ -1481,17 +1481,18 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			
 			CString  strval=L"";
 			CUGCell cell;
+			QuickSetText(col,row,string);
 			GetCell(col,row,&cell);
 			strval=cell.GetText();	
 			if(col==0)
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col0_val=strval;					
+					col0_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col0_val=L"ALL";					
+					col0_val=L"ALL";					
 				}
 			}
 
@@ -1500,11 +1501,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col1_val=strval;					
+					col1_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col1_val=L"ALL";					
+				    col1_val=L"ALL";					
 				}
 			}
 
@@ -1512,11 +1513,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col2_val=strval;					
+					col2_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col2_val=L"ALL";					
+					col2_val=L"ALL";					
 				}
 			}
 
@@ -1524,11 +1525,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col3_val=strval;					
+					col3_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col3_val=L"ALL";					
+					col3_val=L"ALL";					
 				}
 			}
 
@@ -1536,11 +1537,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col4_val=strval;					
+					col4_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col4_val=L"ALL";					
+					col4_val=L"ALL";					
 				}
 			}
 
@@ -1548,11 +1549,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col5_val=strval;					
+					col5_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col5_val=L"ALL";					
+					col5_val=L"ALL";					
 				}
 			}
 
@@ -1560,11 +1561,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col6_val=strval;					
+					col6_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col6_val=L"ALL";					
+					col6_val=L"ALL";					
 				}
 			}
 
@@ -1572,11 +1573,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col7_val=strval;					
+					col7_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col7_val=L"ALL";					
+					col7_val=L"ALL";					
 				}
 			}
 
@@ -1584,11 +1585,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col8_val=strval;					
+					col8_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col8_val=L"ALL";					
+					col8_val=L"ALL";					
 				}
 			}
 
@@ -1596,11 +1597,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col9_val=strval;					
+					col9_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col9_val=L"ALL";					
+					col9_val=L"ALL";					
 				}
 			}
 
@@ -1608,11 +1609,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col10_val=strval;					
+					col10_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col10_val=L"ALL";					
+					col10_val=L"ALL";					
 				}
 			}
 
@@ -1620,11 +1621,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col11_val=strval;					
+					col11_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col11_val=L"ALL";					
+					col11_val=L"ALL";					
 				}
 			}
 
@@ -1632,11 +1633,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col12_val=strval;					
+					col12_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col12_val=L"ALL";					
+					col12_val=L"ALL";					
 				}
 			}
 
@@ -1644,11 +1645,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col13_val=strval;					
+					col13_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col13_val=L"ALL";					
+					col13_val=L"ALL";					
 				}
 			}
 
@@ -1656,11 +1657,11 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			{
 				if (strval!=L"")
 				{
-					CPassedBYMngr::col14_val=strval;					
+					col14_val=strval;					
 				}
 				else
 				{
-					CPassedBYMngr::col14_val=L"ALL";					
+					col14_val=L"ALL";					
 				}
 			}
         }
