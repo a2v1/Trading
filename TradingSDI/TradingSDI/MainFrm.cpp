@@ -1552,7 +1552,7 @@ void CMainFrame::OnUpdatecomment()
 void CMainFrame::OnActivateorder()
 {
 	// TODO: Add your command handler code here
-	COutputWnd::m_wndOutputOrder.Selected_ActivateOrder();
+	COutputWnd::m_wndOutputOrder.Selected_ActivateOrder(); 
 }
 
 void CMainFrame::OnUpdateTotalvalue(CCmdUI *pCmdUI)
