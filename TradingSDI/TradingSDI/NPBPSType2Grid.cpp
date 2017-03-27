@@ -149,8 +149,8 @@ void CNPBPSType2Grid::OnSheetSetup(int sheetNumber)
 			
 	SetNumberCols(18);
 
-	QuickSetText(0,-1,L"Type2");
-	SetColWidth(0,140);
+	QuickSetText(0,-1,L"Type");
+	SetColWidth(0,70);
 	QuickSetText(1,-1,L"Login");
 	SetColWidth(1,70);
 	QuickSetText(2,-1,L"Order#");	
@@ -176,7 +176,7 @@ void CNPBPSType2Grid::OnSheetSetup(int sheetNumber)
 	QuickSetText(12,-1,L"SubType");
 	SetColWidth(12,60);
     QuickSetText(13,-1,L"Trade_Happen_Time");
-	SetColWidth(13,70);
+	SetColWidth(13,140);
 	QuickSetText(14,-1,L"Open");
 	SetColWidth(14,80);			
 	QuickSetText(15,-1,L"High");
@@ -194,6 +194,28 @@ void CNPBPSType2Grid::OnSheetSetup(int sheetNumber)
 	{
 		QuickSetFont(i, -1, 1);
 	}	
+}
+void CNPBPSType2Grid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
+{
+	CUGCell cell;
+	GetCell(col,row,&cell);
+	int nCellTypeIndex = cell.GetCellType();
+	int nParam = cell.GetParam();
+	CString string;
+	if(cell.GetLabelText() != NULL)
+		string = cell.GetLabelText();
+
+	if(processed){
+		if(cell.GetCellType() == m_nSpinIndex)
+			return ;
+	}
+
+	if(nParam == CELLTYPE_IS_EDITABLE || string == "CELLTYPE_IS_EDITABLE")
+	{
+		StartEdit();
+	}
+	
+
 }
 int CNPBPSType2Grid::OnDropList(long ID,int col,long row,long msg,long param)
 {
@@ -434,6 +456,247 @@ int CNPBPSType2Grid::OnDropList(long ID,int col,long row,long msg,long param)
 	return true;
 
 }
+int CNPBPSType2Grid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL cancelFlag)
+{
+    	if(CNPBPSType2Grid::insertFilterFlag==1 && row==0)
+		{
+			CString  strval=L"";
+			CUGCell cell;
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+		}
+
+		if(CNPBPSType2Grid::insertFilterFlag==1 && row==0 )
+		{
+			
+			CString  strval=L"";
+			CUGCell cell;
+			QuickSetText(col,row,string);
+			GetCell(col,row,&cell);
+			strval=cell.GetText();	
+			strval=string;
+
+			if(col==0)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col0_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col0_val=L"ALL";					
+				}
+			}
+
+
+			if(col==1)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col1_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col1_val=L"ALL";					
+				}
+			}
+
+			if(col==2)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col2_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col2_val=L"ALL";					
+				}
+			}
+
+			if(col==3)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col3_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col3_val=L"ALL";					
+				}
+			}
+
+			if(col==4)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col4_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col4_val=L"ALL";					
+				}
+			}
+
+			if(col==5)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col5_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col5_val=L"ALL";					
+				}
+			}
+
+			if(col==6)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col6_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col6_val=L"ALL";					
+				}
+			}
+
+			if(col==7)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col7_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col7_val=L"ALL";					
+				}
+			}
+
+			if(col==8)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col8_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col8_val=L"ALL";					
+				}
+			}
+
+			if(col==9)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col9_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col9_val=L"ALL";					
+				}
+			}
+
+			if(col==10)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col10_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col10_val=L"ALL";					
+				}
+			}
+
+			if(col==11)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col11_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col11_val=L"ALL";					
+				}
+			}
+
+			if(col==12)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col12_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col12_val=L"ALL";					
+				}
+			}
+
+			if(col==13)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col13_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col13_val=L"ALL";					
+				}
+			}
+
+			if(col==14)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col14_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col14_val=L"ALL";					
+				}
+			}
+
+			if(col==15)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col15_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col15_val=L"ALL";					
+				}
+			}
+			if(col==16)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col16_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col16_val=L"ALL";					
+				}
+			}
+			if(col==17)
+			{
+				if (strval!=L"")
+				{
+					CNPBPSType2Grid::col17_val=strval;					
+				}
+				else
+				{
+					CNPBPSType2Grid::col17_val=L"ALL";					
+				}
+			}
+		}
+	
+
+   
+	return true;
+
+}
 
 
 void CNPBPSType2Grid::OnTimer(UINT nIDEvent)
@@ -550,8 +813,7 @@ void CNPBPSType2Grid::OnTimer(UINT nIDEvent)
 		}
 
 		//extended colums
-		str_Order=m_st_Netposition.Trade_Happen_Time ;
-		col_row_val[13]=str_Order ;
+		col_row_val[13]=m_st_Netposition.Trade_Happen_Time ;
 		if (CNPBPSType2Grid::col13_val.Trim().GetLength()>0)
 		{
 			col_row_val[13]=col_row_val[13].Mid(0,CNPBPSType2Grid::col13_val.Trim().GetLength());
@@ -582,7 +844,7 @@ void CNPBPSType2Grid::OnTimer(UINT nIDEvent)
 		}
 		
 
-		if((CNPBPSType2Grid::col0_val.Trim()==col_row_val[0].Trim() || CNPBPSType2Grid::col0_val.Trim()==L"ALL"||CNPBPSType2Grid::col0_val.Trim()==L"") && (CNPBPSType2Grid::col1_val.Trim()==col_row_val[1].Trim() || CNPBPSType2Grid::col1_val.Trim()==L"ALL"||CNPBPSType2Grid::col1_val.Trim()==L"") && (CNPBPSType2Grid::col2_val.Trim()==col_row_val[2].Trim() || CNPBPSType2Grid::col2_val.Trim()==L"ALL"||CNPBPSType2Grid::col2_val.Trim()==L"")  && (CNPBPSType2Grid::col3_val.Trim()==col_row_val[3].Trim() ||CNPBPSType2Grid::col3_val.Trim()==L"ALL"||CNPBPSType2Grid::col3_val.Trim()==L"")  && (CNPBPSType2Grid::col4_val.Trim()==col_row_val[4].Trim() || CNPBPSType2Grid::col4_val.Trim()==L"ALL"||CNPBPSType2Grid::col4_val.Trim()==L"")   && (CNPBPSType2Grid::col5_val.Trim()==col_row_val[5].Trim() || CNPBPSType2Grid::col5_val.Trim()==L"ALL"||CNPBPSType2Grid::col5_val.Trim()==L"")   && (CNPBPSType2Grid::col6_val.Trim()==col_row_val[6].Trim() || CNPBPSType2Grid::col6_val.Trim()==L"ALL"||CNPBPSType2Grid::col6_val.Trim()==L"")   && (CNPBPSType2Grid::col7_val.Trim()==col_row_val[7].Trim() || CNPBPSType2Grid::col7_val.Trim()==L"ALL"||CNPBPSType2Grid::col7_val.Trim()==L"")  && (CNPBPSType2Grid::col8_val.Trim()==col_row_val[8].Trim() || CNPBPSType2Grid::col8_val.Trim()==L"ALL"||CNPBPSType2Grid::col8_val.Trim()==L"")&&(CNPBPSType2Grid::col9_val.Trim()==col_row_val[9].Trim() || CNPBPSType2Grid::col9_val.Trim()==L"ALL"||CNPBPSType2Grid::col9_val.Trim()==L"") && (CNPBPSType2Grid::col10_val.Trim()==col_row_val[10].Trim() || CNPBPSType2Grid::col10_val.Trim()==L"ALL"||CNPBPSType2Grid::col10_val.Trim()==L"")&&(CNPBPSType2Grid::col11_val.Trim()==col_row_val[11].Trim() ||CNPBPSType2Grid::col11_val.Trim()==L"ALL"||CNPBPSType2Grid::col11_val.Trim()==L"") && (CNPBPSType2Grid::col12_val.Trim()==col_row_val[12].Trim() ||CNPBPSType2Grid::col12_val.Trim()==L"ALL"||CNPBPSType2Grid::col12_val.Trim()==L"")&& (CNPBPSType2Grid::col0_val.Trim()==col_row_val[13].Trim() || CNPBPSType2Grid::col13_val.Trim()==L"ALL"||CNPBPSType2Grid::col13_val.Trim()==L"")&& (CNPBPSType2Grid::col14_val.Trim()==col_row_val[14].Trim() || CNPBPSType2Grid::col14_val.Trim()==L"ALL"||CNPBPSType2Grid::col14_val.Trim()==L"")&& (CNPBPSType2Grid::col15_val.Trim()==col_row_val[15].Trim() || CNPBPSType2Grid::col15_val.Trim()==L"ALL"||CNPBPSType2Grid::col15_val.Trim()==L"")&& (CNPBPSType2Grid::col16_val.Trim()==col_row_val[16].Trim() ||CNPBPSType2Grid::col16_val.Trim()==L"ALL"||CNPBPSType2Grid::col16_val.Trim()==L"")&& (CNPBPSType2Grid::col17_val.Trim()==col_row_val[17].Trim() || CNPBPSType2Grid::col17_val.Trim()==L"ALL"||CNPBPSType2Grid::col17_val.Trim()==L""))
+		if((CNPBPSType2Grid::col0_val.Trim()==col_row_val[0].Trim() || CNPBPSType2Grid::col0_val.Trim()==L"ALL"||CNPBPSType2Grid::col0_val.Trim()==L"") && (CNPBPSType2Grid::col1_val.Trim()==col_row_val[1].Trim() || CNPBPSType2Grid::col1_val.Trim()==L"ALL"||CNPBPSType2Grid::col1_val.Trim()==L"") && (CNPBPSType2Grid::col2_val.Trim()==col_row_val[2].Trim() || CNPBPSType2Grid::col2_val.Trim()==L"ALL"||CNPBPSType2Grid::col2_val.Trim()==L"")  && (CNPBPSType2Grid::col3_val.Trim()==col_row_val[3].Trim() ||CNPBPSType2Grid::col3_val.Trim()==L"ALL"||CNPBPSType2Grid::col3_val.Trim()==L"")  && (CNPBPSType2Grid::col4_val.Trim()==col_row_val[4].Trim() || CNPBPSType2Grid::col4_val.Trim()==L"ALL"||CNPBPSType2Grid::col4_val.Trim()==L"")   && (CNPBPSType2Grid::col5_val.Trim()==col_row_val[5].Trim() || CNPBPSType2Grid::col5_val.Trim()==L"ALL"||CNPBPSType2Grid::col5_val.Trim()==L"")   && (CNPBPSType2Grid::col6_val.Trim()==col_row_val[6].Trim() || CNPBPSType2Grid::col6_val.Trim()==L"ALL"||CNPBPSType2Grid::col6_val.Trim()==L"")   && (CNPBPSType2Grid::col7_val.Trim()==col_row_val[7].Trim() || CNPBPSType2Grid::col7_val.Trim()==L"ALL"||CNPBPSType2Grid::col7_val.Trim()==L"")  && (CNPBPSType2Grid::col8_val.Trim()==col_row_val[8].Trim() || CNPBPSType2Grid::col8_val.Trim()==L"ALL"||CNPBPSType2Grid::col8_val.Trim()==L"")&&(CNPBPSType2Grid::col9_val.Trim()==col_row_val[9].Trim() || CNPBPSType2Grid::col9_val.Trim()==L"ALL"||CNPBPSType2Grid::col9_val.Trim()==L"") && (CNPBPSType2Grid::col10_val.Trim()==col_row_val[10].Trim() || CNPBPSType2Grid::col10_val.Trim()==L"ALL"||CNPBPSType2Grid::col10_val.Trim()==L"")&&(CNPBPSType2Grid::col11_val.Trim()==col_row_val[11].Trim() ||CNPBPSType2Grid::col11_val.Trim()==L"ALL"||CNPBPSType2Grid::col11_val.Trim()==L"") && (CNPBPSType2Grid::col12_val.Trim()==col_row_val[12].Trim() ||CNPBPSType2Grid::col12_val.Trim()==L"ALL"||CNPBPSType2Grid::col12_val.Trim()==L"")&& (CNPBPSType2Grid::col13_val.Trim()==col_row_val[13].Trim() || CNPBPSType2Grid::col13_val.Trim()==L"ALL"||CNPBPSType2Grid::col13_val.Trim()==L"")&& (CNPBPSType2Grid::col14_val.Trim()==col_row_val[14].Trim() || CNPBPSType2Grid::col14_val.Trim()==L"ALL"||CNPBPSType2Grid::col14_val.Trim()==L"")&& (CNPBPSType2Grid::col15_val.Trim()==col_row_val[15].Trim() || CNPBPSType2Grid::col15_val.Trim()==L"ALL"||CNPBPSType2Grid::col15_val.Trim()==L"")&& (CNPBPSType2Grid::col16_val.Trim()==col_row_val[16].Trim() ||CNPBPSType2Grid::col16_val.Trim()==L"ALL"||CNPBPSType2Grid::col16_val.Trim()==L"")&& (CNPBPSType2Grid::col17_val.Trim()==col_row_val[17].Trim() || CNPBPSType2Grid::col17_val.Trim()==L"ALL"||CNPBPSType2Grid::col17_val.Trim()==L""))
 		{						
 			m_st_Dealing_Array.Add(&m_st_Netposition);						
 		}
@@ -1061,7 +1323,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==2)
 			{				
 				mst_grid=m_st_Dealing_Array[rows_no];
-				double m_order=mst_grid.Order  ;
+				double m_order=mst_grid.Order;
 
 				CString tmp=L"" ;
 				tmp.Format(L"%.0f",m_order);
@@ -1073,8 +1335,8 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			else if (col==3)
 			{			
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
-				CString tmp=mst_grid.Order_In_Time ;				
+				mst_grid=m_st_Dealing_Array[rows_no];
+				CString tmp=mst_grid.Order_In_Time;				
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1083,7 +1345,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			else if (col==4)
 			{				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				int m_deal=mst_grid.Deal ;
 
 				CString tmp=L"" ;
@@ -1096,7 +1358,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			else if (col==5)
 			{				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Symbol ;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,mst_grid.Symbol)!=0)
@@ -1106,7 +1368,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			else if (col==6)
 			{	
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Type1;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1116,9 +1378,9 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			}
 			else if (col==7)
 			{				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.Volume);
+				tmp.Format(L"%.4f",mst_grid.Volume);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1128,9 +1390,9 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==8)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=L"";
-				tmp.Format(L"%.2f",mst_grid.Price);											
+				tmp.Format(L"%.4f",mst_grid.Price);											
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1140,7 +1402,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==9)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Comment;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1151,7 +1413,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==10)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Status;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1162,7 +1424,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==11)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Type;
 															
 				CString str_get_value=cell->GetText();
@@ -1174,7 +1436,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==12)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.SubType;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1187,7 +1449,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==13)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Trade_Happen_Time;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1195,10 +1457,11 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 					cell->SetText(tmp);
 				}
 			}
+
 			else if (col==14)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Open;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1209,7 +1472,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==15)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.High;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1220,7 +1483,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==16)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Low;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1231,7 +1494,7 @@ void CNPBPSType2Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==17)
 			{	
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Array[rows_no];
 				CString tmp=mst_grid.Close;										
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
@@ -1558,10 +1821,7 @@ void CNPBPSType2Grid::addItemToCombobox()
 
 		 	}												
 		}
-		/*for(int f=0;f<18;f++)
-		{
-			colShorting(f);
-		}	*/	
+		
 	}
 	catch(_com_error & ce)
 	{
@@ -1589,57 +1849,57 @@ BOOLEAN  CNPBPSType2Grid::CheckvalueInArray(const CStringArray& arr,CString strv
 	} 
 }
 
-void CNPBPSType2Grid::colShorting( int index)
-{
-	m_str_array.Clear();
-	CString cstr=str[index];
-	int str_len=cstr.GetLength();
-	CString split_str=L"";
-	for (int f=0;f<str_len;f++)
-	{		
-		if (cstr.Mid(f,1)!=L"\n")
-		{
-			split_str=split_str+cstr.Mid(f,1);
-		}
-		else
-		{
-			if (split_str.Trim().GetLength()>0 && split_str.Trim()!="ALL")
-			{
-				st_shorting m_st_shorting={};
-				CMTStr::Copy(m_st_shorting.m_symbol,split_str);
-				m_str_array.Add(&m_st_shorting);
-			}
-			split_str=L"";
-		}
-	}	
-	int arr_count=m_str_array.Total();
-	st_shorting  first_st={};
-	st_shorting  next_st={};
-	st_shorting  swap_st={};
-	for (int f=0;f<arr_count;f++)
-	{		
-		first_st=m_str_array[f] ;
-		for (int j=f+1;j<arr_count;j++)
-		{			
-			next_st=m_str_array[j];			
-			if (wcscmp(first_st.m_symbol,next_st.m_symbol)>0)
-			{
-				m_str_array.Shift(j,f-j);
-				swap_st=m_str_array[f];
-				first_st=swap_st;							
-			}
-		}
-	}
-	st_shorting st_str={};
-	CString final_str=L"";
-	for (int f=0;f<arr_count;f++)
-	{
-		st_str=m_str_array[f];
-		CString temp_str=st_str.m_symbol ;
-		final_str=final_str+L"\n"+temp_str;
-	}
-	str[index]=L"ALL"+final_str;
-}
+//void CNPBPSType2Grid::colShorting( int index)
+//{
+//	m_str_array.Clear();
+//	CString cstr=str[index];
+//	int str_len=cstr.GetLength();
+//	CString split_str=L"";
+//	for (int f=0;f<str_len;f++)
+//	{		
+//		if (cstr.Mid(f,1)!=L"\n")
+//		{
+//			split_str=split_str+cstr.Mid(f,1);
+//		}
+//		else
+//		{
+//			if (split_str.Trim().GetLength()>0 && split_str.Trim()!="ALL")
+//			{
+//				st_shorting m_st_shorting={};
+//				CMTStr::Copy(m_st_shorting.m_symbol,split_str);
+//				m_str_array.Add(&m_st_shorting);
+//			}
+//			split_str=L"";
+//		}
+//	}	
+//	int arr_count=m_str_array.Total();
+//	st_shorting  first_st={};
+//	st_shorting  next_st={};
+//	st_shorting  swap_st={};
+//	for (int f=0;f<arr_count;f++)
+//	{		
+//		first_st=m_str_array[f] ;
+//		for (int j=f+1;j<arr_count;j++)
+//		{			
+//			next_st=m_str_array[j];			
+//			if (wcscmp(first_st.m_symbol,next_st.m_symbol)>0)
+//			{
+//				m_str_array.Shift(j,f-j);
+//				swap_st=m_str_array[f];
+//				first_st=swap_st;							
+//			}
+//		}
+//	}
+//	st_shorting st_str={};
+//	CString final_str=L"";
+//	for (int f=0;f<arr_count;f++)
+//	{
+//		st_str=m_str_array[f];
+//		CString temp_str=st_str.m_symbol ;
+//		final_str=final_str+L"\n"+temp_str;
+//	}
+//	str[index]=L"ALL"+final_str;
+//}
 
 UINT ShowCNPBPSType2Grid(void *pParam);
 UINT ShowCNPBPSType2Grid(void *pParam)
@@ -1657,7 +1917,7 @@ UINT ShowCNPBPSType2Grid(void *pParam)
 		while (true )
 		{				
 			CString strCommand=L"";		
-			strCommand.Format(L"proc_Type2");        
+			strCommand.Format(L"proc_Passed_By_Manager_OKAY");        
 			_bstr_t bstrCommand="";
 			bstrCommand=strCommand;
 			char* strCommand_char=(char*)bstrCommand;
@@ -1688,10 +1948,10 @@ UINT ShowCNPBPSType2Grid(void *pParam)
 					CMTStr::Copy(m_st_Dealing.SubType,artists1.m_SubType);
 
 					CMTStr::Copy(m_st_Dealing.Trade_Happen_Time,artists1.m_Trade_Happen_Time);
-					CMTStr::Copy(m_st_Dealing.Open,artists1.m_Open );
+					/*CMTStr::Copy(m_st_Dealing.Open,artists1.m_Open );
 					CMTStr::Copy(m_st_Dealing.High,artists1.m_high);
 					CMTStr::Copy(m_st_Dealing.Low,artists1.m_Low);
-					CMTStr::Copy(m_st_Dealing.Close,artists1.m_Close );
+					CMTStr::Copy(m_st_Dealing.Close,artists1.m_Close );*/
 
 
 

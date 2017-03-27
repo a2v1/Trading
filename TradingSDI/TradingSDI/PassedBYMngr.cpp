@@ -600,7 +600,7 @@ void CPassedBYMngr::OnTimer(UINT nIDEvent)
 					}
 					if (col_click==11)
 					{															
-						if (wcscmp(first_st.Comment  ,next_st.Comment  )<0)
+						if (wcscmp(first_st.Status  ,next_st.Status)<0)
 						{
 							m_st_Dealing_Grid_array.Shift(j,i-j);
 							swap_st=m_st_Dealing_Grid_array[i];
@@ -1473,6 +1473,7 @@ int CPassedBYMngr::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL
 			CString  strval=L"";
 			CUGCell cell;
 			GetCell(col,row,&cell);
+			cell.GetText();
 			strval=string;	
 		}
 
