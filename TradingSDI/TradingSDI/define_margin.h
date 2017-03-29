@@ -29,9 +29,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedOk();
 	void define_margin::getSymbolData();
 	
 	CEdit m_textsearch;
 	afx_msg void OnEnChangeEdit1();
+	
+	afx_msg void OnBnClickedButtonsave();
 };

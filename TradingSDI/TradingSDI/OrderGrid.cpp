@@ -1576,10 +1576,12 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				GetColDefault( 12, &MYcell);			
 				QuickSetCellType(12,rows_no,UGCT_DROPLIST);
 				QuickSetCellTypeEx(12,rows_no,UGCT_DROPLISTHIDEBUTTON);
-				
-				
-				CUGCell getMyCell;			 			
-				GetCell(11,row,&getMyCell);
+				QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
+				SetColDefault( 12, &MYcell);
+
+
+				/*CUGCell getMyCell;			 			
+				GetCell(11,rows_no,&getMyCell);
 				CString Cell11_text=getMyCell.GetText();
 
 
@@ -1589,12 +1591,12 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				{
 					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 					SetColDefault( 12, &MYcell);
-				}
-				if (wcscmp(Cell11_text,L"TIME")==0)
+				}*/
+				/*if (wcscmp(Cell11_text,L"TIME")==0)
 				{
-					QuickSetLabelText(12,rows_no,L"TDH\nSAT\n\OL\n");
+					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 					SetColDefault( 12, &MYcell);
-				}
+				}*/
 
 				mst_grid=m_st_Order_GridArray[rows_no];
 				CString tmp=mst_grid.subtype;				
@@ -1870,7 +1872,7 @@ void OrderGrid::addItemToCombobox()
 				}
 				if (clocount==5)
 				{
-					str_val=m_st_for_filter.TYPE ;
+					str_val=m_st_for_filter.action ;
 					str_val=str_val.Trim();
 					if (CheckvalueInArray(arr5,str_val)==false )
 					{
