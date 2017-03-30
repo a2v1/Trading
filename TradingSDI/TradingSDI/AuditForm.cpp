@@ -106,8 +106,8 @@ int CAuditForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		}
 
 		m_tab.InsertItem(1,L"PassByManager");
-		m_tab.InsertItem(2,L"NBPS1");
-		m_tab.InsertItem(3,L"NBPS2");
+		m_tab.InsertItem(2,L"NBPS");
+		m_tab.InsertItem(3,L"OKAY");
 		m_tab.InsertItem(4,L"CodeChanged");
 
 		InitForm();

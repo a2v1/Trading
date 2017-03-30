@@ -133,15 +133,19 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 		{
 			ScripWiseNetPos::m_mutex_scripnetpos.Lock();
 			ScripWiseNetPos::m_scripwisenetpos_Array.Clear();
-			double total_balance=0;
+			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0;
+
 			while (artists1.MoveNext() == S_OK)
-			{						 							
+			{				
 				ScripWiseNetPos::st_scripwisenetpos m_st_scripwisenetpos={};	
 				CMTStr::Copy(m_st_scripwisenetpos.m_Symnol,artists1.m_Symnol);
 				m_st_scripwisenetpos.m_NetQty= artists1.m_NetQty;
 				m_st_scripwisenetpos.m_Average =artists1.m_Average ;
 				m_st_scripwisenetpos.m_LastRate =artists1.m_LastRate ;
 				m_st_scripwisenetpos.m_PL =artists1.m_PL;
+				total_netQty=total_netQty+m_st_scripwisenetpos.m_NetQty;
+				total_AvgaRate=total_AvgaRate+m_st_scripwisenetpos.m_Average;
+				total_Lastrate=total_Lastrate+m_st_scripwisenetpos.m_LastRate;
 				total_balance=total_balance+m_st_scripwisenetpos.m_PL;
 				ScripWiseNetPos::m_scripwisenetpos_Array.Add(&m_st_scripwisenetpos);
 			}
@@ -149,9 +153,9 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 			ScripWiseNetPos::st_scripwisenetpos m_st_scripwisenetpos={};	
 			CMTStr::Copy(m_st_scripwisenetpos.m_Symnol,L"Total");
 
-			m_st_scripwisenetpos.m_NetQty= NULL;
-			m_st_scripwisenetpos.m_Average =NULL;
-			m_st_scripwisenetpos.m_LastRate =NULL;
+			m_st_scripwisenetpos.m_NetQty= total_netQty;
+			m_st_scripwisenetpos.m_Average =total_AvgaRate;
+			m_st_scripwisenetpos.m_LastRate =total_Lastrate;
 
 
 			m_st_scripwisenetpos.m_PL =total_balance;			

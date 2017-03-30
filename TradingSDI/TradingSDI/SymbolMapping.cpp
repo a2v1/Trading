@@ -198,10 +198,10 @@ void SymbolMapping::getSymbolData()
 			int row_number =0;
 			while (table.MoveNext() == S_OK)
 			{	
-				e_grid.InsertRow(row_number);
+				
 				e_grid.QuickSetText(0,row_number,table.m_Symbol);
 				e_grid.QuickSetText(1,row_number,table.m_mapping_Symbol);
-				row_number=row_number+1;
+				row_number++;
 			}		
 		}			
 		e_grid.RedrawAll();
