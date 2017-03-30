@@ -1235,7 +1235,7 @@ void CNPBPSType1Grid::OnGetCell(int col,long row,CUGCell *cell)
 			else if (col==1)
 			{
 				
-				mst_grid=m_st_Dealing_Grid_array[rows_no];
+				mst_grid=m_st_Dealing_Grid_array[rows_no];  
 				CString tmp=mst_grid.Login ;
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
