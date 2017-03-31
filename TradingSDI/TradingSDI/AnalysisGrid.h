@@ -25,7 +25,7 @@ public:
 	};
 	typedef TMTArray<st_Dealing> st_Dealing_Array;
 	static st_Dealing_Array m_st_Dealing_Array;	
-	static st_Dealing_Array m_st_Dealing_Grid_array;	
+	static st_Dealing_Array m_st_Dealing_Grid_array;
 	static CMutex dealing_mutex;
 		
 

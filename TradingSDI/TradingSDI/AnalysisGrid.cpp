@@ -1061,7 +1061,7 @@ UINT Show_Groupwise2NetPos(void *pParam)
 	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
-		session.Open(connection);
+		hr=session.Open(connection);
 		while (true )
 		{				
 			CString strCommand=L"";		
@@ -1069,13 +1069,17 @@ UINT Show_Groupwise2NetPos(void *pParam)
 			_bstr_t bstrCommand="";
 			bstrCommand=strCommand;
 			char* strCommand_char=(char*)bstrCommand;
-			hr=artists1.Open(session,strCommand_char);							 
-				GroupWise2NetPos::dealing_mutex.Lock();			
+			 if(SUCCEEDED(hr))
+			 {
+				hr=artists1.Open(session,strCommand_char);							 
+			 }
+				//GroupWise2NetPos::dealing_mutex.Lock();			
 			 if(SUCCEEDED(hr))
 			 {
 				 GroupWise2NetPos::m_st_Dealing_Array.Clear();
 				 GroupWise2NetPos::st_Dealing m_st_Dealing={};
-				 while (artists1.MoveNext() == S_OK)
+				 int i=0;
+				 while (hr=artists1.MoveNext() == S_OK)
 				 {																	  
 					CMTStr::Copy(m_st_Dealing.Group ,artists1.Group );				 					
 					CMTStr::Copy(m_st_Dealing.Symbol ,artists1.Symbol );				 										
@@ -1089,14 +1093,18 @@ UINT Show_Groupwise2NetPos(void *pParam)
 					m_st_Dealing.pl =artists1.pl ;
 					m_st_Dealing.Total_Amount=artists1.Total_Amount;
 					
+					i=i+1;
+
 					GroupWise2NetPos::m_st_Dealing_Array.Add(&m_st_Dealing);
 				 }
 				 artists1.Close();				    									 			 				 
 			 }
 
+			  GroupWise2NetPos::dealing_mutex.Lock();	
+			  GroupWise2NetPos::m_st_Dealing_Grid_array.Assign(GroupWise2NetPos::m_st_Dealing_Array);
+			  GroupWise2NetPos::dealing_mutex.Unlock();
 
-
-			 GroupWise2NetPos::dealing_mutex.Unlock();	
+			// GroupWise2NetPos::dealing_mutex.Unlock();	
 			 Sleep(1000);
 		}
 	}
