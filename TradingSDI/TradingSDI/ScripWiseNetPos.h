@@ -50,6 +50,7 @@ public:
 	};
 	typedef TMTArray<st_scripwisenetpos> scripwisenetpos_array;
 	static scripwisenetpos_array m_scripwisenetpos_Array;	
+	static scripwisenetpos_array m_scripwisenetpos_Array_data;
 	static scripwisenetpos_array m_scripwisenetpos_grid_array;
 
 	static CMutex m_mutex_scripnetpos;

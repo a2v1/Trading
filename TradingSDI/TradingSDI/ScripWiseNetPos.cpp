@@ -72,6 +72,7 @@ long ScripWiseNetPos::rgIndices[2];
 _bstr_t ScripWiseNetPos::bstr_currenttime("");
 
 ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_Array;	
+ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_Array_data;	
 ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_grid_array;
 CMutex ScripWiseNetPos::m_mutex_scripnetpos;
 
@@ -131,8 +132,8 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 		hr=artists1.Open(session,strCommand_char);							
 		if(SUCCEEDED(hr))
 		{
-			ScripWiseNetPos::m_mutex_scripnetpos.Lock();
-			ScripWiseNetPos::m_scripwisenetpos_Array.Clear();
+			
+			ScripWiseNetPos::m_scripwisenetpos_Array_data.Clear();
 			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0;
 
 			while (artists1.MoveNext() == S_OK)
@@ -147,19 +148,22 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 				total_AvgaRate=total_AvgaRate+m_st_scripwisenetpos.m_Average;
 				total_Lastrate=total_Lastrate+m_st_scripwisenetpos.m_LastRate;
 				total_balance=total_balance+m_st_scripwisenetpos.m_PL;
-				ScripWiseNetPos::m_scripwisenetpos_Array.Add(&m_st_scripwisenetpos);
+				ScripWiseNetPos::m_scripwisenetpos_Array_data.Add(&m_st_scripwisenetpos);
 			}
 			artists1.Close();
 			ScripWiseNetPos::st_scripwisenetpos m_st_scripwisenetpos={};	
 			CMTStr::Copy(m_st_scripwisenetpos.m_Symnol,L"Total");
 
 			m_st_scripwisenetpos.m_NetQty= total_netQty;
-			m_st_scripwisenetpos.m_Average =total_AvgaRate;
-			m_st_scripwisenetpos.m_LastRate =total_Lastrate;
+			//m_st_scripwisenetpos.m_Average =total_AvgaRate;
+			//m_st_scripwisenetpos.m_LastRate =total_Lastrate;
 
 
 			m_st_scripwisenetpos.m_PL =total_balance;			
-			ScripWiseNetPos::m_scripwisenetpos_Array.Add(&m_st_scripwisenetpos);
+			ScripWiseNetPos::m_scripwisenetpos_Array_data.Add(&m_st_scripwisenetpos);
+
+			ScripWiseNetPos::m_mutex_scripnetpos.Lock();
+			ScripWiseNetPos::m_scripwisenetpos_Array.Assign(ScripWiseNetPos::m_scripwisenetpos_Array_data);
 			ScripWiseNetPos::m_mutex_scripnetpos.Unlock();
 		}	
 		Sleep(30);
