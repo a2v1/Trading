@@ -83,35 +83,35 @@ int retVal = 0;
 CString szComp1=L"";
 CString szComp2=L"";
 
-switch ( m_iSortCol )
-{
-  case 0:
+	switch ( m_iSortCol )
+	{
+	  case 0:
     
-	 	szComp1=cell1->GetText();
-		szComp2=cell2->GetText();
+	 		szComp1=cell1->GetText();
+			szComp2=cell2->GetText();
 
-		if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
-		{
-		  retVal=szComp1.Compare(szComp2);
-		}
+			if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
+			{
+			  retVal=szComp1.Compare(szComp2);
+			}
 
-		break;	
+			break;	
 	
-  case 1:
-		szComp1=cell1->GetText();
-		szComp2=cell2->GetText();
+	  case 1:
+			szComp1=cell1->GetText();
+			szComp2=cell2->GetText();
 
-		if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
-		{
-		  retVal=szComp1.Compare(szComp2);
-		}
+			if(!szComp1.IsEmpty() && !szComp2.IsEmpty())
+			{
+			  retVal=szComp1.Compare(szComp2);
+			}
 
-		break;
-  default:
-	     retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
-}
+			break;
+	  default:
+			 retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
+	 }
  
- return retVal;
+	 return retVal;
 }
 
 void Editable_Grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed)

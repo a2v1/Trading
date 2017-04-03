@@ -1591,8 +1591,8 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				{
 					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 					SetColDefault( 12, &MYcell);
-				}*/
-				/*if (wcscmp(Cell11_text,L"TIME")==0)
+				}
+				if (wcscmp(Cell11_text,L"TIME")==0)
 				{
 					QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 					SetColDefault( 12, &MYcell);
