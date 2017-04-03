@@ -137,6 +137,8 @@ void define_margin::OnEnChangeEdit1()
 	d_grid.SetNumberRows(0);
 	CString text_value=L"";
 	CoInitialize(NULL);
+
+
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
 
 	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
