@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ClientHelp_Dlg
+#define ClientHelp_Dlg
 #include "ClientHelpGrid.h"
 #include "Client_Table.h"
 
@@ -26,7 +27,9 @@ protected:
 public:
 	void getdata();
 	virtual BOOL OnInitDialog();
+	void row_delete(int row);
 	afx_msg void OnEnChangeEditsearch();
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedOk();
 };
+#endif

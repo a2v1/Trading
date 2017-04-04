@@ -19,7 +19,6 @@ public:
     CSession session;
     HRESULT hr;
 	CCommand<CNoAccessor, CNoRowset> cmd;
-
 // Dialog Data
 	enum { IDD = IDD_DEFINE_MARGIN };
 	definemargin_grid d_grid;
@@ -29,7 +28,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	//virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedOk();
 	void define_margin::getSymbolData();
 	
@@ -37,4 +36,5 @@ public:
 	afx_msg void OnEnChangeEdit1();
 	
 	afx_msg void OnBnClickedButtonsave();
+	afx_msg void OnClose();
 };

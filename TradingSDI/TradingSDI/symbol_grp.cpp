@@ -151,17 +151,17 @@ void symbol_grp::OnEnKillfocusEdit1()
 	}
 	
 }
-//BOOL symbol_grp::PreTranslateMessage(MSG* pMsg)
-//{
-//	// TODO: Add your specialized code here and/or call the base class
-//	if (pMsg->message == WM_KEYDOWN)
-//    {
-//        if ((pMsg->wParam == VK_RETURN) || (pMsg->wParam == VK_ESCAPE))
-//			
-//			pMsg->wParam=NULL;
-//    }
-//    return CDialogEx::PreTranslateMessage(pMsg);
-//}
+BOOL symbol_grp::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: Add your specialized code here and/or call the base class
+	if (pMsg->message == WM_KEYDOWN)
+    {
+        if ((pMsg->wParam == VK_RETURN) || (pMsg->wParam == VK_ESCAPE))
+			
+			pMsg->wParam=NULL;
+    }
+    return CDialogEx::PreTranslateMessage(pMsg);
+}
 
 void symbol_grp::OnClose()
 {

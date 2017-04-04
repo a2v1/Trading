@@ -1225,7 +1225,7 @@ void CNPBPSType1Grid::OnGetCell(int col,long row,CUGCell *cell)
 			if (col==0)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];				
-				CString tmp=mst_grid.Section ;				
+				CString tmp=mst_grid.Section;				
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1925,6 +1925,7 @@ UINT Show_NPBPStype1(void *pParam)
 				 artists1.Close();				    									 			 				 
 			 }
 
+			 
 
 			 CNPBPSType1Grid::dealing_mutex.Lock();	
 			 CNPBPSType1Grid::m_st_Dealing_Array.Assign(CNPBPSType1Grid::m_st_Dealing_Array_Fill);

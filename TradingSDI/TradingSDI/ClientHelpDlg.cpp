@@ -164,6 +164,7 @@ void ClientHelpDlg::OnEnChangeEditsearch()
 		table.Close();
 }
 
+
 void ClientHelpDlg::OnClose()
 {
 	session.Close();

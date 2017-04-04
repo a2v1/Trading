@@ -496,8 +496,8 @@ void OrderGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,
 	QuickSetCellType(10,-1,UGCT_CHECKBOX);	
 	QuickSetCellTypeEx(10,-1,UGCT_CHECKBOXCHECKMARK);
 	SetColDefault( 10, &cell );
-	QuickSetLabelText(10,-1,L"Select");
-*/		 				
+	QuickSetLabelText(10,-1,L"Select");*/
+
 	RedrawAll();
 }
 
@@ -1576,7 +1576,7 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				GetColDefault( 12, &MYcell);			
 				QuickSetCellType(12,rows_no,UGCT_DROPLIST);
 				QuickSetCellTypeEx(12,rows_no,UGCT_DROPLISTHIDEBUTTON);
-				QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
+				QuickSetLabelText(12,rows_no,L"PBDU\nMISTAKE\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
 				SetColDefault( 12, &MYcell);
 
 

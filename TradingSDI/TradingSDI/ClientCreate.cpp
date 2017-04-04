@@ -123,9 +123,9 @@ void ClientCreate::OnBnClickedSave()
 	}
 	else{
 	
-	    AfxMessageBox(L"Fields are Empty!!!");	
+	     AfxMessageBox(L"Fields are Empty!!!");	
 	
-	}
+	    }
 
 	// TODO: Add your control notification handler code here
 }
