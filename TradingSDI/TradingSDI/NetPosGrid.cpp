@@ -238,7 +238,7 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	//SetUserSizingMode( FALSE );
 	SetDefFont(0);
 	SetSH_Width(0);		
-	SetNumberCols(21);
+	SetNumberCols(22);
 	QuickSetText(0,-1,L"Login");
 	SetColWidth(0,100);
 	QuickSetText(1,-1,L"Name");
@@ -280,7 +280,9 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	QuickSetText(19,-1,L"SQ Balance");
 	SetColWidth(19,100);								
 	QuickSetText(20,-1,L"pl_volume");
-	SetColWidth(20,0);	
+	SetColWidth(20,80);	
+	QuickSetText(21,-1,L"Margin Live");
+	SetColWidth(21,100);	
 
 	// Header font
 	for(int i = 0; i < GetNumberCols(); i++)

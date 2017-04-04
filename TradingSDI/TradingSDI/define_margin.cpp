@@ -10,6 +10,8 @@
 no_namespace rename("EOF", "EndOfFile")
 // define_margin dialog
 
+bool define_margin::fill_data=false;
+
 IMPLEMENT_DYNAMIC(define_margin, CDialogEx)
 
 define_margin::define_margin(CWnd* pParent /*=NULL*/)
@@ -30,7 +32,7 @@ void define_margin::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(define_margin, CDialogEx)
-	ON_BN_CLICKED(IDOK, &define_margin::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_BUTTONSAVE, &define_margin::OnBnClickedButtonsave)
 	ON_EN_CHANGE(IDC_EDIT1, &define_margin::OnEnChangeEdit1)
 END_MESSAGE_MAP()
 
@@ -47,15 +49,21 @@ BOOL define_margin::OnInitDialog()
 	d_grid.QuickSetText(0,-1,L"SYMBOL");
 	d_grid.QuickSetText(1,-1,L"MARGIN");
 
-
-	getSymbolData();
-
+	if(define_margin::fill_data==false)
+	{
+		getSymbolData();
+		define_margin::fill_data=true;
+	}
+	else
+	{
+		define_margin::fill_data=false;
+	}
 	return TRUE;  // return TRUE unless you set the focus to a control
 
 }
 
 
-void define_margin::OnBnClickedOk()
+void define_margin::OnBnClickedButtonsave()
 {
 	_bstr_t valField1("");
 	_bstr_t str_cmd("");
@@ -124,6 +132,7 @@ void define_margin::getSymbolData()
 				rows_count=rows_count+1;
 			}
 		}
+		
 		artists1.Close();	
 		session.Close();
 		connection.Close();
@@ -133,16 +142,22 @@ void define_margin::getSymbolData()
 void define_margin::OnEnChangeEdit1()
 {
 	// TODO: Add your control notification handler code here
-	d_grid.SetNumberRows(0);
+	define_margin::fill_data=false;
+
 	CString text_value=L"";
 	CoInitialize(NULL);
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
+	artists1.ClearRecordMemory();
 
 	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);
 	}
+
+	//setting row by search
+	d_grid.SetNumberRows(0,1);
+	
 	//getting value from textbox
 	m_textsearch.GetWindowTextW(text_value);
 	
@@ -155,12 +170,14 @@ void define_margin::OnEnChangeEdit1()
 	{
 		while (artists1.MoveNext() == S_OK)
 		{
-		d_grid.InsertRow(rows_count);
-		d_grid.QuickSetText(0,rows_count,artists1.m_Symbol ); 
-		d_grid.QuickSetText(1,rows_count,artists1.m_margin ); 
-		rows_count=rows_count+1;
+		 d_grid.InsertRow(rows_count);
+		 d_grid.QuickSetText(0,rows_count,artists1.m_Symbol ); 
+		 d_grid.QuickSetText(1,rows_count,artists1.m_margin ); 
+		 rows_count=rows_count+1;
 		}
+
 	}
+	d_grid.RedrawAll();
 	artists1.Close();	
 	session.Close();
 	connection.Close();

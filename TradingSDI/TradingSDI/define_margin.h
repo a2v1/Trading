@@ -22,6 +22,9 @@ public:
 // Dialog Data
 	enum { IDD = IDD_DEFINE_MARGIN };
 	definemargin_grid d_grid;
+
+	//flag
+	static bool fill_data;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
@@ -29,8 +32,7 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnBnClickedOk();
-	void define_margin::getSymbolData();
+	void getSymbolData();
 	
 	CEdit m_textsearch;
 	afx_msg void OnEnChangeEdit1();
