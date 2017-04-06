@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "ClientHelpGrid.h"
+#include "resource.h"
 
-
+CString ClientHelpGrid::m_Selcolvalue=L"";
+//BOOL  ClientHelpGrid::m_checkvalue=false;  
 ClientHelpGrid::ClientHelpGrid(void)
 {
 }
@@ -46,10 +48,31 @@ void ClientHelpGrid::OnSetup()
 }
 
 
-void ClientHelpGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
+/*void ClientHelpGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
 {
 	StartEdit();
-}	
+}*/	
+
+void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *point,int processed)
+{ 
+	   CUGCell cell; 
+	   GetCell(col, row, &cell); 
+	   if(col==0)
+	   {
+		 ClientHelpGrid::m_Selcolvalue= cell.GetText();
+	   }
+	   else if(col==1){
+		
+			ClientHelpGrid::m_Selcolvalue= cell.GetText();
+	   }
+	   SetCell(col,row,&cell);
+
+	  
+	 // RedrawCell(col, row); 
+
+} 
+
+
 
 int ClientHelpGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {

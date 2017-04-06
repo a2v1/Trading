@@ -2,6 +2,7 @@
 #define ClientHelp_Dlg
 #include "ClientHelpGrid.h"
 #include "Client_Table.h"
+#include "afxwin.h"
 
 // ClientHelpDlg dialog
 
@@ -31,5 +32,6 @@ public:
 	afx_msg void OnEnChangeEditsearch();
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedOk();
+	CEdit m_edit_search;
 };
 #endif

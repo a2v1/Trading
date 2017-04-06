@@ -5,8 +5,7 @@
 #include "TradingSDI.h"
 #include "ClientHelpDlg.h"
 #include "afxdialogex.h"
-
-
+#include <cctype>
 // ClientHelpDlg dialog
 
 IMPLEMENT_DYNAMIC(ClientHelpDlg, CDialogEx)
@@ -19,40 +18,58 @@ ClientHelpDlg::ClientHelpDlg(CWnd* pParent /*=NULL*/)
 
 ClientHelpDlg::~ClientHelpDlg()
 {
+
 }
 
 void ClientHelpDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDITSEARCH, m_edit_search);
+	DDX_Control(pDX, IDC_EDITSEARCH, m_edit_search);
 }
 
 
 BEGIN_MESSAGE_MAP(ClientHelpDlg, CDialogEx)
 	ON_EN_CHANGE(IDC_EDITSEARCH, &ClientHelpDlg::OnEnChangeEditsearch)
 	ON_WM_CLOSE()
-	ON_BN_CLICKED(IDOK, &ClientHelpDlg::OnBnClickedOk)
+//	ON_BN_CLICKED(IDOK, &ClientHelpDlg::OnBnClickedOk)
 	
+	//ON_EN_UPDATE(IDC_EDITSEARCH, &ClientHelpDlg::OnEnUpdateEditsearch)
 END_MESSAGE_MAP()
 
 
 // ClientHelpDlg message handlers
 
+int Validate(CString str);
 
 void ClientHelpDlg::OnBnClickedOk()
 {
 	// TODO: Add your control notification handler code here
 	
 
+	 
+	 // m_edit_search.SetWindowTextW(ClientHelpGrid::m_Selcolvalue);  
+    
+//	ClientHelpGrid::m_Selcolvalue=L"";
+
 
 }
-
-
+int Validate(CString str)
+{
+    for(int i=0; i<str.GetLength(); i++)
+	{
+        if(!std::isdigit(str[i]))
+            return 0;
+    }
+    return 1;
+}
 BOOL ClientHelpDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
 	//database initialization
 		
+
 		CoInitialize(NULL);		
 		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
 		if(SUCCEEDED(hr))
@@ -62,7 +79,6 @@ BOOL ClientHelpDlg::OnInitDialog()
 
 	SetWindowPos(this,40, 60, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-	
 
 	client_grid .AttachGrid(this ,IDC_STATICGRID);
 	client_grid.SetColWidth(0,75);
@@ -84,6 +100,7 @@ BOOL ClientHelpDlg::OnInitDialog()
 	client_grid.QuickSetText(6,-1,L"CLIENTGROUP3");
 	client_grid.QuickSetText(7,-1,L"CLIENTGROUP4");
 	client_grid.QuickSetText(8,-1,L"CREDITCLIENT");
+
 	
 	getdata();
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -123,22 +140,30 @@ void ClientHelpDlg::getdata()
 }
 void ClientHelpDlg::OnEnChangeEditsearch()
 {
-	// TODO:  If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CDialogEx::OnInitDialog()
-	// function and call CRichEditCtrl().SetEventMask()
-	// with the ENM_CHANGE flag ORed into the 
-        client_grid.SetNumberRows(0);
-	
-		//e_grid.GetDataSource
-		CString edit_val;
-		CCommand<CAccessor<Client_Table> > table;	
-		CString  str_command=L"";
-		GetDlgItemText(IDC_EDITSEARCH,edit_val);
+	    CCommand<CAccessor<Client_Table> > table;	
+		
+		//if(!setEditTextProgramatically){
+	    CString edit_val;
+	    CString  str_command=L"";
+		m_edit_search.GetWindowTextW(edit_val);
+		int i= Validate(edit_val);
+	    if(i==0)
+	    {
+          str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Name] like '%s%s'",edit_val,L"%");
 
-		str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Name] like '%s%s'",edit_val,L"%");
+	    }else{
+			
+			  str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_login] like '%s%s'",edit_val,L"%");
+
+	        }
+ 
 		_bstr_t bstr_command=str_command;
 		char* strCommand_char=bstr_command;
-		hr=table.Open(session,strCommand_char);	
+		hr=table.Open(session,strCommand_char);
+
+		 
+		client_grid.SetNumberRows(0);
+
 		CString strBuffer=L"";
     	if(SUCCEEDED(hr))
 		{
@@ -161,13 +186,19 @@ void ClientHelpDlg::OnEnChangeEditsearch()
 			}		
 		}	
 		client_grid.RedrawAll();
-		table.Close();
+	    table.Close();
 }
-
+//void ClientHelpDlg::OnEnUpdateEditsearch()
+//{
+// 
+//}
 
 void ClientHelpDlg::OnClose()
 {
 	session.Close();
 	connection.Close();
+	::CoUninitialize();
 	CDialogEx::OnClose();
 }
+
+

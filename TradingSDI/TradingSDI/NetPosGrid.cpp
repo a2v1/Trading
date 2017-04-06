@@ -4093,14 +4093,14 @@ UINT Update_Netposition(LPVOID pParam)
 					if (NetPosGrid::col_click==4)
 					{
 						LPTSTR endPtr1;										
-						double d_val1=_tcstod(first_st.m_new_qty  ,&endPtr1);
+						double d_val1=_tcstod(first_st.m_incre_qty  ,&endPtr1);
 						LPTSTR endPtr2;										
-						double d_val2=_tcstod(next_st.m_new_qty,&endPtr2);						
+						double d_val2=_tcstod(next_st.m_incre_qty,&endPtr2);						
 						if (d_val1>d_val2)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_new_qty,swap_st.m_new_qty);							
+							CMTStr::Copy(first_st.m_incre_qty,swap_st.m_incre_qty);							
 						}
 					}
 					if (NetPosGrid::col_click==5)
@@ -4378,14 +4378,14 @@ UINT Update_Netposition(LPVOID pParam)
 					if (NetPosGrid::col_click==4)
 					{
 						LPTSTR endPtr1;										
-						double d_val1=_tcstod(first_st.m_new_qty  ,&endPtr1);
+						double d_val1=_tcstod(first_st.m_incre_qty  ,&endPtr1);
 						LPTSTR endPtr2;										
-						double d_val2=_tcstod(next_st.m_new_qty,&endPtr2);						
+						double d_val2=_tcstod(next_st.m_incre_qty,&endPtr2);						
 						if (d_val1<d_val2)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_new_qty,swap_st.m_new_qty);							
+							CMTStr::Copy(first_st.m_incre_qty,swap_st.m_incre_qty);							
 						}
 					}
 					if (NetPosGrid::col_click==5)
