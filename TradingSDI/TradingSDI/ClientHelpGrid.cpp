@@ -76,6 +76,7 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 
 int ClientHelpGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 {
+
 	if( flags & UG_SORT_DESCENDING )
 	{
 		CUGCell *ptr = cell1;

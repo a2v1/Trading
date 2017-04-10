@@ -107,12 +107,12 @@ void ClientCreate::OnBnClickedSave()
     
 	m_creditclientf.GetWindowTextW(strCreditClient);	
 	double d_bal = _tstof((LPCTSTR)strCreditClient);
-    strCreditClient.Format(_T("%.2f"),d_bal);
+  /*  strCreditClient.Format(_T("%.2f"),d_bal);*/
 
 	if(strlogin!=L"")
 	{
 		CString Str_command=L"";
-		Str_command.Format(L"PROC_InsertClient '%s','%s','%s','%s','%s','%s','%s','%s','%f'",strlogin,strName,strComment,strIgnore,strGroup1,strGroup2,strGroup3,strGroup4,strCreditClient);
+		Str_command.Format(L"PROC_InsertClient '%s','%s','%s','%s','%s','%s','%s','%s','%f'",strlogin,strName,strComment,strIgnore,strGroup1,strGroup2,strGroup3,strGroup4,d_bal);
 	
 	
 		CCommand<CNoAccessor, CNoRowset>cmd;				
@@ -165,24 +165,19 @@ void ClientCreate::OnEnKillfocusEdit1()
 		hr=session.Open(connection);							
 	}
 
+	//refresh textbox
+	m_name.SetWindowTextW(L"");
+	m_commnentYN.SetCheck(0);
+	m_ignoreYN.SetCheck(0);
+	m_group1.SetWindowTextW(L"");
+	m_group2.SetWindowTextW(L"");
+	m_group3.SetWindowTextW(L"");
+	m_creditclientf.SetWindowTextW(L"");
 
-	CString str_login=L"";
-
-	
+	CString str_login=L"";	
 	m_login.GetWindowTextW(str_login);
-	if(str_login.IsEmpty())
+	if(!str_login.IsEmpty())
 	{
-		m_name.SetWindowTextW(L"");
-		m_commnentYN.SetCheck(0);
-		m_ignoreYN.SetCheck(0);
-		m_group1.SetWindowTextW(L"");
-		m_group2.SetWindowTextW(L"");
-		m_group3.SetWindowTextW(L"");
-		m_creditclientf.SetWindowTextW(L"");
-	}
-    else
-	{
-
 	CCommand<CAccessor<Client_Table> > table;	
 	CString strcommand=L"";
 	strcommand.Format(L"SELECT [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Login] ='%s'",str_login);
@@ -218,7 +213,7 @@ void ClientCreate::OnEnKillfocusEdit1()
 				m_group1.SetWindowTextW(table.client_group);
 				m_group2.SetWindowTextW(table.Client_Group1);
 				m_group3.SetWindowTextW(table.Client_Group2);
-				str.Format(_T("%.2f",table.Client_Credit));
+				str.Format(L"%.2f",table.Client_Credit);
 				m_creditclientf.SetWindowTextW(str);
 			}
         }

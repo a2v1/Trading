@@ -101,8 +101,9 @@ BOOL ClientHelpDlg::OnInitDialog()
 	client_grid.QuickSetText(7,-1,L"CLIENTGROUP4");
 	client_grid.QuickSetText(8,-1,L"CREDITCLIENT");
 
-	
+	//by default data show
 	getdata();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 
 }	
@@ -140,28 +141,33 @@ void ClientHelpDlg::getdata()
 }
 void ClientHelpDlg::OnEnChangeEditsearch()
 {
-	    CCommand<CAccessor<Client_Table> > table;	
-		
-		//if(!setEditTextProgramatically){
+	//clear old data or rows
+        CUGDataSource *cd;
+		cd=client_grid.GetDataSource(0);
+		int r_n=cd->GetNumRows();
+		cd->DeleteRow(r_n);
+	    
 	    CString edit_val;
 	    CString  str_command=L"";
 		m_edit_search.GetWindowTextW(edit_val);
-		int i= Validate(edit_val);
+		 int i=-1;
+		if(!edit_val.IsEmpty())
+		{
+		  i= Validate(edit_val);
+		}
 	    if(i==0)
 	    {
           str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Name] like '%s%s'",edit_val,L"%");
 
 	    }else{
-			
-			  str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_login] like '%s%s'",edit_val,L"%");
+		  str_command.Format(L"SELECT  [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_login] like '%s%s'",edit_val,L"%");
+	    }
 
-	        }
- 
+        CCommand<CAccessor<Client_Table> > table;	
 		_bstr_t bstr_command=str_command;
 		char* strCommand_char=bstr_command;
 		hr=table.Open(session,strCommand_char);
 
-		 
 		client_grid.SetNumberRows(0);
 
 		CString strBuffer=L"";

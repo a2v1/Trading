@@ -12,7 +12,7 @@ public:
 	TCHAR m_Type[31];
 	TCHAR m_Volume[31];
 	TCHAR m_Price[35];
-	TCHAR m_Current_Rate[35];
+	FLOAT m_Current_Rate;
 	TCHAR m_PL[35];
 	TCHAR m_Status[30];
 	TCHAR m_Trade_Checked[30];

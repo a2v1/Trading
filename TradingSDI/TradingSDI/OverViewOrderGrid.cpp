@@ -173,6 +173,8 @@ UINT update_data_Order(void *pParam)
 				    double d_m_PL = _tcstod(artists1.m_Price, &endPtr);												
 					CString str_price=L"";
 					str_price.Format(_T("%.4f"),d_m_PL);	
+					CString str_Current_rate=L"";
+					str_Current_rate.Format(_T("%.4f"),artists1.m_Current_Rate);	
 
 					CMTStr::Copy(m_st_OverviewOrder.Symbol ,artists1.m_Symbol );				 					
 					CMTStr::Copy(m_st_OverviewOrder.Order ,artists1.m_Order );				 												
@@ -180,7 +182,7 @@ UINT update_data_Order(void *pParam)
 					CMTStr::Copy(m_st_OverviewOrder.Type ,artists1.m_Type );		
 					CMTStr::Copy(m_st_OverviewOrder.Volume ,artists1.m_Volume );
 					CMTStr::Copy(m_st_OverviewOrder.Price,str_price);
-					CMTStr::Copy(m_st_OverviewOrder.Current_Rate ,artists1.m_Current_Rate);		
+					CMTStr::Copy(m_st_OverviewOrder.Current_Rate ,str_Current_rate);		
 					CMTStr::Copy(m_st_OverviewOrder.PL ,artists1.m_PL );
 					CMTStr::Copy(m_st_OverviewOrder.Status,artists1.m_Status);
 					CMTStr::Copy(m_st_OverviewOrder.Trade_Checked,artists1.m_Trade_Checked);

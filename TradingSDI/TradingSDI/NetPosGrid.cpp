@@ -273,7 +273,7 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	SetColWidth(15,130);
 	QuickSetText(16,-1,L"Alloted Limit");
 	SetColWidth(16,100);		
-	QuickSetText(17,-1,L"Remark2");
+	QuickSetText(17,-1,L"LOSS Limit");
 	SetColWidth(17,100);								
 	QuickSetText(18,-1,L"Standing Avg rate");
 	SetColWidth(18,100);		
@@ -4139,7 +4139,7 @@ UINT Update_Netposition(LPVOID pParam)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_last_rate ,swap_st.m_last_rate );							
+							CMTStr::Copy(first_st.m_last_rate ,swap_st.m_last_rate);							
 						}
 					}
 

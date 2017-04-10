@@ -126,6 +126,7 @@ void overview::get_client_details()
 	CoInitialize(NULL);	
 	CCommand<CAccessor<CTrade_Table> > artists1;				
 	_bstr_t strCommand="";	
+	CString strCreditClient=L"";
 	CString sel_login=GridTradeAndOrder::m_selected_login;
 	sel_login=sel_login.Mid(0,6);
 	_bstr_t strcode=sel_login;
@@ -172,8 +173,9 @@ void overview::get_client_details()
 		m_txtGroup1.SetWindowTextW(artists1.m_Time);
 		m_txtGroup2.SetWindowTextW(artists1.m_Type);
 		m_txtGroup3.SetWindowTextW(artists1.m_Volume);	
-		m_txtGroup4.SetWindowTextW(artists1.m_Price);		
-		m_txtCredit.SetWindowTextW(artists1.m_Current_Rate) ;
+		m_txtGroup4.SetWindowTextW(artists1.m_Price);	
+        strCreditClient.Format(_T("%.2f"),artists1.m_Current_Rate);
+		m_txtCredit.SetWindowTextW(strCreditClient) ;
 	}
 
     }
@@ -468,7 +470,7 @@ void overview::OnBnClickedButton3()
 	  _bstr_t group1="";
 	  _bstr_t group2="";
 	  _bstr_t group3="";
-	  _bstr_t group4="";
+	  _bstr_t m_LOSS_limit="";
 	  _bstr_t credit ="";
 
 	  _bstr_t b_name ="";
@@ -476,7 +478,7 @@ void overview::OnBnClickedButton3()
 	  CString str_group1;
 	  CString str_group2;
 	  CString str_group3;
-	  CString str_group4;
+	  CString str_LOSS_limit;
 	  CString str_credit;
 
 	  CString str_name=L"";
@@ -502,7 +504,7 @@ void overview::OnBnClickedButton3()
 	 m_txtGroup1.GetWindowTextW(str_group1);
 	 m_txtGroup2.GetWindowTextW(str_group2);
 	 m_txtGroup3.GetWindowTextW(str_group3);			
-	 m_txtGroup4.GetWindowTextW(str_group4);			
+	 m_txtGroup4.GetWindowTextW(str_LOSS_limit);			
 	 m_txtCredit.GetWindowTextW(str_credit);			
 	 m_accountname.GetWindowTextW(str_name);			
 	 if (str_credit.Trim()==L"")
@@ -512,11 +514,11 @@ void overview::OnBnClickedButton3()
 	 group1=str_group1;
 	 group2=str_group2;
 	 group3=str_group3;
-	 group4=str_group4;
+	 m_LOSS_limit=str_LOSS_limit;
 	 credit=str_credit;
 	 b_name=str_name;
 	 
-	cmd=" update client set    v_name='" + b_name + "', Comment_YN='" + check1 + "',Ignore_YN='" + check2 + "',client_group='" + group1 + "',Client_Group1='" + group2 + "',Client_Group2='" + group3 + "',Client_Group4='" + group4 + "',Client_Credit='" +  credit + "' where v_login='" + GridTradeAndOrder::m_selected_login + "'";
+	cmd=" update client set    v_name='" + b_name + "', Comment_YN='" + check1 + "',Ignore_YN='" + check2 + "',client_group='" + group1 + "',Client_Group1='" + group2 + "',Client_Group2='" + group3 + "',Client_Group4='" + m_LOSS_limit + "',Client_Credit='" +  credit + "' where v_login='" + GridTradeAndOrder::m_selected_login + "'";
 	
 	 char* strCommand_char=(char*)cmd;
 	 hr_update=cmd_update.Open(session_update,strCommand_char);							 			 		 				 	
@@ -524,7 +526,7 @@ void overview::OnBnClickedButton3()
 	 cmd_update.Close();
 	 session_update.Close();
 	 CoUninitialize();
-	AfxMessageBox(L"Data Updated");
+   	AfxMessageBox(L"Data Updated");
 
 }
 
