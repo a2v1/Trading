@@ -1576,7 +1576,7 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				GetColDefault( 12, &MYcell);			
 				QuickSetCellType(12,rows_no,UGCT_DROPLIST);
 				QuickSetCellTypeEx(12,rows_no,UGCT_DROPLISTHIDEBUTTON);
-				QuickSetLabelText(12,rows_no,L"PBDU\nMISTAKE\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
+				QuickSetLabelText(12,rows_no,L"PBDU\nMISTAKE\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\nODINHL\n");
 				SetColDefault( 12, &MYcell);
 
 

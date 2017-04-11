@@ -134,20 +134,15 @@ void symbol_grp::OnEnKillfocusEdit1()
 	m_textcntrl.GetWindowText(tvalue);
 	int row=0,total=0;
 	total=symbol_map.GetNumberRows();
+
+	for(row;row<total;row++)
+	{
+		symbol_map.QuickSetText(0,row,L""); 
+	}
+	
 	if(!tvalue.IsEmpty())
 	{
-		for(row;row<total;row++)
-		{
-			symbol_map.QuickSetText(0,row,L""); 
-		}
 		getSymbolData((LPCTSTR)tvalue);
-	}
-	else
-	{
-		for(row;row<total;row++)
-		{
-			symbol_map.QuickSetText(0,row,L""); 
-		}
 	}
 	
 }

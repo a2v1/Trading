@@ -118,7 +118,6 @@ void ClientCreate::OnBnClickedSave()
 		CCommand<CNoAccessor, CNoRowset>cmd;				
 		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
 		cmd.Close();	
-		session.Close();
 		AfxMessageBox(L"Client has been created !!!");	
 	}
 	else{
@@ -126,7 +125,8 @@ void ClientCreate::OnBnClickedSave()
 	     AfxMessageBox(L"Fields are Empty!!!");	
 	
 	    }
-
+		session.Close();
+		connection.Close();
 	// TODO: Add your control notification handler code here
 }
 
