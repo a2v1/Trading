@@ -2,7 +2,8 @@
 #include "ClientHelpGrid.h"
 #include "resource.h"
 
-CString ClientHelpGrid::m_Selcolvalue=L"";
+COLORREF ClientHelpGrid::my_Color=NULL;
+BOOL ClientHelpGrid::m_click=FALSE;
 //BOOL  ClientHelpGrid::m_checkvalue=false;  
 ClientHelpGrid::ClientHelpGrid(void)
 {
@@ -18,11 +19,19 @@ void ClientHelpGrid::OnSetup()
 {
 	SetNumberCols(9);
 	//SetNumberRows(10);
-	//soritng
+	//data base connection specify
+	CoInitialize(NULL);		
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+		if(SUCCEEDED(hr))
+		{
+			hr=session.Open(connection);							
+		}
+
+
 	m_iArrowIndex = AddCellType( &m_sortArrow );
 
-	SetCurrentCellMode( 2 );
-
+//	SetCurrentCellMode( 2 );
+	SetMultiSelectMode(TRUE);
 	UseHints( TRUE );
 
 	SetSH_Width( 0 );
@@ -36,13 +45,10 @@ void ClientHelpGrid::OnSetup()
 	InitMenu();
 	EnableMenu(TRUE);
 
-	//data base connection specify
-	CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
-		if(SUCCEEDED(hr))
-		{
-			hr=session.Open(connection);							
-		}
+	
+
+ 
+
 
 
 }
@@ -55,7 +61,8 @@ void ClientHelpGrid::OnSetup()
 
 void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *point,int processed)
 { 
-	   CUGCell cell; 
+
+	/*   CUGCell cell; 
 	   GetCell(col, row, &cell); 
 	   if(col==0)
 	   {
@@ -65,10 +72,20 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 		
 			ClientHelpGrid::m_Selcolvalue= cell.GetText();
 	   }
-	   SetCell(col,row,&cell);
+	   SetCell(col,row,&cell);*/
+int cols=0,xx;
+cols = GetNumberCols(); 
 
-	  
-	 // RedrawCell(col, row); 
+	for (xx = 0; xx < cols; xx++)
+	{ 
+		processed=1;
+		GetCell(xx,row, &cell);
+		cell.SetBackColor(RGB(255,0,0));
+		ClientHelpGrid::my_Color= cell.GetBackColor();
+		SetCell(xx,row,&cell); 
+		RedrawCell(xx,row);
+	}
+    RedrawAll(); 
 
 } 
 
@@ -143,16 +160,38 @@ void ClientHelpGrid::InitMenu()
 
 
 }
+void ClientHelpGrid::removeLogin(CString login)
+{
+	int x,y,cols,rows;
+	cols=GetNumberCols();
+	rows=GetNumberRows();
+  for(y=0;y<cols;y++)
+  {
+     for(x=0;x<rows;x++)
+     {
+	  GetCell(y,x,&cell);
+	  if(y==0 && cell.GetBackColor()==ClientHelpGrid::my_Color)
+	  {
+		login=cell.GetText();
+	  }
+    }
+  }
+
+}
+
 
 void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 {
+	int x,y,cols,rows;
+	cols=GetNumberCols();
+	rows=GetNumberRows();
 	CString LOGIN=L"";		
 	CString Str_command=L"";
-	
-	LOGIN=QuickGetText(0,row);
-	   
-	if(!LOGIN.IsEmpty())
-	{
+	removeLogin(LOGIN);
+
+
+	 if(!LOGIN.IsEmpty())
+	 {
 	  CString newstr=L"";
 	  newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",LOGIN);
 	  Str_command=Str_command+newstr;	
@@ -163,11 +202,22 @@ void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
 		cmd.Close();	
 	  }
+     }
+
+
+   for(y=0;y<cols;y++)
+   {
+     for(x=0;x<rows;x++)
+     {
+	  GetCell(y,x,&cell);
+	  if(cell.GetBackColor()==ClientHelpGrid::my_Color)
+	  {
+		  DeleteRow(x);
+	  }
     }
-	
-	AfxMessageBox(L"Client has been Deleted");
-	DeleteRow(row);
-	RedrawAll();
+  }
+  AfxMessageBox(L"Client has been Deleted");
+  RedrawAll();
 
 }
 

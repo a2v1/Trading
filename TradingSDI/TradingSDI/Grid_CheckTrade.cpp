@@ -924,7 +924,7 @@ void Grid_CheckTrade::OnMenuCommand(int col,long row,int section,int item)
 //			Trace( _T( "Displayed the grid's Replace Dialog." ) );
 			break;
 		}
-			case 2002:
+		case 2002:
 		{
 			int getno_col=GetNumberCols();
 			int getrow_no=GetNumberRows();

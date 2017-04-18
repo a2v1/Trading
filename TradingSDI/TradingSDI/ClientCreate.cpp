@@ -63,7 +63,7 @@ BOOL ClientCreate::OnInitDialog()
 
 void ClientCreate::OnBnClickedSave()
 {
-	// TODO: Add your control notification handler code here
+	//TODO: Add your control notification handler code here
 	//CDialogEx::OnOK();
 
 	CDataSource connection;

@@ -16,8 +16,9 @@ public:
 	int m_iArrowIndex;
 	CUGSortArrowType m_sortArrow;
 	int m_iSortCol;
-	static CString m_Selcolvalue;
-
+	static COLORREF my_Color; 
+    static BOOL m_click;
+	CUGCell cell;
 	//static BOOL m_checkvalue;
   //data base initilization for delete row
 	CDataSource connection;
@@ -33,6 +34,7 @@ public:
 	virtual void OnLClicked(int col,long row,int updn,RECT *rect,POINT *point,int processed);
 
     virtual int OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags);
+	void removeLogin(CString login);
 
 };
 #endif

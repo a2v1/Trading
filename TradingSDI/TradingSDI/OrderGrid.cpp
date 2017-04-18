@@ -3389,8 +3389,8 @@ LRESULT OrderGrid::Ordergrid_cellFormat(WPARAM wParam, LPARAM lParam)
 	int col_no=int(wParam);
 	int row_no=int(lParam);
 	CUGCell cell ;
-	GetColDefault( col_no, &cell);			
-	QuickSetCellType(col_no,row_no,UGCT_CHECKBOX);	
+	GetColDefault( col_no, &cell);	
+	QuickSetCellType(col_no,row_no,UGCT_CHECKBOX);
 	QuickSetCellTypeEx(col_no,row_no,UGCT_CHECKBOXCHECKMARK);
 	SetColDefault( col_no, &cell );
 	QuickSetText(col_no,row_no,OrderGrid::str_orderGrid_settext);
