@@ -93,12 +93,12 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 				{
 					//m_clientlist.AddHead(m_clientcode);
 
-					POSITION pos = m_list.GetHeadPosition();
+					POSITION pos = m_clientlist.GetHeadPosition();
 
 					if (pos == NULL)
-						m_list.AddTail(&m_clientcode);
+						m_clientlist.AddTail(m_clientcode);
 					else
-						m_list.InsertBefore(pos,&m_clientcode);
+						m_clientlist.InsertBefore(pos,m_clientcode);
 
 
 
@@ -107,7 +107,7 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 				else
 				{
 					//POSITION position = m_list.GetHeadPosition();
-					POSITION pos = m_list.Find(&m_clientcode);
+					POSITION pos = m_clientlist.Find(m_clientcode);
 
 
 
@@ -117,7 +117,7 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 					{
 						POSITION temp = pos;
 						m_list.GetNext(pos);
-						CString* str=(CString*) m_list.GetAt(temp);
+						CString str= m_clientlist.GetAt(temp);
 						m_list.RemoveAt(temp);
 					}
 				}
@@ -227,12 +227,12 @@ void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 	CString Str_command=L"";
 
 	//Process (show) the items in the list.
-	for( POSITION pos = m_list.GetHeadPosition(); pos != NULL; )
+	for( POSITION pos = m_clientlist.GetHeadPosition(); pos != NULL; )
 	{
-		CString newstr=L"";
-		CString* m_login= (CString*)m_list.GetAt(pos);
-
-		newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",m_login );
+		CString newstr=L"";_bstr_t m_LOGIN;
+		CString m_login= m_clientlist.GetAt(pos);
+		m_LOGIN=m_login;
+		newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",m_LOGIN );
 		Str_command=Str_command+newstr;
 
 	}
