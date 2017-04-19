@@ -12,7 +12,7 @@ ClientHelpGrid::ClientHelpGrid(void)
 
 ClientHelpGrid::~ClientHelpGrid(void)
 {
-  //	delete	m_clientForm;
+	//	delete	m_clientForm;
 }
 
 void ClientHelpGrid::OnSetup()
@@ -21,16 +21,16 @@ void ClientHelpGrid::OnSetup()
 	//SetNumberRows(10);
 	//data base connection specify
 	CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
-		if(SUCCEEDED(hr))
-		{
-			hr=session.Open(connection);							
-		}
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	if(SUCCEEDED(hr))
+	{
+		hr=session.Open(connection);							
+	}
 
 
 	m_iArrowIndex = AddCellType( &m_sortArrow );
 
-//	SetCurrentCellMode( 2 );
+	//	SetCurrentCellMode( 2 );
 	SetMultiSelectMode(TRUE);
 	UseHints( TRUE );
 
@@ -45,9 +45,9 @@ void ClientHelpGrid::OnSetup()
 	InitMenu();
 	EnableMenu(TRUE);
 
-	
 
- 
+
+
 
 
 
@@ -56,36 +56,77 @@ void ClientHelpGrid::OnSetup()
 
 /*void ClientHelpGrid::OnDClicked(int col,long row,RECT *rect,POINT *point,BOOL processed)
 {
-	StartEdit();
+StartEdit();
 }*/	
 
 void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *point,int processed)
 { 
 
-	/*   CUGCell cell; 
-	   GetCell(col, row, &cell); 
-	   if(col==0)
-	   {
-		 ClientHelpGrid::m_Selcolvalue= cell.GetText();
-	   }
-	   else if(col==1){
-		
-			ClientHelpGrid::m_Selcolvalue= cell.GetText();
-	   }
-	   SetCell(col,row,&cell);*/
-int cols=0,xx;
-cols = GetNumberCols(); 
 
-	for (xx = 0; xx < cols; xx++)
-	{ 
-		processed=1;
-		GetCell(xx,row, &cell);
-		cell.SetBackColor(RGB(255,0,0));
-		ClientHelpGrid::my_Color= cell.GetBackColor();
-		SetCell(xx,row,&cell); 
-		RedrawCell(xx,row);
+	int cols=0,xx;
+	cols = GetNumberCols(); 
+	CString m_clientcode=L"";
+
+	if(row>=0)
+	{
+		for (xx = 0; xx < cols; xx++)
+		{ 
+			//processed=1;
+			GetCell(xx,row, &cell);
+			if (updn==1)
+			{
+
+				if(cell.GetBackColor()==RGB(255,0,0))
+				{
+					cell.SetBackColor(RGB(255,255,255));
+				}
+				else
+				{
+					cell.SetBackColor(RGB(255,0,0));
+				}
+			}
+			ClientHelpGrid::my_Color= cell.GetBackColor();
+			if(xx==0)
+			{
+				m_clientcode=cell.GetText();
+				if(ClientHelpGrid::my_Color==RGB(255,0,0))
+				{
+					//m_clientlist.AddHead(m_clientcode);
+
+					POSITION pos = m_list.GetHeadPosition();
+
+					if (pos == NULL)
+						m_list.AddTail(&m_clientcode);
+					else
+						m_list.InsertBefore(pos,&m_clientcode);
+
+
+
+					//m_list.AddTail(&m_clientcode);
+				}
+				else
+				{
+					//POSITION position = m_list.GetHeadPosition();
+					POSITION pos = m_list.Find(&m_clientcode);
+
+
+
+
+
+					if(pos!=NULL)
+					{
+						POSITION temp = pos;
+						m_list.GetNext(pos);
+						CString* str=(CString*) m_list.GetAt(temp);
+						m_list.RemoveAt(temp);
+					}
+				}
+			}
+			SetCell(xx,row,&cell);
+		    RedrawCell(xx,row);
+		}
 	}
-    RedrawAll(); 
+	RedrawAll(); 
 
 } 
 
@@ -106,18 +147,18 @@ int ClientHelpGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 	{
 	case 0:
 		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
+			retVal = -1;
+		if( cell1->GetNumber() > cell2->GetNumber())
+			retVal = 1;
 
-				break;
+		break;
 	case 8:
 		if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
+			retVal = -1;
+		if( cell1->GetNumber() > cell2->GetNumber())
+			retVal = 1;
 
-				break;
+		break;
 
 
 
@@ -129,18 +170,18 @@ int ClientHelpGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 
 		switch( cell1->GetDataType() )
 		{
-			case UGCELLDATA_NUMBER:
-			case UGCELLDATA_BOOL:
-			case UGCELLDATA_CURRENCY:
-				if( cell1->GetNumber() < cell2->GetNumber())
-					retVal = -1;
-				if( cell1->GetNumber() > cell2->GetNumber())
-					retVal = 1;
+		case UGCELLDATA_NUMBER:
+		case UGCELLDATA_BOOL:
+		case UGCELLDATA_CURRENCY:
+			if( cell1->GetNumber() < cell2->GetNumber())
+				retVal = -1;
+			if( cell1->GetNumber() > cell2->GetNumber())
+				retVal = 1;
 
-				break;
+			break;
 
-			default:
-				retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
+		default:
+			retVal = _tcscmp( cell1->GetText( ), cell2->GetText());
 		}
 	}
 
@@ -149,75 +190,64 @@ int ClientHelpGrid::OnSortEvaluate(CUGCell *cell1,CUGCell *cell2,int flags)
 }
 void ClientHelpGrid::InitMenu()
 {
-    CMenu submenu;
+	CMenu submenu;
 	CMenu * menu = GetPopupMenu();
-	
+
 	EnableMenu(TRUE);
-	
+
 	menu->AppendMenuW(MF_STRING,2001,_T("Delete"));
 
 	SetMenu(menu);
 
 
 }
-void ClientHelpGrid::removeLogin(CString login)
+void ClientHelpGrid::delete_row()
 {
 	int x,y,cols,rows;
 	cols=GetNumberCols();
 	rows=GetNumberRows();
-  for(y=0;y<cols;y++)
-  {
-     for(x=0;x<rows;x++)
-     {
-	  GetCell(y,x,&cell);
-	  if(y==0 && cell.GetBackColor()==ClientHelpGrid::my_Color)
-	  {
-		login=cell.GetText();
-	  }
-    }
-  }
+	for(y=0;y<cols;y++)
+	{
+		for(x=0;x<rows;x++)
+		{
+			GetCell(y,x,&cell);
+			if(cell.GetBackColor()==RGB(255,0,0))
+			{
+				DeleteRow(x);
+			}
+		}
+	}
 
 }
 
 
 void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 {
-	int x,y,cols,rows;
-	cols=GetNumberCols();
-	rows=GetNumberRows();
-	CString LOGIN=L"";		
+
 	CString Str_command=L"";
-	removeLogin(LOGIN);
 
+	//Process (show) the items in the list.
+	for( POSITION pos = m_list.GetHeadPosition(); pos != NULL; )
+	{
+		CString newstr=L"";
+		CString* m_login= (CString*)m_list.GetAt(pos);
 
-	 if(!LOGIN.IsEmpty())
-	 {
-	  CString newstr=L"";
-	  newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",LOGIN);
-	  Str_command=Str_command+newstr;	
+		newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",m_login );
+		Str_command=Str_command+newstr;
 
-	  if (Str_command.GetLength()>0)
-	  {	
+	}
+	if (Str_command.GetLength()>0)
+	{	
 		CCommand<CNoAccessor, CNoRowset>cmd;			
 		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
 		cmd.Close();	
-	  }
-     }
+	}
 
 
-   for(y=0;y<cols;y++)
-   {
-     for(x=0;x<rows;x++)
-     {
-	  GetCell(y,x,&cell);
-	  if(cell.GetBackColor()==ClientHelpGrid::my_Color)
-	  {
-		  DeleteRow(x);
-	  }
-    }
-  }
-  AfxMessageBox(L"Client has been Deleted");
-  RedrawAll();
+	delete_row();
+	AfxMessageBox(L"Client has been Deleted");
+	RedrawAll();
+
 
 }
 
@@ -263,8 +293,8 @@ void ClientHelpGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *p
 		QuickSetCellTypeEx( m_iSortCol, -1, UGCT_SORTARROWUP );
 
 	}
-	
-		
+
+
 	RedrawAll();
 }
 
