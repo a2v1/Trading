@@ -2,8 +2,7 @@
 #include "ClientHelpGrid.h"
 #include "resource.h"
 
-COLORREF ClientHelpGrid::my_Color=NULL;
-BOOL ClientHelpGrid::m_click=FALSE;
+int ClientHelpGrid::m_selectedclient =0;
 //BOOL  ClientHelpGrid::m_checkvalue=false;  
 ClientHelpGrid::ClientHelpGrid(void)
 {
@@ -62,7 +61,7 @@ StartEdit();
 void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *point,int processed)
 { 
 
-
+	COLORREF colr=NULL;
 	int cols=0,xx;
 	cols = GetNumberCols(); 
 	CString m_clientcode=L"";
@@ -75,8 +74,8 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 			GetCell(xx,row, &cell);
 			if (updn==1)
 			{
-
-				if(cell.GetBackColor()==RGB(255,0,0))
+				colr=cell.GetBackColor();
+				if(colr==RGB(255,0,0))
 				{
 					cell.SetBackColor(RGB(255,255,255));
 				}
@@ -85,45 +84,43 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 					cell.SetBackColor(RGB(255,0,0));
 				}
 			}
-			ClientHelpGrid::my_Color= cell.GetBackColor();
+
 			if(xx==0)
 			{
 				m_clientcode=cell.GetText();
-				if(ClientHelpGrid::my_Color==RGB(255,0,0))
+				colr=cell.GetBackColor();
+				if(!m_clientcode.IsEmpty())
 				{
-					//m_clientlist.AddHead(m_clientcode);
-
-					POSITION pos = m_clientlist.GetHeadPosition();
-
-					if (pos == NULL)
-						m_clientlist.AddTail(m_clientcode);
-					else
-						m_clientlist.InsertBefore(pos,m_clientcode);
-
-
-
-					//m_list.AddTail(&m_clientcode);
-				}
-				else
-				{
-					//POSITION position = m_list.GetHeadPosition();
-					POSITION pos = m_clientlist.Find(m_clientcode);
-
-
-
-
-
-					if(pos!=NULL)
+					if(colr==RGB(255,0,0))
 					{
-						POSITION temp = pos;
-						m_list.GetNext(pos);
-						CString str= m_clientlist.GetAt(temp);
-						m_list.RemoveAt(temp);
+						CString str=L"";
+
+						str=m_clientcode;
+						INT nCount = m_clientlist.GetCount();
+
+						m_clientlist.AddTail(str);
+					}
+					else
+					{
+						CString str=L"";
+						POSITION pos;
+						pos = m_clientlist.GetHeadPosition();
+						while (pos)
+						{
+							if ( m_clientlist.GetNext(pos)==m_clientcode)
+								str = m_clientcode;
+						}
+
+						if (!str.IsEmpty())
+						{
+							m_clientlist.RemoveAt(m_clientlist.Find(str));
+							str=L"";
+						}
 					}
 				}
 			}
 			SetCell(xx,row,&cell);
-		    RedrawCell(xx,row);
+			RedrawCell(xx,row);
 		}
 	}
 	RedrawAll(); 
@@ -203,20 +200,23 @@ void ClientHelpGrid::InitMenu()
 }
 void ClientHelpGrid::delete_row()
 {
-	int x,y,cols,rows;
-	cols=GetNumberCols();
+	COLORREF colr=NULL;
+	int col,ro,rows,cols;
 	rows=GetNumberRows();
-	for(y=0;y<cols;y++)
+	cols=GetNumberCols();
+	for(col=0;col<cols;col++)
 	{
-		for(x=0;x<rows;x++)
+		for(ro=0;ro<rows;ro++)
 		{
-			GetCell(y,x,&cell);
-			if(cell.GetBackColor()==RGB(255,0,0))
+			GetCell(col,ro,&cell);
+			colr=cell.GetBackColor();
+			if(colr==RGB(255,0,0))
 			{
-				DeleteRow(x);
+				DeleteRow(ro);
 			}
 		}
 	}
+	RedrawAll();
 
 }
 
@@ -229,12 +229,11 @@ void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 	//Process (show) the items in the list.
 	for( POSITION pos = m_clientlist.GetHeadPosition(); pos != NULL; )
 	{
-		CString newstr=L"";_bstr_t m_LOGIN;
-		CString m_login= m_clientlist.GetAt(pos);
-		m_LOGIN=m_login;
-		newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",m_LOGIN );
+		ClientHelpGrid::m_selectedclient=1;
+		CString newstr=L"";
+		CString m_login= m_clientlist.GetNext(pos);
+		newstr.Format(L"delete FROM [CHECKDATA].[dbo].[Client] where [V_login]='%s';",m_login );
 		Str_command=Str_command+newstr;
-
 	}
 	if (Str_command.GetLength()>0)
 	{	
@@ -243,9 +242,20 @@ void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 		cmd.Close();	
 	}
 
+	CString str_msg=L"";
+	if(ClientHelpGrid::m_selectedclient==1)
+	{
+		str_msg=L"Client has been Deleted";
+	}
+	else
+	{
+		str_msg=L"Please select clients before Delete";
+	}
+	ClientHelpGrid::m_selectedclient=0;
 
 	delete_row();
-	AfxMessageBox(L"Client has been Deleted");
+	m_clientlist.RemoveAll();
+	AfxMessageBox(str_msg);
 	RedrawAll();
 
 

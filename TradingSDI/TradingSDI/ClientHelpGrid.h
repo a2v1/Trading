@@ -12,17 +12,14 @@ public:
 	~ClientHelpGrid(void);
 
 	CList<CString ,CString& > m_clientlist;
-
-	CPtrList m_list;
+	
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
 	CUGSortArrowType m_sortArrow;
 	int m_iSortCol;
-	static COLORREF my_Color; 
-    static BOOL m_click;
 	CUGCell cell;
 	
-	//static BOOL m_checkvalue;
+	static int m_selectedclient;
   //data base initilization for delete row
 	CDataSource connection;
     CSession session;	
