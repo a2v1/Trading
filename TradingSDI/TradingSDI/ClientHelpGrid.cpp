@@ -3,6 +3,8 @@
 #include "resource.h"
 
 int ClientHelpGrid::m_selectedclient =0;
+const COLORREF white_colr=RGB(255,255,255);
+const COLORREF red_colr=RGB(255,0,0);
 //BOOL  ClientHelpGrid::m_checkvalue=false;  
 ClientHelpGrid::ClientHelpGrid(void)
 {
@@ -70,18 +72,18 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 	{
 		for (xx = 0; xx < cols; xx++)
 		{ 
-			//processed=1;
 			GetCell(xx,row, &cell);
 			if (updn==1)
 			{
+				processed=1;
 				colr=cell.GetBackColor();
-				if(colr==RGB(255,0,0))
+				if(colr==red_colr)
 				{
-					cell.SetBackColor(RGB(255,255,255));
+					cell.SetBackColor(white_colr);
 				}
 				else
 				{
-					cell.SetBackColor(RGB(255,0,0));
+					cell.SetBackColor(red_colr);
 				}
 			}
 
@@ -91,12 +93,11 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 				colr=cell.GetBackColor();
 				if(!m_clientcode.IsEmpty())
 				{
-					if(colr==RGB(255,0,0))
+					if(colr==red_colr)
 					{
 						CString str=L"";
 
 						str=m_clientcode;
-						INT nCount = m_clientlist.GetCount();
 
 						m_clientlist.AddTail(str);
 					}
@@ -114,7 +115,6 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 						if (!str.IsEmpty())
 						{
 							m_clientlist.RemoveAt(m_clientlist.Find(str));
-							str=L"";
 						}
 					}
 				}
@@ -217,13 +217,11 @@ void ClientHelpGrid::delete_row()
 		}
 	}
 	RedrawAll();
-
 }
 
 
 void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 {
-
 	CString Str_command=L"";
 
 	//Process (show) the items in the list.
@@ -245,19 +243,22 @@ void ClientHelpGrid::OnMenuCommand(int col,long row,int section,int item)
 	CString str_msg=L"";
 	if(ClientHelpGrid::m_selectedclient==1)
 	{
-		str_msg=L"Client has been Deleted";
+		str_msg=L"Client has been Deleted!!";
 	}
 	else
 	{
-		str_msg=L"Please select clients before Delete";
+		str_msg=L"Please Select Client You Want To Delete!!";
 	}
 	ClientHelpGrid::m_selectedclient=0;
 
+
+	if(!m_clientlist.IsEmpty())
+	{
+		m_clientlist.RemoveAll();
+	}
 	delete_row();
-	m_clientlist.RemoveAll();
 	AfxMessageBox(str_msg);
 	RedrawAll();
-
 
 }
 

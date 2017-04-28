@@ -11,9 +11,9 @@
 
 IMPLEMENT_DYNAMIC(ClientCreate, CDialogEx)
 
-ClientCreate::ClientCreate(CWnd* pParent /*=NULL*/)
+	ClientCreate::ClientCreate(CWnd* pParent /*=NULL*/)
 	: CDialogEx(ClientCreate::IDD, pParent)
-	
+
 {
 
 }
@@ -54,10 +54,10 @@ BOOL ClientCreate::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	//database initilization
-		
 
 
-    return true;
+
+	return true;
 }
 
 
@@ -84,7 +84,7 @@ void ClientCreate::OnBnClickedSave()
 	if(m_commnentYN.GetCheck()==1)
 	{
 		strComment=L"Y";
-	  
+
 	}
 	else{
 
@@ -94,7 +94,7 @@ void ClientCreate::OnBnClickedSave()
 	if(m_ignoreYN.GetCheck()==1)
 	{
 		strIgnore=L"Y";
-	  
+
 	}
 	else{
 
@@ -104,29 +104,32 @@ void ClientCreate::OnBnClickedSave()
 	m_group1.GetWindowTextW(strGroup1);
 	m_group2.GetWindowTextW(strGroup2);
 	m_group3.GetWindowTextW(strGroup3);
-    
+
 	m_creditclientf.GetWindowTextW(strCreditClient);	
 	double d_bal = _tstof((LPCTSTR)strCreditClient);
-  /*  strCreditClient.Format(_T("%.2f"),d_bal);*/
+	/*  strCreditClient.Format(_T("%.2f"),d_bal);*/
 
 	if(strlogin!=L"")
 	{
 		CString Str_command=L"";
 		Str_command.Format(L"PROC_InsertClient '%s','%s','%s','%s','%s','%s','%s','%s','%f'",strlogin,strName,strComment,strIgnore,strGroup1,strGroup2,strGroup3,strGroup4,d_bal);
-	
-	
-		CCommand<CNoAccessor, CNoRowset>cmd;				
-		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
-		cmd.Close();	
+
+
+		CCommand<CNoAccessor, CNoRowset>cmd;	
+		/*if (SUCCEEDED(hr))
+		{*/
+			hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
+		//}
+		cmd.Close();
 		AfxMessageBox(L"Client has been created !!!");	
 	}
 	else{
-	
-	     AfxMessageBox(L"Fields are Empty!!!");	
-	
-	    }
-		session.Close();
-		connection.Close();
+
+		AfxMessageBox(L"Fields are Empty!!!");	
+
+	}
+	session.Close();
+	connection.Close();
 	// TODO: Add your control notification handler code here
 }
 
@@ -134,7 +137,7 @@ void ClientCreate::OnBnClickedSave()
 void ClientCreate::OnClose()
 {
 	// TODO: Add your message handler code here and/or call default
-	
+
 	CDialogEx::OnClose();
 }
 
@@ -178,30 +181,30 @@ void ClientCreate::OnEnKillfocusEdit1()
 	m_login.GetWindowTextW(str_login);
 	if(!str_login.IsEmpty())
 	{
-	CCommand<CAccessor<Client_Table> > table;	
-	CString strcommand=L"";
-	strcommand.Format(L"SELECT [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Login] ='%s'",str_login);
-			 	
-		
+		CCommand<CAccessor<Client_Table> > table;	
+		CString strcommand=L"";
+		strcommand.Format(L"SELECT [V_login],[V_Name],[Comment_YN],[Ignore_YN],[client_group],[Client_Group1],[Client_Group2],[Client_Group4],[Client_Credit] FROM [CHECKDATA].[dbo].[Client] where [V_Login] ='%s'",str_login);
+
+
 		hr=table.Open(session,(LPCTSTR)strcommand);							 			 		 				 	
-	    CString str=L"";
+		CString str=L"";
 		if(SUCCEEDED(hr))
 		{
 			while (table.MoveNext() == S_OK)
 			{
-				
+
 				m_name.SetWindowTextW(table.V_Name);
 				//comment YN
 				if (_tcscmp(table.Comment_YN,_T("N"))==0  )
 				{
-				    m_commnentYN.SetCheck(0);
+					m_commnentYN.SetCheck(0);
 				}
 				else
 				{
 					m_commnentYN.SetCheck(1);
 				}
-			
-			   // Ignore YN
+
+				// Ignore YN
 				if (_tcscmp(table.Ignore_YN,_T("N"))==0 )
 				{
 					m_ignoreYN.SetCheck(0);
@@ -216,9 +219,9 @@ void ClientCreate::OnEnKillfocusEdit1()
 				str.Format(L"%.2f",table.Client_Credit);
 				m_creditclientf.SetWindowTextW(str);
 			}
-        }
+		}
 		table.Close();
 		session.Close();
 	}
-//AfxMessageBox(L"1");
+	//AfxMessageBox(L"1");
 }
