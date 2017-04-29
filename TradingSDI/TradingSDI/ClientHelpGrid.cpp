@@ -86,41 +86,40 @@ void ClientHelpGrid::OnLClicked(int col,long row,int updn, RECT *rect,POINT *poi
 					cell.SetBackColor(red_colr);
 				}
 			}
+			SetCell(xx,row,&cell);
+			RedrawCell(xx,row);
 
 			if(xx==0)
 			{
 				m_clientcode=cell.GetText();
 				colr=cell.GetBackColor();
-				if(!m_clientcode.IsEmpty())
+				if(colr==red_colr)
 				{
-					if(colr==red_colr)
+					CString str=L"";
+
+					str=m_clientcode;
+
+					m_clientlist.AddTail(str);
+				}
+				else
+				{
+					CString str=L"";
+					POSITION pos;
+					pos = m_clientlist.GetHeadPosition();
+					while (pos)
 					{
-						CString str=L"";
-
-						str=m_clientcode;
-
-						m_clientlist.AddTail(str);
+						if ( m_clientlist.GetNext(pos)==m_clientcode)
+							str = m_clientcode;
 					}
-					else
+
+					if (!str.IsEmpty())
 					{
-						CString str=L"";
-						POSITION pos;
-						pos = m_clientlist.GetHeadPosition();
-						while (pos)
-						{
-							if ( m_clientlist.GetNext(pos)==m_clientcode)
-								str = m_clientcode;
-						}
-
-						if (!str.IsEmpty())
-						{
-							m_clientlist.RemoveAt(m_clientlist.Find(str));
-						}
+						m_clientlist.RemoveAt(m_clientlist.Find(str));
+						str=L"";
 					}
+
 				}
 			}
-			SetCell(xx,row,&cell);
-			RedrawCell(xx,row);
 		}
 	}
 	RedrawAll(); 
@@ -210,7 +209,7 @@ void ClientHelpGrid::delete_row()
 		{
 			GetCell(col,ro,&cell);
 			colr=cell.GetBackColor();
-			if(colr==RGB(255,0,0))
+			if(colr==red_colr)
 			{
 				DeleteRow(ro);
 			}
