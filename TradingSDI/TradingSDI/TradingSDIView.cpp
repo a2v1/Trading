@@ -74,6 +74,7 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		AddView(RUNTIME_CLASS(CAuditForm),_T("Audit"),6);
 
 
+		SetActiveView(1);
 		//AfxMessageBox(L"CTradingSDIView::OnCreate");
 	return 0;
 }
