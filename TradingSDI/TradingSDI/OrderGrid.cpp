@@ -2807,8 +2807,7 @@ UINT update_data_PBNPS_Order(void *pParam)
 			_bstr_t strCommand="";		
 			strCommand="Proc_Order";        
 			char* strCommand_char=(char*)strCommand;
-			hr=artists1.Open(session,strCommand_char);							 
-			
+			hr=artists1.Open(session,strCommand_char);							 			
 			 int intRows=0;		 
 			 double t_d_m_Pre_NetQty=0;
 			 double t_d_m_Diff_NetQty=0;
