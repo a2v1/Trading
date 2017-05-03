@@ -1225,7 +1225,7 @@ void CNPBPSType1Grid::OnGetCell(int col,long row,CUGCell *cell)
 			if (col==0)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];				
-				CString tmp=mst_grid.Section ;				
+				CString tmp=mst_grid.Section;				
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)
 				{
@@ -1877,7 +1877,7 @@ UINT Show_NPBPStype1(void *pParam)
 	CSession session;
 	CCommand<CAccessor<NPBPSType1Table> > artists1;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=Tradedatabase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=Tradedatabase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);
@@ -1925,6 +1925,7 @@ UINT Show_NPBPStype1(void *pParam)
 				 artists1.Close();				    									 			 				 
 			 }
 
+			 
 
 			 CNPBPSType1Grid::dealing_mutex.Lock();	
 			 CNPBPSType1Grid::m_st_Dealing_Array.Assign(CNPBPSType1Grid::m_st_Dealing_Array_Fill);

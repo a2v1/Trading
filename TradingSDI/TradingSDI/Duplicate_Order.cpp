@@ -141,7 +141,7 @@ UINT update_data_Duplicate_Order(void *pParam)
 	CSession session;
 	CCommand<CAccessor<DataTradeFilter> > artists1;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		session.Open(connection);
@@ -389,7 +389,7 @@ void Duplicate_Order::OnSheetSetup(int sheetNumber)
 	int	nRow = 0, nCol = 0;
 
 	
-	l_hr=l_connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	l_hr=l_connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(l_hr))
 	{
 		l_session.Open(l_connection);
@@ -1266,7 +1266,7 @@ void Duplicate_Order::change_comment_dealwise(CString login,CString dealno,CStri
 		_bstr_t jasonStr="";
 		_variant_t  strUpdate_time="";
 		_bstr_t r_time="";
-		_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=68.168.104.26;Database=Tradedatabase;uid=sa;pwd=ok@12345;";
+		_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=64.251.7.161;Database=Tradedatabase;uid=sa;pwd=ok@12345;";
 		
 		_bstr_t  InsertAndUpdate_Command="exec proc_data_delete_for_commentchange '" + strlogin_1 + "','" + strlogin_2 + "'; ";
 		
@@ -1309,7 +1309,7 @@ void Duplicate_Order::Selected_commentChange()
 	_RecordsetPtr pRstAuthors = NULL;
 	 HRESULT hr = S_OK;
 	 hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
-	_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=68.168.104.26;Database=TRADEDATABASE;uid=sa;pwd=ok@12345;";		
+	_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=64.251.7.161;Database=TRADEDATABASE;uid=sa;pwd=ok@12345;";		
 	_bstr_t str_new="";
 	_bstr_t InsertAndUpdate_Command="";
 	_bstr_t  bstr_final_comment=""; 
@@ -1389,7 +1389,7 @@ void Duplicate_Order::Selected_commentChange()
 				AfxMessageBox(L"Failed to Create Socket");
 				return ;
 			}
-			if(m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+			if(m_Client.Connect(L"64.251.7.161",5042)==FALSE)
 			{
 				AfxMessageBox(L"Failed to Connect");		
 				return;

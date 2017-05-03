@@ -45,6 +45,7 @@ int NetPosGrid::filter_break=0;
 int NetPosGrid::insertFilterFlag=0;
 int NetPosGrid::menu_item_cheked=0;
 int NetPosGrid::check_First=0;
+int NetPosGrid::Data_Update=0;
 _variant_t NetPosGrid::avarRecords;
 int NetPosGrid::lock_data=0;
 int NetPosGrid::intRows=0;
@@ -238,7 +239,7 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	//SetUserSizingMode( FALSE );
 	SetDefFont(0);
 	SetSH_Width(0);		
-	SetNumberCols(21);
+	SetNumberCols(22);
 	QuickSetText(0,-1,L"Login");
 	SetColWidth(0,100);
 	QuickSetText(1,-1,L"Name");
@@ -273,14 +274,16 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	SetColWidth(15,130);
 	QuickSetText(16,-1,L"Alloted Limit");
 	SetColWidth(16,100);		
-	QuickSetText(17,-1,L"Remark2");
+	QuickSetText(17,-1,L"LOSS Limit");
 	SetColWidth(17,100);								
 	QuickSetText(18,-1,L"Standing Avg rate");
 	SetColWidth(18,100);		
 	QuickSetText(19,-1,L"SQ Balance");
 	SetColWidth(19,100);								
 	QuickSetText(20,-1,L"pl_volume");
-	SetColWidth(20,0);	
+	SetColWidth(20,80);	
+	QuickSetText(21,-1,L"Margin Live");
+	SetColWidth(21,100);	
 
 	// Header font
 	for(int i = 0; i < GetNumberCols(); i++)
@@ -2578,7 +2581,7 @@ void NetPosGrid::OnSetup()
 
 		//database initilization
 		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 		if(SUCCEEDED(hr))
 		{
 		 hr=session.Open(connection);							
@@ -2592,7 +2595,7 @@ void NetPosGrid::OnSetup()
 }
 void NetPosGrid::Thread_start_st_netpos_update()
 {
-	AfxBeginThread(Update_Netposition, this);		
+	m_pThreads=AfxBeginThread(Update_Netposition, this);		
 }
 
 boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
@@ -3301,12 +3304,12 @@ UINT Update_Netposition(LPVOID pParam)
 	CDataSource connection;
 	CSession session;
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	if(SUCCEEDED(hr))
 	{
 			 hr=session.Open(connection);
 	}
-	while (true)
+	while (NetPosGrid::Data_Update==1)
 	{			
 		
 		//database initilization
@@ -3435,7 +3438,7 @@ UINT Update_Netposition(LPVOID pParam)
 			connection.Close();
 			CoUninitialize();
 			CoInitialize(NULL);	
-			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 			if(SUCCEEDED(hr))
 			{
 					 hr=session.Open(connection);
@@ -4091,14 +4094,14 @@ UINT Update_Netposition(LPVOID pParam)
 					if (NetPosGrid::col_click==4)
 					{
 						LPTSTR endPtr1;										
-						double d_val1=_tcstod(first_st.m_new_qty  ,&endPtr1);
+						double d_val1=_tcstod(first_st.m_incre_qty  ,&endPtr1);
 						LPTSTR endPtr2;										
-						double d_val2=_tcstod(next_st.m_new_qty,&endPtr2);						
+						double d_val2=_tcstod(next_st.m_incre_qty,&endPtr2);						
 						if (d_val1>d_val2)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_new_qty,swap_st.m_new_qty);							
+							CMTStr::Copy(first_st.m_incre_qty,swap_st.m_incre_qty);							
 						}
 					}
 					if (NetPosGrid::col_click==5)
@@ -4137,7 +4140,7 @@ UINT Update_Netposition(LPVOID pParam)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_last_rate ,swap_st.m_last_rate );							
+							CMTStr::Copy(first_st.m_last_rate ,swap_st.m_last_rate);							
 						}
 					}
 
@@ -4376,14 +4379,14 @@ UINT Update_Netposition(LPVOID pParam)
 					if (NetPosGrid::col_click==4)
 					{
 						LPTSTR endPtr1;										
-						double d_val1=_tcstod(first_st.m_new_qty  ,&endPtr1);
+						double d_val1=_tcstod(first_st.m_incre_qty  ,&endPtr1);
 						LPTSTR endPtr2;										
-						double d_val2=_tcstod(next_st.m_new_qty,&endPtr2);						
+						double d_val2=_tcstod(next_st.m_incre_qty,&endPtr2);						
 						if (d_val1<d_val2)
 						{
 							NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
 							swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
-							CMTStr::Copy(first_st.m_new_qty,swap_st.m_new_qty);							
+							CMTStr::Copy(first_st.m_incre_qty,swap_st.m_incre_qty);							
 						}
 					}
 					if (NetPosGrid::col_click==5)

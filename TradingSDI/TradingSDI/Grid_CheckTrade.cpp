@@ -924,7 +924,7 @@ void Grid_CheckTrade::OnMenuCommand(int col,long row,int section,int item)
 //			Trace( _T( "Displayed the grid's Replace Dialog." ) );
 			break;
 		}
-			case 2002:
+		case 2002:
 		{
 			int getno_col=GetNumberCols();
 			int getrow_no=GetNumberRows();
@@ -1482,7 +1482,7 @@ void Grid_CheckTrade::getData(CString FilterType,CString Datefrom,CString DateTo
 	CSession session;
 	CCommand<CAccessor<DataTradeFilter> > artists1;
 
-	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	
 	session.Open(connection);
 		_bstr_t strCommand="";				

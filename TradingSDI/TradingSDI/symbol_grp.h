@@ -28,7 +28,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	//virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	afx_msg void OnBnClickedButton1();
 	void getSymbolData(_bstr_t group_symbol);
 	afx_msg void OnBnClickedOk();

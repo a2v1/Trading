@@ -84,7 +84,7 @@ void LTP_Dilog::OnBnClickedOk()
 			 
 		CoInitialize(NULL);
           // Define string variables.		 
-		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=68.168.104.26;Database=tradedatabase;uid=sa;pwd=ok@12345;");
+		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=64.251.7.161;Database=tradedatabase;uid=sa;pwd=ok@12345;");
 		
         _RecordsetPtr pRstAuthors = NULL;
  

@@ -19,22 +19,24 @@ public:
     CSession session;
     HRESULT hr;
 	CCommand<CNoAccessor, CNoRowset> cmd;
-
 // Dialog Data
 	enum { IDD = IDD_DEFINE_MARGIN };
 	definemargin_grid d_grid;
+
+	//flag
+	static bool fill_data;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-	//virtual BOOL PreTranslateMessage(MSG* pMsg);
-	afx_msg void OnBnClickedOk();
-	void define_margin::getSymbolData();
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	void getSymbolData();
 	
 	CEdit m_textsearch;
 	afx_msg void OnEnChangeEdit1();
 	
 	afx_msg void OnBnClickedButtonsave();
+	afx_msg void OnClose();
 };

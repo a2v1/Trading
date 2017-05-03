@@ -23,6 +23,7 @@ public:
 	TCHAR m_Standing_Avg_rate[100];
 	TCHAR m_SQ_Balance[100];
 	TCHAR m_pl_volume[100];
+	//TCHAR m_marginlive[100];
 	
 	
 	
@@ -47,6 +48,7 @@ public:
 	DBSTATUS m_dwStanding_Avg_rate;
 	DBSTATUS m_dwSQ_Balance;
 	DBSTATUS m_dwpl_volume;
+	//DBSTATUS m_dwmarginlive;
 
 
     DBLENGTH m_dwLoginLength;
@@ -70,6 +72,7 @@ public:
 	DBLENGTH m_dwStanding_Avg_ratelength;
 	DBLENGTH m_dwSQ_BalanceLength;
 	DBLENGTH m_dwpl_volumeLength;
+	//DBLENGTH m_dwmarginliveLength;
 
 		
 
@@ -94,6 +97,7 @@ BEGIN_COLUMN_MAP(Netposition_table)
 		COLUMN_ENTRY_LENGTH_STATUS(18, m_Remark2,m_dwRemark2, m_dwRemark2Length)
 		COLUMN_ENTRY_LENGTH_STATUS(19, m_Standing_Avg_rate, m_dwStanding_Avg_rate, m_dwStanding_Avg_ratelength)
 		COLUMN_ENTRY_LENGTH_STATUS(20, m_SQ_Balance, m_dwSQ_Balance, m_dwSQ_BalanceLength)
-        COLUMN_ENTRY_LENGTH_STATUS(21, m_pl_volume, m_dwpl_volume, m_dwpl_volumeLength)	
+        COLUMN_ENTRY_LENGTH_STATUS(21, m_pl_volume, m_dwpl_volume, m_dwpl_volumeLength)
+	//	COLUMN_ENTRY_LENGTH_STATUS(22, m_marginlive, m_dwmarginlive, m_dwmarginliveLength)
 END_COLUMN_MAP()	
 };

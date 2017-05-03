@@ -66,7 +66,7 @@ void symbol_grp::OnBnClickedOk()
 	 CString Symbol_group=L"";
 	_bstr_t  b_symbol_group("");
 	CoInitialize(NULL);		
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
 	if(SUCCEEDED(hr))
 	{
 	  hr=session.Open(connection);							
@@ -100,7 +100,7 @@ void symbol_grp::getSymbolData(_bstr_t group_symbol)
 {
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
 	CoInitialize(NULL);		
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
 	if(SUCCEEDED(hr))
 	{
 	 hr=session.Open(connection);							
@@ -134,34 +134,29 @@ void symbol_grp::OnEnKillfocusEdit1()
 	m_textcntrl.GetWindowText(tvalue);
 	int row=0,total=0;
 	total=symbol_map.GetNumberRows();
+
+	for(row;row<total;row++)
+	{
+		symbol_map.QuickSetText(0,row,L""); 
+	}
+	
 	if(!tvalue.IsEmpty())
 	{
-		for(row;row<total;row++)
-		{
-			symbol_map.QuickSetText(0,row,L""); 
-		}
 		getSymbolData((LPCTSTR)tvalue);
-	}
-	else
-	{
-		for(row;row<total;row++)
-		{
-			symbol_map.QuickSetText(0,row,L""); 
-		}
 	}
 	
 }
-//BOOL symbol_grp::PreTranslateMessage(MSG* pMsg)
-//{
-//	// TODO: Add your specialized code here and/or call the base class
-//	if (pMsg->message == WM_KEYDOWN)
-//    {
-//        if ((pMsg->wParam == VK_RETURN) || (pMsg->wParam == VK_ESCAPE))
-//			
-//			pMsg->wParam=NULL;
-//    }
-//    return CDialogEx::PreTranslateMessage(pMsg);
-//}
+BOOL symbol_grp::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: Add your specialized code here and/or call the base class
+	if (pMsg->message == WM_KEYDOWN)
+    {
+        if ((pMsg->wParam == VK_RETURN) || (pMsg->wParam == VK_ESCAPE))
+			
+			pMsg->wParam=NULL;
+    }
+    return CDialogEx::PreTranslateMessage(pMsg);
+}
 
 void symbol_grp::OnClose()
 {

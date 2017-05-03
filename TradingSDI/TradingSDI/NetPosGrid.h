@@ -24,6 +24,7 @@ public:
 
 	static int netpos_lock;
 	static int col_click;
+	static int Data_Update;
 	static CString  Str_Total_Bal;
 	static int a_d;
 	static CMutex mutex_Symbol_ltp;
@@ -91,7 +92,7 @@ public:
 
 	static NetpositionArray m_client_lost;
 
-
+	 CWinThread* m_pThreads;
 	
 	static CMutex str_grid_mutex;
 

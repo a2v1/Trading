@@ -94,7 +94,7 @@ void change_comment::OnBnClickedOk()
 		_bstr_t jasonStr="";
 		_variant_t  strUpdate_time="";
 		_bstr_t r_time="";
-		_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=68.168.104.26;Database=Tradedatabase;uid=sa;pwd=ok@12345;";
+		_bstr_t bstrConnect ="Provider=SQLOLEDB.1;SERVER=64.251.7.161;Database=Tradedatabase;uid=sa;pwd=ok@12345;";
 		
 		_bstr_t  InsertAndUpdate_Command="exec proc_data_delete_for_commentchange '" + strlogin_1 + "','" + strlogin_2 + "'; ";
 		//CString MessageStr=InsertAndUpdate_Command;

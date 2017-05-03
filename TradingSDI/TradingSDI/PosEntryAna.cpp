@@ -193,7 +193,7 @@ void PosEntryAna::Getdata(_bstr_t m_login)
 	CSession session;
 	CCommand<CAccessor<CPosition_Entry_Analysis> > artists1;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	session.Open(connection);
 	
 			
@@ -915,51 +915,6 @@ void PosEntryAna::addItemToCombobox()
 				AfxMessageBox(ce.Description()+L"addItemToCombobox");			
 			} 
 }
-
-//void PosEntryAna::gridFilter(int colno,int rows_count,CString col_value)
-//{
-//	
-//	CString getColvalue=L"";
-//	CString col_filter_val[7];
-//	
-//	for(int c=0;c<7;c++)
-//	{
-//		col_filter_val[c]=QuickGetText(c,0);
-//	}
-//	for(int fcount=rows_count-1;fcount>0;fcount--)
-//	{
-//		int flag=0;		
-//		
-//		CString col_row_val[7];
-//		for(int c=0;c<7;c++)
-//		{
-//			col_row_val[c]=QuickGetText(c,fcount);
-//		}
-//	  if((col_filter_val[0]==col_row_val[0] || col_filter_val[0]==L"ALL"||col_filter_val[0]==L"") && (col_filter_val[1]==col_row_val[1] || col_filter_val[1]==L"ALL"||col_filter_val[1]==L"") && (col_filter_val[2]==col_row_val[2] || col_filter_val[2]==L"ALL"||col_filter_val[2]==L"")  && (col_filter_val[3]==col_row_val[3] || col_filter_val[3]==L"ALL"||col_filter_val[3]==L"")  && (col_filter_val[4]==col_row_val[4] || col_filter_val[4]==L"ALL"||col_filter_val[4]==L"")   && (col_filter_val[5]==col_row_val[5] || col_filter_val[5]==L"ALL"||col_filter_val[5]==L"")&&(col_filter_val[6]==col_row_val[6] || col_filter_val[6]==L"ALL"||col_filter_val[6]==L""))
-//	   {			
-//			CString checkblakval=QuickGetText(0,fcount);
-//			checkblakval=checkblakval.Trim();
-//			if(checkblakval.Trim().GetLength()>0)
-//			{
-//				flag=1;
-//			}			
-//		}
-//		else
-//		{			
-//			flag=0;			
-//		}
-//		
-//	    if (flag==1)
-//		{
-//			SetRowHeight(fcount, 20);
-//		}
-//		else
-//		{   
-//			 SetRowHeight(fcount, 0);
-//		}
-//	 }
-//	
-//}
 
 void PosEntryAna::OnGetCell(int col,long row,CUGCell *cell)
 {		

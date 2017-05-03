@@ -388,7 +388,7 @@ void OrderGrid::OnSheetSetup(int sheetNumber)
 	
 
 	CoInitialize(NULL );
-	hrn=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	hrn=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	if(SUCCEEDED(hrn))
 	{
 		hrn=session_update.Open(connection_update);							
@@ -496,8 +496,8 @@ void OrderGrid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,
 	QuickSetCellType(10,-1,UGCT_CHECKBOX);	
 	QuickSetCellTypeEx(10,-1,UGCT_CHECKBOXCHECKMARK);
 	SetColDefault( 10, &cell );
-	QuickSetLabelText(10,-1,L"Select");
-*/		 				
+	QuickSetLabelText(10,-1,L"Select");*/
+
 	RedrawAll();
 }
 
@@ -1576,7 +1576,7 @@ void OrderGrid::OnSize(UINT nType, int cx, int cy)
 				GetColDefault( 12, &MYcell);			
 				QuickSetCellType(12,rows_no,UGCT_DROPLIST);
 				QuickSetCellTypeEx(12,rows_no,UGCT_DROPLISTHIDEBUTTON);
-				QuickSetLabelText(12,rows_no,L"PBDU\nBPDS\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\n");
+				QuickSetLabelText(12,rows_no,L"PBDU\nMISTAKE\nOL\nNPBPS\nTDH\nPBDU\nPBNPS\nSAT\nPBDS\nODINHL\n");
 				SetColDefault( 12, &MYcell);
 
 
@@ -2042,7 +2042,7 @@ UINT RequestHandler(LPVOID pParam)
 	CSession session;
 	CCommand<CAccessor<Client_Table> > client;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);							
@@ -2095,7 +2095,7 @@ UINT RequestHandler(LPVOID pParam)
 		return 0;
 	}
 	
-	if(OrderGrid::m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+	if(OrderGrid::m_Client.Connect(L"64.251.7.161",5042)==FALSE)
 	//if(OrderGrid::m_Client.Connect(L"192.168.43.203",5042)==FALSE)
 	{
 
@@ -2646,7 +2646,7 @@ UINT RequestHandler(LPVOID pParam)
 	//			
 	//		}	
 	//		
-	//		if(OrderGrid::m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+	//		if(OrderGrid::m_Client.Connect(L"64.251.7.161",5042)==FALSE)
 	//		{
 	//			//AfxMessageBox(L"Failed to Connect");				
 	//		}	
@@ -2798,7 +2798,7 @@ UINT update_data_PBNPS_Order(void *pParam)
 	CSession session;
 	CCommand<CAccessor<COrder_Table> > artists1;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		session.Open(connection);
@@ -3388,8 +3388,8 @@ LRESULT OrderGrid::Ordergrid_cellFormat(WPARAM wParam, LPARAM lParam)
 	int col_no=int(wParam);
 	int row_no=int(lParam);
 	CUGCell cell ;
-	GetColDefault( col_no, &cell);			
-	QuickSetCellType(col_no,row_no,UGCT_CHECKBOX);	
+	GetColDefault( col_no, &cell);	
+	QuickSetCellType(col_no,row_no,UGCT_CHECKBOX);
 	QuickSetCellTypeEx(col_no,row_no,UGCT_CHECKBOXCHECKMARK);
 	SetColDefault( col_no, &cell );
 	QuickSetText(col_no,row_no,OrderGrid::str_orderGrid_settext);
