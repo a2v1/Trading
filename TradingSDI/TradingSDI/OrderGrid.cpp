@@ -388,7 +388,7 @@ void OrderGrid::OnSheetSetup(int sheetNumber)
 	
 
 	CoInitialize(NULL );
-	hrn=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	hrn=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	if(SUCCEEDED(hrn))
 	{
 		hrn=session_update.Open(connection_update);							
@@ -2042,7 +2042,7 @@ UINT RequestHandler(LPVOID pParam)
 	CSession session;
 	CCommand<CAccessor<Client_Table> > client;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);							
@@ -2095,7 +2095,7 @@ UINT RequestHandler(LPVOID pParam)
 		return 0;
 	}
 	
-	if(OrderGrid::m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+	if(OrderGrid::m_Client.Connect(L"64.251.7.161",5042)==FALSE)
 	//if(OrderGrid::m_Client.Connect(L"192.168.43.203",5042)==FALSE)
 	{
 
@@ -2646,7 +2646,7 @@ UINT RequestHandler(LPVOID pParam)
 	//			
 	//		}	
 	//		
-	//		if(OrderGrid::m_Client.Connect(L"68.168.104.26",5042)==FALSE)
+	//		if(OrderGrid::m_Client.Connect(L"64.251.7.161",5042)==FALSE)
 	//		{
 	//			//AfxMessageBox(L"Failed to Connect");				
 	//		}	
@@ -2798,7 +2798,7 @@ UINT update_data_PBNPS_Order(void *pParam)
 	CSession session;
 	CCommand<CAccessor<COrder_Table> > artists1;	
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
 		session.Open(connection);

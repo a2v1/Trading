@@ -45,6 +45,7 @@ int NetPosGrid::filter_break=0;
 int NetPosGrid::insertFilterFlag=0;
 int NetPosGrid::menu_item_cheked=0;
 int NetPosGrid::check_First=0;
+int NetPosGrid::Data_Update=0;
 _variant_t NetPosGrid::avarRecords;
 int NetPosGrid::lock_data=0;
 int NetPosGrid::intRows=0;
@@ -2580,7 +2581,7 @@ void NetPosGrid::OnSetup()
 
 		//database initilization
 		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+		hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 		if(SUCCEEDED(hr))
 		{
 		 hr=session.Open(connection);							
@@ -2594,7 +2595,7 @@ void NetPosGrid::OnSetup()
 }
 void NetPosGrid::Thread_start_st_netpos_update()
 {
-	AfxBeginThread(Update_Netposition, this);		
+	m_pThreads=AfxBeginThread(Update_Netposition, this);		
 }
 
 boolean  Check_numeric_col_filter(CString  filter_value,CString  real_value)
@@ -3303,12 +3304,12 @@ UINT Update_Netposition(LPVOID pParam)
 	CDataSource connection;
 	CSession session;
 	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	if(SUCCEEDED(hr))
 	{
 			 hr=session.Open(connection);
 	}
-	while (true)
+	while (NetPosGrid::Data_Update==1)
 	{			
 		
 		//database initilization
@@ -3437,7 +3438,7 @@ UINT Update_Netposition(LPVOID pParam)
 			connection.Close();
 			CoUninitialize();
 			CoInitialize(NULL);	
-			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+			hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 			if(SUCCEEDED(hr))
 			{
 					 hr=session.Open(connection);

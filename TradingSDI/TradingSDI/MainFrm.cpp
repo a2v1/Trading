@@ -487,7 +487,7 @@ RECT.bottom  =RECT.bottom +2;
 		CSession session;
 		HRESULT hr;
 		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLOLEDB.1;Password=ok@12345;Persist Security Info=True;User ID=sa;Initial Catalog=tradedatabase;Data Source=68.168.104.26;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ABHISHEK-P;Use Encryption for Data=False;Tag with column collation when possible=False");			
+		hr=connection.OpenFromInitializationString(L"Provider=SQLOLEDB.1;Password=ok@12345;Persist Security Info=True;User ID=sa;Initial Catalog=tradedatabase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ABHISHEK-P;Use Encryption for Data=False;Tag with column collation when possible=False");			
 		if(SUCCEEDED(hr))
 		{
 			hr=session.Open(connection);							
@@ -827,7 +827,7 @@ void DlgHelp::OnBnClickedBtnLogin()
 	add_LoginToCombobox();
 	
 	COutputWnd::m_wndOutputOrder.ThreadStart();
-	COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
+	//COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
 	//Thread_start_ServerSocket
 	// TODO: Add your control notification handler code here
 }
