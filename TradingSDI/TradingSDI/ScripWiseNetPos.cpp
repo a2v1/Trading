@@ -132,7 +132,7 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 		hr=artists1.Open(session,strCommand_char);							
 		if(SUCCEEDED(hr))
 		{
-			
+			Sleep(30);
 			ScripWiseNetPos::m_scripwisenetpos_Array_data.Clear();
 			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0;
 
@@ -166,7 +166,7 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 			ScripWiseNetPos::m_scripwisenetpos_Array.Assign(ScripWiseNetPos::m_scripwisenetpos_Array_data);
 			ScripWiseNetPos::m_mutex_scripnetpos.Unlock();
 		}	
-		Sleep(30);
+		
 	}		
     return 0;
 }

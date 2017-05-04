@@ -5,9 +5,10 @@ class Duplicate_Order:public CUGCtrl
 {
 public:
 
-	
+	void thread_destoy();
+	void data_ThreadStart();
 
-
+	static int Data_Update;
 	int short_click;
 	struct st_Comment_Change
 	{

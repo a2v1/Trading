@@ -62,7 +62,7 @@ _bstr_t Duplicate_Order::strFilter(" ");
 _variant_t Duplicate_Order::result;
 long Duplicate_Order::rgIndices[2];
 _bstr_t Duplicate_Order::bstr_currenttime("");
-
+int Duplicate_Order::Data_Update=0;
 
 Duplicate_Order::Comment_ChangeArray Duplicate_Order::m_Comment_ChangeArray;
 Duplicate_Order::st_Comment_Change Duplicate_Order::m_st_Comment_Change={};
@@ -107,89 +107,10 @@ LRESULT Duplicate_Order::CreatePushButton(WPARAM, LPARAM)
 
 Duplicate_Order::~Duplicate_Order()
 {
-	try
-	{
-	//delete m_pThread;
-	UGXPThemes::CleanUp();
-
-	DWORD exit_code= NULL;
-	if (m_pThreads != NULL)
-	{
-    GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
-    if(exit_code == STILL_ACTIVE)
-    {
-        ::TerminateThread(m_pThreads->m_hThread, 0);
-        CloseHandle(m_pThreads->m_hThread);
-    }
-    m_pThreads->m_hThread = NULL;
-    m_pThreads = NULL;
-	}
-	}
-	catch(_com_error & ce)
-	{
-		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
-	}
-
+	thread_destoy();
 }
 
-UINT update_data_Duplicate_Order(void*);
-UINT update_data_Duplicate_Order(void *pParam)
-{
-	Duplicate_Order* pThis= (Duplicate_Order*)pParam;	
-	CoInitialize(NULL);
-	CDataSource connection;
-	CSession session;
-	CCommand<CAccessor<DataTradeFilter> > artists1;	
-	HRESULT hr;
-	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
-	if(SUCCEEDED(hr))
-	{
-		session.Open(connection);
-		while (true )
-		{				
-			_bstr_t strCommand="";		
-			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',[login] as 'Checked',isnull(change_YN,0) as 'Change_YN',Opp_Deal  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where ISNULL(Change_YN,0)='1' order by slno asc";        
-			char* strCommand_char=(char*)strCommand;
-			hr=artists1.Open(session,strCommand_char);							 					 		 				 
-			 int intRows=0;		 
-			 double t_d_m_Pre_NetQty=0;
-			 double t_d_m_Diff_NetQty=0;
-			 double t_d_m_NetQty=0;
-			 double t_d_m_PL=0;
-			 double t_d_m_Balance=0;
-			 if(SUCCEEDED(hr))
-			 {
-				 Duplicate_Order::m_Comment_ChangeArray.Clear();
-				 while (artists1.MoveNext() == S_OK)
-				 {																	  
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.login,artists1.m_Checked);				 					
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.time,artists1.m_time);				 										
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.deal ,artists1.m_deal);				 										 
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.order ,artists1.m_order);																
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.symbol ,artists1.m_symbol);																										 
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.action ,artists1.m_Type);											
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.volume ,artists1.m_volume);								
-					LPTSTR endPtr;
-					double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
-					CString cstrpl;
-					cstrpl.Format(_T("%.4f"),d_m_PL);	
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.price ,cstrpl);											
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.comment ,artists1.m_comment);											
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.OurComment ,artists1.m_OurComment);	
-					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.Opposite_Deal  ,artists1.m_Opp_Deal );
-					Duplicate_Order::m_Comment_ChangeArray.Add(&Duplicate_Order::m_st_Comment_Change);
-				 }
-				 artists1.Close();
-				 pThis->SendMessage(WM_MY_THREAD_MESSAGE1, 0,0);
-				 //pThis->PostMessage(WM_MY_THREAD_MESSAGE1, 0,0);
-			 }
-		 
 
-			 Sleep(50);
-		}
-	}
-    return 0;
-}
 
 LRESULT Duplicate_Order::rownofind(WPARAM wParam, LPARAM lParam)
 {
@@ -232,7 +153,7 @@ LRESULT Duplicate_Order::GridRefresh(WPARAM wParam, LPARAM lParam)
 }
 LRESULT Duplicate_Order::DeleteThred(WPARAM wParam, LPARAM lParam)
 {
-	DWORD exit_code= NULL;
+	/*DWORD exit_code= NULL;
 	if (m_pThreads != NULL)
 	{
     GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
@@ -245,7 +166,7 @@ LRESULT Duplicate_Order::DeleteThred(WPARAM wParam, LPARAM lParam)
     m_pThreads = NULL;
 	}
 
-	Duplicate_Order::thred_killed_ok=0;	
+	Duplicate_Order::thred_killed_ok=0;	*/
 	return 0;
 }
 
@@ -1148,7 +1069,7 @@ void Duplicate_Order::OnSetup()
 
 	m_iSortCol = 0;
 	m_bSortedAscending = TRUE;
-	m_pThreads=AfxBeginThread(update_data_Duplicate_Order, this);		   	
+		   	
 		run_check=0;		
 }
 
@@ -1432,4 +1353,95 @@ BOOL Duplicate_Order::PreTranslateMessage(MSG* pMsg)
 		}
 	}
    return CUGCtrl::PreTranslateMessage(pMsg);
+}
+
+UINT update_data_Duplicate_Order(void*);
+UINT update_data_Duplicate_Order(void *pParam)
+{
+	Duplicate_Order* pThis= (Duplicate_Order*)pParam;	
+	CoInitialize(NULL);
+	CDataSource connection;
+	CSession session;
+	CCommand<CAccessor<DataTradeFilter> > artists1;	
+	HRESULT hr;
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=TradeDataBase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
+	if(SUCCEEDED(hr))
+	{
+		session.Open(connection);
+		while (Duplicate_Order::Data_Update==1)
+		{	
+			Sleep(100);
+			_bstr_t strCommand="";		
+			strCommand="select [time],[order],mt5_deals.deal,symbol,case when [action]=0 then 'Buy' else 'Sell' end as 'Type',volume/10000 as 'volume',price,comment,isnull(OurComment,'') as 'OurComment',[login] as 'Checked',isnull(change_YN,0) as 'Change_YN',Opp_Deal  from mt5_deals left outer join Trade_Checked on Trade_Checked.deal=mt5_deals.deal left outer join comment_change on comment_change.deal=mt5_deals.deal where ISNULL(Change_YN,0)='1' order by slno asc";        
+			char* strCommand_char=(char*)strCommand;
+			hr=artists1.Open(session,strCommand_char);							 					 		 				 
+			 int intRows=0;		 
+			 double t_d_m_Pre_NetQty=0;
+			 double t_d_m_Diff_NetQty=0;
+			 double t_d_m_NetQty=0;
+			 double t_d_m_PL=0;
+			 double t_d_m_Balance=0;
+			 if(SUCCEEDED(hr))
+			 {
+				 Duplicate_Order::m_Comment_ChangeArray.Clear();
+				 while (artists1.MoveNext() == S_OK)
+				 {																	  
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.login,artists1.m_Checked);				 					
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.time,artists1.m_time);				 										
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.deal ,artists1.m_deal);				 										 
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.order ,artists1.m_order);																
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.symbol ,artists1.m_symbol);																										 
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.action ,artists1.m_Type);											
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.volume ,artists1.m_volume);								
+					LPTSTR endPtr;
+					double d_m_PL = _tcstod(artists1.m_price, &endPtr);												
+					CString cstrpl;
+					cstrpl.Format(_T("%.4f"),d_m_PL);	
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.price ,cstrpl);											
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.comment ,artists1.m_comment);											
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.OurComment ,artists1.m_OurComment);	
+					CMTStr::Copy(Duplicate_Order::m_st_Comment_Change.Opposite_Deal  ,artists1.m_Opp_Deal );
+					Duplicate_Order::m_Comment_ChangeArray.Add(&Duplicate_Order::m_st_Comment_Change);
+				 }
+				 artists1.Close();
+				 //pThis->SendMessage(WM_MY_THREAD_MESSAGE1, 0,0);				 
+				 pThis->PostMessageW(WM_MY_THREAD_MESSAGE1, 0,0);
+			 }		 			 
+		}
+		session.Close();
+		connection.Close();
+	}
+    return 0;
+}
+
+void Duplicate_Order::data_ThreadStart()
+{
+	Data_Update=1;
+	m_pThreads=AfxBeginThread(update_data_Duplicate_Order, this);	
+}
+void Duplicate_Order::thread_destoy()
+{
+	try 
+	{		
+		Duplicate_Order::Data_Update=0;
+		DWORD exit_code= NULL;
+		if (COutputWnd::m_wndOutputDuplicate_Order.m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(COutputWnd::m_wndOutputDuplicate_Order.m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(COutputWnd::m_wndOutputDuplicate_Order.m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(COutputWnd::m_wndOutputDuplicate_Order.m_pThreads->m_hThread, 0);
+					CloseHandle(COutputWnd::m_wndOutputDuplicate_Order.m_pThreads->m_hThread);
+				}
+				//COutputWnd::m_wndOutputDuplicate_Order.m_pThreads->m_hThread = NULL;
+				COutputWnd::m_wndOutputDuplicate_Order.m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }

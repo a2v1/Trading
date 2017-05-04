@@ -8,9 +8,10 @@ private:
 public:
 	CWinThread* m_pThreads;
 	CString str[9];
-
+	void thread_destoy();
+	void data_ThreadStart();
 	int col_click,a_d;
-
+	static int Data_Update;
 	struct st_Dealing
 	{		 		
 		wchar_t Group[100];

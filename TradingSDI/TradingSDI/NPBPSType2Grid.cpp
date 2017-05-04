@@ -1915,7 +1915,8 @@ UINT ShowCNPBPSType2Grid(void *pParam)
 	{
 		hr=session.Open(connection);
 		while (true )
-		{				
+		{			
+			Sleep(100);
 			CString strCommand=L"";		
 			strCommand.Format(L"proc_Passed_By_Manager_OKAY");        
 			_bstr_t bstrCommand="";

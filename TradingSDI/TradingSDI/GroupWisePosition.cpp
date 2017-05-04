@@ -31,7 +31,7 @@ CMutex GroupWiseNetPos::dealing_mutex;
 /////////////////////////////////////////////////////////////////////////////
 //Standard MyCug construction/destruction
 boolean  Check_numeric_col_filter_2(CString  filter_value,CString  real_value);
-
+int GroupWiseNetPos::Data_Update=0;
 UINT Show_GroupwiseNetPos(void *pParam);
 GroupWiseNetPos::GroupWiseNetPos()
 {
@@ -42,7 +42,7 @@ GroupWiseNetPos::GroupWiseNetPos()
 
 GroupWiseNetPos::~GroupWiseNetPos()
 {
-	//delete m_pThread;
+	thread_destoy();
 	UGXPThemes::CleanUp();
 }
 
@@ -97,12 +97,17 @@ void GroupWiseNetPos::OnSetup()
 		InitMenu();
 		SetTimer(0, 100, NULL);
 
-		m_pThreads=AfxBeginThread(Show_GroupwiseNetPos, this);	
+		
 	}
 	 catch(_com_error & ce)
 	{
 		AfxMessageBox(ce.Description()+L"   writeData");			
 	} 
+}
+void GroupWiseNetPos::data_ThreadStart()
+{
+	GroupWiseNetPos::Data_Update=1;
+	m_pThreads=AfxBeginThread(Show_GroupwiseNetPos, this);	
 }
 void GroupWiseNetPos::OnSheetSetup(int sheetNumber)
 {
@@ -1064,8 +1069,9 @@ UINT Show_GroupwiseNetPos(void *pParam)
 		hr=session.Open(connection);
 	if(SUCCEEDED(hr))
 	{
-		while (true )
-		{				
+		while (GroupWiseNetPos::Data_Update==1)
+		{			
+			Sleep(100);
 			CString strCommand=L"";		
 			strCommand.Format(L"GroupwiseNetpos'%d'",CMainFrame::int_currenttime);        
 			_bstr_t bstrCommand="";
@@ -1102,6 +1108,8 @@ UINT Show_GroupwiseNetPos(void *pParam)
 			 Sleep(1000);
 		}
 	}
+	session.Close();
+	connection.Close();
 	}
     return 0;
 }
@@ -1169,4 +1177,33 @@ void GroupWiseNetPos::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 //		Trace( _T( "Sorted column %d descending" ), iCol );
 	}			 				
 	RedrawAll();
+}
+
+
+
+void GroupWiseNetPos::thread_destoy()
+{
+try 
+	{
+		Data_Update=0;
+		DWORD exit_code= NULL;
+		if (COutputWnd::m_GroupWiseNetPos.m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(COutputWnd::m_GroupWiseNetPos.m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(COutputWnd::m_GroupWiseNetPos.m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(COutputWnd::m_GroupWiseNetPos.m_pThreads->m_hThread, 0);
+					CloseHandle(COutputWnd::m_GroupWiseNetPos.m_pThreads->m_hThread);
+				}
+				//COutputWnd::m_wndOutputPos.m_pThreads->m_hThread = NULL;
+				COutputWnd::m_GroupWiseNetPos.m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }

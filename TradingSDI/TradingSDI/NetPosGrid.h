@@ -140,7 +140,7 @@ public:
 
 
 
-
+	void thread_destoy();
 
 
 	struct  Client_Details

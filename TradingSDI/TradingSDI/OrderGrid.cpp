@@ -110,6 +110,7 @@ OrderGrid::St_Client OrderGrid::m_St_Client_5={};
 CMutex OrderGrid::m_order_mutex;
 int OrderGrid::col_click=0;
 int OrderGrid::a_d=0;
+int OrderGrid::Data_Update=0;
 
 OrderGrid::st_Order_UpdateArray OrderGrid::m_st_Order_GridArray;
 
@@ -188,29 +189,7 @@ BOOLEAN Check_value_In_list(CString login)
 
 OrderGrid::~OrderGrid()
 {
-	try
-	{
-	//delete m_pThread;
-	UGXPThemes::CleanUp();
-
-	DWORD exit_code= NULL;
-	if (m_pThreads != NULL)
-	{
-    GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
-    if(exit_code == STILL_ACTIVE)
-    {
-        ::TerminateThread(m_pThreads->m_hThread, 0);
-        CloseHandle(m_pThreads->m_hThread);
-    }
-    m_pThreads->m_hThread = NULL;
-    m_pThreads = NULL;
-	}
-	}
-	catch(_com_error & ce)
-	{
-		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
-	}
-
+	thread_destoy();
 	try
 	{
 	//delete m_pThread;
@@ -2677,6 +2656,12 @@ void OrderGrid::ThreadStart()
 {
 	m_SocketThred=AfxBeginThread(RequestHandler, this);		
 }
+
+void OrderGrid::data_ThreadStart()
+{
+	OrderGrid::Data_Update=1;
+	m_pThreads=AfxBeginThread(update_data_PBNPS_Order, this);		
+}
 void OrderGrid::OnSetup()
 {
 	// Set up the Tab controls
@@ -2775,7 +2760,7 @@ void OrderGrid::OnSetup()
 
 
 
-	m_pThreads=AfxBeginThread(update_data_PBNPS_Order, this);	
+	
 
 
 	
@@ -2802,8 +2787,9 @@ UINT update_data_PBNPS_Order(void *pParam)
 	if(SUCCEEDED(hr))
 	{
 		session.Open(connection);
-		while (true )
-		{				
+		while (OrderGrid::Data_Update==1)
+		{	
+			Sleep(10);
 			_bstr_t strCommand="";		
 			strCommand="Proc_Order";        
 			char* strCommand_char=(char*)strCommand;
@@ -3244,8 +3230,10 @@ UINT update_data_PBNPS_Order(void *pParam)
 	OrderGrid::m_order_mutex.Unlock();
 
 			 }		 
-			 Sleep(10);			 
+			 			 
 		}
+		session.Close();
+		connection.Close();
 	}
     return 0;
 }
@@ -3446,4 +3434,32 @@ void OrderGrid::Selected_ActivateOrder()
 		}
 	}		
 	AfxMessageBox(L"Data has been  SuccessFully updated");
+}
+
+
+void OrderGrid::thread_destoy()
+{
+	try 
+	{	
+		Data_Update=0;
+		DWORD exit_code= NULL;
+		if (COutputWnd::m_wndOutputOrder.m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(COutputWnd::m_wndOutputOrder.m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(COutputWnd::m_wndOutputOrder.m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(COutputWnd::m_wndOutputOrder.m_pThreads->m_hThread, 0);
+					CloseHandle(COutputWnd::m_wndOutputOrder.m_pThreads->m_hThread);
+				}
+				//COutputWnd::m_wndOutputPos.m_pThreads->m_hThread = NULL;
+				COutputWnd::m_wndOutputOrder.m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }

@@ -157,7 +157,7 @@ public:
 class OrderGrid:public CUGCtrl
 {
 public:
-
+	void thread_destoy();
 
 	struct st_Order_Update
 	{
@@ -235,6 +235,9 @@ public:
 	static int lock_data_fill ;
 
 	static int first_time_data_Received_YN;
+
+	static int Data_Update;
+
 
 	static CString str_text_Update_Final_Balance;
 	BOOL m_bSortedAscending;
@@ -408,7 +411,7 @@ public:
 
 	void ThreadStart();
 
-
+	void data_ThreadStart();
 	void Selected_ActivateOrder();
 
 };

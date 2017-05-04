@@ -18,6 +18,7 @@
 #include "GroupWiseNetPosForm.h"
 #include "AuditForm.h"
 #include "OutputWnd.h"
+#include "Login.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -84,47 +85,74 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // CTradingSDIView diagnostics
 LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 {
-	CMFCTabCtrl* pTab = (CMFCTabCtrl*)lParam;
+	if (DlgHelp::login_checkYN==1)
+	{
+		CMFCTabCtrl* pTab = (CMFCTabCtrl*)lParam;
 	
-	CWnd *pWnd = pTab->GetActiveWnd();
+		CWnd *pWnd = pTab->GetActiveWnd();
 
-	int i=pTab->GetActiveTab();
+		int i=pTab->GetActiveTab();
 
-	if(i==0)
-	{
-	 NetPosGrid::Data_Update=0;
-	 onDestoyNetposThread();
-	}
-	else if(i==1)
-	{
-		NetPosGrid::Data_Update=1;
-		COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
-	}
+		if(i==0)
+		{
+			 COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			 COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			 COutputWnd::m_GroupWiseNetPos.thread_destoy();	 
+			 COutputWnd::m_wndOutputPos.thread_destoy();		 
+			 COutputWnd::m_wndOutputOrder.data_ThreadStart();
+	 
+		}
+		else if(i==1)
+		{
+			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			COutputWnd::m_GroupWiseNetPos.thread_destoy();
+			COutputWnd::m_wndOutputOrder.thread_destoy();			
+			COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
+		}
 
-	else if(i==2)
-	{
-		 NetPosGrid::Data_Update=0;
-		 onDestoyNetposThread();
-	}
-	else if(i==3)
-	{
-		 NetPosGrid::Data_Update=0;
-		 onDestoyNetposThread();
-	}
-	else if(i==4)
-	{
-		NetPosGrid::Data_Update=0;
-		onDestoyNetposThread();
-	}
-	else if(i==5)
-	{
-		NetPosGrid::Data_Update=0;
-		onDestoyNetposThread();
-	}
-	else if(i==6)
-	{
-		NetPosGrid::Data_Update=0;
-		onDestoyNetposThread();
+		else if(i==2)
+		{
+			COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			COutputWnd::m_GroupWiseNetPos.thread_destoy();
+			 COutputWnd::m_wndOutputPos.thread_destoy();			 
+			 COutputWnd::m_wndOutputOrder.thread_destoy();
+			 COutputWnd::m_wndOutputDuplicate_Order.data_ThreadStart();
+		}
+		else if(i==3)
+		{
+			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			COutputWnd::m_GroupWiseNetPos.thread_destoy();
+			COutputWnd::m_wndOutputPos.thread_destoy();			 
+			 COutputWnd::m_wndOutputOrder.thread_destoy();
+		}
+		else if(i==4)
+		{
+			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			COutputWnd::m_AnalysisGrid.data_ThreadStart();
+			COutputWnd::m_GroupWiseNetPos.thread_destoy();
+			COutputWnd::m_wndOutputPos.thread_destoy();			
+			COutputWnd::m_wndOutputOrder.thread_destoy();
+		}
+		else if(i==5)
+		{			
+			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			COutputWnd::m_wndOutputPos.thread_destoy();
+			OrderGrid::Data_Update=0;
+			COutputWnd::m_wndOutputOrder.thread_destoy();
+			
+			COutputWnd::m_GroupWiseNetPos.data_ThreadStart();
+		}
+		else if(i==6)
+		{
+			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
+			COutputWnd::m_AnalysisGrid.thread_destoy() ;
+			COutputWnd::m_GroupWiseNetPos.thread_destoy();
+			COutputWnd::m_wndOutputPos.thread_destoy();			
+			COutputWnd::m_wndOutputOrder.thread_destoy();
+		}
 	}
 	return 0;
 }
@@ -137,31 +165,12 @@ void CTradingSDIView::OnActivateView(CView* view)
 }
 
 
-void CTradingSDIView::onDestoyNetposThread()
-{
-	try 
-	{				
-		DWORD exit_code= NULL;
-		if (COutputWnd::m_wndOutputPos.m_pThreads != NULL)
-		{
-			if(WaitForSingleObject(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
-			{
-				GetExitCodeThread(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread, &exit_code);
-				if(exit_code == STILL_ACTIVE)
-				{
-					::TerminateThread(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread, 0);
-					CloseHandle(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread);
-				}
-				//COutputWnd::m_wndOutputPos.m_pThreads->m_hThread = NULL;
-				COutputWnd::m_wndOutputPos.m_pThreads = NULL;
-			}
-		}
-	}
-	catch(_com_error & ce)
-	{
-		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
-	}
-}
+
+
+
+
+
+
 
 #ifdef _DEBUG
 

@@ -8,6 +8,7 @@ private:
 public:
 	CWinThread* m_pThreads;
 	CString str[9];
+	static int Data_Update;
 
 	int col_click,a_d;
 
@@ -63,6 +64,8 @@ public:
 	void InitMenu();
 	void gridFilter(int colno,int rows_count,CString col_value);
 	void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
+	void data_ThreadStart();
+	void thread_destoy();
 };
 #endif
 

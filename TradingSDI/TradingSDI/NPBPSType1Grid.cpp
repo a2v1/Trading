@@ -1882,7 +1882,8 @@ UINT Show_NPBPStype1(void *pParam)
 	{
 		hr=session.Open(connection);
 		while (true )
-		{				
+		{		
+			Sleep(100);
 			CString strCommand=L"";		
 			strCommand.Format(L"proc_Type1");        
 			 if(SUCCEEDED(hr))

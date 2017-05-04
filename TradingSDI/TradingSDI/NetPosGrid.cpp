@@ -225,6 +225,7 @@ NetPosGrid::NetPosGrid()
 NetPosGrid::~NetPosGrid()
 {
 	
+	thread_destoy();
 	UGXPThemes::CleanUp();	
 }
 
@@ -2595,6 +2596,7 @@ void NetPosGrid::OnSetup()
 }
 void NetPosGrid::Thread_start_st_netpos_update()
 {
+	NetPosGrid::Data_Update=1;
 	m_pThreads=AfxBeginThread(Update_Netposition, this);		
 }
 
@@ -3239,7 +3241,8 @@ void NetPosGrid::UpdatePre_Post_Position()
 		{	
 			NetPosGrid::mutex_Symbol_ltp.Lock();
 			while (artists1.MoveNext() == S_OK)
-			{		
+			{	
+				Sleep(10);
 				t_d_m_Pre_NetQty=artists1.m_preval ;
 				t_d_m_Post_NetQty=artists1.m_postval;
 				strlogin=artists1.m_login;
@@ -3311,12 +3314,7 @@ UINT Update_Netposition(LPVOID pParam)
 	}
 	while (NetPosGrid::Data_Update==1)
 	{			
-		
-		//database initilization
-	   /*try
-	   {*/
-	    //m_logfile.LogEvent(L"Start update_rate_and_pl_byindex");
-		//CMainFrame::int_currenttime
+		Sleep(10);
 		NetPosGrid::str_grid_filter.Lock();
 		NetPosGrid::m_NetpositionArray.Clear();
 		if(SUCCEEDED(hr))
@@ -4545,6 +4543,35 @@ UINT Update_Netposition(LPVOID pParam)
 
 	return 0;
 }
+
+
+void NetPosGrid::thread_destoy()
+{
+	try 
+	{		
+		Data_Update=0;
+		DWORD exit_code= NULL;
+		if (COutputWnd::m_wndOutputPos.m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread, 0);
+					CloseHandle(COutputWnd::m_wndOutputPos.m_pThreads->m_hThread);
+				}
+				//COutputWnd::m_wndOutputPos.m_pThreads->m_hThread = NULL;
+				COutputWnd::m_wndOutputPos.m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
+}
+
 
 	
 

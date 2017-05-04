@@ -1317,7 +1317,8 @@ UINT Show_CCodesChanged(void *pParam)
 	{
 		hr=session.Open(connection);
 		while (true )
-		{				
+		{	
+			Sleep(10);
 			 CString strCommand=L"";		
 			 strCommand.Format(L"code_change");        
 			_bstr_t bstrCommand="";

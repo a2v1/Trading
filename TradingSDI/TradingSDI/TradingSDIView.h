@@ -23,7 +23,9 @@ public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual void OnActivateView(CView* view);
 	
-	void onDestoyNetposThread();
+	
+	
+	
 
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
