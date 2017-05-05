@@ -125,14 +125,13 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 	session.Open(connection);
 	while (true)
 	{	
-		 
+		Sleep(10); 
 		_bstr_t strCommand="";		
 		strCommand="ScripWiseNetpos";
         char* strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);							
 		if(SUCCEEDED(hr))
-		{
-			Sleep(30);
+		{			
 			ScripWiseNetPos::m_scripwisenetpos_Array_data.Clear();
 			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0;
 
@@ -244,6 +243,8 @@ LRESULT ScripWiseNetPos::gridshorting(WPARAM wParam, LPARAM lParam)
 	 }
 
 	 RedrawAll();
+
+
 	 return 0;
 }
 
