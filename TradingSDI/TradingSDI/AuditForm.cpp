@@ -161,27 +161,36 @@ void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	// for destroy thread and start thread on tab change
-	    if(m_tab.GetCurSel()==0)
+	    if(m_tabCurrent==0)
 		{
 			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.data_ThreadStart();
+			m_nbpsgrid1.thread_destoy();
+			m_codechangegrid.thread_destoy();
+			CAuditForm::m_passbygrid.data_ThreadStart();
 
 		}
-		else if(m_tab.GetCurSel()==1)
+		else if(m_tabCurrent==1)
 		{
 			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.thread_destoy();
+			m_codechangegrid.thread_destoy();
+			CAuditForm::m_passbygrid.thread_destoy();
+			m_nbpsgrid1.data_ThreadStart();
 		}
-		else if(m_tab.GetCurSel()==2)
+		else if(m_tabCurrent==2)
 		{
-			
+			CAuditForm::m_passbygrid.thread_destoy();
+			m_nbpsgrid1.thread_destoy();
+			m_codechangegrid.thread_destoy();
 			m_nbpsgrid2.data_ThreadStart();
-			//CAuditForm::m_passbygrid.thread_destoy();
+			
 		}
-		else if(m_tab.GetCurSel()==3)
+		else if(m_tabCurrent==3)
 		{
 			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.thread_destoy();
+			CAuditForm::m_passbygrid.thread_destoy();
+			m_nbpsgrid1.thread_destoy();
+			m_codechangegrid.data_ThreadStart();
+
 		}
 
 	*pResult = 0;
@@ -197,29 +206,6 @@ void CAuditForm::OnTcnFocusChangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 		m_Grid[m_tabCurrent]->ShowWindow(SW_SHOW);
 		m_Grid[m_tabCurrent]->SetFocus();
 	}
-
-	    if(m_tab.GetCurFocus()==0)
-		{
-			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.data_ThreadStart();
-
-		}
-		else if(m_tab.GetCurFocus()==1)
-		{
-			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.thread_destoy();
-		}
-		else if(m_tab.GetCurFocus()==2)
-		{
-			
-			m_nbpsgrid2.data_ThreadStart();
-			//CAuditForm::m_passbygrid.thread_destoy();
-		}
-		else if(m_tab.GetCurFocus()==3)
-		{
-			m_nbpsgrid2.thread_destoy();
-			//CAuditForm::m_passbygrid.thread_destoy();
-		}
 
 	*pResult = 0;
 }

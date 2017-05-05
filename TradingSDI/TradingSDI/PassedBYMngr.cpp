@@ -50,7 +50,8 @@ int CPassedBYMngr::Data_Update=0;
 UINT PassedByMnger(void *pParam);
 CPassedBYMngr::CPassedBYMngr(void)
 {
-	UGXPThemes::UseThemes(false);	
+	UGXPThemes::UseThemes(false);
+	m_pThreads=NULL;
 	col_click=0;
 	a_d=0;
 }
@@ -1234,7 +1235,6 @@ UINT PassedByMnger(void *pParam)
 
 			Sleep(1000);
 
-
 		}
 	}
 
@@ -1755,7 +1755,7 @@ void CPassedBYMngr::thread_destoy()
 					::TerminateThread(m_pThreads->m_hThread, 0);
 					CloseHandle(m_pThreads->m_hThread);
 				}
-				m_pThreads->m_hThread = NULL;
+				//m_pThreads->m_hThread = NULL;
 				m_pThreads = NULL;
 			}
 		}

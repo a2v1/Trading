@@ -50,12 +50,13 @@ CString CCodesChanged::col17_val=L"";
 
 int CCodesChanged::col_click=0;
 int CCodesChanged::a_d=0;
-
+int CCodesChanged::Data_Update=0;
 
 UINT Show_CCodesChanged(void *pParam);
 CCodesChanged::CCodesChanged(void)
 {
 	UGXPThemes::UseThemes(false);	
+	m_pThreads=NULL;
 	col_click=0;
 	a_d=0;
 }
@@ -76,6 +77,12 @@ int CCodesChanged::OnCellTypeNotify(long ID,int col,long row,long msg,long param
 	}
 
     return 0;
+}
+void CCodesChanged::data_ThreadStart()
+{
+  CCodesChanged::Data_Update=1;
+  m_pThreads=AfxBeginThread(Show_CCodesChanged,this);
+
 }
 void CCodesChanged::OnSetup()
 {
@@ -1316,7 +1323,7 @@ UINT Show_CCodesChanged(void *pParam)
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);
-		while (true )
+		while (CCodesChanged::Data_Update==1)
 		{	
 			Sleep(10);
 			 CString strCommand=L"";		
@@ -1986,4 +1993,31 @@ void CCodesChanged::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *po
 //		Trace( _T( "Sorted column %d descending" ), iCol );
 	}			 				
 	RedrawAll();
+}
+void CCodesChanged::thread_destoy()
+{
+	try 
+	{	
+		Data_Update=0;
+		DWORD exit_code= NULL;
+
+		if (m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(m_pThreads->m_hThread, 0);
+					CloseHandle(m_pThreads->m_hThread);
+				}
+				//m_pThreads->m_hThread = NULL;
+				m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }
