@@ -2479,16 +2479,7 @@ void NetPosGrid::addItemToCombobox()
 							arr19.Add(str_val);
 						}
 					}	
-				/*	if (clocount==20)
-					{
-						str_val=m_st_Netposition.m_pl_volume;
-						str_val=str_val.Trim();
-						if (CheckvalueInArray(arr20,str_val)==false  && str_val!=L"")
-						{
-							str[20]=str[20]+str_val+L"\n";										
-							arr20.Add(str_val);
-						}
-					}	*/
+				
 			}												
 		}
 		for(int f=0;f<20;f++)

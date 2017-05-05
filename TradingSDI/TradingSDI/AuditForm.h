@@ -24,6 +24,12 @@ protected:
     int m_tabCurrent;
     int m_nPageCount;
 
+  static CPassedBYMngr m_passbygrid;
+	CNPBPSType1Grid m_nbpsgrid1;
+	CNPBPSType2Grid m_nbpsgrid2;
+	CCodesChanged m_codechangegrid;
+
+
 public:
 	enum { IDD = IDD_AUDITFORM };
 

@@ -116,7 +116,7 @@ void CCodesChanged::OnSetup()
 		InitMenu();
 		SetTimer(0, 100, NULL);
 
-		m_pThreads=AfxBeginThread(Show_CCodesChanged, this);	
+		//m_pThreads=AfxBeginThread(Show_CCodesChanged, this);	
 	}
 	 catch(_com_error & ce)
 	{
