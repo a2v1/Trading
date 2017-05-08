@@ -2082,8 +2082,8 @@ UINT RequestHandler(LPVOID pParam)
 		return 0;
 	}	
 	_bstr_t bstr="";
-	USES_CONVERSION ;	
-	rapidjson::Document d;	
+	//USES_CONVERSION ;	
+	//rapidjson::Document d;	
 
 	//while(true)
 	//{
