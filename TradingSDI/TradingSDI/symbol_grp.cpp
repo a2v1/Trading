@@ -44,11 +44,16 @@ END_MESSAGE_MAP()
 BOOL symbol_grp::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	//SETTING THE POSITION OF DILOG
+	CRect rect;
+	GetClientRect(&rect);
+	MoveWindow( rect.left+10,rect.top+115,rect.Width()+25,rect.Height());
+
+
 	symbol_map.AttachGrid(this ,IDC_STATIC_GRID);
 	symbol_map.SetColWidth(0,340);	
 	symbol_map.QuickSetText(0,-1,L"SYMBOL");
-
-	
 
 	return TRUE;  // return TRUE unless you set the focus to a control	
 }

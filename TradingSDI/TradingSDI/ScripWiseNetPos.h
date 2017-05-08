@@ -110,7 +110,7 @@ public:
 	
 	void    gridFilter(int colno,int rows_count,CString col_value);
 	
-	static _variant_t result;
+	static CString total_result;
 	void InitMenu();
 
 

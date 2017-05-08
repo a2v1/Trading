@@ -72,11 +72,6 @@ public:
 
 	//new Dlg calling
 	CDateTimeEditCtrl     m_date;	
-	symbol_grp            m_SymbolDlg;
-	SymbolMapping         m_Symbolmapiingdlg;
-	define_margin         m_DefineMarginDlg ;
-	ClientCreate          m_ClientDlg;
-	LTP_Dilog             m_ltp_dilog;
 	
 
 	CButton			  m_btn_Delete;

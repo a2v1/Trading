@@ -67,7 +67,7 @@ int ScripWiseNetPos::row_count=0;
 _bstr_t ScripWiseNetPos::strShort("  order by t1.login asc,t1.symbol asc");
 _bstr_t ScripWiseNetPos::cellvalue("");
 _bstr_t ScripWiseNetPos::strFilter(" ");
-_variant_t ScripWiseNetPos::result;
+CString ScripWiseNetPos::total_result;
 long ScripWiseNetPos::rgIndices[2];
 _bstr_t ScripWiseNetPos::bstr_currenttime("");
 
@@ -150,6 +150,7 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 				ScripWiseNetPos::m_scripwisenetpos_Array_data.Add(&m_st_scripwisenetpos);
 			}
 			artists1.Close();
+			ScripWiseNetPos::total_result.Format(_T("%.2f"),total_balance);
 			ScripWiseNetPos::st_scripwisenetpos m_st_scripwisenetpos={};	
 			CMTStr::Copy(m_st_scripwisenetpos.m_Symnol,L"Total");
 

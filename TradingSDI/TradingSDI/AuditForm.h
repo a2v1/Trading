@@ -6,7 +6,7 @@
 #include "NPBPSType2Grid.h"
 #include "afxwin.h"
 #include "afxcmn.h"
-
+#include "Login.h"
 // CAuditForm form view
 
 class CAuditForm : public CFormView

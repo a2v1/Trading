@@ -53,10 +53,10 @@ BOOL ClientCreate::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	//database initilization
-
-
-
+	//setting the position of window dilog
+	CRect rect;
+	GetClientRect(&rect);
+    MoveWindow( rect.left+470,rect.bottom-100,375,320);
 	return true;
 }
 
@@ -118,7 +118,7 @@ void ClientCreate::OnBnClickedSave()
 		CCommand<CNoAccessor, CNoRowset>cmd;	
 		/*if (SUCCEEDED(hr))
 		{*/
-			hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
+		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
 		//}
 		cmd.Close();
 		AfxMessageBox(L"Client has been created !!!");	

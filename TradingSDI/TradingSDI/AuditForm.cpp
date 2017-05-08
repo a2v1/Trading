@@ -160,8 +160,10 @@ void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 		m_Grid[m_tabCurrent]->SetFocus();
 	}
 
-	// for destroy thread and start thread on tab change
-	    if(m_tabCurrent==0)
+	if (DlgHelp::login_checkYN==1)
+	{
+		//destroying thread and start thread on tab change
+		if(m_tabCurrent==0)
 		{
 			m_nbpsgrid2.thread_destoy();
 			m_nbpsgrid1.thread_destoy();
@@ -182,7 +184,7 @@ void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 			m_nbpsgrid1.thread_destoy();
 			m_codechangegrid.thread_destoy();
 			m_nbpsgrid2.data_ThreadStart();
-			
+
 		}
 		else if(m_tabCurrent==3)
 		{
@@ -192,7 +194,7 @@ void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 			m_codechangegrid.data_ThreadStart();
 
 		}
-
+	}
 	*pResult = 0;
 }
 

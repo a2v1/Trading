@@ -23,8 +23,6 @@ public:
 	enum { IDD = IDD_DEFINE_MARGIN };
 	definemargin_grid d_grid;
 
-	//flag
-	static bool fill_data;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 

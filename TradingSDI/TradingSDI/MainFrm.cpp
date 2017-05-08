@@ -15,14 +15,14 @@
 #include "Symbol_Table.h"
 #include "symbol_grp.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
-no_namespace rename("EOF", "EndOfFile")
+	no_namespace rename("EOF", "EndOfFile")
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 #define SAFE_DELETE(ptr) if (ptr) { delete ptr; ptr = NULL; }
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
-//used for dockablepane to reset it's pointer after close->destroy	
-const UINT WM_RESETMEMBER = ::RegisterWindowMessage(_T("WM_RESETMEMBER"));
+	//used for dockablepane to reset it's pointer after close->destroy	
+	const UINT WM_RESETMEMBER = ::RegisterWindowMessage(_T("WM_RESETMEMBER"));
 const int  iMaxUserToolbars = 10;
 const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
 const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
@@ -51,14 +51,14 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_IGNOREMAIN, &CMainFrame::OnUpdateIgnoremain)
 	ON_UPDATE_COMMAND_UI(ID_IGNORECOMMENT, &CMainFrame::OnUpdateIgnorecomment)
 	ON_UPDATE_COMMAND_UI(ID_TOTALVALUE, &CMainFrame::OnUpdateTotalvalue)
-//	ON_COMMAND(ID_SYMBOLMAP, &CMainFrame::OnSymbolmap)
-ON_COMMAND(ID_SYMBOLMAP, &CMainFrame::OnSymbolmap)
-ON_COMMAND(ID_SYMBOLGROUPMAPPING, &CMainFrame::OnSymbolgroupmapping)
-ON_COMMAND(ID_LTPUPDATE, &CMainFrame::OnLtpupdate)
-ON_COMMAND(ID_DEFINESYMBOL, &CMainFrame::OnDefinesymbol)
-ON_COMMAND(ID_CLIENTCREATE, &CMainFrame::OnClientcreate)
-ON_UPDATE_COMMAND_UI(ID_DATETIME, &CMainFrame::OnUpdateDatetime)
-ON_WM_MOVE()
+	//	ON_COMMAND(ID_SYMBOLMAP, &CMainFrame::OnSymbolmap)
+	ON_COMMAND(ID_SYMBOLMAP, &CMainFrame::OnSymbolmap)
+	ON_COMMAND(ID_SYMBOLGROUPMAPPING, &CMainFrame::OnSymbolgroupmapping)
+	ON_COMMAND(ID_LTPUPDATE, &CMainFrame::OnLtpupdate)
+	ON_COMMAND(ID_DEFINESYMBOL, &CMainFrame::OnDefinesymbol)
+	ON_COMMAND(ID_CLIENTCREATE, &CMainFrame::OnClientcreate)
+	ON_UPDATE_COMMAND_UI(ID_DATETIME, &CMainFrame::OnUpdateDatetime)
+	ON_WM_MOVE()
 END_MESSAGE_MAP()
 static UINT indicators[] =
 {
@@ -130,43 +130,43 @@ void DlgHelp::add_LoginToCombobox()
 	IMTConSymbol *symbols=m_dealer->m_manager->SymbolCreate();
 	UINT Login_Index=0;
 	UINT symbol_count=m_dealer->m_manager->SymbolTotal();    
-		if (symbol_count!=0)
+	if (symbol_count!=0)
+	{
+		for(int f_count=0;f_count<symbol_count;f_count++)
 		{
-			for(int f_count=0;f_count<symbol_count;f_count++)
-			{
-				if(m_dealer->m_manager->SymbolNext(f_count,symbols)==MT_RET_OK)
-				{					
-					CMainFrame::arrScrip[f_count]=symbols->Symbol();
-				}
+			if(m_dealer->m_manager->SymbolNext(f_count,symbols)==MT_RET_OK)
+			{					
+				CMainFrame::arrScrip[f_count]=symbols->Symbol();
 			}
 		}
-        for(UINT i=0;m_dealer->m_manager->GroupNext(i,group)==MT_RET_OK;i++)
-          {		   
-           UINT64 *logins=NULL;
-           UINT    logins_total=0;
-           if(m_dealer->m_manager->UserLogins(group->Group(),logins,logins_total)==MT_RET_OK)
-             {
-              if(logins && logins_total)
-                for(UINT j=0;j<logins_total;j++)
-                  {                  
-					  UINT64 INTLOGIN=logins[j];					  
-					  CString  pstrLogin=L"";
-					  pstrLogin.Format( _T("%d"),INTLOGIN);
-					  CString  pstrLogin_Name=L"";					  
-					  CMainFrame::arrLogin[Login_Index]=pstrLogin;					  					  					  
-					  if(m_dealer->m_manager->UserGet(INTLOGIN,user)==MT_RET_OK)
-					  {
-						  pstrLogin_Name=user->Name();
-					  }
-					  CMainFrame::arrLogin_Name[Login_Index]=pstrLogin_Name;
-					  Login_Index=Login_Index+1;					  					  
-                  }
-              
-              if(logins) { m_dealer->m_manager->Free(logins); logins=NULL; }
-              logins_total=0;
-             }
-          }
-        group->Release();
+	}
+	for(UINT i=0;m_dealer->m_manager->GroupNext(i,group)==MT_RET_OK;i++)
+	{		   
+		UINT64 *logins=NULL;
+		UINT    logins_total=0;
+		if(m_dealer->m_manager->UserLogins(group->Group(),logins,logins_total)==MT_RET_OK)
+		{
+			if(logins && logins_total)
+				for(UINT j=0;j<logins_total;j++)
+				{                  
+					UINT64 INTLOGIN=logins[j];					  
+					CString  pstrLogin=L"";
+					pstrLogin.Format( _T("%d"),INTLOGIN);
+					CString  pstrLogin_Name=L"";					  
+					CMainFrame::arrLogin[Login_Index]=pstrLogin;					  					  					  
+					if(m_dealer->m_manager->UserGet(INTLOGIN,user)==MT_RET_OK)
+					{
+						pstrLogin_Name=user->Name();
+					}
+					CMainFrame::arrLogin_Name[Login_Index]=pstrLogin_Name;
+					Login_Index=Login_Index+1;					  					  
+				}
+
+				if(logins) { m_dealer->m_manager->Free(logins); logins=NULL; }
+				logins_total=0;
+		}
+	}
+	group->Release();
 }
 
 
@@ -182,29 +182,29 @@ BOOL DlgHelp::OnInitDialog()
 	m_Loginname=(CEdit*)GetDlgItem(IDC_LOGIN_EDIT_LOGIN3);
 	//m_Server=(CEdit*)GetDlgItem(IDC_LOGIN_EDIT_SERVER3);
 	//--- initialize dealer
-   if(!m_dealer->Initialize(this))
-     {
-      EndDialog(IDCANCEL);
-      return(FALSE);
-     }
-//--- create IMTRequest object
-   m_request=m_dealer->RequestCreate();
-   if(!m_request)
-     {
-      AfxMessageBox(L"Failed to create interface.");
-      EndDialog(IDCANCEL);
-      return(FALSE);
-     }
-//--- create IMTConfirm object
-    m_confirm=m_dealer->ConfirmCreate();
-    if(!m_confirm)
-     {
-      AfxMessageBox(L"Failed to create interface.");
-      EndDialog(IDCANCEL);
-      return(FALSE);
-     }
-//--	
-   //AfxMessageBox(L"OnInitDialog End");
+	if(!m_dealer->Initialize(this))
+	{
+		EndDialog(IDCANCEL);
+		return(FALSE);
+	}
+	//--- create IMTRequest object
+	m_request=m_dealer->RequestCreate();
+	if(!m_request)
+	{
+		AfxMessageBox(L"Failed to create interface.");
+		EndDialog(IDCANCEL);
+		return(FALSE);
+	}
+	//--- create IMTConfirm object
+	m_confirm=m_dealer->ConfirmCreate();
+	if(!m_confirm)
+	{
+		AfxMessageBox(L"Failed to create interface.");
+		EndDialog(IDCANCEL);
+		return(FALSE);
+	}
+	//--	
+	//AfxMessageBox(L"OnInitDialog End");
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -233,7 +233,7 @@ BEGIN_MESSAGE_MAP(DlgHelp, CDialogEx)
 	ON_WM_CLOSE()	
 	ON_COMMAND(IDOK, &DlgHelp::OnIdok)
 	ON_COMMAND(IDCANCEL, &DlgHelp::OnIdcancel)
-	
+
 END_MESSAGE_MAP()
 
 #define IDC_DIALOG_PANE 105
@@ -264,25 +264,25 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	order_type[6]=L"Buy Stop Limit";
 	order_type[7]=L"Sell Stop Limit";
 	last_Nrow=0;	
-	
+
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	BOOL bNameValid;
-	
+
 
 	CMainFrame::m_wndRibbonBar.Create(this);
 	CMainFrame::m_wndRibbonBar.LoadFromResource(IDR_RIBBON1);
-	
+
 
 	CString strCustomize;
 	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
 	ASSERT(bNameValid);
-	
+
 	InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
 
-	
-	
+
+
 
 	//if (!m_wndMenuBar.Create(this))
 	//{
@@ -296,7 +296,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//CMFCPopupMenu::SetForceMenuFocus(FALSE);
 
 	// Allow user-defined toolbars operations:
-	
+
 
 	//if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 	//!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
@@ -308,19 +308,19 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//}
 
 	/*menubar_height=0;
-	
+
 	CString strToolBarName;
 	bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
 	ASSERT(bNameValid);
 	m_wndToolBar.SetWindowText(strToolBarName);
-*/
-		
+	*/
+
 	//ribbon control
 	pEditRibbon = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_TOTALVALUE));	
-	
+
 	pEditDate_time = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_DATETIME));
 
-	
+
 	//current date and time 
 	CTime t = CTime::GetCurrentTime();
 	CMainFrame::current_datetime = t.Format("%d:%m:%y %H:%M:%S");
@@ -331,15 +331,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
-	
+
 	// TODO: Delete these five lines if you don't want the toolbar and menubar to be dockable
 	/*m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
-	
+
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndMenuBar);
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndToolBar);*/
-	
+
 	// enable Visual Studio 2005 style docking window behavior
 	CDockingManager::SetDockingMode(DT_SMART);
 	// enable Visual Studio 2005 style docking window auto-hide behavior
@@ -351,24 +351,24 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create docking windows\n");
 		return -1;
 	}
-	
-	
+
+
 
 	m_rateDocking.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_rateDocking);
-		
-	
+
+
 	m_ScripNetPosDocking.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_ScripNetPosDocking);
-	
+
 	//m_ScripNetPosDocking
 	// set the visual manager and style based on persisted value
 	OnApplicationLook(theApp.m_nAppLook);
 
 	EnableDocking(CBRS_ALIGN_ANY);
 
-	
-	 //Enable toolbar and docking window menu replacement
+
+	//Enable toolbar and docking window menu replacement
 	//EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);
 	//// enable menu personalization (most-recently used commands)
 	//// TODO: define your own basic commands, ensuring that each pulldown menu has at least one basic command.
@@ -393,76 +393,76 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//lstBasicCommands.AddTail(ID_VIEW_APPLOOK_WINDOWS_7);	
 
 
-	
-//if (!m_Check0qty.Create(L"Igonore 0 Qty",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(0,0,105,20), &m_wndToolBar, ID_FILE_NEW_FRAME))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_Check0qty.EnableWindow(1);
-//
-//
-//if (!m_Ignoremain.Create(L"Ignore Main",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(110,0,210,20), &m_wndToolBar, ID_1))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_Ignoremain.EnableWindow(1);
-//
-//if (!m_Ignorecomment.Create(L"Ignore Comment",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(210,0,340,20), &m_wndToolBar, ID_2))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_Ignorecomment.EnableWindow(1);
-//
-//
-CRect RECT;
-RECT=pEditDate_time->GetRect();
 
-RECT.bottom  =RECT.bottom +2;
+	//if (!m_Check0qty.Create(L"Igonore 0 Qty",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(0,0,105,20), &m_wndToolBar, ID_FILE_NEW_FRAME))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_Check0qty.EnableWindow(1);
+	//
+	//
+	//if (!m_Ignoremain.Create(L"Ignore Main",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(110,0,210,20), &m_wndToolBar, ID_1))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_Ignoremain.EnableWindow(1);
+	//
+	//if (!m_Ignorecomment.Create(L"Ignore Comment",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(210,0,340,20), &m_wndToolBar, ID_2))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_Ignorecomment.EnableWindow(1);
+	//
+	//
+	CRect RECT;
+	RECT=pEditDate_time->GetRect();
+
+	RECT.bottom  =RECT.bottom +2;
 
 
-//if (!m_date.Create(WS_CHILD|WS_VISIBLE,CRect(400,100,580,125), &m_wndRibbonBar, 701))
+	//if (!m_date.Create(WS_CHILD|WS_VISIBLE,CRect(400,100,580,125), &m_wndRibbonBar, 701))
 	if (!m_date.Create(WS_CHILD|WS_VISIBLE,RECT, &m_wndRibbonBar, 701))
 	{
-			TRACE0("Failed to create DateTimePicker\n");
-			return -1; // fail to create
+		TRACE0("Failed to create DateTimePicker\n");
+		return -1; // fail to create
 	}
 	m_date.EnableWindow(1);
 	m_date.SetFormat(L"dd-MM-yyyy HH:mm:ss");
 
-//if (!m_btn_Delete.Create(L"Data Delete",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(510,0,615,22), &m_wndToolBar, ID_4))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_btn_Delete.EnableWindow(0);
-//
-//if (!m_btn_Update_Comment.Create(L"Update Comment",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(625,0,750,22), &m_wndToolBar, ID_5))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_btn_Update_Comment.EnableWindow(0);
-//
-//
-//if (!m_btn_Activate_Order.Create(L"Activate Order",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(760,0,875,22), &m_wndToolBar, ID_6))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_btn_Activate_Order.EnableWindow(0);
-//
-//
-//if (!NetPosGrid::m_taxt_total.Create(WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(885,0,1010,18), &m_wndToolBar, ID_7))
-//{
-//		TRACE0("Failed to create checkbox\n");
-//		return -1; // fail to create
-//}
-//m_taxt_total.EnableWindow(0);
+	//if (!m_btn_Delete.Create(L"Data Delete",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(510,0,615,22), &m_wndToolBar, ID_4))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_btn_Delete.EnableWindow(0);
+	//
+	//if (!m_btn_Update_Comment.Create(L"Update Comment",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(625,0,750,22), &m_wndToolBar, ID_5))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_btn_Update_Comment.EnableWindow(0);
+	//
+	//
+	//if (!m_btn_Activate_Order.Create(L"Activate Order",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(760,0,875,22), &m_wndToolBar, ID_6))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_btn_Activate_Order.EnableWindow(0);
+	//
+	//
+	//if (!NetPosGrid::m_taxt_total.Create(WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(885,0,1010,18), &m_wndToolBar, ID_7))
+	//{
+	//		TRACE0("Failed to create checkbox\n");
+	//		return -1; // fail to create
+	//}
+	//m_taxt_total.EnableWindow(0);
 
-//m_taxt_total
+	//m_taxt_total
 
 	DlgHelp dlg;
 
@@ -472,51 +472,51 @@ RECT.bottom  =RECT.bottom +2;
 		//CDialog::OnCancel();
 		ASSERT(AfxGetMainWnd() != NULL);    
 		AfxGetMainWnd()->PostMessage(WM_CLOSE);
-	
+
 	}
 
 	MTAPIRES res    =MT_RET_OK_NONE;
 
 	res=DlgHelp::m_dealer->m_manager->OrderSubscribe(this);	
 	res=DlgHelp::m_dealer->m_manager->DealSubscribe(this);
-	
+
 	GetDeals();
 
 	//Loading symbol list in Array
-		CDataSource connection;
-		CSession session;
-		HRESULT hr;
-		CoInitialize(NULL);		
-		hr=connection.OpenFromInitializationString(L"Provider=SQLOLEDB.1;Password=ok@12345;Persist Security Info=True;User ID=sa;Initial Catalog=tradedatabase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ABHISHEK-P;Use Encryption for Data=False;Tag with column collation when possible=False");			
-		if(SUCCEEDED(hr))
-		{
-			hr=session.Open(connection);							
+	CDataSource connection;
+	CSession session;
+	HRESULT hr;
+	CoInitialize(NULL);		
+	hr=connection.OpenFromInitializationString(L"Provider=SQLOLEDB.1;Password=ok@12345;Persist Security Info=True;User ID=sa;Initial Catalog=tradedatabase;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ABHISHEK-P;Use Encryption for Data=False;Tag with column collation when possible=False");			
+	if(SUCCEEDED(hr))
+	{
+		hr=session.Open(connection);							
+	}		
+	CCommand<CAccessor<CSymbol_Table> > table;				 	
+	char* strCommand_char="select Symbol,Mapping_Symbol from symbol_mapping";
+	if(SUCCEEDED(hr))
+	{
+		hr=table.Open(session,strCommand_char);							 			 		 				 	
+	}
+	if(SUCCEEDED(hr))
+	{
+		while (table.MoveNext() == S_OK)
+		{									
+			Symbol_Mapping m_dt={};			
+			CMTStr::Copy(m_dt.symbol,table.m_Symbol ) ;
+			CMTStr::Copy(m_dt.Mapping_symbol,table.m_Mapping_Symbol);
+			CString  Ltp_Symbol=L"";
+			Ltp_Symbol=table.m_Mapping_Symbol;	
+			DlgHelp::m_dealer->m_manager->SelectedAdd(Ltp_Symbol);
+			m_symbol_array.Add(&m_dt);
 		}		
-		CCommand<CAccessor<CSymbol_Table> > table;				 	
-		char* strCommand_char="select Symbol,Mapping_Symbol from symbol_mapping";
-		if(SUCCEEDED(hr))
-		{
-			hr=table.Open(session,strCommand_char);							 			 		 				 	
-		}
-		if(SUCCEEDED(hr))
-		{
-			while (table.MoveNext() == S_OK)
-			{									
-				Symbol_Mapping m_dt={};			
-				CMTStr::Copy(m_dt.symbol,table.m_Symbol ) ;
-				CMTStr::Copy(m_dt.Mapping_symbol,table.m_Mapping_Symbol);
-				CString  Ltp_Symbol=L"";
-				Ltp_Symbol=table.m_Mapping_Symbol;	
-				DlgHelp::m_dealer->m_manager->SelectedAdd(Ltp_Symbol);
-				m_symbol_array.Add(&m_dt);
-			}		
-		}			
-		table.Close();
+	}			
+	table.Close();
 	//End of Loading symbol list in Array
-	
+
 	//DlgHelp::m_dealer->m_manager->TickSubscribe(this);
-	
-	
+
+
 
 	int count=COutputWnd::m_wndOutputPos.m_SymbolMultiplyer.Total();
 
@@ -525,22 +525,13 @@ RECT.bottom  =RECT.bottom +2;
 		COutputWnd::m_wndOutputPos.m_st_multiplyer=COutputWnd::m_wndOutputPos.m_SymbolMultiplyer[f];
 		DlgHelp::m_dealer->m_manager->SelectedAdd(COutputWnd::m_wndOutputPos.m_st_multiplyer.m_symbol);
 	}
-	
-		
+
+
 	res=DlgHelp::m_dealer->m_manager->TickSubscribe(this);
 
 	state=1;
-	
+
 	login_Check=1;
-
-
-
-	//dilog called in this class
-    m_ClientDlg.Create(IDD_DIALOG1, this);
-    m_Symbolmapiingdlg.Create(IDD_Mapping_Symbol, this);
-	m_SymbolDlg.Create(IDD_SYMBOL_GRP, this);
-	m_DefineMarginDlg.Create(IDD_DEFINE_MARGIN, this);
-	m_ltp_dilog.Create(IDD_DIALOG_LTP, this);
 
 	return 0;
 }
@@ -559,11 +550,11 @@ BOOL CMainFrame::CreateDockingWindows()
 	BOOL bNameValid;
 	// Create output window
 	CString strOutputWnd;
-	
+
 
 	CMainFrame::screen_height=GetSystemMetrics(SM_CYSCREEN);
 	CMainFrame::screen_width =GetSystemMetrics(SM_CXSCREEN);	
-	
+
 	bNameValid = strOutputWnd.LoadString(IDS_OUTPUT_WND);
 	ASSERT(bNameValid);
 	//if (!m_wndOutput.Create(strOutputWnd, this, CRect(0,0,0,0), TRUE, ID_VIEW_OUTPUTWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN |CBRS_ORIENT_HORZ| CBRS_FLOAT_MULTI))
@@ -572,7 +563,7 @@ BOOL CMainFrame::CreateDockingWindows()
 	//	return FALSE; // failed to create
 	//}
 
-	 	
+
 	CString strScripWiseNetPosWnd;
 	bNameValid = strScripWiseNetPosWnd.LoadString(IDS_SCRIPNETPOS_WND);
 	ASSERT(bNameValid);
@@ -581,7 +572,7 @@ BOOL CMainFrame::CreateDockingWindows()
 		TRACE0("Failed to create Properties window\n");
 		return FALSE; // failed to create
 	}
-	
+
 	//	m_ScripNetPosDocking.SetAutoHideMode(true, CBRS_ALIGN_LEFT);
 
 	CString strPropertiesWnd;
@@ -594,14 +585,14 @@ BOOL CMainFrame::CreateDockingWindows()
 	}
 
 	//m_rateDocking.SetAutoHideMode(true, CBRS_ALIGN_RIGHT);
-	
-	
+
+
 
 
 	//m_ScripNetPosDocking
 	SetDockingWindowIcons(theApp.m_bHiColorIcons);
 
-	
+
 
 	return TRUE;
 }
@@ -613,7 +604,7 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	//m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
 	m_rateDocking.SetIcon(hOutputBarIcon, FALSE);
 	m_ScripNetPosDocking.SetIcon(hOutputBarIcon, FALSE);
-	
+
 }
 
 // CMainFrame diagnostics
@@ -712,7 +703,7 @@ void CMainFrame::OnApplicationLook(UINT id)
 		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 	}
 
-	
+
 
 	//m_wndOutput.UpdateFonts();
 	m_rateDocking.UpdateFonts();
@@ -739,7 +730,7 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 
 
 	// TODO: Add your control notification handler code here
-	
+
 	return TRUE;
 }
 
@@ -764,68 +755,68 @@ void DlgHelp::OnBnClickedBtnLogin()
 {
 
 	//TODO: Add your control notification handler code here
-   CString login;
-   CString password;
-   CString server;
-   
-//---   
-   m_Loginname->GetWindowText(login);   
+	CString login;
+	CString password;
+	CString server;
 
-   server=L"64.150.180.239:1950";
-   //server=L"72.55.168.204:1950";
+	//---   
+	m_Loginname->GetWindowText(login);   
 
-   m_Password->GetWindowText(password);    
-   //m_Server->GetWindowText(server);    
-//--- dealer starting
-   
+	server=L"64.150.180.239:1950";
+	//server=L"72.55.168.204:1950";
 
-    
+	m_Password->GetWindowText(password);    
+	//m_Server->GetWindowText(server);    
+	//--- dealer starting
+
+
+
 	//if( m_dealer->m_manager->Connect(server,_wtoi64(login),password,L"",IMTManagerAPI::PUMP_MODE_FULL,INFINITE))
- //    {
- //     AfxMessageBox(L"Login fail");
- //     return;	  
- //    }
+	//    {
+	//     AfxMessageBox(L"Login fail");
+	//     return;	  
+	//    }
 	////res=admin->Connect(server,login,password,L"",0,MT5_CONNECT_TIMEOUT);
 	//if( m_dealer->m_admin->Connect(server,_wtoi64(login),password,L"",0,INFINITE))
- //    {
- //     //AfxMessageBox(L"Login fail");
- //     //return;	  
+	//    {
+	//     //AfxMessageBox(L"Login fail");
+	//     //return;	  
 	//	 CMainFrame::admin_login=0;
- //    }
+	//    }
 	//else
 	//{
 	//	CMainFrame::admin_login=1;
 	//}
-   int login_check=0;
-   login_check=m_dealer->login(server,login,password);
-   if (login_check==0)
-   {
-	   return;
-   }
+	int login_check=0;
+	login_check=m_dealer->login(server,login,password);
+	if (login_check==0)
+	{
+		return;
+	}
 	//--- loading manager API
-   if((orderEntryForm::factory.Initialize(L""))!=MT_RET_OK)
-     {
-      wprintf_s(L"Loading manager API failed ");
-     
-     }
-//--- creating manager interface
-   if((orderEntryForm::factory.CreateManager(MTManagerAPIVersion,&orderEntryForm::manager))!=MT_RET_OK)
-     {
-      wprintf_s(L"Creating manager interface failed ");
-      
-     }	
+	if((orderEntryForm::factory.Initialize(L""))!=MT_RET_OK)
+	{
+		wprintf_s(L"Loading manager API failed ");
+
+	}
+	//--- creating manager interface
+	if((orderEntryForm::factory.CreateManager(MTManagerAPIVersion,&orderEntryForm::manager))!=MT_RET_OK)
+	{
+		wprintf_s(L"Creating manager interface failed ");
+
+	}	
 
 	/*if( orderEntryForm::manager->Connect(server,_wtoi64(login),password,L"",IMTManagerAPI::PUMP_MODE_FULL,INFINITE))
-     {
-      AfxMessageBox(L"Login fail");
-      return;	  
-     }*/
+	{
+	AfxMessageBox(L"Login fail");
+	return;	  
+	}*/
 
 	//m_dealer->m_manager=orderEntryForm::manager;
 	DlgHelp::login_checkYN=1;
 	CDialog::OnCancel();
 	add_LoginToCombobox();
-	
+
 	COutputWnd::m_wndOutputOrder.ThreadStart();
 	OrderGrid::Data_Update=1;
 	COutputWnd::m_wndOutputOrder.data_ThreadStart();
@@ -837,19 +828,19 @@ void DlgHelp::OnBnClickedBtnLogin()
 
 void DlgHelp::OnBnClickedBtnExit()
 {	
-   /*CDealerSink* sink;
-   sink=new  CDealerSink();*/
-   
+	/*CDealerSink* sink;
+	sink=new  CDealerSink();*/
+
 
 	CDialog::OnCancel();
 	ASSERT(AfxGetMainWnd() != NULL);    
 	AfxGetMainWnd()->PostMessage(WM_CLOSE);
-	
+
 }
 
 void DlgHelp::OnClose()
 {	
-	
+
 	CDialog::OnCancel();
 	ASSERT(AfxGetMainWnd() != NULL);    
 	AfxGetMainWnd()->PostMessage(WM_CLOSE);
@@ -900,11 +891,11 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		wcscpy(m_st_dealing.Current_Status,order->ExternalID());	
 		Dealing::m_st_Dealing_Array.Add(&m_st_dealing);
 		//Dealing::m_st_Dealing_Array.Shift(Dealing::m_st_Dealing_Array.Total()-1,0);	
-		
+
 		Dealing::dealing_mutex.Unlock();	
 	}
 }
- void  CMainFrame::OnOrderDelete(const IMTOrder*  order)
+void  CMainFrame::OnOrderDelete(const IMTOrder*  order)
 {
 	if (order->Type()!=0 && order->Type()!=1)
 	{
@@ -933,7 +924,7 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		m_st_dealing.Order=order->Order();	
 		wcscpy(m_st_dealing.Symbol,order->Symbol());
 
-		
+
 		wcscpy(m_st_dealing.Type,L"");
 
 		double d_volume=order->VolumeInitial();
@@ -951,9 +942,9 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		Dealing::dealing_mutex.Unlock();	
 	}
 }
- void  CMainFrame::OnOrderUpdate(const IMTOrder*  order)
+void  CMainFrame::OnOrderUpdate(const IMTOrder*  order)
 {
-	
+
 	if (order->Type()!=0 && order->Type()!=1)
 	{
 		Dealing::st_Dealing m_st_dealing={};
@@ -969,72 +960,72 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		}
 		if ( wcscmp(m_st_dealing.Comment,order->Comment())!=0 || wcscmp(m_st_dealing.Symbol ,order->Symbol())!=0  || m_st_dealing.Price!=order->PriceOrder() || m_st_dealing.Volume!=order->VolumeInitial()/10000|| wcscmp(m_st_dealing.Current_Status,order->ExternalID())!=0)
 		{
-		Dealing::dealing_mutex.Lock();	
-		
-
-		CString cstr_log_time=L"";
-		CTime t = CTime::GetCurrentTime();
-		cstr_log_time = t.Format("%Y.%m.%d %H:%M:%S");	
-		wcscpy(m_st_dealing.LOG_TIME ,cstr_log_time);
+			Dealing::dealing_mutex.Lock();	
 
 
-		m_st_dealing.Time=order->TimeSetup();
+			CString cstr_log_time=L"";
+			CTime t = CTime::GetCurrentTime();
+			cstr_log_time = t.Format("%Y.%m.%d %H:%M:%S");	
+			wcscpy(m_st_dealing.LOG_TIME ,cstr_log_time);
+
+
+			m_st_dealing.Time=order->TimeSetup();
 
 
 
-		CString m_comment=order->Comment();
-		CString m_login=L"";
-		m_login.Format(L"%d",order->Login());
-		if (m_comment.Trim()!=L"")
-		{
-			if(check_comment_YN_d(m_login)==1)
+			CString m_comment=order->Comment();
+			CString m_login=L"";
+			m_login.Format(L"%d",order->Login());
+			if (m_comment.Trim()!=L"")
 			{
-				m_login=m_login+"-"+m_comment;
-			}
-		}	
-		wcscpy(m_st_dealing.Login,m_login);	
+				if(check_comment_YN_d(m_login)==1)
+				{
+					m_login=m_login+"-"+m_comment;
+				}
+			}	
+			wcscpy(m_st_dealing.Login,m_login);	
 
-		m_st_dealing.Order=order->Order();	
-		wcscpy(m_st_dealing.Symbol,order->Symbol());
+			m_st_dealing.Order=order->Order();	
+			wcscpy(m_st_dealing.Symbol,order->Symbol());
 
-		
-		wcscpy(m_st_dealing.Type,L"");
 
-		double d_volume=order->VolumeInitial();
-		m_st_dealing.Volume=d_volume/10000;
-		m_st_dealing.Price=order->PriceOrder();	
+			wcscpy(m_st_dealing.Type,L"");
 
-		m_st_dealing.Deal=0;
+			double d_volume=order->VolumeInitial();
+			m_st_dealing.Volume=d_volume/10000;
+			m_st_dealing.Price=order->PriceOrder();	
 
-		wcscpy(m_st_dealing.Order_type,order_type[order->Type()]);
+			m_st_dealing.Deal=0;
 
-		wcscpy(m_st_dealing.Entrytype,L"ORDER");
-		wcscpy(m_st_dealing.Comment,order->Comment());	
-		wcscpy(m_st_dealing.Current_Status,order->ExternalID());	
-		Dealing::m_st_Dealing_Array.Add(&m_st_dealing);
-		//Dealing::m_st_Dealing_Array.Shift(Dealing::m_st_Dealing_Array.Total()-1,0);	
-		Dealing::dealing_mutex.Unlock();	
+			wcscpy(m_st_dealing.Order_type,order_type[order->Type()]);
+
+			wcscpy(m_st_dealing.Entrytype,L"ORDER");
+			wcscpy(m_st_dealing.Comment,order->Comment());	
+			wcscpy(m_st_dealing.Current_Status,order->ExternalID());	
+			Dealing::m_st_Dealing_Array.Add(&m_st_dealing);
+			//Dealing::m_st_Dealing_Array.Shift(Dealing::m_st_Dealing_Array.Total()-1,0);	
+			Dealing::dealing_mutex.Unlock();	
 		}
 	}
 }
 
 
- void  CMainFrame::Getnetpos()
- {	 
-	 
- }
+void  CMainFrame::Getnetpos()
+{	 
+
+}
 
 
 
-  void  CMainFrame::GetDeals()
- {	 
-	
- }
-  
+void  CMainFrame::GetDeals()
+{	 
+
+}
+
 void  CMainFrame::GetOrders()
- {	 		 
-		
- }
+{	 		 
+
+}
 
 
 
@@ -1104,16 +1095,16 @@ inline void CMainFrame::OnTick(LPCWSTR symbol, const MTTickShort& tick)
 
 void CMainFrame::OnFileSymbolmapping()
 {
-		// TODO: Add your command handler code here
-		SymbolMapping* dlg = new SymbolMapping();
-	
-		dlg->Create(IDD_Mapping_Symbol, this);
-		//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
-		CRect rect;
-		GetClientRect(&rect);
-		dlg->MoveWindow( 1,48,500,700);
-		dlg->ShowWindow(SW_NORMAL);
-	}
+	// TODO: Add your command handler code here
+	SymbolMapping* dlg = new SymbolMapping();
+
+	dlg->Create(IDD_Mapping_Symbol, this);
+	//dlg->SetWindowPos(NULL, 0,Pos,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
+	CRect rect;
+	GetClientRect(&rect);
+	dlg->MoveWindow( 1,48,500,700);
+	dlg->ShowWindow(SW_NORMAL);
+}
 void  CMainFrame::OnDealAdd(const IMTDeal*  deal)
 {
 	Dealing::dealing_mutex.Lock();
@@ -1136,7 +1127,7 @@ void  CMainFrame::OnDealAdd(const IMTDeal*  deal)
 	wcscpy(m_st_dealing.Login,m_login);
 	m_st_dealing.Deal=deal->Deal();
 	m_st_dealing.Order=deal->Order();
-	
+
 	wcscpy(m_st_dealing.Symbol,deal->Symbol());
 	CString m_type=L"";
 	if (deal->Action()==0)
@@ -1167,7 +1158,7 @@ void CMainFrame::OnViewSymboladd()
 {
 	// TODO: Add your command handler code here
 	AddScrip* dlg = new AddScrip();
-	
+
 	dlg->Create(IDD_DIALOG_ADD_SCRIP, this);
 	dlg->SetWindowPos(NULL, 0,0,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 	CRect rect;
@@ -1178,13 +1169,13 @@ void CMainFrame::OnViewSymboladd()
 
 int CMainFrame::CreateRebar( void )
 {    
-    return 0;
+	return 0;
 }
 
 LRESULT CMainFrame::OnClosePane(WPARAM,LPARAM lp)
 {		
-    CBasePane* pane = (CBasePane*)lp;
-    int id = pane->GetDlgCtrlID();    
+	CBasePane* pane = (CBasePane*)lp;
+	int id = pane->GetDlgCtrlID();    
 	int cx,cy;
 	cx=0;
 	cy=0 ;
@@ -1203,8 +1194,8 @@ LRESULT CMainFrame::OnClosePane(WPARAM,LPARAM lp)
 		int i=0;		
 		//CMainFrame::m_wndOutput.SetWindowPos(NULL,cx+5 , 30, CMainFrame::screen_width-cx-RateDocking::m_rate_x-5, cy+40,  SWP_NOACTIVATE | SWP_NOZORDER);	
 	}
-	
- return (LRESULT)FALSE ;
+
+	return (LRESULT)FALSE ;
 }
 
 BOOL CMainFrame::OnShowPanes(BOOL bShow)
@@ -1215,9 +1206,9 @@ BOOL CMainFrame::OnShowPanes(BOOL bShow)
 
 void CMainFrame::Activate_Order()
 {
-	
+
 	COutputWnd::m_wndOutputOrder.Selected_ActivateOrder();
-	
+
 }
 void CMainFrame::UpdateComment()
 {
@@ -1228,7 +1219,7 @@ void CMainFrame::UpdateComment()
 void CMainFrame::OnViewJournalsearch()
 {	
 	CJournalSearch* dlg = new CJournalSearch();
-	
+
 	dlg->Create(IDD_DIALOG_FOR_JOURNAL_SEARCH, this);
 	dlg->SetWindowPos(NULL, 0,0,0,0, SWP_NOZORDER | SWP_NOMOVE | SWP_SHOWWINDOW);
 	CRect rect;
@@ -1240,9 +1231,9 @@ void CMainFrame::OnViewJournalsearch()
 
 void CMainFrame::OnFileLtpupdate()
 {
-	
-	
-    RecalcLayout();
+
+
+	RecalcLayout();
 }
 
 
@@ -1250,145 +1241,145 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	int x=(int)pMsg->wParam;
 
-if(pMsg->message==WM_SYSKEYDOWN || pMsg->message==WM_KEYDOWN )
-{
+	if(pMsg->message==WM_SYSKEYDOWN || pMsg->message==WM_KEYDOWN )
+	{
 		BOOL bCtrl=::GetKeyState(VK_CONTROL)&0x8000;
-        BOOL bShift=::GetKeyState(VK_SHIFT)&0x8000;
-        BOOL bAlt=::GetKeyState(VK_MENU)&0x8000;
+		BOOL bShift=::GetKeyState(VK_SHIFT)&0x8000;
+		BOOL bAlt=::GetKeyState(VK_MENU)&0x8000;
 
-switch (x)
+		switch (x)
 		{
-          case 77:
-			  if(bCtrl )
-	                   {
-						   if (m_Ignoremain.GetState()==BST_UNCHECKED)
-						   {
-							    m_Ignoremain.SetCheck(BST_CHECKED);
-						        NetPosGrid::ignoremain=" and isnull(type,'')<>'O'";
-	                            NetPosGrid::ignorecomment="";
-	                         	m_Ignorecomment.SetCheck(0);
-	
-						    	m_Ignoremain.EnableWindow(TRUE);
-						   }
-						   else if(m_Ignoremain.GetState()==BST_CHECKED)
-						   {
-						
-							   m_Ignoremain.SetCheck(BST_UNCHECKED);
-                                 NetPosGrid::ignoremain="";  
-						    	m_Ignoremain.EnableWindow(TRUE);
-						   }
-						   return TRUE; 
-						   OBJ.RedrawAll();
-			            }
-			         
-	                  RedrawWindow();
-					  break;
+		case 77:
+			if(bCtrl )
+			{
+				if (m_Ignoremain.GetState()==BST_UNCHECKED)
+				{
+					m_Ignoremain.SetCheck(BST_CHECKED);
+					NetPosGrid::ignoremain=" and isnull(type,'')<>'O'";
+					NetPosGrid::ignorecomment="";
+					m_Ignorecomment.SetCheck(0);
 
-          case 90:
-	             if(bCtrl)
-	                  {
-						  if (m_Check0qty.GetState()==BST_UNCHECKED)
-						   {
-							   m_Check0qty.SetCheck(BST_CHECKED);
-		                       NetPosGrid::ignore0ty=" and t1.NetQty<>0"; 
-							    m_Check0qty.EnableWindow(TRUE);
+					m_Ignoremain.EnableWindow(TRUE);
+				}
+				else if(m_Ignoremain.GetState()==BST_CHECKED)
+				{
 
-						   }
-						   else if(m_Check0qty.GetState()==BST_CHECKED)
-						   {
-							    m_Check0qty.SetCheck(BST_UNCHECKED);
-						        NetPosGrid::ignore0ty="";
-							    m_Check0qty.EnableWindow(TRUE);
+					m_Ignoremain.SetCheck(BST_UNCHECKED);
+					NetPosGrid::ignoremain="";  
+					m_Ignoremain.EnableWindow(TRUE);
+				}
+				return TRUE; 
+				OBJ.RedrawAll();
+			}
 
-						   }
-		                  return TRUE;
-						  OBJ.RedrawAll();
-	                  }
-				       
-				      RedrawWindow();
-					  break;
-		  case 67:
-			    if(bCtrl)
-				      {
-				          if (m_Ignorecomment.GetState()==BST_UNCHECKED)
-						   {   
-							   m_Ignorecomment.SetCheck(BST_CHECKED);
-							   NetPosGrid::ignoremain="";
-		                       NetPosGrid::ignorecomment=" and isnull(type,'')<>'D'";
-		                       m_Ignoremain.SetCheck(0);
-							    m_Ignorecomment.EnableWindow(TRUE);
+			RedrawWindow();
+			break;
 
-						   }
-						   else if(m_Ignorecomment.GetState()==BST_CHECKED)
-						   {    
-							     m_Ignorecomment.SetCheck(BST_UNCHECKED);
-							    NetPosGrid::ignorecomment="";
-								 m_Ignorecomment.EnableWindow(TRUE);
-						   }
-		                  return TRUE;
-						   OBJ.RedrawAll();
-				        }
-				         
-				         RedrawWindow();
-						 break;
-		  case 82:
-			  if(bCtrl)
-			         {
-					
-					     /* if(!m_bShow && !m_bVisible)
-		                      {
-								 m_bShow = TRUE;
-		                         m_bVisible	= TRUE;
-		                         Invalidate();
-								 m_rateDocking.ShowPane(TRUE,FALSE,TRUE);
-								 m_rateDocking.DockToRecentPos();
-					             UpdateWindow();
+		case 90:
+			if(bCtrl)
+			{
+				if (m_Check0qty.GetState()==BST_UNCHECKED)
+				{
+					m_Check0qty.SetCheck(BST_CHECKED);
+					NetPosGrid::ignore0ty=" and t1.NetQty<>0"; 
+					m_Check0qty.EnableWindow(TRUE);
 
-								 }
-						  else 
-			     			  {
-								  m_bShow = FALSE;
-		                          m_bVisible = FALSE;
-		                          Invalidate();
-								  m_rateDocking.ShowPane(FALSE,FALSE,FALSE);
-		                          UpdateWindow();
-						     }*/
-						
-				     }
-			         RedrawWindow();
-			         break;
-           case 66:
-			   if(bCtrl)
-			         {
-					        if(!m_bShow && !m_bVisible)
-		                        {
-				                
-	                        	 m_bShow = TRUE;
-		                         m_bVisible	= TRUE;
-		                         Invalidate();
-								 m_ScripNetPosDocking.ShowPane(TRUE,FALSE,TRUE);
-								  m_ScripNetPosDocking.DockToRecentPos();
-							     UpdateWindow();
+				}
+				else if(m_Check0qty.GetState()==BST_CHECKED)
+				{
+					m_Check0qty.SetCheck(BST_UNCHECKED);
+					NetPosGrid::ignore0ty="";
+					m_Check0qty.EnableWindow(TRUE);
 
-								 }
-						    else 
-			     			   {
-								  m_bShow		= FALSE;
-		                          m_bVisible	= FALSE;
-		                          Invalidate();
-								  m_ScripNetPosDocking.ShowPane(FALSE,FALSE,FALSE);
-		                          UpdateWindow();
-						       }
-				     }
-			         RedrawWindow();
-			         break;
-  		                   default:
-			                  break;
-		           }
-           
-       }
- 
-            
+				}
+				return TRUE;
+				OBJ.RedrawAll();
+			}
+
+			RedrawWindow();
+			break;
+		case 67:
+			if(bCtrl)
+			{
+				if (m_Ignorecomment.GetState()==BST_UNCHECKED)
+				{   
+					m_Ignorecomment.SetCheck(BST_CHECKED);
+					NetPosGrid::ignoremain="";
+					NetPosGrid::ignorecomment=" and isnull(type,'')<>'D'";
+					m_Ignoremain.SetCheck(0);
+					m_Ignorecomment.EnableWindow(TRUE);
+
+				}
+				else if(m_Ignorecomment.GetState()==BST_CHECKED)
+				{    
+					m_Ignorecomment.SetCheck(BST_UNCHECKED);
+					NetPosGrid::ignorecomment="";
+					m_Ignorecomment.EnableWindow(TRUE);
+				}
+				return TRUE;
+				OBJ.RedrawAll();
+			}
+
+			RedrawWindow();
+			break;
+		case 82:
+			if(bCtrl)
+			{
+
+				/* if(!m_bShow && !m_bVisible)
+				{
+				m_bShow = TRUE;
+				m_bVisible	= TRUE;
+				Invalidate();
+				m_rateDocking.ShowPane(TRUE,FALSE,TRUE);
+				m_rateDocking.DockToRecentPos();
+				UpdateWindow();
+
+				}
+				else 
+				{
+				m_bShow = FALSE;
+				m_bVisible = FALSE;
+				Invalidate();
+				m_rateDocking.ShowPane(FALSE,FALSE,FALSE);
+				UpdateWindow();
+				}*/
+
+			}
+			RedrawWindow();
+			break;
+		case 66:
+			if(bCtrl)
+			{
+				if(!m_bShow && !m_bVisible)
+				{
+
+					m_bShow = TRUE;
+					m_bVisible	= TRUE;
+					Invalidate();
+					m_ScripNetPosDocking.ShowPane(TRUE,FALSE,TRUE);
+					m_ScripNetPosDocking.DockToRecentPos();
+					UpdateWindow();
+
+				}
+				else 
+				{
+					m_bShow		= FALSE;
+					m_bVisible	= FALSE;
+					Invalidate();
+					m_ScripNetPosDocking.ShowPane(FALSE,FALSE,FALSE);
+					UpdateWindow();
+				}
+			}
+			RedrawWindow();
+			break;
+		default:
+			break;
+		}
+
+	}
+
+
 	return __super::PreTranslateMessage(pMsg);
 }
 
@@ -1410,7 +1401,7 @@ void CMainFrame::OnLiverateview()
 void CMainFrame::OnUpdateIgnore0qqty(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
-    pCmdUI->Enable();
+	pCmdUI->Enable();
 	pCmdUI->SetCheck( m_enabled_ignore0 ? 1 :  0 );
 }
 
@@ -1420,7 +1411,7 @@ void CMainFrame::OnIgnore0qqty()
 	m_enabled_ignore0 = !m_enabled_ignore0;
 
 
-    if(m_enabled_ignore0==1)
+	if(m_enabled_ignore0==1)
 	{
 		NetPosGrid::int_ignoreQty=1;
 	}
@@ -1428,15 +1419,15 @@ void CMainFrame::OnIgnore0qqty()
 	{
 		NetPosGrid::int_ignoreQty=0;
 	}
- 
+
 	Invalidate();
 }
 
 void CMainFrame::OnUpdateIgnoremain(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_main ? 1 :  0 );
-	
+	pCmdUI->SetCheck( m_enabled_main ? 1 :  0 );
+
 }
 
 
@@ -1454,15 +1445,15 @@ void CMainFrame::OnIgnoremain()
 	{
 		NetPosGrid::ignoremain="";
 	}
-  
-   Invalidate();
+
+	Invalidate();
 }
 
 void CMainFrame::OnUpdateIgnorecomment(CCmdUI *pCmdUI)
 {
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable();
-    pCmdUI->SetCheck( m_enabled_comment ? 1 :  0);
+	pCmdUI->SetCheck( m_enabled_comment ? 1 :  0);
 
 }
 
@@ -1511,7 +1502,7 @@ void CMainFrame::OnIgnorecomment()
 
 
 			CString str_symbol=st_net.m_symbol ;
-			
+
 			//For checking login is allreay exist or not
 			int  symbol_count=NetPosGrid::m_Symbol_in_m_Array.Total();
 			int check_for_duplicate_symbol=0;
@@ -1560,62 +1551,55 @@ void CMainFrame::OnActivateorder()
 void CMainFrame::OnUpdateTotalvalue(CCmdUI *pCmdUI)
 {
 	pCmdUI->Enable();	
-	NetPosGrid::str_grid_mutex.Lock();
-	pEditRibbon->SetEditText(NetPosGrid::Str_Total_Bal);
-	NetPosGrid::str_grid_mutex.Unlock();
-	
+	if(NetPosGrid::Data_Update==1)
+	{
+		NetPosGrid::str_grid_mutex.Lock();
+		pEditRibbon->SetEditText(NetPosGrid::Str_Total_Bal);
+		NetPosGrid::str_grid_mutex.Unlock();
+	}
+	else
+	{
+		ScripWiseNetPos::m_mutex_scripnetpos.Lock();
+		pEditRibbon->SetEditText(ScripWiseNetPos::total_result);
+		ScripWiseNetPos::m_mutex_scripnetpos.Unlock();
+	}
+
 }
 
 
 void CMainFrame::OnSymbolmap()
 {
-    CRect rect;
-	GetClientRect(&rect);
-	m_Symbolmapiingdlg.MoveWindow( 1,48,440,650);
-	m_Symbolmapiingdlg.ShowWindow(SW_NORMAL);
-	
-
+   SymbolMapping dlg;
+   dlg.DoModal();
 }
 
 
 
 void CMainFrame::OnSymbolgroupmapping()
 {
-	CRect rect;
-	GetClientRect(&rect);
-	m_SymbolDlg.MoveWindow( 1,48,410,550);
-	m_SymbolDlg.ShowWindow(SW_NORMAL);
-		
+   symbol_grp dlg;
+   dlg.DoModal();
 }
 
 
 void CMainFrame::OnLtpupdate()
 {
-	CRect rect;
-	GetClientRect(&rect);
-	m_ltp_dilog.MoveWindow( 1,48,380,500);
-	m_ltp_dilog.ShowWindow(SW_NORMAL);
+   LTP_Dilog dlg;
+   dlg.DoModal();	
 }
 
 
 void CMainFrame::OnDefinesymbol()
 {
-
-	CRect rect;
-	GetClientRect(&rect);
-	m_DefineMarginDlg.MoveWindow( 1,48,400,538);
-	m_DefineMarginDlg.ShowWindow(SW_NORMAL);
-	
+   define_margin dlg;
+   dlg.DoModal();
 }
 
 
 void CMainFrame::OnClientcreate()
 {
-
-	CRect rect;
-	GetClientRect(&rect);
-	m_ClientDlg.MoveWindow( 30,100,450,350);
-	m_ClientDlg.ShowWindow(SW_NORMAL);
+	ClientCreate dlg;
+	dlg.DoModal();
 }
 
 
@@ -1632,5 +1616,5 @@ void CMainFrame::OnMove(int x, int y)
 	__super::OnMove(x, y);
 
 
-	
+
 }
