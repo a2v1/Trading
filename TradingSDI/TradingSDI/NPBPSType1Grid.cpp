@@ -69,6 +69,7 @@ CNPBPSType1Grid::CNPBPSType1Grid(void)
 CNPBPSType1Grid::~CNPBPSType1Grid(void)
 {
 	//delete m_pThread;
+	thread_destoy();
 	UGXPThemes::CleanUp();
 }
 int CNPBPSType1Grid::OnCellTypeNotify(long ID,int col,long row,long msg,long param)

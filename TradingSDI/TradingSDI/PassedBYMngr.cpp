@@ -60,6 +60,7 @@ CPassedBYMngr::CPassedBYMngr(void)
 CPassedBYMngr::~CPassedBYMngr(void)
 {
 	//delete m_pThread;
+	thread_destoy();
 	UGXPThemes::CleanUp();
 }
 

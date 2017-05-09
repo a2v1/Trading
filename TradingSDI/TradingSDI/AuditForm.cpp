@@ -157,7 +157,9 @@ void CAuditForm::OnTcnSelchangeTabaudit(NMHDR *pNMHDR, LRESULT *pResult)
 		m_Grid[m_tabCurrent]->ShowWindow(SW_HIDE);
 		m_tabCurrent=m_tab.GetCurSel();
 		m_Grid[m_tabCurrent]->ShowWindow(SW_SHOW);
+		m_Grid[m_tabCurrent]->RedrawAll();
 		m_Grid[m_tabCurrent]->SetFocus();
+		
 	}
 
 	if (DlgHelp::login_checkYN==1)

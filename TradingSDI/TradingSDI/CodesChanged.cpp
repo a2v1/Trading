@@ -65,6 +65,7 @@ CCodesChanged::CCodesChanged(void)
 CCodesChanged::~CCodesChanged(void)
 {
 	//delete m_pThread;
+	thread_destoy();
 	UGXPThemes::CleanUp();
 }
 
