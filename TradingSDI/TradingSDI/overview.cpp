@@ -6,7 +6,7 @@
 #include "overviewordergrid.h"
 #include "tabControl.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
-no_namespace rename("EOF", "EndOfFile")
+	no_namespace rename("EOF", "EndOfFile")
 #define MY_THREAD_UPDATE				WM_APP+200
 
 int overview::chcekinitialize=0;
@@ -31,7 +31,7 @@ extern CSession session_update;
 
 IMPLEMENT_DYNAMIC(overview, CDialogEx)
 
-overview::overview(CWnd* pParent /*=NULL*/)
+	overview::overview(CWnd* pParent /*=NULL*/)
 	: CDialogEx(overview::IDD, pParent)
 {
 	checked_val=0;
@@ -45,29 +45,29 @@ overview::~overview()
 
 	try 
 	{			
-	
-	DWORD exit_code= NULL;
-	if (m_pThreads != NULL)
-	{
-	if(WaitForSingleObject(m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
-	{
-    GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
-    if(exit_code == STILL_ACTIVE)
-    {
-        ::TerminateThread(m_pThreads->m_hThread, 0);
-        CloseHandle(m_pThreads->m_hThread);
-    }
-    m_pThreads->m_hThread = NULL;
-    m_pThreads = NULL;
-	}
-	}
+
+		DWORD exit_code= NULL;
+		if (m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(m_pThreads->m_hThread, 0);
+					CloseHandle(m_pThreads->m_hThread);
+				}
+				m_pThreads->m_hThread = NULL;
+				m_pThreads = NULL;
+			}
+		}
 	}
 	catch(_com_error & ce)
 	{
 		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
 	}
 	/* Tradegrid.~GridTradeAndOrder();
-	 Ordergrid.~OverViewOrderGrid();*/
+	Ordergrid.~OverViewOrderGrid();*/
 
 }
 LRESULT overview::UpdateData(WPARAM wParam, LPARAM lParam)
@@ -79,7 +79,7 @@ LRESULT overview::UpdateData(WPARAM wParam, LPARAM lParam)
 	m_txtProfit.SetWindowTextW(profit);
 	m_txtBalance.SetWindowTextW(balance);
 	m_txtMargin.SetWindowTextW(Margin);
-	
+
 	return 0;
 }
 
@@ -135,12 +135,12 @@ void overview::get_client_details()
 
 	CDataSource connection;
 	CSession session;
-	
+
 
 	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
 	if(SUCCEEDED(hr))
 	{
-	hr=session.Open(connection);
+		hr=session.Open(connection);
 	}
 
 
@@ -152,36 +152,36 @@ void overview::get_client_details()
 	}
 	if(SUCCEEDED(hr))
 	{
-	while (artists1.MoveNext() == S_OK)
-	{		
-		if (_tcscmp(artists1.m_Symbol,_T("N"))==0 )
-		{
-			m_ignoreclient.SetCheck(0);
+		while (artists1.MoveNext() == S_OK)
+		{		
+			if (_tcscmp(artists1.m_Symbol,_T("N"))==0 )
+			{
+				m_ignoreclient.SetCheck(0);
+			}
+			else
+			{
+				m_ignoreclient.SetCheck(1);
+			}
+			if (_tcscmp(artists1.m_Order,_T("N"))==0 )
+			{
+				m_commentwise.SetCheck(0);
+			}
+			else
+			{
+				m_commentwise.SetCheck(1);
+			}						
+			m_txtGroup1.SetWindowTextW(artists1.m_Time);
+			m_txtGroup2.SetWindowTextW(artists1.m_Type);
+			m_txtGroup3.SetWindowTextW(artists1.m_Volume);	
+			m_txtGroup4.SetWindowTextW(artists1.m_Price);	
+			strCreditClient.Format(_T("%.2f"),artists1.m_Current_Rate);
+			m_txtCredit.SetWindowTextW(strCreditClient) ;
 		}
-		else
-		{
-			m_ignoreclient.SetCheck(1);
-		}
-		if (_tcscmp(artists1.m_Order,_T("N"))==0 )
-		{
-			m_commentwise.SetCheck(0);
-		}
-		else
-		{
-			m_commentwise.SetCheck(1);
-		}						
-		m_txtGroup1.SetWindowTextW(artists1.m_Time);
-		m_txtGroup2.SetWindowTextW(artists1.m_Type);
-		m_txtGroup3.SetWindowTextW(artists1.m_Volume);	
-		m_txtGroup4.SetWindowTextW(artists1.m_Price);	
-        strCreditClient.Format(_T("%.2f"),artists1.m_Current_Rate);
-		m_txtCredit.SetWindowTextW(strCreditClient) ;
-	}
 
-    }
+	}
 	artists1.Close();	
-	
-	
+
+
 }
 
 UINT update_Label(void*);
@@ -194,29 +194,29 @@ UINT update_Label(void *pParam)
 	CCommand<CAccessor<CTrade_Table> > artists1;	
 
 	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");
-	
+
 	session.Open(connection);
 	HRESULT hr;
 	while (OverViewOrderGrid::thred_kill==0 )
 	{	
-		
+
 		Sleep(100);
 		_bstr_t strCommand="";	
 		CString sel_login=GridTradeAndOrder::m_selected_login;
 		sel_login=sel_login.Mid(0,6);
 		_bstr_t strcode=sel_login;
 		strCommand="select sum(volume/10000),max([time]),(cast(sum(volume/10000) as float)/cast((select sum(volume/10000) from Deal_Table_Accounting where [action]in (0,1) and [login]='" + strcode + "' ) as float))*100 ,'' as  'TYPE','' as  'volume', '' as Price,'' as Current_rate,''  as 'PL',''   as 'Status',''   as 'TradeStatus' from Deal_Table_Accounting where [action]in (0,1)  and [login]='" + GridTradeAndOrder::m_selected_login + "' ";
-		
+
 		char* strCommand_char=(char*)strCommand;
 		hr=artists1.Open(session,strCommand_char);	
 		if(SUCCEEDED(hr))
 		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			overview::total_trade=artists1.m_Symbol ;
-			overview::last_trade_time=artists1.m_Order ;
-			overview::trade_per=artists1.m_Time ;
-		}
+			while (artists1.MoveNext() == S_OK)
+			{
+				overview::total_trade=artists1.m_Symbol ;
+				overview::last_trade_time=artists1.m_Order ;
+				overview::trade_per=artists1.m_Time ;
+			}
 		}
 		artists1.Close();
 		overview::balance=L"0";
@@ -225,14 +225,14 @@ UINT update_Label(void *pParam)
 		hr=artists1.Open(session,strCommand_char);				
 		if(SUCCEEDED(hr))
 		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			LPTSTR endPtr;
-			double d_m_PL = _tcstod(artists1.m_Symbol, &endPtr);												
-			CString cstrpl;
-			cstrpl.Format(_T("%.0f"),d_m_PL);															
-			overview::balance=cstrpl;									
-		}
+			while (artists1.MoveNext() == S_OK)
+			{
+				LPTSTR endPtr;
+				double d_m_PL = _tcstod(artists1.m_Symbol, &endPtr);												
+				CString cstrpl;
+				cstrpl.Format(_T("%.0f"),d_m_PL);															
+				overview::balance=cstrpl;									
+			}
 		}
 		artists1.Close();
 
@@ -243,29 +243,29 @@ UINT update_Label(void *pParam)
 		hr=artists1.Open(session,strCommand_char);				
 		if(SUCCEEDED(hr))
 		{
-		while (artists1.MoveNext() == S_OK)
-		{
-			LPTSTR endPtr;
-			double d_m_PL = _tcstod(artists1.m_Symbol, &endPtr);												
-			CString cstrpl;
-			cstrpl.Format(_T("%.0f"),d_m_PL);															
-			overview::profit=cstrpl;			
-		}
+			while (artists1.MoveNext() == S_OK)
+			{
+				LPTSTR endPtr;
+				double d_m_PL = _tcstod(artists1.m_Symbol, &endPtr);												
+				CString cstrpl;
+				cstrpl.Format(_T("%.0f"),d_m_PL);															
+				overview::profit=cstrpl;			
+			}
 		}
 		artists1.Close();
-								
+
 		double v1 = _tstof((LPCTSTR)overview::balance);
 		double v2 = _tstof((LPCTSTR)overview::profit);
 		double v1v2= v1+v2;
-		
+
 		overview::Margin.Format(_T("%.0f"), v1v2);
 		if (OverViewOrderGrid::thred_kill!=1)
 		{
 			pThis->SendMessage(MY_THREAD_UPDATE, 1,1);			 		 		
 		}
-	 }
-	 return 0;
 	}
+	return 0;
+}
 
 
 
@@ -304,29 +304,29 @@ void overview::OnBnClickedButton2()
 	}
 
 
-	 int check_data=0;
-	 _bstr_t jasonStr="";
-	 _variant_t  strUpdate_time="";
-	 _bstr_t r_time="";	 
+	int check_data=0;
+	_bstr_t jasonStr="";
+	_variant_t  strUpdate_time="";
+	_bstr_t r_time="";	 
 
-	 int rows_no=Tradegrid.GetNumberRows();
-	 _bstr_t  InsertAndUpdate_Command=" ";
-	 _bstr_t  str_deal=" ";
-	 _bstr_t  str_out_comment=" ";
-	 _bstr_t  str_checked=" ";
-	 _bstr_t  str_new=" ";
-	 _bstr_t str_symbol="";
-	 _bstr_t str_Limit="";
+	int rows_no=Tradegrid.GetNumberRows();
+	_bstr_t  InsertAndUpdate_Command=" ";
+	_bstr_t  str_deal=" ";
+	_bstr_t  str_out_comment=" ";
+	_bstr_t  str_checked=" ";
+	_bstr_t  str_new=" ";
+	_bstr_t str_symbol="";
+	_bstr_t str_Limit="";
 
 
-	 _bstr_t  str_checked_Time=" ";
-	 _bstr_t  str_Remark1=" ";
-	 _bstr_t str_Remark2="";
-	 _bstr_t str_Limit2="";
-	 _bstr_t str_NewLimit="";
-	 int check_flag=0;
-	 for (int forcount=0;forcount<rows_no;forcount++)
-	 {		 		 		 
+	_bstr_t  str_checked_Time=" ";
+	_bstr_t  str_Remark1=" ";
+	_bstr_t str_Remark2="";
+	_bstr_t str_Limit2="";
+	_bstr_t str_NewLimit="";
+	int check_flag=0;
+	for (int forcount=0;forcount<rows_no;forcount++)
+	{		 		 		 
 		str_symbol=Tradegrid.QuickGetText(0,forcount);		 		
 		str_checked_Time=Tradegrid.QuickGetText(10,forcount);		 
 		str_Remark1=Tradegrid.QuickGetText(11,forcount);		 
@@ -370,22 +370,25 @@ void overview::OnBnClickedButton2()
 		if(Tradegrid.QuickGetText(0,forcount)!=NULL )
 		{
 			str_new= " exec Proc_Position_Check_1 '" + GridTradeAndOrder::m_selected_login + "','" + str_symbol + "','" + str_checked_Time  + "','" + str_Remark1  + "','" + str_Remark2 + "'; ";
-		 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
+			InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}
 		if (Tradegrid.QuickGetText(11,forcount)!=NULL )
 		{
-		 str_new= " exec Update_Limit '" + GridTradeAndOrder::m_selected_login + "','" + str_symbol + "','" + str_NewLimit + "','" + str_Limit2 + "'; ";
-		 InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
+			str_new= " exec Update_Limit '" + GridTradeAndOrder::m_selected_login + "','" + str_symbol + "','" + str_NewLimit + "','" + str_Limit2 + "'; ";
+			InsertAndUpdate_Command=str_new +InsertAndUpdate_Command ;
 		}
-		 
-		 
-	 }
-	 char* strCommand_char=(char*)InsertAndUpdate_Command;
-	 hr_update=cmd_update.Open(session_update,strCommand_char);							 			 		 				 	
-	 cmd_update.Close();
-	 session_update.Close();
-	 
-	 CoUninitialize();
+
+
+	}
+	char* strCommand_char=(char*)InsertAndUpdate_Command;
+	hr_update=cmd_update.Open(session_update,strCommand_char);	
+
+
+	AfxMessageBox(L"Data has been updated");
+	cmd_update.Close();
+	session_update.Close();
+
+	CoUninitialize();
 }
 
 
@@ -398,13 +401,13 @@ BOOL overview::OnInitDialog()
 	Codeandname.Format(L"                                                   %s:-%s",strcode,strname);
 	SetWindowTextW(Codeandname);
 	//
- // // TODO: Add extra initialization h
+	// // TODO: Add extra initialization h
 	/*CRect rectDummy;
 	RECT  rect={100,100,100,100};*/
 	//
-  	 Tradegrid.AttachGrid(this,IDC_STATIC_FrGrid_Trade2);
-	 Ordergrid.AttachGrid(this,IDC_STATIC_FrGrid_Order2);
-	
+	Tradegrid.AttachGrid(this,IDC_STATIC_FrGrid_Trade2);
+	Ordergrid.AttachGrid(this,IDC_STATIC_FrGrid_Order2);
+
 
 	get_client_details();
 
@@ -417,14 +420,14 @@ BOOL overview::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 
-	
+
 }
 void overview::OnIdclose()
 {
-	
+
 	OverViewOrderGrid::thred_kill=1;
-	
-	
+
+
 }
 
 
@@ -432,7 +435,7 @@ void overview::OnIdclose()
 void overview::OnClose()
 {
 	OverViewOrderGrid::thred_kill=1;
-	
+
 	CDialog::OnClose();
 }
 
@@ -441,49 +444,49 @@ void overview::OnClose()
 void overview::OnBnClickedButton3()
 {
 	// TODO: Add your control notification handler code here
-	
-		_bstr_t valField1("");
-		_bstr_t valField2("");
-		_bstr_t cmd("");
-		CString  strsqlcommand;				 	
-		
-		HRESULT hr_update;
-		CDataSource connection_update;
-		CSession session_update;	
-		CCommand<CNoAccessor, CNoRowset> cmd_update;
-		
-		CoInitialize(NULL );
-		hr_update=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
-		if(SUCCEEDED(hr_update))
-		{
-			hr_update=session_update.Open(connection_update);							
-		}
-		else
-		{
-			AfxMessageBox(L"connection.OpenFromInitializationString Failed");
-		}
+
+	_bstr_t valField1("");
+	_bstr_t valField2("");
+	_bstr_t cmd("");
+	CString  strsqlcommand;				 	
+
+	HRESULT hr_update;
+	CDataSource connection_update;
+	CSession session_update;	
+	CCommand<CNoAccessor, CNoRowset> cmd_update;
+
+	CoInitialize(NULL );
+	hr_update=connection_update.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
+	if(SUCCEEDED(hr_update))
+	{
+		hr_update=session_update.Open(connection_update);							
+	}
+	else
+	{
+		AfxMessageBox(L"connection.OpenFromInitializationString Failed");
+	}
 
 
-		
-	  _bstr_t check1="";
-	  _bstr_t check2="";
-	  _bstr_t group1="";
-	  _bstr_t group2="";
-	  _bstr_t group3="";
-	  _bstr_t m_LOSS_limit="";
-	  _bstr_t credit ="";
 
-	  _bstr_t b_name ="";
+	_bstr_t check1="";
+	_bstr_t check2="";
+	_bstr_t group1="";
+	_bstr_t group2="";
+	_bstr_t group3="";
+	_bstr_t m_LOSS_limit="";
+	_bstr_t credit ="";
 
-	  CString str_group1;
-	  CString str_group2;
-	  CString str_group3;
-	  CString str_LOSS_limit;
-	  CString str_credit;
+	_bstr_t b_name ="";
 
-	  CString str_name=L"";
+	CString str_group1;
+	CString str_group2;
+	CString str_group3;
+	CString str_LOSS_limit;
+	CString str_credit;
 
-	 
+	CString str_name=L"";
+
+
 	if(m_ignoreclient.GetCheck()==0)
 	{
 		check1="N";
@@ -492,7 +495,7 @@ void overview::OnBnClickedButton3()
 	{
 		check1="Y";
 	}
-	 if(m_commentwise.GetCheck()==0)
+	if(m_commentwise.GetCheck()==0)
 	{
 		check2="N";
 	}
@@ -500,33 +503,33 @@ void overview::OnBnClickedButton3()
 	{
 		check2="Y";
 	}	 		
-	 						
-	 m_txtGroup1.GetWindowTextW(str_group1);
-	 m_txtGroup2.GetWindowTextW(str_group2);
-	 m_txtGroup3.GetWindowTextW(str_group3);			
-	 m_txtGroup4.GetWindowTextW(str_LOSS_limit);			
-	 m_txtCredit.GetWindowTextW(str_credit);			
-	 m_accountname.GetWindowTextW(str_name);			
-	 if (str_credit.Trim()==L"")
-	 {
-		 str_credit=L"0";
-	 }
-	 group1=str_group1;
-	 group2=str_group2;
-	 group3=str_group3;
-	 m_LOSS_limit=str_LOSS_limit;
-	 credit=str_credit;
-	 b_name=str_name;
-	 
+
+	m_txtGroup1.GetWindowTextW(str_group1);
+	m_txtGroup2.GetWindowTextW(str_group2);
+	m_txtGroup3.GetWindowTextW(str_group3);			
+	m_txtGroup4.GetWindowTextW(str_LOSS_limit);			
+	m_txtCredit.GetWindowTextW(str_credit);			
+	m_accountname.GetWindowTextW(str_name);			
+	if (str_credit.Trim()==L"")
+	{
+		str_credit=L"0";
+	}
+	group1=str_group1;
+	group2=str_group2;
+	group3=str_group3;
+	m_LOSS_limit=str_LOSS_limit;
+	credit=str_credit;
+	b_name=str_name;
+
 	cmd=" update client set    v_name='" + b_name + "', Comment_YN='" + check1 + "',Ignore_YN='" + check2 + "',client_group='" + group1 + "',Client_Group1='" + group2 + "',Client_Group2='" + group3 + "',Client_Group4='" + m_LOSS_limit + "',Client_Credit='" +  credit + "' where v_login='" + GridTradeAndOrder::m_selected_login + "'";
-	
-	 char* strCommand_char=(char*)cmd;
-	 hr_update=cmd_update.Open(session_update,strCommand_char);							 			 		 				 	
-	 
-	 cmd_update.Close();
-	 session_update.Close();
-	 CoUninitialize();
-   	AfxMessageBox(L"Data Updated");
+
+	char* strCommand_char=(char*)cmd;
+	hr_update=cmd_update.Open(session_update,strCommand_char);							 			 		 				 	
+
+	cmd_update.Close();
+	session_update.Close();
+	CoUninitialize();
+	AfxMessageBox(L"Data Updated");
 
 }
 
@@ -539,7 +542,7 @@ void overview::OnBnClickedCheck2()
 
 void overview::OnTimer(UINT_PTR nIDEvent)
 {
-	
+
 	/*double v1 = _tstof((LPCTSTR)overview::balance);
 	double v2 = _tstof((LPCTSTR)overview::profit);
 	double v1v2= v1+v2;
@@ -547,13 +550,13 @@ void overview::OnTimer(UINT_PTR nIDEvent)
 
 	if (OverViewOrderGrid::thred_kill!=1)
 	{
-		m_nooftrade.SetWindowTextW(total_trade);
-		m_lasttrade.SetWindowTextW(last_trade_time);
-		m_percentageoftrade.SetWindowTextW(trade_per);
+	m_nooftrade.SetWindowTextW(total_trade);
+	m_lasttrade.SetWindowTextW(last_trade_time);
+	m_percentageoftrade.SetWindowTextW(trade_per);
 
-		m_txtProfit.SetWindowTextW(profit);
-		m_txtBalance.SetWindowTextW(balance);
-		m_txtMargin.SetWindowTextW(overview::Margin);
+	m_txtProfit.SetWindowTextW(profit);
+	m_txtBalance.SetWindowTextW(balance);
+	m_txtMargin.SetWindowTextW(overview::Margin);
 	}*/
 
 	CDialogEx::OnTimer(nIDEvent);

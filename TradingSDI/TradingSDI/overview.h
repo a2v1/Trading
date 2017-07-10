@@ -10,8 +10,7 @@
 #include "CTrade_Table.h"
 #include "afxdtctl.h"
 #include "Grid_CheckTrade.h"
-#include "TABCONTROL.H"
-
+#include  "tabControl.h"
 
 // overview dialog
 

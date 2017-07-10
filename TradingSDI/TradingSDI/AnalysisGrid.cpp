@@ -1085,7 +1085,7 @@ UINT Show_Groupwise2NetPos(void *pParam)
 			 {
 				 GroupWise2NetPos::m_st_Dealing_Array.Clear();
 				 GroupWise2NetPos::st_Dealing m_st_Dealing={};
-				 int i=0;
+			
 				 while (hr=artists1.MoveNext() == S_OK)
 				 {																	  
 					CMTStr::Copy(m_st_Dealing.Group ,artists1.Group );				 					
@@ -1100,7 +1100,7 @@ UINT Show_Groupwise2NetPos(void *pParam)
 					m_st_Dealing.pl =artists1.pl ;
 					m_st_Dealing.Total_Amount=artists1.Total_Amount;
 					
-					i=i+1;
+
 
 					GroupWise2NetPos::m_st_Dealing_Array.Add(&m_st_Dealing);
 				 }

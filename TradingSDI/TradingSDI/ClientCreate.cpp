@@ -39,7 +39,7 @@ void ClientCreate::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(ClientCreate, CDialogEx)
 	ON_BN_CLICKED(IDSAVE, &ClientCreate::OnBnClickedSave)
 	ON_WM_CLOSE()
-	ON_EN_CHANGE(IDC_EDIT1, &ClientCreate::OnEnChangeEdit1)
+	//ON_EN_CHANGE(IDC_EDIT1, &ClientCreate::OnEnChangeEdit1)
 
 	ON_BN_CLICKED(IDC_DELETEBTN, &ClientCreate::OnBnClickedDeletebtn)
 	ON_EN_KILLFOCUS(IDC_EDIT1, &ClientCreate::OnEnKillfocusEdit1)
@@ -116,10 +116,10 @@ void ClientCreate::OnBnClickedSave()
 
 
 		CCommand<CNoAccessor, CNoRowset>cmd;	
-		/*if (SUCCEEDED(hr))
-		{*/
-		hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
-		//}
+		if (SUCCEEDED(hr))
+		{
+		  hr=cmd.Open(session,LPCTSTR(Str_command));							 			 		 				 	
+		}
 		cmd.Close();
 		AfxMessageBox(L"Client has been created !!!");	
 	}

@@ -3,6 +3,7 @@
 #include "ADD_overview.h"
 #include "afxdialogex.h"
 #include "tabControl.h"
+#include  <odbcinst.h>
 IMPLEMENT_DYNAMIC(ADD_overview, CDialogEx)
 ADD_overview::ADD_overview(CWnd* pParent /*=NULL*/)
     : CDialogEx(ADD_overview::IDD, pParent)
@@ -55,6 +56,7 @@ BOOL ADD_overview::OnInitDialog()
     m_ctrlTAB.InsertItem(2,L"TradeWiseAnalysis");
     m_ctrlTAB.InsertItem(3,L"StandingPosition");
      
+
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
  

@@ -116,10 +116,7 @@ void Tab2::OnBnClickedOk()
 		char* strCommand_char=(char*)InsertAndUpdate_Command;
 		hrn=cmd.Open(session_update,strCommand_char);							 			 		 				 	
 		cmd.Close();
-	 AfxMessageBox(L"Data Updated");
-	 
-	
-
+	    AfxMessageBox(L"Data Updated");
 	
 }
 	
