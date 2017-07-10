@@ -352,6 +352,8 @@ void Dealing::OnGetCell(int col,long row,CUGCell *cell)
 			{				
 				mst_grid=m_st_Dealing_Grid_array[rows_no];
 
+				
+
 				UINT64 m_time=mst_grid.Time;
 				CString tmp=L"";
 				CMTStr256 str;

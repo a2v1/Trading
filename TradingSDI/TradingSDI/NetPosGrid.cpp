@@ -3196,9 +3196,6 @@ double NetPosGrid::getBalance(CString strlogin)
 	return return_value;
 }
 
-
-
-
 double NetPosGrid::getColumnSum(int col_index)
 {
 	double return_val=0;
@@ -3216,8 +3213,6 @@ double NetPosGrid::getColumnSum(int col_index)
 	}
 	return return_val;
 }
-
-
 	
 
 void NetPosGrid::UpdatePre_Post_Position()
@@ -3344,14 +3339,8 @@ UINT Update_Netposition(LPVOID pParam)
 					    NetPosGrid::st_Netposition mst={};
 						CMTStr::Copy(mst.m_login,artists1.m_login);
 						CMTStr::Copy(mst.m_Name,artists1.m_name);
-						CMTStr::Copy(mst.m_symbol,artists1.m_symbol);
-
-						/*if (wcscmp(artists1.m_symbol,L"GCJ71KG")==0)
-						{
-							int k=0;
-						}*/
-
-						//strpre_netQty.Format( _T("%.2f"), artists1.m_Pre_NetQty);
+						CMTStr::Copy(mst.m_symbol,artists1.m_symbol);										
+						
 						CString str_m_Pre_NetQty=artists1.m_Pre_NetQty;
 						if (str_m_Pre_NetQty.Find('.')>0)
 						{
@@ -3460,7 +3449,13 @@ UINT Update_Netposition(LPVOID pParam)
 				m_st_Netposition=NetPosGrid::m_NetpositionArray[fcount];
 				int flag=0;				
 				CString col_row_val[21];		
-				col_row_val[0]=m_st_Netposition.m_login;
+				col_row_val[0]=m_st_Netposition.m_login;			
+
+
+
+					
+
+
 				if (NetPosGrid::col0_val.Trim().GetLength()>0)
 				{
 					col_row_val[0]=col_row_val[0].Mid(0,NetPosGrid::col0_val.Trim().GetLength());
@@ -3568,7 +3563,7 @@ UINT Update_Netposition(LPVOID pParam)
 		
 				if((NetPosGrid::col0_val.Trim()==col_row_val[0].Trim() || NetPosGrid::col0_val.Trim()==L"ALL"||NetPosGrid::col0_val.Trim()==L"") && (NetPosGrid::col1_val.Trim()==col_row_val[1].Trim() || NetPosGrid::col1_val.Trim()==L"ALL"||NetPosGrid::col1_val.Trim()==L"") && (NetPosGrid::col2_val.Trim()==col_row_val[2].Trim() || NetPosGrid::col2_val.Trim()==L"ALL"||NetPosGrid::col2_val.Trim()==L"")  && (bool_col3==true  || NetPosGrid::col3_val.Trim()==L"ALL"||NetPosGrid::col3_val.Trim()==L"")  && (bool_col4==true  ||  NetPosGrid::col4_val.Trim()==L"ALL"||NetPosGrid::col4_val.Trim()==L"")   && (bool_col5==true || NetPosGrid::col5_val.Trim()==L"ALL"||NetPosGrid::col5_val.Trim()==L"")   && (bool_col6==true || NetPosGrid::col6_val.Trim()==L"ALL"||NetPosGrid::col6_val.Trim()==L"")   && (bool_col7==true || NetPosGrid::col7_val.Trim()==L"ALL"||NetPosGrid::col7_val.Trim()==L"")   && (bool_col8==true || NetPosGrid::col8_val.Trim()==L"ALL"||NetPosGrid::col8_val.Trim()==L"") && (bool_col9==true || NetPosGrid::col9_val==L"ALL"||NetPosGrid::col9_val==L"") &&(NetPosGrid::col10_val==col_row_val[10] || NetPosGrid::col10_val==L"ALL"||NetPosGrid::col10_val==L"")&&(NetPosGrid::col11_val==col_row_val[11] || NetPosGrid::col11_val==L"ALL"||NetPosGrid::col11_val==L"")&&(NetPosGrid::col12_val==col_row_val[12] || NetPosGrid::col12_val==L"ALL"||NetPosGrid::col12_val==L"") &&(NetPosGrid::col13_val==col_row_val[13] || NetPosGrid::col13_val==L"ALL"||NetPosGrid::col13_val==L"")&&(NetPosGrid::col14_val==col_row_val[14] || NetPosGrid::col14_val==L"ALL"||NetPosGrid::col14_val==L"")&&(NetPosGrid::col15_val==col_row_val[15] || NetPosGrid::col15_val==L"ALL"||NetPosGrid::col15_val==L"")&&(NetPosGrid::col16_val==col_row_val[16] || NetPosGrid::col16_val==L"ALL"||NetPosGrid::col16_val==L"")&&(NetPosGrid::col17_val==col_row_val[17] || NetPosGrid::col17_val==L"ALL"||NetPosGrid::col17_val==L"")&&(NetPosGrid::col18_val==col_row_val[18] || NetPosGrid::col18_val==L"ALL"||NetPosGrid::col18_val==L"")&&(NetPosGrid::col19_val==col_row_val[19] || NetPosGrid::col19_val==L"ALL"||NetPosGrid::col19_val==L"")&&(NetPosGrid::col20_val==col_row_val[20] || NetPosGrid::col20_val==L"ALL"||NetPosGrid::col20_val==L""))
 				{						
-					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_login,m_st_Netposition.m_login);				
+					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_login,m_st_Netposition.m_login);						
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_Name ,m_st_Netposition.m_Name) ;
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_symbol ,m_st_Netposition.m_symbol );				
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_pre_qty ,m_st_Netposition.m_pre_qty) ;						

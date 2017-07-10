@@ -875,6 +875,8 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		cstr_log_time = t.Format("%Y.%m.%d %H:%M:%S");	
 		wcscpy(m_st_dealing.LOG_TIME ,cstr_log_time);
 		m_st_dealing.Time=order->TimeSetup();
+
+		
 		CString m_comment=order->Comment();		
 		CString m_login=L"";
 		m_login.Format(L"%d",order->Login());
@@ -1116,6 +1118,9 @@ void CMainFrame::OnFileSymbolmapping()
 	}
 void  CMainFrame::OnDealAdd(const IMTDeal*  deal)
 {
+
+	//UINT64 t1=deal->TimeMsc();
+
 	Dealing::dealing_mutex.Lock();
 	Dealing::st_Dealing m_st_dealing={};
 	CString cstr_log_time=L"";
@@ -1123,6 +1128,7 @@ void  CMainFrame::OnDealAdd(const IMTDeal*  deal)
 	cstr_log_time = t.Format("%Y.%m.%d %H:%M:%S");	
 	wcscpy(m_st_dealing.LOG_TIME ,cstr_log_time);	
 	m_st_dealing.Time=deal->Time();
+
 	CString m_comment=deal->Comment();
 	CString m_login=L"";
 	m_login.Format(L"%d",deal->Login());
