@@ -6,7 +6,7 @@
 #include "NPBPSType2Grid.h"
 #include "afxwin.h"
 #include "afxcmn.h"
-
+#include "Login.h"
 // CAuditForm form view
 
 class CAuditForm : public CFormView
@@ -24,9 +24,15 @@ protected:
     int m_tabCurrent;
     int m_nPageCount;
 
+  
+	CNPBPSType1Grid m_nbpsgrid1;
+	CNPBPSType2Grid m_nbpsgrid2;
+	CCodesChanged m_codechangegrid;
+
+
 public:
 	enum { IDD = IDD_AUDITFORM };
-
+	static CPassedBYMngr m_passbygrid;
 	
 #ifdef _DEBUG
 	virtual void AssertValid() const;
@@ -40,7 +46,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-
+	
 
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	CStatic m_staticpassedbymngr;

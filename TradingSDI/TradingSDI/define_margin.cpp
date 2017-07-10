@@ -10,8 +10,6 @@
 no_namespace rename("EOF", "EndOfFile")
 // define_margin dialog
 
-bool define_margin::fill_data=false;
-
 IMPLEMENT_DYNAMIC(define_margin, CDialogEx)
 
 define_margin::define_margin(CWnd* pParent /*=NULL*/)
@@ -43,21 +41,22 @@ BOOL define_margin::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
+	CRect rect;
+	GetClientRect(&rect);
+	MoveWindow( rect.left+10,rect.top+115,rect.Width(),rect.Height()+50);
+
+
+
 	d_grid.AttachGrid(this ,IDC_STATIC_MARGIN);
 	d_grid.SetColWidth(0,170);
 	d_grid.SetColWidth(1,170);
 	d_grid.QuickSetText(0,-1,L"SYMBOL");
 	d_grid.QuickSetText(1,-1,L"MARGIN");
 
-	if(define_margin::fill_data==false)
-	{
-		getSymbolData();
-		define_margin::fill_data=true;
-	}
-	else
-	{
-		define_margin::fill_data=false;
-	}
+
+	//data fetch
+    getSymbolData();
+	
 	return TRUE;  // return TRUE unless you set the focus to a control
 
 }
@@ -142,7 +141,6 @@ void define_margin::getSymbolData()
 void define_margin::OnEnChangeEdit1()
 {
 	// TODO: Add your control notification handler code here
-	define_margin::fill_data=false;
 
 	CString text_value=L"";
 	CoInitialize(NULL);

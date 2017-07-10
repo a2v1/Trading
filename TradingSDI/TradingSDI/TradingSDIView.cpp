@@ -152,6 +152,7 @@ LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 			COutputWnd::m_GroupWiseNetPos.thread_destoy();
 			COutputWnd::m_wndOutputPos.thread_destoy();			
 			COutputWnd::m_wndOutputOrder.thread_destoy();
+			CAuditForm::m_passbygrid.data_ThreadStart();
 		}
 	}
 	return 0;

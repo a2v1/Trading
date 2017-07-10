@@ -41,7 +41,10 @@ END_MESSAGE_MAP()
 BOOL SymbolMapping::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
+	//SETTING THE POSITION OF DILOG
+	CRect rect;
+	GetClientRect(&rect);
+	MoveWindow( rect.left+10,rect.top+115,rect.Width()+5,rect.Height());
 	
 	
 // use the initial dialog size as the default minimum

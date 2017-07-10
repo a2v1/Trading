@@ -12,10 +12,10 @@
 // LTP_Dilog dialog
 
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
-no_namespace rename("EOF", "EndOfFile")
+	no_namespace rename("EOF", "EndOfFile")
 IMPLEMENT_DYNAMIC(LTP_Dilog, CDialogEx)
 
-LTP_Dilog::LTP_Dilog(CWnd* pParent /*=NULL*/)
+	LTP_Dilog::LTP_Dilog(CWnd* pParent /*=NULL*/)
 	: CDialogEx(LTP_Dilog::IDD, pParent)
 {
 
@@ -33,7 +33,7 @@ void LTP_Dilog::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(LTP_Dilog, CDialogEx)
 	ON_STN_CLICKED(IDC_STATIC_LTP, &LTP_Dilog::OnStnClickedStaticLtp)
-	
+
 	ON_BN_CLICKED(IDOK, &LTP_Dilog::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTON1, &LTP_Dilog::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON4, &LTP_Dilog::OnBnClickedButton4)
@@ -44,6 +44,12 @@ END_MESSAGE_MAP()
 BOOL LTP_Dilog::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+
+	//SETTING THE POSITION OF DILOG
+	CRect rect;
+	GetClientRect(&rect);
+	MoveWindow( rect.left+10,rect.top+115,rect.Width(),rect.Height());
+
 
 	ltp_grid.AttachGrid(this ,IDC_STATIC_LTP);
 
@@ -57,7 +63,7 @@ BOOL LTP_Dilog::OnInitDialog()
 
 	ltp_grid.GetData();
 
-     return TRUE;
+	return TRUE;
 	// EXCEPTION: OCX Property Pages should return FALSE
 }
 
@@ -74,23 +80,23 @@ void LTP_Dilog::OnStnClickedStaticLtp()
 
 void LTP_Dilog::OnBnClickedOk()
 {
-	
-		_bstr_t valField1("");
-		_bstr_t valField2("");
-		_bstr_t valField3("");
-		_bstr_t cmd("");
-		CString  strsqlcommand;				 	
-		HRESULT hr = S_OK;		 
-			 
-		CoInitialize(NULL);
-          // Define string variables.		 
-		_bstr_t strCnn("Provider=SQLOLEDB;SERVER=64.251.7.161;Database=tradedatabase;uid=sa;pwd=ok@12345;");
-		
-        _RecordsetPtr pRstAuthors = NULL;
- 
-      // Call Create instance to instantiate the Record set
-      hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
-	 
+
+	_bstr_t valField1("");
+	_bstr_t valField2("");
+	_bstr_t valField3("");
+	_bstr_t cmd("");
+	CString  strsqlcommand;				 	
+	HRESULT hr = S_OK;		 
+
+	CoInitialize(NULL);
+	// Define string variables.		 
+	_bstr_t strCnn("Provider=SQLOLEDB;SERVER=64.251.7.161;Database=tradedatabase;uid=sa;pwd=ok@12345;");
+
+	_RecordsetPtr pRstAuthors = NULL;
+
+	// Call Create instance to instantiate the Record set
+	hr = pRstAuthors.CreateInstance(__uuidof(Recordset)); 
+
 	int noofrows=ltp_grid.GetNumberRows();
 	for (int f_count=0;f_count<noofrows;f_count++)
 	{
@@ -106,7 +112,7 @@ void LTP_Dilog::OnBnClickedOk()
 	pRstAuthors->Open(cmd,strCnn, adOpenStatic,adLockReadOnly,adCmdText);    			
 
 	AfxMessageBox(L"LTP has been updated");
-	
+
 }
 
 
@@ -119,11 +125,12 @@ void LTP_Dilog::OnBnClickedButton1()
 		CString strf=ltp_grid.QuickGetText(0,f_count);
 		strf=strf.Trim();
 		MTTickShort  tick;
+		tick.ask=0.00;
 		DlgHelp::m_dealer->m_manager->TickLast(strf,tick);
 		CString strtlasttick=L"";
 		strtlasttick.Format(L"%.4f",tick.ask );
 		ltp_grid.QuickSetText (2,f_count,strtlasttick);
-		
+
 	}
 	ltp_grid.RedrawAll();
 }
@@ -146,13 +153,13 @@ void LTP_Dilog::OnBnClickedButton4()
 
 		strf=strf.Trim();
 		MTTickShort  tick;
-		
+
 		DlgHelp::m_dealer->m_manager->TickLast(strf,tick);
 		tick.datetime=0;
 
 		LPTSTR endPtr1;										
 		double Closing_rate=_tcstod(str_closingrate ,&endPtr1);
-		
+
 
 		MTTick   newtick={};
 		CMTStr::Copy(newtick.symbol,strf);

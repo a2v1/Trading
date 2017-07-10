@@ -59,7 +59,7 @@ public:
 
 	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val,col16_val,col17_val,col18_val,col19_val,col20_val,col21_val;
 	static  int insertFilterFlag;
-
+	static  int Data_Update;
 public:
 	BOOL m_bSortedAscending;
 	int m_iArrowIndex;
@@ -76,6 +76,8 @@ public:
 	void addItemToCombobox();
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
 	void InitMenu();
+	void data_ThreadStart();
+	void thread_destoy();
 	void gridFilter(int colno,int rows_count,CString col_value);
 	void OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *point,BOOL processed);
 	virtual int OnDropList(long ID,int col,long row,long msg,long param);

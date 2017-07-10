@@ -54,12 +54,13 @@ CString CNPBPSType1Grid::col19_val=L"";
 CString CNPBPSType1Grid::col20_val=L"";
 CString CNPBPSType1Grid::col21_val=L"";
 
-
+int CNPBPSType1Grid::Data_Update=0;
 
 UINT Show_NPBPStype1(void *pParam);
 CNPBPSType1Grid::CNPBPSType1Grid(void)
 {
-	UGXPThemes::UseThemes(false);	
+	UGXPThemes::UseThemes(false);
+	m_pThreads=NULL;
 	col_click=0;
 	a_d=0;
 }
@@ -68,6 +69,7 @@ CNPBPSType1Grid::CNPBPSType1Grid(void)
 CNPBPSType1Grid::~CNPBPSType1Grid(void)
 {
 	//delete m_pThread;
+	thread_destoy();
 	UGXPThemes::CleanUp();
 }
 int CNPBPSType1Grid::OnCellTypeNotify(long ID,int col,long row,long msg,long param)
@@ -80,6 +82,13 @@ int CNPBPSType1Grid::OnCellTypeNotify(long ID,int col,long row,long msg,long par
     return 0;
   
 }
+void CNPBPSType1Grid::data_ThreadStart()
+{
+  CNPBPSType1Grid::Data_Update=1;
+  m_pThreads=AfxBeginThread(Show_NPBPStype1,this);
+
+}
+
 void CNPBPSType1Grid::OnSetup()
 {
 	try
@@ -119,7 +128,7 @@ void CNPBPSType1Grid::OnSetup()
 		InitMenu();
 		SetTimer(0, 100, NULL);
 
-		m_pThreads=AfxBeginThread(Show_NPBPStype1, this);	
+		//m_pThreads=AfxBeginThread(Show_NPBPStype1, this);	
 	}
 	 catch(_com_error & ce)
 	{
@@ -1881,7 +1890,7 @@ UINT Show_NPBPStype1(void *pParam)
 	if(SUCCEEDED(hr))
 	{
 		hr=session.Open(connection);
-		while (true )
+		while (CNPBPSType1Grid::Data_Update==1)
 		{		
 			Sleep(100);
 			CString strCommand=L"";		
@@ -1996,4 +2005,31 @@ void CNPBPSType1Grid::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 //		Trace( _T( "Sorted column %d descending" ), iCol );
 	}			 				
 	RedrawAll();
+}
+void CNPBPSType1Grid::thread_destoy()
+{
+	try 
+	{	
+		Data_Update=0;
+		DWORD exit_code= NULL;
+
+		if (m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(m_pThreads->m_hThread, 0);
+					CloseHandle(m_pThreads->m_hThread);
+				}
+				//m_pThreads->m_hThread = NULL;
+				m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }
