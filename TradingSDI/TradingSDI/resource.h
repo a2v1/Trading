@@ -73,6 +73,10 @@
 #define IDD_GROUP2WISENETPOSFORM        347
 #define IDD_GROUPWISENETPOS             348
 #define IDD_AUDITFORM                   350
+#define IDD_USERDILOG                   352
+#define IDD_USERCLIENT_MAP              353
+#define IDD_DIALOG3                     354
+#define IDD_HELPUSERCLEINT              354
 #define IDC_SCRIP_CMB_LOGIN             1000
 #define IDC_SCRIP_EDIT_LOGIN            1001
 #define IDC_LOGIN_EDIT_PWD              1002
@@ -116,6 +120,7 @@
 #define IDC_EDIT1                       1026
 #define IDC_EDIT2                       1027
 #define IDC_STATIC_PRICE                1028
+#define IDC_CONFIRMPASSWRD              1028
 #define FL_CMB_STATUS                   1029
 #define IDC_NET                         1029
 #define IDC_BUTTON2                     1030
@@ -167,6 +172,11 @@
 #define IDC_STATICGRID                  1102
 #define IDC_TABAUDIT                    1109
 #define IDC_BUTTONSAVE                  1110
+#define IDC_PASSWORD                    1111
+#define ID_OKMAP                        1112
+#define IDC_CLIENTLIST                  1113
+#define IDC_HELPCLICK                   1114
+#define ID_OK                           1115
 #define ID_FILE_SYMBOLMAPPING           32777
 #define ID_VIEW_SYMBOLADD               32778
 #define IDC_CHECK_IGNOREQTY             32779
@@ -226,15 +236,18 @@
 #define ID_LTPUPDATE                    32852
 #define ID_DEFINESYMBOL                 32853
 #define ID_CLIENTCREATE                 32854
+#define ID_USERCREATE                   32854
 #define ID_DATETIME                     32855
+#define ID_USER_CREATE                  32856
+#define ID_USERCLIENTMAPPING            32858
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        352
-#define _APS_NEXT_COMMAND_VALUE         32856
-#define _APS_NEXT_CONTROL_VALUE         1111
+#define _APS_NEXT_RESOURCE_VALUE        355
+#define _APS_NEXT_COMMAND_VALUE         32859
+#define _APS_NEXT_CONTROL_VALUE         1116
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

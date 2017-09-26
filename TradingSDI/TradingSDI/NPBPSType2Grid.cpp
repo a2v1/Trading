@@ -1072,7 +1072,7 @@ void CNPBPSType2Grid::OnTimer(UINT nIDEvent)
 			}
 			else
 			{
-if (val_type==0)
+            if (val_type==0)
 				{
 					if (col_click==0)
 					{
@@ -1093,7 +1093,7 @@ if (val_type==0)
 						}
 					}
 				}
-				else
+			else
 				{
 					if (col_click==2)
 					{															
@@ -1178,11 +1178,11 @@ if (val_type==0)
 					}
 					if (col_click==10)
 					{															
-						if (wcscmp(first_st.Comment  ,next_st.Comment  )<0)
+						if (wcscmp(first_st.Status  ,next_st.Status)<0)
 						{
 							m_st_Dealing_Array.Shift(j,i-j);
 							swap_st=m_st_Dealing_Array[i];
-							CMTStr::Copy(first_st.Comment  ,swap_st.Comment );							
+							CMTStr::Copy(first_st.Status,swap_st.Status);							
 						}
 					}
 					if (col_click==11)

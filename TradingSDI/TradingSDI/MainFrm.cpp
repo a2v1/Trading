@@ -14,6 +14,8 @@
 #include "JournalSearch.h"
 #include "Symbol_Table.h"
 #include "symbol_grp.h"
+#include "UserCreate.h"
+#include "UserClientMapping.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
 	no_namespace rename("EOF", "EndOfFile")
 #ifdef _DEBUG
@@ -59,6 +61,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_COMMAND(ID_CLIENTCREATE, &CMainFrame::OnClientcreate)
 	ON_UPDATE_COMMAND_UI(ID_DATETIME, &CMainFrame::OnUpdateDatetime)
 	ON_WM_MOVE()
+	ON_COMMAND(ID_USER_CREATE, &CMainFrame::OnUserCreate)
+	ON_COMMAND(ID_USERCLIENTMAPPING, &CMainFrame::OnUserclientmapping)
 END_MESSAGE_MAP()
 static UINT indicators[] =
 {
@@ -1622,5 +1626,20 @@ void CMainFrame::OnMove(int x, int y)
 	__super::OnMove(x, y);
 
 
+}
 
+
+void CMainFrame::OnUserCreate()
+{
+	// TODO: Add your command handler code here
+	UserCreate dlg;
+	dlg.DoModal();
+}
+
+
+void CMainFrame::OnUserclientmapping()
+{
+	// TODO: Add your command handler code here
+	UserClientMapping dlg;
+	dlg.DoModal();
 }

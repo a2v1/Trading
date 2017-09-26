@@ -115,9 +115,9 @@ LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 		{
 			COutputWnd::m_AnalysisGrid.thread_destoy() ;
 			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			 COutputWnd::m_wndOutputPos.thread_destoy();			 
-			 COutputWnd::m_wndOutputOrder.thread_destoy();
-			 COutputWnd::m_wndOutputDuplicate_Order.data_ThreadStart();
+			COutputWnd::m_wndOutputPos.thread_destoy();			 
+			COutputWnd::m_wndOutputOrder.thread_destoy();
+			COutputWnd::m_wndOutputDuplicate_Order.data_ThreadStart();
 		}
 		else if(i==3)
 		{
@@ -125,15 +125,15 @@ LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 			COutputWnd::m_AnalysisGrid.thread_destoy() ;
 			COutputWnd::m_GroupWiseNetPos.thread_destoy();
 			COutputWnd::m_wndOutputPos.thread_destoy();			 
-			 COutputWnd::m_wndOutputOrder.thread_destoy();
+			COutputWnd::m_wndOutputOrder.thread_destoy();
 		}
 		else if(i==4)
 		{
 			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_AnalysisGrid.data_ThreadStart();
 			COutputWnd::m_GroupWiseNetPos.thread_destoy();
 			COutputWnd::m_wndOutputPos.thread_destoy();			
 			COutputWnd::m_wndOutputOrder.thread_destoy();
+			COutputWnd::m_AnalysisGrid.data_ThreadStart();
 		}
 		else if(i==5)
 		{			
@@ -142,7 +142,6 @@ LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 			COutputWnd::m_wndOutputPos.thread_destoy();
 			OrderGrid::Data_Update=0;
 			COutputWnd::m_wndOutputOrder.thread_destoy();
-			
 			COutputWnd::m_GroupWiseNetPos.data_ThreadStart();
 		}
 		else if(i==6)

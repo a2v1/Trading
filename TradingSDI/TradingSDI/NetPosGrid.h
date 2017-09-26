@@ -80,6 +80,7 @@ public:
 		wchar_t  m_last_rate[60];
 		wchar_t  m_Floating_Profit[60];
 		wchar_t  m_Balance[60];
+		wchar_t  m_creditlimit[60];
 	};
 	typedef TMTArray<st_Netposition> NetpositionArray;
 
@@ -102,6 +103,7 @@ public:
 	static st_Netposition m_st_Netposition_For_Grid;
 
 	static NetpositionArray m_NetpositionArray_For_Grid_Final;
+	static NetpositionArray m_NetpositionArray_Filter;
 
 
 
@@ -257,7 +259,7 @@ public:
 	static int sub_rows_count;
 
 
-	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val,col16_val,col17_val,col18_val,col19_val,col20_val;
+	static CString col0_val,col1_val,col2_val,col3_val,col4_val,col5_val,col6_val,col7_val,col8_val,col9_val,col10_val,col11_val,col12_val,col13_val,col14_val,col15_val,col16_val,col17_val,col18_val,col19_val,col20_val,col21_val;
 
 	//SORT
 	BOOL m_bSortedAscending;

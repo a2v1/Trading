@@ -181,6 +181,9 @@ public:
 	afx_msg void OnClientcreate();
 	afx_msg void OnUpdateDatetime(CCmdUI *pCmdUI);
 	afx_msg void OnMove(int x, int y);
+	afx_msg void OnUsercreate();
+	afx_msg void OnUserCreate();
+	afx_msg void OnUserclientmapping();
 };
 
 

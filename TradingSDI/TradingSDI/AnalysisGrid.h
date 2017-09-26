@@ -10,7 +10,6 @@ public:
 	CString str[9];
 	void thread_destoy();
 	void data_ThreadStart();
-	int col_click,a_d;
 	static int Data_Update;
 	struct st_Dealing
 	{		 		
@@ -27,6 +26,9 @@ public:
 	typedef TMTArray<st_Dealing> st_Dealing_Array;
 	static st_Dealing_Array m_st_Dealing_Array;	
 	static st_Dealing_Array m_st_Dealing_Grid_array;
+	static st_Dealing_Array m_st_Dealing_Grid_udaptearray;
+	static st_Dealing_Array m_st_Dealing_Grid_finalarray;
+
 	static CMutex dealing_mutex;
 		
 
@@ -54,9 +56,12 @@ public:
 	~GroupWise2NetPos();
 	void OnSheetSetup(int sheetNumber);	
 	virtual void OnSetup();
+	//mouse and key strokes
+	virtual  int OnCellTypeNotify(long ID,int col,long row,long msg,long param);
 	void OnTimer(UINT nIDEvent);
 	void OnGetCell(int col,long row,CUGCell *cell);
 	void OnMenuCommand(int col,long row,int section,int item);
+	virtual int OnDropList(long ID,int col,long row,long msg,long param);
 	void filter();
 	void addItemToCombobox();
 	BOOLEAN  CheckvalueInArray(const CStringArray& arr,CString strval) ;
