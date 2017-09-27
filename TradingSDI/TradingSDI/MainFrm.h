@@ -117,6 +117,11 @@ protected:  // control bar embedded members
 	CMFCToolBarImages m_UserImages;	
 	RateDocking       m_rateDocking;
 	ScripWiseNetPosDocking   m_ScripNetPosDocking;
+
+	//data base initilization objects
+	CDataSource connection;
+	CSession session;
+	HRESULT hr;
 	//CFormView         m_formView;
 
 	//LRESULT OnClosePane(WPARAM,LPARAM lp);
@@ -184,6 +189,7 @@ public:
 	afx_msg void OnUsercreate();
 	afx_msg void OnUserCreate();
 	afx_msg void OnUserclientmapping();
+	afx_msg void OnScripwisemodule();
 };
 
 

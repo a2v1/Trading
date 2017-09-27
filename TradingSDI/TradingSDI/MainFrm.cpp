@@ -63,6 +63,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_WM_MOVE()
 	ON_COMMAND(ID_USER_CREATE, &CMainFrame::OnUserCreate)
 	ON_COMMAND(ID_USERCLIENTMAPPING, &CMainFrame::OnUserclientmapping)
+	ON_COMMAND(ID_SCRIPWISEMODULE, &CMainFrame::OnScripwisemodule)
 END_MESSAGE_MAP()
 static UINT indicators[] =
 {
@@ -255,7 +256,7 @@ CMainFrame::~CMainFrame()
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	//CHECK bOX BY DEFAULT PROP
-	m_enabled_ignore0=false ;
+    /*m_enabled_ignore0=false ;
 	m_enabled_comment =false;
 	m_enabled_main=false;
 
@@ -267,7 +268,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	order_type[5]=L"Sell Stop";
 	order_type[6]=L"Buy Stop Limit";
 	order_type[7]=L"Sell Stop Limit";
-	last_Nrow=0;	
+	last_Nrow=0;	*/
 
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -275,15 +276,24 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	BOOL bNameValid;
 
 
-	CMainFrame::m_wndRibbonBar.Create(this);
-	CMainFrame::m_wndRibbonBar.LoadFromResource(IDR_RIBBON1);
+	/*CMainFrame::m_wndRibbonBar.Create(this);
+	CMainFrame::m_wndRibbonBar.LoadFromResource(IDR_RIBBON1);*/
+
+	if (!m_wndMenuBar.Create(this))
+	{
+		TRACE0("Failed to create menubar\n");
+		return -1;      // fail to create
+	}
+
+	m_wndMenuBar.SetPaneStyle(m_wndMenuBar.GetPaneStyle() | CBRS_SIZE_DYNAMIC | CBRS_TOOLTIPS | CBRS_FLYBY);
 
 
-	CString strCustomize;
-	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
-	ASSERT(bNameValid);
 
-	InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
+	//CString strCustomize;
+	//bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
+	//ASSERT(bNameValid);
+
+	//InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
 
 
 
@@ -311,18 +321,18 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//	return -1;      // fail to create
 	//}
 
-	/*menubar_height=0;
+	//menubar_height=0;
 
-	CString strToolBarName;
+	/*CString strToolBarName;
 	bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
 	ASSERT(bNameValid);
-	m_wndToolBar.SetWindowText(strToolBarName);
-	*/
+	m_wndToolBar.SetWindowText(strToolBarName);*/
+	
 
-	//ribbon control
-	pEditRibbon = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_TOTALVALUE));	
+	////ribbon control
+	//pEditRibbon = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_TOTALVALUE));	
 
-	pEditDate_time = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_DATETIME));
+	//pEditDate_time = DYNAMIC_DOWNCAST(CMFCRibbonEdit, m_wndRibbonBar.FindByID(ID_DATETIME));
 
 
 	//current date and time 
@@ -337,11 +347,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
 	// TODO: Delete these five lines if you don't want the toolbar and menubar to be dockable
-	/*m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndMenuBar.EnableDocking(CBRS_ALIGN_ANY);
 
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndMenuBar);
-	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	/*m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndToolBar);*/
 
 	// enable Visual Studio 2005 style docking window behavior
@@ -358,8 +368,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 
-	m_rateDocking.EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_rateDocking);
+	/*m_rateDocking.EnableDocking(CBRS_ALIGN_ANY);
+	DockPane(&m_rateDocking);*/
 
 
 	m_ScripNetPosDocking.EnableDocking(CBRS_ALIGN_ANY);
@@ -404,7 +414,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//		return -1; // fail to create
 	//}
 	//m_Check0qty.EnableWindow(1);
-	//
+	
 	//
 	//if (!m_Ignoremain.Create(L"Ignore Main",WS_CHILD|WS_VISIBLE|BS_AUTOCHECKBOX,CRect(110,0,210,20), &m_wndToolBar, ID_1))
 	//{
@@ -421,20 +431,20 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//m_Ignorecomment.EnableWindow(1);
 	//
 	//
-	CRect RECT;
-	RECT=pEditDate_time->GetRect();
+	//CRect RECT;
+	//RECT=pEditDate_time->GetRect();
 
-	RECT.bottom  =RECT.bottom +2;
+	//RECT.bottom  =RECT.bottom +2;
 
 
-	//if (!m_date.Create(WS_CHILD|WS_VISIBLE,CRect(400,100,580,125), &m_wndRibbonBar, 701))
-	if (!m_date.Create(WS_CHILD|WS_VISIBLE,RECT, &m_wndRibbonBar, 701))
-	{
-		TRACE0("Failed to create DateTimePicker\n");
-		return -1; // fail to create
-	}
-	m_date.EnableWindow(1);
-	m_date.SetFormat(L"dd-MM-yyyy HH:mm:ss");
+	////if (!m_date.Create(WS_CHILD|WS_VISIBLE,CRect(400,100,580,125), &m_wndRibbonBar, 701))
+	//if (!m_date.Create(WS_CHILD|WS_VISIBLE,RECT, &m_wndRibbonBar, 701))
+	//{
+	//	TRACE0("Failed to create DateTimePicker\n");
+	//	return -1; // fail to create
+	//}
+	//m_date.EnableWindow(1);
+	//m_date.SetFormat(L"dd-MM-yyyy HH:mm:ss");
 
 	//if (!m_btn_Delete.Create(L"Data Delete",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(510,0,615,22), &m_wndToolBar, ID_4))
 	//{
@@ -442,15 +452,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//		return -1; // fail to create
 	//}
 	//m_btn_Delete.EnableWindow(0);
-	//
+	////
 	//if (!m_btn_Update_Comment.Create(L"Update Comment",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(625,0,750,22), &m_wndToolBar, ID_5))
 	//{
 	//		TRACE0("Failed to create checkbox\n");
 	//		return -1; // fail to create
 	//}
 	//m_btn_Update_Comment.EnableWindow(0);
-	//
-	//
+	////
+	////
 	//if (!m_btn_Activate_Order.Create(L"Activate Order",WS_CHILD|WS_VISIBLE|BS_PUSHBUTTON,CRect(760,0,875,22), &m_wndToolBar, ID_6))
 	//{
 	//		TRACE0("Failed to create checkbox\n");
@@ -496,7 +506,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	{
 		hr=session.Open(connection);							
 	}		
-	CCommand<CAccessor<CSymbol_Table> > table;				 	
+	CCommand<CAccessor<CSymbol_Table> > table;			 	
 	char* strCommand_char="select Symbol,Mapping_Symbol from symbol_mapping";
 	if(SUCCEEDED(hr))
 	{
@@ -536,7 +546,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	state=1;
 
 	login_Check=1;
-
 	return 0;
 }
 
@@ -579,14 +588,14 @@ BOOL CMainFrame::CreateDockingWindows()
 
 	//	m_ScripNetPosDocking.SetAutoHideMode(true, CBRS_ALIGN_LEFT);
 
-	CString strPropertiesWnd;
-	bNameValid = strPropertiesWnd.LoadString(IDS_PROPERTIES_WND);
-	ASSERT(bNameValid);
-	if (!m_rateDocking.Create(strPropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_PROPERTIESWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
-	{
-		TRACE0("Failed to create Properties window\n");
-		return FALSE; // failed to create
-	}
+	//CString strPropertiesWnd;
+	//bNameValid = strPropertiesWnd.LoadString(IDS_PROPERTIES_WND);
+	//ASSERT(bNameValid);
+	//if (!m_rateDocking.Create(strPropertiesWnd, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_PROPERTIESWND, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI))
+	//{
+	//	TRACE0("Failed to create Properties window\n");
+	//	return FALSE; // failed to create
+	//}
 
 	//m_rateDocking.SetAutoHideMode(true, CBRS_ALIGN_RIGHT);
 
@@ -606,7 +615,7 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 	//m_rateDocking
 	//m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
-	m_rateDocking.SetIcon(hOutputBarIcon, FALSE);
+	//m_rateDocking.SetIcon(hOutputBarIcon, FALSE);
 	m_ScripNetPosDocking.SetIcon(hOutputBarIcon, FALSE);
 
 }
@@ -644,42 +653,42 @@ void CMainFrame::OnApplicationLook(UINT id)
 	{
 	case ID_VIEW_APPLOOK_WIN_2000:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManager));
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_OFF_XP:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerOfficeXP));
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_WIN_XP:
 		CMFCVisualManagerWindows::m_b3DTabsXPTheme = TRUE;
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows));
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_OFF_2003:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerOffice2003));
 		CDockingManager::SetDockingMode(DT_SMART);
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_VS_2005:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerVS2005));
 		CDockingManager::SetDockingMode(DT_SMART);
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_VS_2008:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerVS2008));
 		CDockingManager::SetDockingMode(DT_SMART);
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 		break;
 
 	case ID_VIEW_APPLOOK_WINDOWS_7:
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerWindows7));
 		CDockingManager::SetDockingMode(DT_SMART);
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(TRUE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(TRUE);
 		break;
 
 	default:
@@ -704,17 +713,17 @@ void CMainFrame::OnApplicationLook(UINT id)
 
 		CMFCVisualManager::SetDefaultManager(RUNTIME_CLASS(CMFCVisualManagerOffice2007));
 		CDockingManager::SetDockingMode(DT_SMART);
-		CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
+		//CMainFrame::m_wndRibbonBar.SetWindows7Look(FALSE);
 	}
 
 
 
-	//m_wndOutput.UpdateFonts();
-	m_rateDocking.UpdateFonts();
-	m_ScripNetPosDocking.UpdateFonts();
-	RedrawWindow(NULL, NULL, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
+	////m_wndOutput.UpdateFonts();
+	//m_rateDocking.UpdateFonts();
+	//m_ScripNetPosDocking.UpdateFonts();
+	//RedrawWindow(NULL, NULL, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_FRAME | RDW_ERASE);
 
-	theApp.WriteInt(_T("ApplicationLook"), theApp.m_nAppLook);
+	//theApp.WriteInt(_T("ApplicationLook"), theApp.m_nAppLook);
 }
 
 void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
@@ -743,7 +752,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	//m_wndOutput.UpdateFonts();
-	m_rateDocking.UpdateFonts();
+	//m_rateDocking.UpdateFonts();
 	m_ScripNetPosDocking.UpdateFonts();
 }
 
@@ -766,10 +775,74 @@ void DlgHelp::OnBnClickedBtnLogin()
 	//---   
 	m_Loginname->GetWindowText(login);   
 
-	server=L"64.150.180.239:1950";
+	//server=L"64.150.180.239:1950";
 	//server=L"72.55.168.204:1950";
 
-	m_Password->GetWindowText(password);    
+	m_Password->GetWindowText(password);
+
+	if(login.IsEmpty()&& password.IsEmpty())
+	{
+	  return;
+	}
+
+	CoInitialize(NULL);
+	CCommand<CAccessor<UserClient_Table> > artists1;
+	hr=connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");			
+	if(SUCCEEDED(hr))
+	{
+		hr=session.Open(connection);							
+	}
+
+
+	if(SUCCEEDED(hr))
+	{
+		CString Str_command=L"";
+		Str_command.Format(L"select ID, Paswrd from User_Create where id='%s'and Paswrd='%s'",login,password);
+		hr=artists1.Open(session,(LPCTSTR)Str_command);
+		int rows_count=0;
+		if(SUCCEEDED(hr))
+		{
+			if(hr=artists1.MoveNext() == S_OK)
+			{
+
+				if((orderEntryForm::factory.Initialize(L""))!=MT_RET_OK)
+				{
+					wprintf_s(L"Loading manager API failed ");
+
+				}
+				//--- creating manager interface
+				if((orderEntryForm::factory.CreateManager(MTManagerAPIVersion,&orderEntryForm::manager))!=MT_RET_OK)
+				{
+					wprintf_s(L"Creating manager interface failed ");
+
+				}	
+
+				/*if( orderEntryForm::manager->Connect(server,_wtoi64(login),password,L"",IMTManagerAPI::PUMP_MODE_FULL,INFINITE))
+				{
+				AfxMessageBox(L"Login fail");
+				return;	  
+				}*/
+
+				//m_dealer->m_manager=orderEntryForm::manager;
+				DlgHelp::login_checkYN=1;
+				CDialog::OnCancel();
+				//add_LoginToCombobox();
+
+				COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();
+				ScripWiseNetPosDocking::m_wndOutputOrder.Thread_start_scrip_wise();
+			}
+			else{
+			     AfxMessageBox(L"Login fail");
+ 			}
+
+		}	
+		artists1.Close();
+
+	}
+	session.Close();
+	connection.Close();
+
+	CoUninitialize();
 	//m_Server->GetWindowText(server);    
 	//--- dealer starting
 
@@ -791,39 +864,39 @@ void DlgHelp::OnBnClickedBtnLogin()
 	//{
 	//	CMainFrame::admin_login=1;
 	//}
-	int login_check=0;
+	/*int login_check=0;
 	login_check=m_dealer->login(server,login,password);
 	if (login_check==0)
 	{
-		return;
-	}
-	//--- loading manager API
-	if((orderEntryForm::factory.Initialize(L""))!=MT_RET_OK)
-	{
-		wprintf_s(L"Loading manager API failed ");
-
-	}
-	//--- creating manager interface
-	if((orderEntryForm::factory.CreateManager(MTManagerAPIVersion,&orderEntryForm::manager))!=MT_RET_OK)
-	{
-		wprintf_s(L"Creating manager interface failed ");
-
-	}	
-
-	/*if( orderEntryForm::manager->Connect(server,_wtoi64(login),password,L"",IMTManagerAPI::PUMP_MODE_FULL,INFINITE))
-	{
-	AfxMessageBox(L"Login fail");
-	return;	  
+	return;
 	}*/
+	//--- loading manager API
+	//if((orderEntryForm::factory.Initialize(L""))!=MT_RET_OK)
+	//{
+	//	wprintf_s(L"Loading manager API failed ");
 
-	//m_dealer->m_manager=orderEntryForm::manager;
-	DlgHelp::login_checkYN=1;
-	CDialog::OnCancel();
-	add_LoginToCombobox();
+	//}
+	////--- creating manager interface
+	//if((orderEntryForm::factory.CreateManager(MTManagerAPIVersion,&orderEntryForm::manager))!=MT_RET_OK)
+	//{
+	//	wprintf_s(L"Creating manager interface failed ");
 
-	COutputWnd::m_wndOutputOrder.ThreadStart();
-	OrderGrid::Data_Update=1;
-	COutputWnd::m_wndOutputOrder.data_ThreadStart();
+	//}	
+
+	///*if( orderEntryForm::manager->Connect(server,_wtoi64(login),password,L"",IMTManagerAPI::PUMP_MODE_FULL,INFINITE))
+	//{
+	//AfxMessageBox(L"Login fail");
+	//return;	  
+	//}*/
+
+	////m_dealer->m_manager=orderEntryForm::manager;
+	//DlgHelp::login_checkYN=1;
+	//CDialog::OnCancel();
+	//add_LoginToCombobox();
+
+	//COutputWnd::m_wndOutputOrder.ThreadStart();
+	//OrderGrid::Data_Update=1;
+	//COutputWnd::m_wndOutputOrder.data_ThreadStart();
 	//COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
 	//Thread_start_ServerSocket
 	// TODO: Add your control notification handler code here
@@ -871,7 +944,7 @@ void  CMainFrame::OnOrderAdd(const IMTOrder*  order)
 		wcscpy(m_st_dealing.LOG_TIME ,cstr_log_time);
 		m_st_dealing.Time=order->TimeSetup();
 
-		
+
 		CString m_comment=order->Comment();		
 		CString m_login=L"";
 		m_login.Format(L"%d",order->Login());
@@ -1579,30 +1652,30 @@ void CMainFrame::OnUpdateTotalvalue(CCmdUI *pCmdUI)
 
 void CMainFrame::OnSymbolmap()
 {
-   SymbolMapping dlg;
-   dlg.DoModal();
+	SymbolMapping dlg;
+	dlg.DoModal();
 }
 
 
 
 void CMainFrame::OnSymbolgroupmapping()
 {
-   symbol_grp dlg;
-   dlg.DoModal();
+	symbol_grp dlg;
+	dlg.DoModal();
 }
 
 
 void CMainFrame::OnLtpupdate()
 {
-   LTP_Dilog dlg;
-   dlg.DoModal();	
+	LTP_Dilog dlg;
+	dlg.DoModal();	
 }
 
 
 void CMainFrame::OnDefinesymbol()
 {
-   define_margin dlg;
-   dlg.DoModal();
+	define_margin dlg;
+	dlg.DoModal();
 }
 
 
@@ -1642,4 +1715,12 @@ void CMainFrame::OnUserclientmapping()
 	// TODO: Add your command handler code here
 	UserClientMapping dlg;
 	dlg.DoModal();
+}
+
+
+void CMainFrame::OnScripwisemodule()
+{
+	// TODO: Add your command handler code here
+	BOOL show_hide= this->m_ScripNetPosDocking.IsVisible();
+	m_ScripNetPosDocking.ShowPane(!show_hide,FALSE,!show_hide);	
 }

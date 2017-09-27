@@ -89,7 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>D:\TradingGit\Trading\json;D:\TradingGit\Trading\Grid\DataSources\ODBC;D:\TradingGit\Trading\Grid\Include;D:\TradingGit\Trading\Grid\CellTypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\TradingAppClient\Trading\json;D:\TradingAppClient\Trading\Grid\DataSources\ODBC;D:\TradingAppClient\Trading\Grid\Include;D:\TradingAppClient\Trading\Grid\CellTypes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

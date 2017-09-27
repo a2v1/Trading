@@ -75,7 +75,6 @@
 #define IDD_AUDITFORM                   350
 #define IDD_USERDILOG                   352
 #define IDD_USERCLIENT_MAP              353
-#define IDD_DIALOG3                     354
 #define IDD_HELPUSERCLEINT              354
 #define IDC_SCRIP_CMB_LOGIN             1000
 #define IDC_SCRIP_EDIT_LOGIN            1001
@@ -176,7 +175,6 @@
 #define ID_OKMAP                        1112
 #define IDC_CLIENTLIST                  1113
 #define IDC_HELPCLICK                   1114
-#define ID_OK                           1115
 #define ID_FILE_SYMBOLMAPPING           32777
 #define ID_VIEW_SYMBOLADD               32778
 #define IDC_CHECK_IGNOREQTY             32779
@@ -240,13 +238,14 @@
 #define ID_DATETIME                     32855
 #define ID_USER_CREATE                  32856
 #define ID_USERCLIENTMAPPING            32858
+#define ID_SCRIPWISEMODULE              32861
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        355
-#define _APS_NEXT_COMMAND_VALUE         32859
+#define _APS_NEXT_RESOURCE_VALUE        356
+#define _APS_NEXT_COMMAND_VALUE         32862
 #define _APS_NEXT_CONTROL_VALUE         1116
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

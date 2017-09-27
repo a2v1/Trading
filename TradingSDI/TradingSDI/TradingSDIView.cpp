@@ -63,18 +63,18 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		CRect m_rect;
 		m_rect.SetRectEmpty();
 		m_tab.DestroyWindow();
-		m_tab.Create(CMFCTabCtrl::STYLE_3D_VS2005,m_rect,this,1,CMFCTabCtrl::LOCATION_TOP);
+		m_tab.Create(CMFCTabCtrl::STYLE_3D_VS2005,m_rect,this,1,CMFCTabCtrl::LOCATION_BOTTOM);
 		m_tab.EnableTabSwap(false);
 		
 		
 
-		AddView(RUNTIME_CLASS(COrderForm),_T("Order"),0);
-		AddView(RUNTIME_CLASS(CNetPosForm),_T("NetPosition"),1);
-		AddView(RUNTIME_CLASS(CCommentChangeForm),_T("CommentChange"),2);
+		AddView(RUNTIME_CLASS(CNetPosForm),_T("Net Position"),0);
+		
+		/*AddView(RUNTIME_CLASS(CCommentChangeForm),_T("CommentChange"),2);
 		AddView(RUNTIME_CLASS(CDealingForm),_T("Dealing"),3);
 		AddView(RUNTIME_CLASS(CGroup2WiseNetPosForm),_T("Group2WiseNetPos"),4);
 		AddView(RUNTIME_CLASS(CGroupWiseNetPosForm),_T("GroupWiseNetPos"),5);
-		AddView(RUNTIME_CLASS(CAuditForm),_T("Audit"),6);
+		AddView(RUNTIME_CLASS(CAuditForm),_T("Audit"),6);*/
 
 
 		//SetActiveView(1);
@@ -85,7 +85,7 @@ int CTradingSDIView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 // CTradingSDIView diagnostics
 LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 {
-	if (DlgHelp::login_checkYN==1)
+	/*if (DlgHelp::login_checkYN==1)
 	{
 		CMFCTabCtrl* pTab = (CMFCTabCtrl*)lParam;
 	
@@ -95,65 +95,15 @@ LRESULT CTradingSDIView::OnAfxWmChangingActiveTab(WPARAM wParam, LPARAM lParam)
 
 		if(i==0)
 		{
-			 COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			 COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			 COutputWnd::m_GroupWiseNetPos.thread_destoy();	 
-			 COutputWnd::m_wndOutputPos.thread_destoy();		 
-			 COutputWnd::m_wndOutputOrder.data_ThreadStart();
-	 
+			COutputWnd::m_wndOutputPos.thread_destoy();
 		}
 		else if(i==1)
 		{
-			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			COutputWnd::m_wndOutputOrder.thread_destoy();			
 			COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
+			COrderForm::m_GridScripWise.thread_destoy();
 		}
+	}*/
 
-		else if(i==2)
-		{
-			COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			COutputWnd::m_wndOutputPos.thread_destoy();			 
-			COutputWnd::m_wndOutputOrder.thread_destoy();
-			COutputWnd::m_wndOutputDuplicate_Order.data_ThreadStart();
-		}
-		else if(i==3)
-		{
-			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			COutputWnd::m_wndOutputPos.thread_destoy();			 
-			COutputWnd::m_wndOutputOrder.thread_destoy();
-		}
-		else if(i==4)
-		{
-			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			COutputWnd::m_wndOutputPos.thread_destoy();			
-			COutputWnd::m_wndOutputOrder.thread_destoy();
-			COutputWnd::m_AnalysisGrid.data_ThreadStart();
-		}
-		else if(i==5)
-		{			
-			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			COutputWnd::m_wndOutputPos.thread_destoy();
-			OrderGrid::Data_Update=0;
-			COutputWnd::m_wndOutputOrder.thread_destoy();
-			COutputWnd::m_GroupWiseNetPos.data_ThreadStart();
-		}
-		else if(i==6)
-		{
-			COutputWnd::m_wndOutputDuplicate_Order.thread_destoy();
-			COutputWnd::m_AnalysisGrid.thread_destoy() ;
-			COutputWnd::m_GroupWiseNetPos.thread_destoy();
-			COutputWnd::m_wndOutputPos.thread_destoy();			
-			COutputWnd::m_wndOutputOrder.thread_destoy();
-			CAuditForm::m_passbygrid.data_ThreadStart();
-		}
-	}
 	return 0;
 }
 

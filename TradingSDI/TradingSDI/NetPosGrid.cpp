@@ -3395,7 +3395,7 @@ UINT Update_Netposition(LPVOID pParam)
 	{
 		hr=session.Open(connection);
 	}
-	while (NetPosGrid::Data_Update==1)
+	while (true)
 	{			
 		Sleep(10);
 		NetPosGrid::str_grid_filter.Lock();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OrderGrid.h"
+#include "ScripWiseNetPos.h"
 
 // COrderForm form view
 
@@ -15,6 +15,7 @@ protected:
 public:
 	//OrderGrid m_ordergrid;
 	enum { IDD = IDD_ORDERFORM };
+	static ScripWiseNetPos m_GridScripWise;
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 #ifndef _WIN32_WCE

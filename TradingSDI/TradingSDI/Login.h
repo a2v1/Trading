@@ -4,6 +4,8 @@
 #include "MainFrm.h"
 #include "AddScrip.h"
 #include "Dealer.h"
+#include "OrderForm.h"
+
 class DlgHelp : public CDialogEx
 {
 	public:
@@ -21,13 +23,17 @@ class DlgHelp : public CDialogEx
 		//BOOL PreTranslateMessage(MSG* pMsg);// DDX/DDV support
 
 
-		CEdit*              m_Password;
+		CEdit*            m_Password;
 		CEdit*            m_Loginname;   
 		//CEdit*            m_Server;  
-		CButton*           m_Logout;
-		CButton*           m_Login;   
-		HICON            m_hIcon;
+		CButton*          m_Logout;
+		CButton*          m_Login;   
+		HICON             m_hIcon;
 
+	//data base initilization objects
+	CDataSource connection;
+	CSession session;
+	HRESULT hr;
   
    //CMainFrame		mainF;
 // Implementation
@@ -46,6 +52,7 @@ public:
 		static CDealer           *m_dealer;
 		static int login_checkYN ;
 		
+
 	afx_msg void OnBnClickedBtnLogin();
 	afx_msg void OnBnClickedBtnExit();
 	

@@ -75,7 +75,7 @@ ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_Array;
 ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_Array_data;	
 ScripWiseNetPos::scripwisenetpos_array ScripWiseNetPos::m_scripwisenetpos_grid_array;
 CMutex ScripWiseNetPos::m_mutex_scripnetpos;
-
+int ScripWiseNetPos::Data_Update=0;
 
 /////////////////////////////////////////////////////////////////////////////
 //Standard MyCug construction/destruction
@@ -123,7 +123,7 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 	CCommand<CAccessor<CScripWiseNetPosTable> > artists1;	
 	connection.OpenFromInitializationString(L"Provider=SQLNCLI11.1;Password=ok@12345;Persist Security Info=False;User ID=sa;Initial Catalog=CHECKDATA;Data Source=64.251.7.161;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=WINDOWS-LOJSHQK;Initial File Name=\"\";Use Encryption for Data=False;Tag with column collation when possible=False;MARS Connection=False;DataTypeCompatibility=0;Trust Server Certificate=False;Application Intent=READWRITE");	
 	session.Open(connection);
-	while (true)
+	while (ScripWiseNetPos::Data_Update==1)
 	{	
 		Sleep(10); 
 		_bstr_t strCommand="";		
@@ -388,16 +388,16 @@ void ScripWiseNetPos::OnSheetSetup(int sheetNumber)
 			//SetNumberRows(18);
 			QuickSetText(0,-1,L"Symbol");
 			SetColWidth(0,110);
-			QuickSetText(1,-1,L"NetQty");
-			SetColWidth(1,70);
+			QuickSetText(1,-1,L"Net Quantity");
+			SetColWidth(1,80);
 			QuickSetText(2,-1,L"Average");	
-			SetColWidth(2,70);
+			SetColWidth(2,80);
 			
-			QuickSetText(3,-1,L"LastRate");
-			SetColWidth(3,70);
+			QuickSetText(3,-1,L"Last Rate");
+			SetColWidth(3,80);
 			
-			QuickSetText(4,-1,L"PL");
-			SetColWidth(4,90);
+			QuickSetText(4,-1,L"Profit Loss");
+			SetColWidth(4,80);
 			
 
 			
@@ -1038,13 +1038,18 @@ void ScripWiseNetPos::OnSetup()
 
 	m_iSortCol = 0;
 	m_bSortedAscending = TRUE;
-	m_pThreads=AfxBeginThread(update_data_ScripWiseNetpos, this);		   	
+		   	
 		run_check=0;		
 
 }
 
+void ScripWiseNetPos::Thread_start_scrip_wise()
+{
 
+   ScripWiseNetPos::Data_Update=1;
+   m_pThreads=AfxBeginThread(update_data_ScripWiseNetpos, this);
 
+}
 
 void ScripWiseNetPos::OnLButtonUp(UINT nFlags, CPoint point)
 {
@@ -1136,4 +1141,31 @@ void ScripWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 				}
 			}
 		}
+}
+
+void ScripWiseNetPos::thread_destoy()
+{
+	try 
+	{		
+		Data_Update=0;
+		DWORD exit_code= NULL;
+		if (m_pThreads != NULL)
+		{
+			if(WaitForSingleObject(m_pThreads->m_hThread,INFINITE) == WAIT_OBJECT_0) 
+			{
+				GetExitCodeThread(m_pThreads->m_hThread, &exit_code);
+				if(exit_code == STILL_ACTIVE)
+				{
+					::TerminateThread(m_pThreads->m_hThread, 0);
+					CloseHandle(m_pThreads->m_hThread);
+				}
+				//COutputWnd::m_wndOutputPos.m_pThreads->m_hThread = NULL;
+				m_pThreads = NULL;
+			}
+		}
+	}
+	catch(_com_error & ce)
+	{
+		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
+	}
 }

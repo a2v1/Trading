@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "ScripWiseNetPos.h"
 
 class CTradingSDIView : public CTabView 
 {
@@ -14,6 +14,7 @@ protected: // create from serialization only
 // Attributes
 public:
 	CTradingSDIDoc* GetDocument() const;
+
 
 // Operations
 public  :
