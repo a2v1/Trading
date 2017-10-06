@@ -301,6 +301,7 @@
     <ClInclude Include="ClientCreate.h" />
     <ClInclude Include="ClientHelpDlg.h" />
     <ClInclude Include="ClientHelpGrid.h" />
+    <ClInclude Include="ClientList.h" />
     <ClInclude Include="Client_Table.h" />
     <ClInclude Include="clr_setting.h" />
     <ClInclude Include="Cmycontrol.h" />
@@ -328,6 +329,8 @@
     <ClInclude Include="Grid_CheckTrade.h" />
     <ClInclude Include="Group2WiseNetPosForm.h" />
     <ClInclude Include="GroupWiseNetPosForm.h" />
+    <ClInclude Include="HelpUserCleintDlg.h" />
+    <ClInclude Include="HelpUserCleintGrid.h" />
     <ClInclude Include="NetPosForm.h" />
     <ClInclude Include="Netpositoin_Table.h" />
     <ClInclude Include="NPBPSType1Grid.h" />
@@ -386,6 +389,10 @@
     <ClInclude Include="TradingSDIView.h" />
     <ClInclude Include="T_Pre_Post_outstanding.h" />
     <ClInclude Include="UIThread.h" />
+    <ClInclude Include="UserClientMapping.h" />
+    <ClInclude Include="UserClientTable.h" />
+    <ClInclude Include="UserCreate.h" />
+    <ClInclude Include="UserTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Grid\CellTypes\UGCTafnt.cpp" />
@@ -451,6 +458,7 @@
     <ClCompile Include="ClientCreate.cpp" />
     <ClCompile Include="ClientHelpDlg.cpp" />
     <ClCompile Include="ClientHelpGrid.cpp" />
+    <ClCompile Include="ClientList.cpp" />
     <ClCompile Include="clr_setting.cpp" />
     <ClCompile Include="Cmycontrol.cpp" />
     <ClCompile Include="Cnetposdlg.cpp" />
@@ -470,6 +478,8 @@
     <ClCompile Include="GroupWiseNetPosForm.cpp" />
     <ClCompile Include="GroupWisePosition.cpp" />
     <ClCompile Include="helpserach_grid.cpp" />
+    <ClCompile Include="HelpUserCleintDlg.cpp" />
+    <ClCompile Include="HelpUserCleintGrid.cpp" />
     <ClCompile Include="help_search.cpp" />
     <ClCompile Include="JournalSearch.cpp" />
     <ClCompile Include="LimitMappingScripwise.cpp" />
@@ -514,6 +524,8 @@
     <ClCompile Include="TradingSDIDoc.cpp" />
     <ClCompile Include="TradingSDIView.cpp" />
     <ClCompile Include="UIThread.cpp" />
+    <ClCompile Include="UserClientMapping.cpp" />
+    <ClCompile Include="UserCreate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="TradingSDI.rc" />

@@ -21,7 +21,7 @@ public:
 	CDataSource connection;
     CSession session;
     HRESULT hr;
-
+	CCommand<CNoAccessor, CNoRowset> cmd;
 // Implementation
 protected:
 	HICON m_hIcon;

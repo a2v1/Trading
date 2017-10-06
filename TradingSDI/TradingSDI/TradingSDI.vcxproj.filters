@@ -228,9 +228,6 @@
     <ClInclude Include="OrderwiseJournal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AnalysisGrid.h">
-      <Filter>Grid</Filter>
-    </ClInclude>
     <ClInclude Include="AnalysisTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -663,6 +660,30 @@
     <ClInclude Include="SymbolMappingTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AnalysisGrid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UserCreate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserClientMapping.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserClientTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpUserCleintDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpUserCleintGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TradingSDI.cpp">
@@ -890,9 +911,6 @@
     <ClCompile Include="OrderwiseJournal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="AnalysisGrid.cpp">
-      <Filter>Grid</Filter>
-    </ClCompile>
     <ClCompile Include="LTPupdate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1027,6 +1045,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Grid\CellTypes\UGCTSpin.cpp">
       <Filter>Grid\CellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="AnalysisGrid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UserCreate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="UserClientMapping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpUserCleintDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpUserCleintGrid.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

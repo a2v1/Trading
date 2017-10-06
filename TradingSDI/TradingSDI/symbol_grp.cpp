@@ -82,10 +82,7 @@ void symbol_grp::OnBnClickedOk()
 	int noofrows=symbol_map.GetNumberRows();
 	for (int f_count=0;f_count<noofrows-1;f_count++)
 	{
-		CString strf=L"";
-		valField1=symbol_map.QuickGetText(0,f_count);
-		strf=symbol_map.QuickGetText(0,f_count);
-		
+		valField1=symbol_map.QuickGetText(0,f_count);		
 		if (valField1.length()!=0)
 		{
 			str_cmd=str_cmd+" insert into Symbol_Group(Group_name,Symbol) values('" + b_symbol_group + "','" + valField1 + "');";
