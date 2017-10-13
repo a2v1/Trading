@@ -117,7 +117,7 @@ void symbol_grp::getSymbolData(_bstr_t group_symbol)
 			int rows_count=0;
 			if(SUCCEEDED(hr))
 			{
-				while (artists1.MoveNext() == S_OK)
+				while (hr=artists1.MoveNext() == S_FALSE)
 				{
 					symbol_map.QuickSetText(0,rows_count,artists1.m_Symbol ); 
 					rows_count=rows_count+1;

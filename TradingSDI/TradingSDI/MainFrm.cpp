@@ -824,6 +824,8 @@ void DlgHelp::OnBnClickedBtnLogin()
 	COutputWnd::m_wndOutputOrder.ThreadStart();
 	OrderGrid::Data_Update=1;
 	COutputWnd::m_wndOutputOrder.data_ThreadStart();
+	ScripWiseNetPosDocking::m_wndOutputOrder.Thread_start_scrip_wise();
+
 	//COutputWnd::m_wndOutputPos.Thread_start_st_netpos_update();	
 	//Thread_start_ServerSocket
 	// TODO: Add your control notification handler code here

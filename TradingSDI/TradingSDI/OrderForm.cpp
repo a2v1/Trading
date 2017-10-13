@@ -8,6 +8,7 @@
 
 
 // COrderForm
+ScripWiseNetPos COrderForm::m_GridScripWise;
 
 IMPLEMENT_DYNCREATE(COrderForm, CFormView)
 
@@ -61,7 +62,7 @@ int COrderForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		GetParentFrame()->GetWindowRect(desktop);
 		desktop.right =desktop.right-4;
-		desktop.bottom=desktop.bottom-182;
+		desktop.bottom=desktop.bottom-75;
 
 		MoveWindow(&desktop,TRUE);		
 
@@ -78,5 +79,4 @@ int COrderForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void COrderForm::OnInitialUpdate()
 {
 	 CFormView::OnInitialUpdate();	
-	
 }

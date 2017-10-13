@@ -3538,12 +3538,7 @@ UINT Update_Netposition(LPVOID pParam)
 				m_st_Netposition=NetPosGrid::m_NetpositionArray[fcount];
 				int flag=0;				
 				CString col_row_val[22];		
-				col_row_val[0]=m_st_Netposition.m_login;			
-
-
-
-
-
+				col_row_val[0]=m_st_Netposition.m_login;
 
 				if (NetPosGrid::col0_val.Trim().GetLength()>0)
 				{

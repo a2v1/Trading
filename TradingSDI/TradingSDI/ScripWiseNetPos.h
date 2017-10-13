@@ -8,6 +8,7 @@ public:
 	static int g_c;
 	static int g_check;
 	static int g_check_AND_BREAK;
+	static int Data_Update;
 	//CSocket m_Client;
 	ScripWiseNetPos();
 	~ScripWiseNetPos();
@@ -107,8 +108,11 @@ public:
 	int	m_nSpinIndex;
 	int run_check;
 	
-	
-	void    gridFilter(int colno,int rows_count,CString col_value);
+	void Thread_start_scrip_wise();
+	void thread_destoy();
+
+
+	void gridFilter(int colno,int rows_count,CString col_value);
 	
 	static CString total_result;
 	void InitMenu();

@@ -61,7 +61,7 @@ int CNetPosForm::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		GetParentFrame()->GetWindowRect(desktop);
 		desktop.right =desktop.right-4;
-		desktop.bottom=desktop.bottom-182;
+		desktop.bottom=desktop.bottom-70;
 
 		MoveWindow(&desktop,TRUE);	
 
