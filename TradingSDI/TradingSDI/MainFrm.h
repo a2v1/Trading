@@ -11,6 +11,7 @@
 #include "SymbolMapping.h"
 #include "LTP_Dilog.h"
 #include "symbol_grp.h"
+#include "CLIENT_PER_DEFINE.h"
 class CMainFrame : public CFrameWndEx,public IMTManagerSink, public IMTRequestSink, public IMTOrderSink, public IMTDealerSink,public IMTDealSink ,public IMTTickSink 
 {	
 protected: // create from serialization only
@@ -184,6 +185,9 @@ public:
 	afx_msg void OnUsercreate();
 	afx_msg void OnUserCreate();
 	afx_msg void OnUserclientmapping();
+	afx_msg void OnClientPerDefine();		
+	
+	afx_msg void OnSymbolpercentagedefine();
 };
 
 

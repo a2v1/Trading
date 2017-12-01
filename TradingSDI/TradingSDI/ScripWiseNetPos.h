@@ -9,6 +9,11 @@ public:
 	static int g_check;
 	static int g_check_AND_BREAK;
 	static int Data_Update;
+
+
+	static int col_click;
+	static int a_d;
+
 	//CSocket m_Client;
 	ScripWiseNetPos();
 	~ScripWiseNetPos();
@@ -48,6 +53,9 @@ public:
 		double   m_Average;
 		double   m_LastRate;
 		double   m_PL;
+		double   m_remQty;
+		double   m_remPL;
+
 	};
 	typedef TMTArray<st_scripwisenetpos> scripwisenetpos_array;
 	static scripwisenetpos_array m_scripwisenetpos_Array;	
@@ -103,6 +111,7 @@ private:
 	DECLARE_MESSAGE_MAP()
 
 public:
+	void ExportToCSV();
 	CString str[5];
 	
 	int	m_nSpinIndex;

@@ -33,5 +33,6 @@ public:
 	afx_msg void OnClose();
 	afx_msg void OnBnClickedOk();
 	CEdit m_edit_search;
+	afx_msg void OnBnClickedCancel();
 };
 #endif

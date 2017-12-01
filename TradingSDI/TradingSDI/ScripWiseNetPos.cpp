@@ -44,7 +44,7 @@ BEGIN_MESSAGE_MAP(ScripWiseNetPos,CUGCtrl)
 END_MESSAGE_MAP()
 
 
-
+int ScripWiseNetPos::a_d=0;
 CString ScripWiseNetPos::m_COL_VAL=L"";
 
 int ScripWiseNetPos::g_ud=0;
@@ -63,6 +63,8 @@ int ScripWiseNetPos::Grid_Rows_Count=0;
 int ScripWiseNetPos::data_display=0;
 int ScripWiseNetPos::g_check_AND_BREAK=0;
 int ScripWiseNetPos::row_count=0;
+
+int ScripWiseNetPos::col_click=0;
 
 _bstr_t ScripWiseNetPos::strShort("  order by t1.login asc,t1.symbol asc");
 _bstr_t ScripWiseNetPos::cellvalue("");
@@ -133,7 +135,7 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 		if(SUCCEEDED(hr))
 		{			
 			ScripWiseNetPos::m_scripwisenetpos_Array_data.Clear();
-			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0;
+			double total_balance=0,total_netQty=0,total_AvgaRate=0,total_Lastrate=0,total_rem_qty=0,total_rem_bal=0;			
 
 			while (artists1.MoveNext() == S_OK)
 			{				
@@ -143,23 +145,190 @@ UINT update_data_ScripWiseNetpos(void *pParam)
 				m_st_scripwisenetpos.m_Average =artists1.m_Average ;
 				m_st_scripwisenetpos.m_LastRate =artists1.m_LastRate ;
 				m_st_scripwisenetpos.m_PL =artists1.m_PL;
+				m_st_scripwisenetpos.m_remQty=artists1.m_remQTY;
+				m_st_scripwisenetpos.m_remPL=artists1.m_remPL;
+
 				total_netQty=total_netQty+m_st_scripwisenetpos.m_NetQty;
 				total_AvgaRate=total_AvgaRate+m_st_scripwisenetpos.m_Average;
 				total_Lastrate=total_Lastrate+m_st_scripwisenetpos.m_LastRate;
 				total_balance=total_balance+m_st_scripwisenetpos.m_PL;
+
+				total_rem_qty=total_rem_qty+artists1.m_remQTY;
+				total_rem_bal=total_rem_bal+artists1.m_remPL;
 				ScripWiseNetPos::m_scripwisenetpos_Array_data.Add(&m_st_scripwisenetpos);
 			}
 			artists1.Close();
+
+
+
+			int t_rows=ScripWiseNetPos::m_scripwisenetpos_Array_data.Total();
+			ScripWiseNetPos::st_scripwisenetpos first_st={};
+			ScripWiseNetPos::st_scripwisenetpos next_st={};
+			ScripWiseNetPos::st_scripwisenetpos swap_st={};
+			for (int i=0;i<t_rows;i++)
+			{
+				first_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+				for (int j=i+1;j<t_rows;j++)
+				{
+					next_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[j];
+					if (ScripWiseNetPos::a_d==0)
+					{					
+							if (ScripWiseNetPos::col_click==0)
+							{
+								if (wcscmp(first_st.m_Symnol ,next_st.m_Symnol)>0)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									CMTStr::Copy(first_st.m_Symnol,swap_st.m_Symnol);
+								}
+							}
+
+							if (ScripWiseNetPos::col_click==1)
+							{
+								if (first_st.m_NetQty >next_st.m_NetQty)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_NetQty=swap_st.m_NetQty;
+								}
+							}
+							if (ScripWiseNetPos::col_click==2)
+							{
+								if (first_st.m_Average >next_st.m_Average)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_Average=swap_st.m_Average;
+								}
+							}
+							if (ScripWiseNetPos::col_click==3)
+							{
+								if (first_st.m_LastRate >next_st.m_LastRate)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_LastRate=swap_st.m_LastRate;
+								}
+							}
+							if (ScripWiseNetPos::col_click==4)
+							{
+								if (first_st.m_PL >next_st.m_PL)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_PL=swap_st.m_PL;
+								}
+							}
+							if (ScripWiseNetPos::col_click==5)
+							{
+								if (first_st.m_remQty >next_st.m_remQty)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_remQty=swap_st.m_remQty;
+								}
+							}
+							if (ScripWiseNetPos::col_click==6)
+							{
+								if (first_st.m_remPL >next_st.m_remPL)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_remPL=swap_st.m_remPL;
+								}
+							}
+
+					}
+					if (ScripWiseNetPos::a_d==1)
+					{					
+							if (ScripWiseNetPos::col_click==0)
+							{
+								if (wcscmp(first_st.m_Symnol ,next_st.m_Symnol)<0)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									CMTStr::Copy(first_st.m_Symnol,swap_st.m_Symnol);
+								}
+							}
+
+							if (ScripWiseNetPos::col_click==1)
+							{
+								if (first_st.m_NetQty <next_st.m_NetQty)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_NetQty=swap_st.m_NetQty;
+								}
+							}
+							if (ScripWiseNetPos::col_click==2)
+							{
+								if (first_st.m_Average <next_st.m_Average)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_Average=swap_st.m_Average;
+								}
+							}
+							if (ScripWiseNetPos::col_click==3)
+							{
+								if (first_st.m_LastRate <next_st.m_LastRate)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_LastRate=swap_st.m_LastRate;
+								}
+							}
+							if (ScripWiseNetPos::col_click==4)
+							{
+								if (first_st.m_PL <next_st.m_PL)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_PL=swap_st.m_PL;
+								}
+							}
+							if (ScripWiseNetPos::col_click==5)
+							{
+								if (first_st.m_remQty <next_st.m_remQty)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_remQty=swap_st.m_remQty;
+								}
+							}
+							if (ScripWiseNetPos::col_click==6)
+							{
+								if (first_st.m_remPL <next_st.m_remPL)
+								{
+									ScripWiseNetPos::m_scripwisenetpos_Array_data.Shift(j,i-j);
+									swap_st=ScripWiseNetPos::m_scripwisenetpos_Array_data[i];
+									first_st.m_remPL=swap_st.m_remPL;
+								}
+							}									
+					}
+				}
+			}
+
+
+
+
+
+
+
+
+
+
 			ScripWiseNetPos::total_result.Format(_T("%.2f"),total_balance);
 			ScripWiseNetPos::st_scripwisenetpos m_st_scripwisenetpos={};	
 			CMTStr::Copy(m_st_scripwisenetpos.m_Symnol,L"Total");
 
 			m_st_scripwisenetpos.m_NetQty= total_netQty;
-			//m_st_scripwisenetpos.m_Average =total_AvgaRate;
-			//m_st_scripwisenetpos.m_LastRate =total_Lastrate;
+			
 
 
-			m_st_scripwisenetpos.m_PL =total_balance;			
+			m_st_scripwisenetpos.m_PL =total_balance;	
+			m_st_scripwisenetpos.m_remQty=total_rem_qty;
+			m_st_scripwisenetpos.m_remPL=total_rem_bal;
 			ScripWiseNetPos::m_scripwisenetpos_Array_data.Add(&m_st_scripwisenetpos);
 
 			ScripWiseNetPos::m_mutex_scripnetpos.Lock();
@@ -384,7 +553,7 @@ void ScripWiseNetPos::OnSheetSetup(int sheetNumber)
 	SetSH_Width(0);
 	
 	// Number
-			SetNumberCols(5);
+			SetNumberCols(7);
 			//SetNumberRows(18);
 			QuickSetText(0,-1,L"Symbol");
 			SetColWidth(0,110);
@@ -398,6 +567,13 @@ void ScripWiseNetPos::OnSheetSetup(int sheetNumber)
 			
 			QuickSetText(4,-1,L"Profit Loss");
 			SetColWidth(4,80);
+
+
+			QuickSetText(5,-1,L"COM Qty");
+			SetColWidth(5,80);
+			
+			QuickSetText(6,-1,L"COM PL");
+			SetColWidth(6,80);
 			
 
 			
@@ -451,6 +627,25 @@ void ScripWiseNetPos::OnTH_LClicked(int col,long row,int updn,RECT *rect,POINT *
 	UNREFERENCED_PARAMETER(*point);
 	UNREFERENCED_PARAMETER(processed);
 	gridshorting(updn,col);
+
+	ScripWiseNetPos::col_click=col;
+	if( updn == 0)
+		return;
+	if (col_click!=col)
+	{
+		a_d=0;
+	}
+	else
+	{
+		if (a_d==0)
+		{
+			a_d=1;
+		}
+		else
+		{
+			a_d=0;
+		}
+	}
 	
 }
 
@@ -589,12 +784,52 @@ void ScripWiseNetPos::OnMenuCommand(int col,long row,int section,int item)
 			break;
 
 		}
+		case 2002:
+		{
+			ExportToCSV();
+//			Trace( _T( "Displayed the grid's Find Dialog." ) );
+			break;
+
+		}
 	}
 }
 //   
 
 
+void ScripWiseNetPos::ExportToCSV()
+{
+			int row_number =GetNumberRows();
+			int col_number =GetNumberCols();
+			CString fileformat=L"";
+			CString Strfile=_T("");
+			Strfile=L"D:\\NetPos_Company_csv.csv";
+			CStdioFile file(Strfile,CFile::modeCreate|CFile::modeWrite);
+			for(int r=0;r<row_number;r++)
+			{
+				for (int c=0;c<col_number;c++)
+				{					
+					CString temp_text=QuickGetText(c,r);
 
+					while (temp_text.Find(',')>0)
+					{
+						CString tmp_cal_1=L"" ;
+						CString tmp_cal_2=L"" ;
+						tmp_cal_1=temp_text.Mid(0,temp_text.Find(','));
+						tmp_cal_2=temp_text.Mid(temp_text.Find(',')+1,(temp_text.GetLength()-temp_text.Find(',')));
+						temp_text=tmp_cal_1+L" "+tmp_cal_2;
+					}
+
+					temp_text=temp_text+L",";
+					fileformat=fileformat+temp_text;
+				}
+				fileformat=fileformat+L"\n";
+				file.SeekToEnd();
+				file.WriteString(fileformat);
+				fileformat=L"";
+			}
+			file.Close();
+			AfxMessageBox(L"File Has Been Created");
+}
 
 /////////////////////////////////////////////////////////////////////////////
 //	OnSortEvaluate
@@ -728,6 +963,7 @@ void ScripWiseNetPos::InitMenu()
 	
 	/*AddMenuItem( 2000, _T( "Filter" ) );*/
 	AddMenuItem( 2001, _T( "Find Dialog" ) );
+	AddMenuItem( 2002, _T( "Export To CSV" ) );
 		
 	submenu.CreatePopupMenu();
 	submenu.AppendMenu(MF_STRING|MF_CHECKED, 1000, _T("Symbol"));
@@ -1133,6 +1369,30 @@ void ScripWiseNetPos::OnGetCell(int col,long row,CUGCell *cell)
 				mst_grid=m_scripwisenetpos_grid_array[rows_no];				
 				CString tmp=L"";
 				double netqty=mst_grid.m_PL ;
+				tmp.Format(L"%.2f",netqty);
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==5)
+			{				
+				mst_grid=m_scripwisenetpos_grid_array[rows_no];				
+				CString tmp=L"";
+				double netremqty=mst_grid.m_remQty ;
+				tmp.Format(L"%.2f",netremqty);
+				CString str_get_value=cell->GetText();
+				if (wcscmp(str_get_value,tmp)!=0)
+				{
+					cell->SetText(tmp);
+				}
+			}
+			else if (col==6)
+			{				
+				mst_grid=m_scripwisenetpos_grid_array[rows_no];				
+				CString tmp=L"";
+				double netqty=mst_grid.m_remPL  ;
 				tmp.Format(L"%.2f",netqty);
 				CString str_get_value=cell->GetText();
 				if (wcscmp(str_get_value,tmp)!=0)

@@ -17,6 +17,9 @@
 #include "writer.h"
 #include "T_Pre_Post_outstanding.h"
 #include <cstdio>
+#include "per_define_Table.h"
+#include "OutputWnd.h"
+
 using namespace std;
 using namespace rapidjson;
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
@@ -75,6 +78,11 @@ NetPosGrid::Symbol_rateArray NetPosGrid::m_Symbol_rateArray;
 NetPosGrid::NetpositionArray NetPosGrid::m_client_lost;
 
 NetPosGrid::st_Netposition NetPosGrid::m_st_Netposition_Ratecal={};
+
+
+NetPosGrid::St_Client_Per_Array NetPosGrid::m_St_Client_Per_Array;
+NetPosGrid::St_Symbol_Per_Array NetPosGrid::m_St_Symbol_Per_Array;
+
 
 int NetPosGrid::netpos_grid_total=0;
 CUGCell NetPosGrid::cellSymbol;
@@ -219,6 +227,23 @@ double getColumnSum_in_st_O(int col_index)
 			{
 				d_val1=_tcstod(st.m_Floating_Profit,&endPtr1);
 			}	
+
+			if (col_index==24)
+			{
+				d_val1=st.m_COM_QTY;
+			}
+
+			if (col_index==25)
+			{
+				d_val1=st.m_COM_PL;
+			}
+
+			if (col_index==27)
+			{
+				d_val1=st.m_Expe_PL;
+			}
+
+
 			return_val=return_val+d_val1;
 		}
 	}
@@ -255,7 +280,7 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	//SetUserSizingMode( FALSE );
 	SetDefFont(0);
 	SetSH_Width(0);		
-	SetNumberCols(23);
+	SetNumberCols(28);
 	QuickSetText(0,-1,L"Login");
 	SetColWidth(0,100);
 	QuickSetText(1,-1,L"Name");
@@ -302,6 +327,21 @@ void NetPosGrid::OnSheetSetup(int sheetNumber)
 	SetColWidth(21,80);
 	QuickSetText(22,-1,L"Credit_Limit");
 	SetColWidth(22,100);
+
+
+	QuickSetText(23,-1,L"Client Per");
+	SetColWidth(23,100);								
+
+	QuickSetText(24,-1,L"COM QTY");
+	SetColWidth(24,100);								
+
+	QuickSetText(25,-1,L"COM PL");
+	SetColWidth(25,80);	
+	QuickSetText(26,-1,L"Expe Per");
+	SetColWidth(26,80);
+	QuickSetText(27,-1,L"Expe PL");
+	SetColWidth(27,100);
+
 
 	// Header font
 	for(int i = 0; i < GetNumberCols(); i++)
@@ -577,6 +617,53 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 			{
 				cell->SetText(tmp);
 			}
+		}
+		else if (col==23)
+		{
+
+			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
+			
+			double per=mst_grid.m_Client_Per;
+			CString str_per=L"";
+			str_per.Format(L"%.2f",per);			
+			cell->SetText(str_per);			
+			
+			
+		}
+		else if (col==24)
+		{
+
+			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];			
+			double per_pl=mst_grid.m_COM_QTY;			
+			CString str_per=L"";
+			str_per.Format(L"%.2f",per_pl);			
+			cell->SetText(str_per);			
+		}
+		else if (col==25)
+		{
+
+			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];		
+			double per_pl=mst_grid.m_COM_PL;		
+			CString str_per=L"";
+			str_per.Format(L"%.2f",per_pl);			
+			cell->SetText(str_per);			
+		}
+		else if (col==26)
+		{
+			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];			
+			double per=mst_grid.m_Expe_Per;
+			CString str_per=L"";
+			str_per.Format(L"%.2f",per);			
+			cell->SetText(str_per);			
+		}
+		else if (col==27)
+		{
+			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];						
+			double per_netqty=mst_grid.m_Expe_PL;
+
+			CString str_per=L"";
+			str_per.Format(L"%.2f",per_netqty);			
+			cell->SetText(str_per);			
 		}
 	}
 	//m_logfile_g.LogEvent(L"END OnGetCell");	
@@ -1473,7 +1560,11 @@ void NetPosGrid::OnMenuCommand(int col,long row,int section,int item)
 			filter();
 			break;
 		}
-
+	case 9001:
+	{
+		ExportToCSV();
+		break;
+	}
 	case 1000:
 		{
 			if(submenu->GetMenuState(1000,MF_CHECKED))
@@ -2082,6 +2173,7 @@ void NetPosGrid::InitMenu()
 
 	EnableMenu(TRUE);
 
+	menu->AppendMenuW(MF_STRING|MF_UNCHECKED,9001,_T("Export To CSV"));
 	menu->AppendMenuW(MF_STRING|MF_UNCHECKED,2001,_T("Filter"));
 
 
@@ -2109,6 +2201,9 @@ void NetPosGrid::InitMenu()
 
 
 	menu->AppendMenu(MF_POPUP, (UINT)submenu.Detach(), _T("Columns Setting"));
+
+	
+
 	SetMenu(menu);
 	// LPCSTR menuname="Columns Setting";
 
@@ -2676,6 +2771,42 @@ void NetPosGrid::OnSetup()
 			hr=session.Open(connection);							
 		}
 
+
+
+		CCommand<CAccessor<Cper_define_Table> > artists1;			
+		_bstr_t strCommand="";					
+		strCommand="select * from Client_Per";		
+		char* strCommand_char=(char*)strCommand;
+		hr=artists1.Open(session,strCommand_char);				
+		int rows_count=0;
+		if(SUCCEEDED(hr))
+		{
+			while (artists1.MoveNext() == S_OK)
+			{
+				St_Client_Per m_St_Client_Per={};
+				CMTStr::Copy(m_St_Client_Per.Client,artists1.m_Client);
+				m_St_Client_Per.per=artists1.m_Per;
+				m_St_Client_Per_Array.Add(&m_St_Client_Per);
+			}
+		}
+		artists1.Close();	
+
+
+		strCommand="select * from symbol_per";		
+		strCommand_char=(char*)strCommand;
+		hr=artists1.Open(session,strCommand_char);				
+		rows_count=0;
+		if(SUCCEEDED(hr))
+		{
+			while (artists1.MoveNext() == S_OK)
+			{
+				St_Symbol_Per m_St_Symbol_Per={};
+				CMTStr::Copy(m_St_Symbol_Per.Symbol,artists1.m_Client);
+				m_St_Symbol_Per.per=artists1.m_Per;
+				m_St_Symbol_Per_Array.Add(&m_St_Symbol_Per);
+			}
+		}
+		artists1.Close();			
 	}
 	catch(_com_error & ce)
 	{
@@ -3384,7 +3515,7 @@ CString Get_Ltp_Symbol(CString StrSymbol)
 void get_login_balance_details(CString login);
 UINT Update_Netposition(LPVOID pParam)
 {
-
+	
 	CCommand<CAccessor<Netposition_table> > artists1;		
 	CoInitialize(NULL);	
 	CDataSource connection;
@@ -3500,6 +3631,61 @@ UINT Update_Netposition(LPVOID pParam)
 					//str_pl_volume.Format( _T("%.4f"), artists1.m_pl_volume);
 					CMTStr::Copy(mst.m_pl_volume ,artists1.m_pl_volume);
 					CMTStr::Copy(mst.m_creditlimit ,artists1.m_creditClient);
+
+					
+					CString tmp=artists1.m_login;
+					
+					double per=COutputWnd::m_wndOutputPos.Client_PerFind(tmp);
+					mst.m_Client_Per=per;
+
+
+
+					
+					
+					CString tmp_pl=artists1.m_NetQty;
+					double per_pl=_wtof(tmp_pl);
+					per_pl=per_pl*(100-per)/100;
+					mst.m_COM_QTY=per_pl;
+
+					
+					 tmp_pl=artists1.m_PL ;
+					 per_pl=_wtof(tmp_pl);
+					per_pl=per_pl*(100-per)/100;
+					mst.m_COM_PL=per_pl;
+
+
+
+					
+					CString tmp_symbol=artists1.m_symbol ;
+					double per_symbol=COutputWnd::m_wndOutputPos.Symbol_PerFind(tmp_symbol);
+					mst.m_Expe_Per=per_symbol;
+
+
+
+
+					
+					
+					CString tmp_Netqty=artists1.m_NetQty ;
+					double dbl_tmp_Netqty=_wtof(tmp_Netqty);
+
+					double per_netqty=dbl_tmp_Netqty*(100-per)/100;
+
+			
+					CString Standing_Avg_rate=artists1.m_Standing_Avg_rate; 
+					double dbl_Standing_Avg_rate=_wtof(Standing_Avg_rate);
+
+					if (per_netqty<0)
+					{
+						per_netqty=-per_netqty;
+					}
+					per_netqty=(per_netqty*dbl_Standing_Avg_rate*artists1.m_lot_Size)*per_symbol/100;
+
+					mst.m_Expe_PL=per_netqty;		
+
+
+
+
+
 					NetPosGrid::m_NetpositionArray.Add(&mst);				
 				}
 
@@ -3672,6 +3858,12 @@ UINT Update_Netposition(LPVOID pParam)
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_Sq_Balance ,m_st_Netposition.m_Sq_Balance);				
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_pl_volume ,m_st_Netposition.m_pl_volume);	
 					CMTStr::Copy(NetPosGrid::m_st_Netposition_For_Grid.m_creditlimit ,m_st_Netposition.m_creditlimit);
+					NetPosGrid::m_st_Netposition_For_Grid.m_Client_Per=m_st_Netposition.m_Client_Per;
+					NetPosGrid::m_st_Netposition_For_Grid.m_COM_QTY=m_st_Netposition.m_COM_QTY;
+					NetPosGrid::m_st_Netposition_For_Grid.m_COM_PL=m_st_Netposition.m_COM_PL;
+					NetPosGrid::m_st_Netposition_For_Grid.m_Expe_Per=m_st_Netposition.m_Expe_Per;
+					NetPosGrid::m_st_Netposition_For_Grid.m_Expe_PL=m_st_Netposition.m_Expe_PL;
+
 					if (NetPosGrid::int_ignoreQty==1)
 					{
 						CString str_netqty=m_st_Netposition.m_netqty;
@@ -4327,6 +4519,67 @@ UINT Update_Netposition(LPVOID pParam)
 						}
 
 
+						
+
+						if (NetPosGrid::col_click==23)
+						{								
+							double d_val1=first_st.m_Client_Per;							
+							double d_val2=next_st.m_Client_Per;						
+							if (d_val1>d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Client_Per=swap_st.m_Client_Per;							
+							}
+						}
+
+
+						if (NetPosGrid::col_click==24)
+						{								
+							double d_val1=first_st.m_COM_QTY;							
+							double d_val2=next_st.m_COM_QTY;						
+							if (d_val1>d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_COM_QTY=swap_st.m_COM_QTY;							
+							}
+						}
+
+						if (NetPosGrid::col_click==25)
+						{								
+							double d_val1=first_st.m_COM_PL;							
+							double d_val2=next_st.m_COM_PL;						
+							if (d_val1>d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_COM_PL=swap_st.m_COM_PL;							
+							}
+						}
+						if (NetPosGrid::col_click==26)
+						{								
+							double d_val1=first_st.m_Expe_Per;							
+							double d_val2=next_st.m_Expe_Per;						
+							if (d_val1>d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Expe_Per=swap_st.m_Expe_Per;							
+							}
+						}
+						if (NetPosGrid::col_click==27)
+						{								
+							double d_val1=first_st.m_Expe_PL;							
+							double d_val2=next_st.m_Expe_PL;						
+							if (d_val1>d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Expe_PL=swap_st.m_Expe_PL;							
+							}
+						}
+
 					}
 				}
 				else if(NetPosGrid::a_d==1)
@@ -4625,11 +4878,69 @@ UINT Update_Netposition(LPVOID pParam)
 							}
 						}
 
+						if (NetPosGrid::col_click==23)
+						{								
+							double d_val1=first_st.m_Client_Per;							
+							double d_val2=next_st.m_Client_Per;						
+							if (d_val1<d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Client_Per=swap_st.m_Client_Per;							
+							}
+						}
+
+
+						if (NetPosGrid::col_click==24)
+						{								
+							double d_val1=first_st.m_COM_QTY;							
+							double d_val2=next_st.m_COM_QTY;						
+							if (d_val1<d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_COM_QTY=swap_st.m_COM_QTY;							
+							}
+						}
+
+						if (NetPosGrid::col_click==25)
+						{								
+							double d_val1=first_st.m_COM_PL;							
+							double d_val2=next_st.m_COM_PL;						
+							if (d_val1<d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_COM_PL=swap_st.m_COM_PL;							
+							}
+						}
+						if (NetPosGrid::col_click==26)
+						{								
+							double d_val1=first_st.m_Expe_Per;							
+							double d_val2=next_st.m_Expe_Per;						
+							if (d_val1<d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Expe_Per=swap_st.m_Expe_Per;							
+							}
+						}
+						if (NetPosGrid::col_click==27)
+						{								
+							double d_val1=first_st.m_Expe_PL;							
+							double d_val2=next_st.m_Expe_PL;						
+							if (d_val1<d_val2)
+							{
+								NetPosGrid::m_NetpositionArray_For_Grid.Shift(j,i-j);
+								swap_st=NetPosGrid::m_NetpositionArray_For_Grid[i];
+								first_st.m_Expe_PL=swap_st.m_Expe_PL;							
+							}
+						}
+
 					}
 				}
 
 			}
-
 		}
 		//m_logfile_g.LogEvent(L"Start Update_Netposition Step_6");	
 		//End of Updating Data In New Structure
@@ -4650,6 +4961,15 @@ UINT Update_Netposition(LPVOID pParam)
 		tempval.Format(L"%.2f",getColumnSum_in_st_O(8));
 		CMTStr::Copy(N_st.m_Floating_Profit,tempval);
 	    str_balance=tempval;
+
+
+		
+		N_st.m_COM_QTY=getColumnSum_in_st_O(24);
+		N_st.m_COM_PL=getColumnSum_in_st_O(25);
+		
+		N_st.m_Expe_PL=getColumnSum_in_st_O(27);
+
+
 
 		NetPosGrid::m_NetpositionArray_For_Grid.Add(&N_st);		
 
@@ -4691,6 +5011,77 @@ void NetPosGrid::thread_destoy()
 	{
 		AfxMessageBox(ce.Description()+L"Thread UnInitiliaze");			
 	}
+}
+
+double NetPosGrid::Client_PerFind(CString Client)
+{
+	double return_val=0;
+	int count=m_St_Client_Per_Array.Total();
+	for (int i=0;i<count;i++)
+	{
+		St_Client_Per m_St_Client_Per={};
+		m_St_Client_Per=m_St_Client_Per_Array[i];
+		CString tmp_client=m_St_Client_Per.Client;
+		if (Client==tmp_client)
+		{
+			return_val=m_St_Client_Per.per ;
+			return return_val;
+			break;
+		}
+	}
+	return return_val;
+}
+double NetPosGrid::Symbol_PerFind(CString Symbol)
+{
+	double return_val=0;
+	int count=m_St_Symbol_Per_Array.Total();
+	for (int i=0;i<count;i++)
+	{
+		St_Symbol_Per m_St_Symbol_Per={};
+		m_St_Symbol_Per=m_St_Symbol_Per_Array[i];
+		CString tmp_client=m_St_Symbol_Per.Symbol;
+		if (Symbol==tmp_client)
+		{
+			return_val=m_St_Symbol_Per.per ;
+			return return_val;
+			break;
+		}
+	}
+	return return_val;
+}
+void NetPosGrid::ExportToCSV()
+{
+			int row_number =GetNumberRows();
+			int col_number =GetNumberCols();
+			CString fileformat=L"";
+			CString Strfile=_T("");
+			Strfile=L"D:\\NetPos_csv.csv";
+			CStdioFile file(Strfile,CFile::modeCreate|CFile::modeWrite);
+			for(int r=0;r<row_number;r++)
+			{
+				for (int c=0;c<col_number;c++)
+				{					
+					CString temp_text=QuickGetText(c,r);
+
+					while (temp_text.Find(',')>0)
+					{
+						CString tmp_cal_1=L"" ;
+						CString tmp_cal_2=L"" ;
+						tmp_cal_1=temp_text.Mid(0,temp_text.Find(','));
+						tmp_cal_2=temp_text.Mid(temp_text.Find(',')+1,(temp_text.GetLength()-temp_text.Find(',')));
+						temp_text=tmp_cal_1+L" "+tmp_cal_2;
+					}
+
+					temp_text=temp_text+L",";
+					fileformat=fileformat+temp_text;
+				}
+				fileformat=fileformat+L"\n";
+				file.SeekToEnd();
+				file.WriteString(fileformat);
+				fileformat=L"";
+			}
+			file.Close();
+			AfxMessageBox(L"File Has Been Created");
 }
 
 

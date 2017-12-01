@@ -77,6 +77,8 @@
 #define IDD_USERCLIENT_MAP              353
 #define IDD_DIALOG3                     354
 #define IDD_HELPUSERCLEINT              354
+#define ID_CLIENT_PER_DEFINE            355
+#define IDD_DIALOG4                     356
 #define IDC_SCRIP_CMB_LOGIN             1000
 #define IDC_SCRIP_EDIT_LOGIN            1001
 #define IDC_LOGIN_EDIT_PWD              1002
@@ -177,6 +179,8 @@
 #define IDC_CLIENTLIST                  1113
 #define IDC_HELPCLICK                   1114
 #define ID_OK                           1115
+#define IDC_STATIC_GRID_Cleint_Per_Define 1116
+#define IDC_STATIC_GRID_Scrip_Per_Define 1117
 #define ID_FILE_SYMBOLMAPPING           32777
 #define ID_VIEW_SYMBOLADD               32778
 #define IDC_CHECK_IGNOREQTY             32779
@@ -240,14 +244,18 @@
 #define ID_DATETIME                     32855
 #define ID_USER_CREATE                  32856
 #define ID_USERCLIENTMAPPING            32858
+#define ID_CLIENTPERDEFINE              32859
+#define ID_SYMBOLPERCENTAGEDEFINE       32860
+#define ID_BUTTON2                      32861
+#define ID_SCRIPPERDEFINE               32865
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        355
-#define _APS_NEXT_COMMAND_VALUE         32859
-#define _APS_NEXT_CONTROL_VALUE         1116
+#define _APS_NEXT_RESOURCE_VALUE        357
+#define _APS_NEXT_COMMAND_VALUE         32862
+#define _APS_NEXT_CONTROL_VALUE         1118
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

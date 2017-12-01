@@ -24,6 +24,7 @@ public:
 	TCHAR m_SQ_Balance[100];
 	TCHAR m_pl_volume[100];
 	TCHAR m_creditClient[100];
+	int   m_lot_Size;
 	//TCHAR m_marginlive[100];
 	
 	
@@ -50,6 +51,7 @@ public:
 	DBSTATUS m_dwSQ_Balance;
 	DBSTATUS m_dwpl_volume;
 	DBSTATUS m_creditClient_s;
+	DBSTATUS m_lot_Size_s;
 	//DBSTATUS m_dwmarginlive;
 
 
@@ -75,6 +77,7 @@ public:
 	DBLENGTH m_dwSQ_BalanceLength;
 	DBLENGTH m_dwpl_volumeLength;
 	DBLENGTH m_creditClient_l;
+	DBLENGTH m_lot_Size_l;
 	//DBLENGTH m_dwmarginliveLength;
 
 		
@@ -102,6 +105,7 @@ BEGIN_COLUMN_MAP(Netposition_table)
 		COLUMN_ENTRY_LENGTH_STATUS(20, m_SQ_Balance, m_dwSQ_Balance, m_dwSQ_BalanceLength)
         COLUMN_ENTRY_LENGTH_STATUS(21, m_pl_volume, m_dwpl_volume, m_dwpl_volumeLength)
 		COLUMN_ENTRY_LENGTH_STATUS(22, m_creditClient,m_creditClient_s, m_creditClient_l)
-	//	COLUMN_ENTRY_LENGTH_STATUS(22, m_marginlive, m_dwmarginlive, m_dwmarginliveLength)
+		COLUMN_ENTRY_LENGTH_STATUS(23, m_lot_Size,m_lot_Size_s, m_lot_Size_l)
+		//COLUMN_ENTRY_LENGTH_STATUS(22, m_marginlive, m_dwmarginlive, m_dwmarginliveLength)
 END_COLUMN_MAP()	
 };

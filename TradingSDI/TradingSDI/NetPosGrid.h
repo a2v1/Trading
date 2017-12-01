@@ -81,6 +81,11 @@ public:
 		wchar_t  m_Floating_Profit[60];
 		wchar_t  m_Balance[60];
 		wchar_t  m_creditlimit[60];
+		double  m_Client_Per;
+		double  m_COM_QTY;
+		double  m_COM_PL;
+		double  m_Expe_Per;
+		double  m_Expe_PL;
 	};
 	typedef TMTArray<st_Netposition> NetpositionArray;
 
@@ -186,13 +191,36 @@ public:
 	
 	
 
-	struct  Symbol_in_m
+  struct  Symbol_in_m
    {
 		wchar_t  V_symbol[64];
 		
    };    
     typedef  TMTArray<Symbol_in_m> Symbol_in_m_Array;
 	static Symbol_in_m_Array m_Symbol_in_m_Array;
+
+
+
+
+
+	struct  St_Client_Per
+   {
+		wchar_t  Client[30];
+		double  per;
+		
+   };    
+    typedef  TMTArray<St_Client_Per> St_Client_Per_Array;
+	static St_Client_Per_Array m_St_Client_Per_Array;
+
+
+	struct  St_Symbol_Per
+   {
+		wchar_t  Symbol[30];
+		double  per;
+		
+   };    
+    typedef  TMTArray<St_Symbol_Per> St_Symbol_Per_Array;
+	static St_Symbol_Per_Array m_St_Symbol_Per_Array;
 
 
 	
@@ -406,7 +434,10 @@ public:
 	//void getFinal_Balance_cell(int col,int row);
 
 	void UpdatePre_Post_Position();
-	
+
+	double Client_PerFind(CString Client);
+	double Symbol_PerFind(CString Symbol);
+	void ExportToCSV();
 	
 };
 #endif

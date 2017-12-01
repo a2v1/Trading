@@ -669,12 +669,6 @@
     <ClInclude Include="UserTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="UserClientMapping.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClientList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UserClientTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -682,6 +676,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HelpUserCleintGrid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLIENT_PER_DEFINE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Per_define_Table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol_Per_Define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1049,19 +1052,16 @@
     <ClCompile Include="AnalysisGrid.cpp">
       <Filter>Grid</Filter>
     </ClCompile>
-    <ClCompile Include="UserCreate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UserClientMapping.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="HelpUserCleintDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HelpUserCleintGrid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLIENT_PER_DEFINE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbol_Per_Define.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

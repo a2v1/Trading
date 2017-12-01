@@ -40,7 +40,7 @@ Editable_Grid::~Editable_Grid()
 void Editable_Grid::OnSetup()
 {
 	SetNumberCols(2);
-	SetNumberRows(80);
+	SetNumberRows(180);
 		//soritng
 	m_iArrowIndex = AddCellType( &m_sortArrow );
 
