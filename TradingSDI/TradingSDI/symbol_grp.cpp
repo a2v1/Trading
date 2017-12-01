@@ -96,8 +96,8 @@ void symbol_grp::OnBnClickedOk()
 	cmd.Close();
 	session.Close();
 	connection.Close();	
+	CoUninitialize();
 }
-
 void symbol_grp::getSymbolData(_bstr_t group_symbol)
 {
 	CCommand<CAccessor<CSymbolGroup_Table> > artists1;	
@@ -117,7 +117,7 @@ void symbol_grp::getSymbolData(_bstr_t group_symbol)
 			int rows_count=0;
 			if(SUCCEEDED(hr))
 			{
-				while (hr=artists1.MoveNext() == S_FALSE)
+				while (hr=artists1.MoveNext() == S_OK)
 				{
 					symbol_map.QuickSetText(0,rows_count,artists1.m_Symbol ); 
 					rows_count=rows_count+1;
@@ -128,6 +128,7 @@ void symbol_grp::getSymbolData(_bstr_t group_symbol)
 
 	session.Close();
 	connection.Close();	
+	CoUninitialize();
 }
 
 void symbol_grp::OnEnKillfocusEdit1()
@@ -163,9 +164,6 @@ BOOL symbol_grp::PreTranslateMessage(MSG* pMsg)
 void symbol_grp::OnClose()
 {
 	// TODO: Add your message handler code here and/or call default
-	session.Close();
-	connection.Close();	
-	CoUninitialize();
 	CDialogEx::OnClose();
 }
 
