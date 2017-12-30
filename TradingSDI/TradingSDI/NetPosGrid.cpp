@@ -622,13 +622,13 @@ void NetPosGrid::OnGetCell(int col,long row,CUGCell *cell)
 		{
 
 			mst_grid=NetPosGrid::m_NetpositionArray_For_Grid_Final[rows_no];
-			
+
 			double per=mst_grid.m_Client_Per;
 			CString str_per=L"";
 			str_per.Format(L"%.2f",per);			
 			cell->SetText(str_per);			
-			
-			
+
+
 		}
 		else if (col==24)
 		{
@@ -1524,7 +1524,7 @@ int NetPosGrid::OnEditFinish(int col, long row,CWnd *edit,LPCTSTR string,BOOL ca
 			{
 				col20_val=L"ALL";					
 			}
-		
+
 		}
 		if(col==22)
 		{
@@ -1561,10 +1561,10 @@ void NetPosGrid::OnMenuCommand(int col,long row,int section,int item)
 			break;
 		}
 	case 9001:
-	{
-		ExportToCSV();
-		break;
-	}
+		{
+			ExportToCSV();
+			break;
+		}
 	case 1000:
 		{
 			if(submenu->GetMenuState(1000,MF_CHECKED))
@@ -2202,7 +2202,7 @@ void NetPosGrid::InitMenu()
 
 	menu->AppendMenu(MF_POPUP, (UINT)submenu.Detach(), _T("Columns Setting"));
 
-	
+
 
 	SetMenu(menu);
 	// LPCSTR menuname="Columns Setting";
@@ -2434,7 +2434,7 @@ void NetPosGrid:: addItemToCombobox()
 	{
 		NetPosGrid::m_NetpositionArray_Filter.Assign(NetPosGrid::m_Netposition_Ignore_comment_Array);
 	}else{
-	
+
 		NetPosGrid::m_NetpositionArray_Filter.Assign(NetPosGrid::m_NetpositionArray_For_Grid);
 	}
 
@@ -3515,7 +3515,7 @@ CString Get_Ltp_Symbol(CString StrSymbol)
 void get_login_balance_details(CString login);
 UINT Update_Netposition(LPVOID pParam)
 {
-	
+
 	CCommand<CAccessor<Netposition_table> > artists1;		
 	CoInitialize(NULL);	
 	CDataSource connection;
@@ -3632,30 +3632,30 @@ UINT Update_Netposition(LPVOID pParam)
 					CMTStr::Copy(mst.m_pl_volume ,artists1.m_pl_volume);
 					CMTStr::Copy(mst.m_creditlimit ,artists1.m_creditClient);
 
-					
+
 					CString tmp=artists1.m_login;
-					
+
 					double per=COutputWnd::m_wndOutputPos.Client_PerFind(tmp);
 					mst.m_Client_Per=per;
 
 
 
-					
-					
+
+
 					CString tmp_pl=artists1.m_NetQty;
 					double per_pl=_wtof(tmp_pl);
 					per_pl=per_pl*(100-per)/100;
 					mst.m_COM_QTY=per_pl;
 
-					
-					 tmp_pl=artists1.m_PL ;
-					 per_pl=_wtof(tmp_pl);
+
+					tmp_pl=artists1.m_PL ;
+					per_pl=_wtof(tmp_pl);
 					per_pl=per_pl*(100-per)/100;
 					mst.m_COM_PL=per_pl;
 
 
 
-					
+
 					CString tmp_symbol=artists1.m_symbol ;
 					double per_symbol=COutputWnd::m_wndOutputPos.Symbol_PerFind(tmp_symbol);
 					mst.m_Expe_Per=per_symbol;
@@ -3663,14 +3663,14 @@ UINT Update_Netposition(LPVOID pParam)
 
 
 
-					
-					
+
+
 					CString tmp_Netqty=artists1.m_NetQty ;
 					double dbl_tmp_Netqty=_wtof(tmp_Netqty);
 
 					double per_netqty=dbl_tmp_Netqty*(100-per)/100;
 
-			
+
 					CString Standing_Avg_rate=artists1.m_Standing_Avg_rate; 
 					double dbl_Standing_Avg_rate=_wtof(Standing_Avg_rate);
 
@@ -3692,7 +3692,7 @@ UINT Update_Netposition(LPVOID pParam)
 
 			}
 			artists1.Close();
-
+			INT I=NetPosGrid::m_NetpositionArray.Total();
 		}
 		else
 		{
@@ -3882,7 +3882,7 @@ UINT Update_Netposition(LPVOID pParam)
 			//m_logfile_g.LogEvent(L"Start Update_Netposition Step_4");	
 		}
 
-	    else if (NetPosGrid::int_igrore_comment==1)
+		else if (NetPosGrid::int_igrore_comment==1)
 		{
 			NetPosGrid::mutex_Symbol_ltp.Unlock();
 			//st_Netposition_Ignore_comment
@@ -4519,7 +4519,7 @@ UINT Update_Netposition(LPVOID pParam)
 						}
 
 
-						
+
 
 						if (NetPosGrid::col_click==23)
 						{								
@@ -4960,13 +4960,13 @@ UINT Update_Netposition(LPVOID pParam)
 
 		tempval.Format(L"%.2f",getColumnSum_in_st_O(8));
 		CMTStr::Copy(N_st.m_Floating_Profit,tempval);
-	    str_balance=tempval;
+		str_balance=tempval;
 
 
-		
+
 		N_st.m_COM_QTY=getColumnSum_in_st_O(24);
 		N_st.m_COM_PL=getColumnSum_in_st_O(25);
-		
+
 		N_st.m_Expe_PL=getColumnSum_in_st_O(27);
 
 
@@ -5051,37 +5051,37 @@ double NetPosGrid::Symbol_PerFind(CString Symbol)
 }
 void NetPosGrid::ExportToCSV()
 {
-			int row_number =GetNumberRows();
-			int col_number =GetNumberCols();
-			CString fileformat=L"";
-			CString Strfile=_T("");
-			Strfile=L"D:\\NetPos_csv.csv";
-			CStdioFile file(Strfile,CFile::modeCreate|CFile::modeWrite);
-			for(int r=0;r<row_number;r++)
+	int row_number =GetNumberRows();
+	int col_number =GetNumberCols();
+	CString fileformat=L"";
+	CString Strfile=_T("");
+	Strfile=L"D:\\NetPos_csv.csv";
+	CStdioFile file(Strfile,CFile::modeCreate|CFile::modeWrite);
+	for(int r=0;r<row_number;r++)
+	{
+		for (int c=0;c<col_number;c++)
+		{					
+			CString temp_text=QuickGetText(c,r);
+
+			while (temp_text.Find(',')>0)
 			{
-				for (int c=0;c<col_number;c++)
-				{					
-					CString temp_text=QuickGetText(c,r);
-
-					while (temp_text.Find(',')>0)
-					{
-						CString tmp_cal_1=L"" ;
-						CString tmp_cal_2=L"" ;
-						tmp_cal_1=temp_text.Mid(0,temp_text.Find(','));
-						tmp_cal_2=temp_text.Mid(temp_text.Find(',')+1,(temp_text.GetLength()-temp_text.Find(',')));
-						temp_text=tmp_cal_1+L" "+tmp_cal_2;
-					}
-
-					temp_text=temp_text+L",";
-					fileformat=fileformat+temp_text;
-				}
-				fileformat=fileformat+L"\n";
-				file.SeekToEnd();
-				file.WriteString(fileformat);
-				fileformat=L"";
+				CString tmp_cal_1=L"" ;
+				CString tmp_cal_2=L"" ;
+				tmp_cal_1=temp_text.Mid(0,temp_text.Find(','));
+				tmp_cal_2=temp_text.Mid(temp_text.Find(',')+1,(temp_text.GetLength()-temp_text.Find(',')));
+				temp_text=tmp_cal_1+L" "+tmp_cal_2;
 			}
-			file.Close();
-			AfxMessageBox(L"File Has Been Created");
+
+			temp_text=temp_text+L",";
+			fileformat=fileformat+temp_text;
+		}
+		fileformat=fileformat+L"\n";
+		file.SeekToEnd();
+		file.WriteString(fileformat);
+		fileformat=L"";
+	}
+	file.Close();
+	AfxMessageBox(L"File Has Been Created");
 }
 
 
