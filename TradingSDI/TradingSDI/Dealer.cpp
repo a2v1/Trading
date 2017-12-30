@@ -147,8 +147,10 @@ bool CDealer::Initialize(CWnd *parent)
 //--- parent window
    m_parent=parent;
 //--- initialize factory  
-   if((res=m_factory.Initialize(L"..\\..\\MT5\\Manager\\API\\"))!=MT_RET_OK)
+   if((res=m_factory.Initialize(L"..\\..\\..\\MT5\\Manager\\API\\"))!=MT_RET_OK)
      {
+
+		 
       message.Format(L"Dealer: loading manager API failed (%u)",res);
       AfxMessageBox(message);
       return(false);

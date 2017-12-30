@@ -15,8 +15,8 @@
 #include "Symbol_Table.h"
 #include "symbol_grp.h"
 #include "Symbol_Per_Define.h"
-//#include "UserCreate.h"
-//#include "UserClientMapping.h"
+#include "UserCreate.h"
+#include "UserClientMapping.h"
 #import "C:\Program Files\Common Files\System\ADO\msado15.dll" \
 	no_namespace rename("EOF", "EndOfFile")
 #ifdef _DEBUG
@@ -1628,23 +1628,24 @@ void CMainFrame::OnUpdateDatetime(CCmdUI *pCmdUI)
 
 void CMainFrame::OnMove(int x, int y)
 {
+	
 	__super::OnMove(x, y);
-
-
 }
 
 
 void CMainFrame::OnUserCreate()
 {
 	// TODO: Add your command handler code here
-	/*UserCreate dlg;
-	dlg.DoModal();*/
+	UserCreate dlg;
+	dlg.DoModal();
 }
 
 
 void CMainFrame::OnUserclientmapping()
 {
-	
+	UserClientMapping dlg;
+	dlg.DoModal();
+
 }
 
 
@@ -1653,13 +1654,6 @@ void CMainFrame::OnClientPerDefine()
 	CLIENT_PER_DEFINE m_CLIENT_PER_DEFINE;
 	m_CLIENT_PER_DEFINE.DoModal();
 }
-
-
-
-
-
-
-
 
 void CMainFrame::OnSymbolpercentagedefine()
 {
